@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+		    #footer
+		    {
+				position:fixed;
+				left:0;
+				bottom:0;
+				width:100%;
+		    }
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+
+		<header id="header"></header>
+
+		<section class="container">
+		    <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <h1>404</h1>
+                    <h2>找不到 ${url}</h2>
+                </div>
+		    </div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+
+	</body>
+</html>

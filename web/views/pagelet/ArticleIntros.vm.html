@@ -1,0 +1,54 @@
+#foreach($article in $articles)
+<div class="article content-frame clearfix">
+	#if("1" == $article.Bookmark)
+	<div class="glyphicon glyphicon-bookmark olx-glyphicon-bookmark"></div>
+	#end
+	<div class="article-date" title="创建于 $article.sPostTime">
+		<span class="month">$article.PostTime_Month月</span>
+		<span class="day">$article.PostTime_Day</span>
+	</div>
+	<div class="article-content">
+		<div class="content-title">
+			<h3>
+				<a href="${virtualPath}archive/${article.Id}.html">$article.ArticleTitle</a>
+			</h3>
+		</div>
+		<div class="content-tag">
+			<span class="label label-success olx-label">
+				<span class="glyphicon glyphicon-tag"></span>
+				<a rel="category tag" title="查看 $article.ArticleAuthor 中的全部文章" href="${virtualPath}archive/author/${article.ArticleAuthor}">$article.ArticleAuthor</a></span>
+			<span class="label label-success olx-label"><span class="glyphicon glyphicon-user"></span>
+				<a rel="category tag" title="由 洪荒世界 发布" href="javascript:;">洪荒世界</a></span>
+			<span class="label label-success olx-label"><span class="glyphicon glyphicon-eye-open"></span> <a>$article.ViewNumsToFormat人</a>
+			</span>
+			#*<span class="label label-success olx-label"><span class="glyphicon glyphicon-thumbs-up"></span> <a href="#">2,503</a>
+			</span>
+			<span class="label label-success olx-label"><span class="glyphicon glyphicon-thumbs-down"></span> <a href="#">2,503</a>
+			</span>*#
+		</div>
+		<div class="content-article">
+            #if("" != ${article.ArticleImage})
+			<figure class="thumbnail clearfix">
+				<a href="${virtualPath}archive/${article.Id}.html">
+					<img src="${virtualPath}userData/${article.ArticleAuthor}/${article.ArticleImage}" alt="${virtualPath}userData/${article.ArticleAuthor}/${article.ArticleImage}">
+				</a>
+			</figure>
+		    #end
+			<div class="alert olx-alert clearfix">$article.ArticleIntro</div>
+		</div>
+		<div class="content-footer">
+			<div class="footer-tag clearfix">
+				#foreach($articleTag in $article.Tags)
+				<span class="label label-success olx-tag">
+					<a rel="tag" title="查看 $articleTag.TagName 标签" href="${virtualPath}archive/tag/${articleTag.TagName}">$articleTag.TagName</a>
+				</span>
+				#end
+			</div>
+			<a class="btn btn-danger pull-right" title="详细阅读 $article.ArticleTitle" href="${virtualPath}archive/${article.Id}.html">
+				阅读全文
+				<span class="badge">$article.ViewNumsToFormat</span>
+			</a>
+		</div>
+	</div>						
+</div>						
+#end

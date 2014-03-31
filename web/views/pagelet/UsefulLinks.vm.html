@@ -1,0 +1,13 @@
+<div class="panel panel-default olx-panel">
+	<div class="panel-heading">
+		<ul class="nav nav-pills">
+			<li class="active"><a href="javascript:;">常用链接</a></li>
+			<li><a href="javascript:;">友情链接</a></li>
+		</ul>
+	</div>
+	<div class="panel-body">
+		<div id="usefulLinks" class="list-group">
+		#foreach($usefulLink in $usefulLinks)<a target="_blank" href="$usefulLink.LinkUrl" title="$usefulLink.LinkName" class="list-group-item">$usefulLink.LinkName</a>
+		#end</div>
+	</div>
+</div>

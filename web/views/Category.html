@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+
+		<header id="header"></header>
+
+		<section class="container">
+			<div class="row">
+				<div id="articleIntros" class="col-sm-12 col-md-8">
+		            #parse('pagelet/TopMessage.html')
+					#parse("pagelet/topMarks.html")
+		            #parse('pagelet/ArticleIntros.vm.html')
+				</div>
+				<div class="col-sm-12 col-md-4">
+
+					#parse("pagelet/top10ViewNums.html")
+
+					#parse("pagelet/top10Comments.html")
+
+					#parse("pagelet/usefulLinks.html")
+					
+					<div id="qrcode">
+						<figure>
+							<img src="${virtualPath}asset/images/foreworld.png" alt="二维码" title="${categoryName}">
+						</figure>
+					</div>
+				</div>
+
+				<div class="col-sm-12 col-md-8">
+					<a id="loadMore" href="javascript:;" data-current-page="1" class="btn btn-block" data-url="${virtualPath}archive/category/${categoryName}/more">加载更多...</a>
+				</div>
+			</div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+
+        #parse('pagelet/backTop.html')
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+		<script type="text/javascript" src="${virtualPath}js/js.js"></script>
+
+	</body>
+</html>

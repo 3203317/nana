@@ -1,0 +1,19 @@
+#foreach($tag in $tags)<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a id="${tag.TagName}" href="#collapse${tag.Id}" data-parent="#accordion" data-toggle="collapse">${tag.TagName} (${tag.Articles.length}篇文章)</a>
+		</h4>
+	</div>
+	<div id="collapse${tag.Id}" class="panel-collapse collapse in">
+		<div class="panel-body">
+			#foreach($article in $tag.Articles)
+			<p>
+				${article.PostTime_Year}-${article.PostTime_Month}-${article.PostTime_Day}:
+				<a title="创建于 $article.PostTime_Time" href="${virtualPath}archive/${article.Id}.html">${article.ArticleTitle}</a>
+				<span class="badge">${article.ViewNumsToFormat}</span>
+			</p>
+			#end
+		</div>
+	</div>
+</div>
+#end

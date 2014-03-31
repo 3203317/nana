@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+
+		<header id="header"></header>
+
+		<section class="container">
+			<div class="row">
+				<div id="articleIntros" class="col-sm-12 col-md-8">
+		            #parse('pagelet/TopMessage.html')
+                    <div class="article content-frame clearfix">
+	                    <div class="article-content">
+                            <ol class="breadcrumb">
+                                <li><div class="glyphicon glyphicon-home"></div> <a href="${virtualPath}index.html">首页</a></li>
+                                <li class="active">${article.ArticleTitle}</li>
+                            </ol>
+		                    <div class="content-title">
+			                    <h3>
+				                    <a href="${virtualPath}archive/${article.Id}.html">$article.ArticleTitle</a>
+			                    </h3>
+		                    </div>
+		                    <div class="content-tag">
+			                    <span class="label label-success olx-label"><span class="glyphicon glyphicon-calendar"></span> <a title="创建于 $article.PostTime_Time">$article.PostTime_Date</a></span>
+			                    <span class="label label-success olx-label"><span class="glyphicon glyphicon-tag"></span>
+				                    <a rel="category tag" title="查看 $article.ArticleAuthor 中的全部文章" href="${virtualPath}archive/author/${article.ArticleAuthor}">$article.ArticleAuthor</a></span>
+			                    <span class="label label-success olx-label"><span class="glyphicon glyphicon-user"></span>
+				                    <a rel="category tag" title="由 洪荒世界 发布" href="javascript:;">洪荒世界</a></span>
+			                    <span class="label label-success olx-label"><span class="glyphicon glyphicon-eye-open"></span> <a>$article.ViewNumsToFormat人</a>
+			                    </span>
+			                    #*<span class="label label-success olx-label"><span class="glyphicon glyphicon-thumbs-up"></span> <a href="#">2,503</a>
+			                    </span>
+			                    <span class="label label-success olx-label"><span class="glyphicon glyphicon-thumbs-down"></span> <a href="#">2,503</a>
+			                    </span>*#
+		                    </div>
+		                    <div class="content-article">
+                                #if("" != ${article.ArticleImage})
+			                    <figure class="thumbnail clearfix">
+				                    <a>
+					                    <img src="${virtualPath}userData/${article.ArticleAuthor}/${article.ArticleImage}" alt="${virtualPath}userData/${article.ArticleAuthor}/${article.ArticleImage}">
+				                    </a>
+			                    </figure>
+		                        #end
+			                    <div class="alert olx-alert clearfix">$article.ArticleContent</div>
+		                    </div>
+                            #if ($!article.Tags)
+		                    <div class="content-footer article-footer">
+			                    <div class="footer-tag clearfix">
+				                    #foreach($articleTag in $article.Tags)
+				                    <span class="label label-success olx-tag">
+					                    <a rel="tag" title="查看 $articleTag.TagName 标签" href="${virtualPath}archive/tag/${articleTag.TagName}">$articleTag.TagName</a>
+				                    </span>
+				                    #end
+			                    </div> 
+                                #*<div class="btn-group article-btn-group">
+                                    #if ($!nextArticle)
+                                    <a class="btn btn-default" href="${virtualPath}archive/${nextArticle.Id}.html" title="${nextArticle.ArticleTitle}">上一篇</a>
+                                    #end
+                                    #if ($!prevArticle)
+                                    <a class="btn btn-default" href="${virtualPath}archive/${prevArticle.Id}.html" title="${prevArticle.ArticleTitle}">下一篇</a>
+                                    #end
+                                </div>*#
+		                    </div>
+                            #end
+		                    <div class="alert alert-success article-alert">
+                                <p>版权所属：<a href="http://www.foreworld.net/">洪荒世界</a></p>
+                                <p>原文地址：<a href="${virtualPath}archive/${article.Id}.html" title="${article.ArticleTitle}">http://www.foreworld.net/archive/${article.Id}.html</a></p>
+                                <p>转载时必须以链接形式注明原始出处及本声明。</p>
+                            </div>
+		                    <div class="alert alert-success article-alert" style="margin-top:0">
+                                #if ($!nextArticle)
+                                <p>上篇：<a href="${virtualPath}archive/${nextArticle.Id}.html" title="创建于 ${nextArticle.PostTime}">${nextArticle.ArticleTitle}</a></p>
+                                #end
+                                #if ($!prevArticle)
+                                <p>下篇：<a href="${virtualPath}archive/${prevArticle.Id}.html" title="创建于 ${prevArticle.PostTime}">${prevArticle.ArticleTitle}</a></p>
+                                #end
+                            </div>
+                            <div>
+			                    <a href="javascript:;"><img src="${virtualPath}asset/images/16x16/twitter.png"></a>
+			                    <a href="javascript:;"><img src="${virtualPath}asset/images/16x16/qqwb.png"></a>
+			                    <a href="javascript:;"><img src="${virtualPath}asset/images/16x16/sinawb.png"></a>
+			                    <a href="javascript:;"><img src="${virtualPath}asset/images/16x16/baidu.png"></a>
+		                    </div>
+	                    </div>				
+                    </div>	
+                    
+                    <div class="col-sm-12 col-md-12">
+                        <div class="alert alert-danger center-alert">
+                            <div class="glyphicon glyphicon-heart"></div> 您可能也喜欢
+                        </div>	
+                        <div class="col-md-4">
+                            <div class="thumbnail love-thumbnail">
+                                <div class="caption">
+                                    <p class="post-related-title">
+                                        <a title="Zanblog 2.0.7（稳定版）更新" rel="bookmark" href="#">RCP 中 RetargetAction 的实现</a>
+                                    </p>
+                                    <p class="post-related-content">HI，赞友们，Zanblog在2个月之后终于又迎来了更新，此前因为我们自身工作比较忙的缘故，迟迟未推出新版本，非常抱歉。 让我们一起看看 2.0.7 稳定版所做的变...</p>
+                                    <p>
+                                        <a class="btn btn-danger pull-right read-more" title="详细阅读 Zanblog 2.0.7（稳定版）更新" href="#">阅读全文</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail love-thumbnail">
+                                <div class="caption">
+                                    <p class="post-related-title">
+                                        <a title="Zanblog 2.0.7（稳定版）更新" rel="bookmark" href="#">显示或隐藏工具栏</a>
+                                    </p>
+                                    <p class="post-related-content">HI，赞友们，Zanblog在2个月之后终于又迎来了更新，此前因为我们自身工作比较忙的缘故，迟迟未推出新版本，非常抱歉。 让我们一起看看 2.0.7 稳定版所做的变...</p>
+                                    <p>
+                                        <a class="btn btn-danger pull-right read-more" title="详细阅读 Zanblog 2.0.7（稳定版）更新" href="#">阅读全文</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail love-thumbnail">
+                                <div class="caption">
+                                    <p class="post-related-title">
+                                        <a title="Zanblog 2.0.7（稳定版）更新" rel="bookmark" href="#">RCP上下文敏感帮助功能实现</a>
+                                    </p>
+                                    <p class="post-related-content">HI，赞友们，Zanblog在2个月之后终于又迎来了更新，此前因为我们自身工作比较忙的缘故，迟迟未推出新版本，非常抱歉。 让我们一起看看 2.0.7 稳定版所做的变...</p>
+                                    <p>
+                                        <a class="btn btn-danger pull-right read-more" title="详细阅读 Zanblog 2.0.7（稳定版）更新" href="#">阅读全文</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                                     
+                    <div id="comments" class="col-sm-12 col-md-12">
+                        <div id="comments_info">
+                            <div>
+                                <button class="btn btn-primary" type="button"><span>69</span>条评论</button>
+                                <button class="btn btn-default" type="button"><span>1</span>条新浪微博</button>
+                            </div>
+                            <div>
+                                <a class="a-default" href="javascript:;">最新</a>
+                                <a class="a-default" href="javascript:;">最早</a>
+                                <a class="a-active" href="javascript:;">最热</a>
+                            </div>
+                        </div>
+                        <ul id="comment_posts">
+                            <li class="comment-post">
+                                <div class="ds-post-self" data-source="duoshuo" data-root-id="0" data-thread-id="1162940254559141941" data-post-id="1162940254559143060">
+                                    <div class="ds-avatar" data-user-id="804844">
+                                        <a title="imxiao" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" target="_blank" rel="nofollow author">
+                                            <img alt="imxiao" src="/asset/images/avatar/avatar1.jpg">
+                                        </a>
+                                    </div>
+                                    <div class="ds-comment-body">
+                                        <div class="ds-comment-header">
+                                            <a class="ds-user-name ds-highlight" data-user-id="804844" target="_blank" rel="nofollow" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" data-qqt-account="">imxiao</a>
+                                        </div>
+                                        <p>
+                                            为什么我的侧边栏如果什么都不放入的话剧不显示，随便放入一个小工具就会显示所有的呢
+                                        </p>
+                                        <div class="ds-comment-footer ds-comment-actions">
+                                            <span class="ds-time" title="2013年12月31日 16:12:34" datetime="2013-12-31T16:12:34+08:00">2013年12月31日</span>
+                                            <a class="ds-post-reply tool" href="javascript:;">
+                                                <span class="ds-icon ds-icon-reply"></span>回复
+                                            </a>
+                                            <a class="ds-post-likes tool" href="javascript:;">
+                                                <span class="ds-icon ds-icon-like"></span>顶
+                                            </a>
+                                            <a class="ds-post-repost tool" href="javascript:;">
+                                                <span class="ds-icon ds-icon-share"></span>转发
+                                            </a>
+                                            <a class="ds-post-report tool hideme" href="javascript:;">
+                                                <span class="ds-icon ds-icon-report"></span>举报
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="comment-post">
+                                <div class="ds-post-self" data-source="duoshuo" data-root-id="0" data-thread-id="1162940254559141941" data-post-id="1162940254559143060">
+                                    <div class="ds-avatar" data-user-id="804844">
+                                        <a title="imxiao" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" target="_blank" rel="nofollow author">
+                                            <img alt="imxiao" src="/asset/images/avatar/avatar2.jpg">
+                                        </a>
+                                    </div>
+                                    <div class="ds-comment-body">
+                                        <div class="ds-comment-header">
+                                            <a class="ds-user-name ds-highlight" data-user-id="804844" target="_blank" rel="nofollow" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" data-qqt-account="">永立土工</a>
+                                        </div>
+                                        <p>
+                                            终于更新了。等了好苦啊
+                                            <img class="ds-smiley" title="[鼓掌]" alt="[鼓掌]" src="">
+                                        </p>
+                                        <div class="ds-comment-footer ds-comment-actions">
+                                            <span class="ds-time" title="2013年12月31日 16:12:34" datetime="2013-12-31T16:12:34+08:00">2013年12月31日</span>
+                                            <a class="ds-post-reply" href="javascript:;">
+                                                <span class="ds-icon ds-icon-reply"></span>回复
+                                            </a>
+                                            <a class="ds-post-likes" href="javascript:;">
+                                                <span class="ds-icon ds-icon-like"></span>顶(1)
+                                            </a>
+                                            <a class="ds-post-repost" href="javascript:;">
+                                                <span class="ds-icon ds-icon-share"></span>转发
+                                            </a>
+                                            <a class="ds-post-report" href="javascript:;">
+                                                <span class="ds-icon ds-icon-report"></span>举报
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="comment-post">
+                                <div class="ds-post-self" data-source="duoshuo" data-root-id="0" data-thread-id="1162940254559141941" data-post-id="1162940254559143060">
+                                    <div class="ds-avatar" data-user-id="804844">
+                                        <a title="imxiao" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" target="_blank" rel="nofollow author">
+                                            <img alt="imxiao" src="/asset/images/avatar/avatar3.jpg">
+                                        </a>
+                                    </div>
+                                    <div class="ds-comment-body">
+                                        <div class="ds-comment-header">
+                                            <a class="ds-user-name ds-highlight" data-user-id="804844" target="_blank" rel="nofollow" onclick="this.href='http://yeahzan.duoshuo.com/user-url/?user_id=804844';" href="http://i.tov.cc/" data-qqt-account="">Fred</a>
+                                        </div>
+                                        <p>
+                                            你好，meta slider lite 已经写入短代码，但是不显示。但是插入到文章里，进入文章会显示幻灯片。从首页预览就只有一串代码……meta slider lite设置页面点“保存并预览”会显示一个Internal Server Error等一大堆的错误..这是怎么什么情况.
+                                        </p>
+                                        <div class="ds-comment-footer ds-comment-actions">
+                                            <span class="ds-time" title="2013年12月31日 16:12:34" datetime="2013-12-31T16:12:34+08:00">2013年12月31日</span>
+                                            <a class="ds-post-reply" href="javascript:;">
+                                                <span class="ds-icon ds-icon-reply"></span>回复
+                                            </a>
+                                            <a class="ds-post-likes" href="javascript:;">
+                                                <span class="ds-icon ds-icon-like"></span>顶
+                                            </a>
+                                            <a class="ds-post-repost" href="javascript:;">
+                                                <span class="ds-icon ds-icon-share"></span>转发
+                                            </a>
+                                            <a class="ds-post-report" href="javascript:;">
+                                                <span class="ds-icon ds-icon-report"></span>举报
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="ds-login-buttons">
+                            <p>社交帐号登录:</p>
+                            <div class="ds-social-links">
+                                <ul class="ds-service-list">
+                                    <li>
+                                        <a class="ds-service-link ds-weibo" rel="nofollow" href="javascript:;">微博</a>
+                                    </li>
+                                    <li>
+                                        <a class="ds-service-link ds-qq" rel="nofollow" href="javascript:;">QQ</a>
+                                    </li>
+                                    <li>
+                                        <a class="ds-service-link ds-renren" rel="nofollow" href="javascript:;">人人</a>
+                                    </li>
+                                    <li>
+                                        <a class="ds-service-link ds-douban" rel="nofollow" href="javascript:;">豆瓣</a>
+                                    </li>
+                                    <li>
+                                        <a class="ds-more-services" href="javascript:">更多»</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="ds-replybox">
+                            <a class="ds-avatar" onclick="return false" href="javascript:;">
+                                <img alt="" src="/asset/images/avatar/avatar1.jpg">
+                            </a>
+                            <form method="post">
+                                <input type="hidden" value="1162940254559141941" name="thread_id">
+                                <input type="hidden" value="" name="parent_id">
+                                <input type="hidden" value="5313e5d65e556" name="nonce">
+                                <div class="ds-textarea-wrapper ds-rounded-top">
+                                <textarea placeholder="说点什么吧…" title="Ctrl+Enter快捷提交" name="message"></textarea>
+                                <pre class="ds-hidden-text"></pre>
+                                </div>
+                                <div class="ds-post-toolbar">
+                                    <div class="ds-post-options ds-gradient-bg">
+                                        <span class="ds-sync"></span>
+                                    </div>
+                                    <button class="ds-post-button" type="submit">发布</button>
+                                    <div class="ds-toolbar-buttons">
+                                        <a class="ds-toolbar-button ds-add-emote ds-icon" title="插入表情"></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>              
+				</div>
+				
+				<div class="col-sm-12 col-md-4">
+				
+					#parse("pagelet/top10ViewNums.html")
+
+					#parse("pagelet/top10Comments.html")
+
+                    #parse("pagelet/usefulLinks.html")
+                    
+					<div id="qrcode">
+						<figure>
+							<img src="${virtualPath}userData/${article.ArticleAuthor}/qrcode/${article.Id}.png" alt="二维码" title="${article.ArticleTitle}">
+						</figure>
+					</div>
+				</div>				
+			</div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+
+        #parse('pagelet/backTop.html')
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+		<script type="text/javascript" src="${virtualPath}js/js.js"></script>
+
+	</body>
+</html>
