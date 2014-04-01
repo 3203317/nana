@@ -1,52 +1,49 @@
 var db = require('./mongodb');
 
-
 var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var TagSchema = new Schema({
+var UserSchema = new Schema({
 	Id: {
 		type: String,
 		unique: true,
 		index: true
 	},
-	TagName: {
+	UserName: {
 		type: String,
 		required: true
 	},
-	TagCount: {
+	UserPass: {
+		type: String
+	},
+	Sex: {
 		type: Number
 	}
 }, {
 	versionKey: false
 });
 
-TagSchema.pre('save', function(next, done){
+UserSchema.pre('save', function(next, done){
 	next();
 });
 
-TagSchema.post('save', function(){
+UserSchema.post('save', function(){
 });
 
-var tags;
-
-TagSchema.statics.findTags = function(cb) {
-	if(tags){
-		cb(null, tags);
-		return;
-	}
-
-	this.find(null, null, {sort: {TagName: 1}}, function(err, docs){
+UserSchema.statics.findUsers = function(cb) {
+	this.find(null, null, null, function(err, docs){
 		if(err){
 			cb(err);
 			return;
 		}
-		tags = docs;
-		cb(null, tags);
+		cb(null, docs);
 	});
 };
 
-var TagModel = mongoose.model('tag', TagSchema);
+UserSchema.statics.register = function(cb, registerInfo) {
+};
 
-exports = module.exports = TagModel;
+var UserModel = mongoose.model('user', UserSchema);
+
+exports = module.exports = UserModel;

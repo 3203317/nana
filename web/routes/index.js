@@ -13,6 +13,7 @@ module.exports = function(app) {
 	 * @params res
 	 * @return
 	 */
-	app.get('/user/login', user.login);
-	app.get('/user/register', user.register);
+	app.get('/user/login', user.loginUI);
+	app.get('/user/register', user.registerUI);
+	app.post('/user/login.do', user.login);
 };

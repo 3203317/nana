@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="密码确认">
                         </div>
-                        <button type="button" class="btn btn-danger">注册</button>
+                        <button id="btn_register" type="button" class="btn btn-danger">注册</button>
                     </form>                
                 </div>
 		    </div>
@@ -42,6 +42,17 @@
         #parse('pagelet/IndexJs.html')
 
 		<!-- Own -->
+		<script type="text/javascript">
+			$('#btn_register').click(function(){
+		        $.ajax({
+					url: '/user/login.do',
+					type: "POST",
+					dataType: "json"
+				}).done(function(responseText) {
+				}).complete(function(){
+				});
+			});
+		</script>
 
 	</body>
 </html>
