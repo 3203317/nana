@@ -6,7 +6,7 @@ var title = 'FOREWORLD 洪荒';
 module.exports = function(app) {
 
 	/**
-	 * 登陆
+	 * 登陆及注册
 	 *
 	 * @method
 	 * @params req
@@ -14,4 +14,5 @@ module.exports = function(app) {
 	 * @return
 	 */
 	app.get('/user/login', user.login);
+	app.get('/user/register', user.register);
 };
