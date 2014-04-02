@@ -6,15 +6,26 @@ var title = 'FOREWORLD 洪荒';
 module.exports = function(app) {
 
 	app.use(function (req, res) {
-		res.render('404', {
-			state: 404,
-			url: req.url,
-			title: title,
-			atitle: '404',
-			description: '个人博客',
-			keywords: ',个人博客,Bootstrap3',
-			virtualPath: virtualPath +'/'
-		});
+		if(req.accepts('html')){
+			res.render('404', {
+				state: 404,
+				url: req.url,
+				title: title,
+				atitle: '404',
+				description: '个人博客',
+				keywords: ',个人博客,Bootstrap3',
+				virtualPath: virtualPath +'/'
+			});
+			return;
+		}
+		if(req.accepts('json')){
+			res.send({
+				success: false,
+				msg: 'Not found'
+			});
+			return;
+		}
+		res.type('txt').send('Not found');
 	});
 
 	/**
