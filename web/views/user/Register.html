@@ -20,16 +20,16 @@
 		<section class="container">
 		    <div class="row">		    
                 <div class="col-md-3 col-sm-4">
-                    <form role="form" onsubmit="return false;">
+                    <form id="registerForm" role="form" onsubmit="return false;">
                         <h3>新用户注册</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="用户名">
+                            <input type="text" id="userName" name="UserName" class="form-control" placeholder="用户名">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="密码">
+                            <input type="password" id="userPass" name="UserPass" class="form-control" placeholder="密码">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="密码确认">
+                            <input type="password" id="userPass2" class="form-control" placeholder="密码确认">
                         </div>
                         <button id="btn_register" type="button" class="btn btn-danger">注册</button>
                     </form>                
@@ -43,13 +43,29 @@
 
 		<!-- Own -->
 		<script type="text/javascript">
-			$('#btn_register').click(function(){
-		        $.ajax({
-					url: '/user/login.do',
-					type: "POST",
-					dataType: "json"
-				}).done(function(responseText) {
-				}).complete(function(){
+			function validateForm(){
+				var formObj = $("#registerForm").serializeObjectForm();
+				return formObj;
+			}
+
+			$(function(){
+				$('#btn_register').click(function(){
+					var formObj = validateForm();
+					if(!formObj){
+						alert('表单验证失败')
+						return;
+					}
+
+        			var data = { data: JSON.stringify(formObj) };
+
+					$.ajax({
+						url: '/user/register.do',
+						type: "POST",
+						dataType: "json",
+						data: data
+					}).done(function(responseText) {
+					}).complete(function(){
+					});
 				});
 			});
 		</script>
