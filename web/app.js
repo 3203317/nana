@@ -43,8 +43,8 @@ app.use(express.session({
 	})
 }));
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('.html',function(path,options,fn){   
 	fs.readFile(path, 'utf8', function(err, data){
