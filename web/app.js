@@ -37,7 +37,9 @@ app.use(express.cookieParser());
 app.use(express.session({
 	secret: settings.cookieSecret,
 	key: settings.db,
-	cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+	cookie: {
+		maxAge: 1000 * 60 * 60 * 24 * 30
+	},//30 days
 	store: new MongoStore({
 		db: settings.db
 	})
@@ -52,7 +54,6 @@ app.engine('.html',function(path,options,fn){
 			fn(err);
 			return;
 		}
-		
 		var macros = {  
 			parse: function(file) {  
 				var template = fs.readFileSync(cwd + '/views/' + file).toString()  

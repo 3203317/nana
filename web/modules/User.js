@@ -14,6 +14,10 @@ function uuid(b) {
 	return uuid;
 }
 
+function md5(str){
+	return str;
+}
+
 var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
@@ -29,13 +33,16 @@ var UserSchema = new Schema({
 		required: true
 	},
 	UserPass: {
-		type: String
+		type: String,
+		default: '123456'
 	},
 	Sex: {
-		type: Number
+		type: Number,
+		default: 1
 	},
 	regTime: {
-		type: Date
+		type: Date,
+		default: Date.now
 	}
 }, {
 	versionKey: false
@@ -60,6 +67,7 @@ UserSchema.statics.findUsers = function(cb) {
 
 UserSchema.statics.register = function(registerInfo, cb) {
 	registerInfo.Id = uuid(false);
+	registerInfo.UserPass = md5(registerInfo.UserPass);
 	this.create(registerInfo, function(err, doc){
 		if(err){
 			cb(err)
@@ -70,11 +78,6 @@ UserSchema.statics.register = function(registerInfo, cb) {
 };
 
 UserSchema.statics.findUserByUserName = function(userName, cb) {
-	if('' === userName) {
-		cb('用户名不能为空')
-		return;
-	}
-
 	this.findOne({
 		UserName: userName
 	}, null, null, function(err, doc){
