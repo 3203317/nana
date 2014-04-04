@@ -1,32 +1,23 @@
 var user = require('../controllers/user');
+var role = require('../controllers/role');
 
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
 module.exports = function(app) {
 
-	app.use(function (req, res) {
-		if(req.accepts('html')){
-			res.render('404', {
-				state: 404,
-				url: req.url,
-				title: title,
-				atitle: '404',
-				description: '个人博客',
-				keywords: ',个人博客,Bootstrap3',
-				virtualPath: virtualPath +'/'
-			});
-			return;
-		}
-		if(req.accepts('json')){
-			res.send({
+	function valiPostData(req, res, next){
+		try{
+			var data = eval('('+ req.body.data +')');
+			req._data = data;
+			next();
+		}catch(ex){
+			return res.send({
 				success: false,
-				msg: 'Not found'
+				msg: ex.message
 			});
-			return;
 		}
-		res.type('txt').send('Not found');
-	});
+	}
 
 	/**
 	 * 登陆及注册
@@ -38,6 +29,9 @@ module.exports = function(app) {
 	 */
 	app.get('/user/login', user.loginUI);
 	app.get('/user/register', user.registerUI);
-	app.post('/user/login.do', user.login);
-	app.post('/user/register.do', user.register);
+	app.post('/user/login.do', valiPostData, user.login);
+	app.post('/user/register.do', valiPostData, user.register);
+
+	app.get('/role/index', role.indexUI);
+	app.post('/role/saveNew.do', valiPostData, role.saveNew);
 };

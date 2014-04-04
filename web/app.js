@@ -19,6 +19,9 @@ var fs = require('fs')
 var app = express();
 var velocity = require('velocityjs')
 
+var title = 'FOREWORLD 洪荒';
+var virtualPath = '/'
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -38,8 +41,8 @@ app.use(express.session({
 	secret: settings.cookieSecret,
 	key: settings.db,
 	cookie: {
-		maxAge: 1000 * 60 * 60 * 24 * 30
-	},//30 days
+		maxAge: 1000 * 60 * 60 * 24 * 30 //30 days
+	},
 	store: new MongoStore({
 		db: settings.db
 	})
@@ -48,12 +51,45 @@ app.use(express.session({
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-app.engine('.html',function(path,options,fn){   
-	fs.readFile(path, 'utf8', function(err, data){
-		if(err){
-			fn(err);
-			return;
-		}
+app.use(function (err, req, res, next){
+	if(req.xhr){
+		return res.send({
+			success: false,
+			msg: err.message
+		});
+	}
+	res.render(500, {		
+		state: 500,
+		url: err.message,
+		title: title,
+		atitle: '500',
+		description: '500',
+		keywords: ',500,Bootstrap3',
+		virtualPath: virtualPath
+	});
+});
+
+app.use(function (req, res) {
+	if(req.xhr){
+		return res.send({
+			success: false,
+			msg: 'Not found'
+		});
+	}
+	return res.render(404, {
+		state: 404,
+		url: req.url,
+		title: title,
+		atitle: '404',
+		description: '个人博客',
+		keywords: ',个人博客,Bootstrap3',
+		virtualPath: virtualPath
+	});
+});
+
+app.engine('.html',function (path,options,fn){   
+	fs.readFile(path, 'utf8', function (err, data){
+		if(err) return fn(err);
 		var macros = {  
 			parse: function(file) {  
 				var template = fs.readFileSync(cwd + '/views/' + file).toString()  

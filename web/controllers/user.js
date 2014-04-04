@@ -1,11 +1,8 @@
 var User = require('../modules/User.js');
+var util = require('../libs/utils');
 
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
-
-function md5(str){
-	return str;
-}
 
 exports.loginUI = function(req, res, next) {
 	res.render('User/Login', {
@@ -28,43 +25,31 @@ exports.registerUI = function(req, res, next) {
 };
 
 exports.login = function(req, res, next) {
-	var data, result = { success: false };
-	try{
-		data = eval('('+ req.body.data +')');
-	}catch(e){
-		result.msg = '参数异常';
-		res.send(result);
-		return;
+	var result = { success: false },
+		data = req._data;
+
+	/* 表单参数验证 */
+	if('' === data.UserName || '' === data.UserPass){
+		result.msg = '用户名或密码不能为空';
+		return res.send(result);
 	}
 
-	User.findUserByUserName(data.UserName, function(err, doc){
-		if(err){
+	User.findUserByUserName(data.UserName, function (err, doc){
+		if('string' === typeof err){
 			result.msg = err;
-			res.send(result);
-			return;
+			return res.send(result);
 		}
-		if(doc && md5(data.UserPass) === doc.UserPass){
-			result.success = true;
-			res.send(result);
-			return;
+		if(!err){
+			if(util.md5(data.UserPass) === doc.UserPass){
+				result.success = true;
+				return res.send(result);
+			}
+			result.msg = '用户名或密码输入错误';
+			return res.send(result);
 		}
-		res.send(result);
+		next(err);
 	});
 };
-
-/**
- * todo
- *
- * @method 验证用户注册表单参数
- * @params data
- * @return 成功返回true
- */
-function valRegForm(data){
-	if('' === data.UserName || '' === data.UserPass){
-		return false;
-	}
-	return true;
-}
 
 /**
  * todo
@@ -78,35 +63,24 @@ function filterUserName(userName){
 }
 
 exports.register = function(req, res, next) {
-	var data, result = { success: false };
-	try{
-		data = eval('('+ req.body.data +')');
-	}catch(e){
-		result.msg = '参数异常';
-		res.send(result);
-		return;
-	}
+	var result = { success: false },
+		data = req._data;
 
-	if(!valRegForm(data)){
+	/* 表单参数验证 */
+	if('' === data.UserName || '' === data.UserPass){
 		result.msg = '用户名或密码不能为空';
-		res.send(result);
-		return;
+		return res.send(result);
 	}
 
 	if(!filterUserName(data.UserName)){
 		result.msg = '用户名不合法';
-		res.send(result);
-		return;
+		return res.send(result);
 	}
 
-	User.findUserByUserName(data.UserName, function(err, doc){
+	User.findUserByUserName(data.UserName, function (err, doc){
 		if('string' === typeof err){
-			User.register(data, function(err, doc){
-				if(err){
-					result.msg = err;
-					res.send(result);
-					return;
-				}
+			User.register(data, function (err, doc){
+				if(err) return next(err);
 				result.success = true;
 				result.msg = '新用户注册成功';
 				res.send(result);
@@ -115,9 +89,8 @@ exports.register = function(req, res, next) {
 		}
 		if(!err){
 			result.msg = '用户名已经存在';
-			res.send(result);
-			return;
+			return res.send(result);
 		}
-		res.send(result);
+		next(err);
 	});
 };
