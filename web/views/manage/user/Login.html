@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+			body {
+				background-color: #F5F5F5;
+				padding-bottom: 40px;
+				padding-top: 40px;
+			}
+		    #loginForm 
+		    {
+				background-color: #FFFFFF;
+				border: 1px solid #E5E5E5;
+				border-radius: 5px;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+				margin: 0 auto 20px;
+				max-width: 350px;
+				padding: 19px 29px 29px;
+		    }
+		</style>
+	</head>
+	<body>
+		<section class="container">
+			<form id="loginForm" role="form" onsubmit="return false;">
+			    <h3>后台登陆</h3>
+			    <div class="form-group">
+			        <input id="userName" name="UserName" type="text" class="form-control" placeholder="用户名">
+			    </div>
+			    <div class="form-group">
+			        <input id="userPass" name="UserPass" type="password" class="form-control" placeholder="密码">
+			    </div>
+			    <div class="checkbox">
+			        <label>
+			            <input type="checkbox"> 记住我
+			        </label>
+			    </div>
+			    <button id="btn_login" type="button" class="btn btn-primary">登陆</button>
+			</form>
+		</section>
+
+		<!-- Own -->
+		<script type="text/javascript">
+			function validateForm(){
+				var formObj = $("#loginForm").serializeObjectForm();
+				return formObj;
+			}
+		</script>
+	</body>
+</html>

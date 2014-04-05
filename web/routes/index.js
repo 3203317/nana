@@ -36,7 +36,7 @@ module.exports = function(app) {
 	app.get('/role/index', role.indexUI);
 	app.post('/role/saveNew.do', valiPostData, role.saveNew);
 
-	app.get('/manage/login', manage.loginUI);
+	app.get('/manage/user/login', user.loginBackStageUI);
 	app.get('/manage', manage.validate);
 	app.post('/manage', manage.validate);
 	app.get('/manage/index', manage.indexUI);

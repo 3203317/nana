@@ -27,6 +27,16 @@ exports.registerUI = function(req, res, next) {
 	});
 };
 
+exports.loginBackStageUI = function(req, res, next) {
+	res.render('Manage/User/Login', {
+		title: title,
+		atitle: '后台登陆',
+		description: '后台登陆',
+		keywords: ',后台登陆,Bootstrap3',
+		virtualPath: virtualPath +'/'
+	});
+};
+
 exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
