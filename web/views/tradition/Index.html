@@ -1,78 +1,100 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-	<head>
-		#parse('pagelet/IndexHeader.html')
-		<style>
-		    #footer 
-		    {
-		    	position:fixed;
-		    	left:0;
-		    	bottom:0;
-		    	width:100%;
-		    }
-		</style>
-	</head>
-	<body>
-		#parse('pagelet/TopBanner.html')
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<TITLE>核心平台</TITLE>
+		<link rel="STYLESHEET" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxTabbar/codebase/dhtmlxtabbar.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxTree/codebase/dhtmlxtree.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxAccordion/codebase/skins/dhtmlxaccordion_dhx_skyblue.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxLayout/codebase/dhtmlxlayout.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxLayout/codebase/skins/dhtmlxlayout_dhx_skyblue.css">
 
-		<header id="header"></header>
-
-		<section class="container">
-		    <div class="row">		    
-                <div class="col-md-3 col-sm-4">
-                    <form id="loginForm" role="form" onsubmit="return false;">
-                        <h3>请登陆</h3>
-                        <div class="form-group">
-                            <input id="userName" name="UserName" type="text" class="form-control" placeholder="用户名">
-                        </div>
-                        <div class="form-group">
-                            <input id="userPass" name="UserPass" type="password" class="form-control" placeholder="密码">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> 记住我
-                            </label>
-                        </div>
-                        <button id="btn_login" type="button" class="btn btn-primary">登陆</button>
-                        <button type="button" class="btn btn-danger" onclick="location.href='register'">注册</button>
-                    </form>                
-                </div>
-		    </div>
-		</section>
-
-        #parse('pagelet/IndexFooter.html')
-
-        #parse('pagelet/IndexJs.html')
-
-		<!-- Own -->
-		<script type="text/javascript">
-			function validateForm(){
-				var formObj = $("#loginForm").serializeObjectForm();
-				return formObj;
-			}
-
-			$(function(){
-				$('#btn_login').click(function(){
-					var formObj = validateForm();
-					if(!formObj){
-						alert('表单验证失败')
-						return;
-					}
-
-        			var data = { data: JSON.stringify(formObj) };
-
-					$.ajax({
-						url: '/user/login.do',
-						type: "POST",
-						dataType: "json",
-						data: data
-					}).done(function(responseText) {
-						console.log(responseText)
-					}).complete(function(){
-					});
-				});
-			});
+		<link rel="stylesheet" type="text/css" href="${virtualPath}public/tradition/style.css">
+	<!--[if lt IE 8 ]>
+		<link rel="stylesheet" type="text/css" href="${virtualPath}public/tradition/style.ie8.css">
+	<![endif]-->
+	</HEAD>
+	<BODY class="fore">
+		<div id="div_loader"><div>页面正在加载 ...</div></div>
+		<table id="div_head" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="top_logo">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="36%" height="66">&nbsp;</td>
+							<td width="25%" valign="top">&nbsp;</td>
+							<td width="39%" align="left">
+								<table width="100%" border="0" cellspacing="1" cellpadding="1">
+									<tr>
+										<td height="14" align="right" class="top_a">
+											<a href="#page/welcome.html">首页</a>&nbsp;|
+											<a href="javascript:void(0);">语言设置</a>&nbsp;|
+											<a href="javascript:void(0);">皮肤设置</a>&nbsp;|
+											<a href="javascript:void(0);">修改密码</a>&nbsp;|
+											<a href="javascript:void(0);">使用帮助</a>&nbsp;|
+											<a href="javascript:void(0);" id="a_quit" class="quit_a">安全退出</a>
+										</td>
+										<td align="right">&nbsp;</td>
+									</tr>
+									<tr>
+										<td height="30" align="right" class="quit_a">系统管理员 上午好 工作辛苦了！</td>
+										<td align="right">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<iframe id="ifr_mainTabs" frameborder="0" height="100%" width="100%" src=""></iframe>		
+		<div id="div_foot"><span>版权所有：核心科技</span></div>	
+		<div id="div_tree"></div>
+		<div id="div_center"></div>
+		<!--[if lt IE 10]> <script type="text/javascript" src="http://localhost:8082/cdn/js/html5shiv/3.6.2/html5.js"></script> <![endif]-->
+		<script>
+			var	cdnPath = "http://localhost:8082/cdn/js/";
+			var dhxPath = "dhtmlx/3.6/";
+			var require = {
+				waitSeconds: 0,
+				urlArgs: "v="+ (new Date()).getTime(),
+				deps: [
+					cdnPath + dhxPath +"dhtmlxTabbar/codebase/dhtmlxcommon.js",
+					cdnPath + dhxPath +"dhtmlxTabbar/codebase/dhtmlxcontainer.js"
+				],
+				callback: function(){
+					//console.log(arguments);
+				}
+			};
+			var config = {
+				waitSeconds: 0,
+				locale: location.search.match(/locale=([\w\-]+)/) ? RegExp.$1 : "zh",
+				paths: {
+					jquery: cdnPath +"jquery/1.10.2/jquery.min",
+					i18n: cdnPath +"require/i18n",
+					underscore: cdnPath +"underscore/1.5.1/underscore.min",
+					backbone: cdnPath +"backbone/1.0.0/backbone.min",
+					dhtmlxtabbar: cdnPath + dhxPath +"dhtmlxTabbar/codebase/dhtmlxtabbar",
+					dhtmlxtree: cdnPath + dhxPath +"dhtmlxTree/codebase/dhtmlxtree",
+					dhtmlxtree_json: cdnPath + dhxPath +"dhtmlxTree/codebase/ext/dhtmlxtree_json",
+					dhtmlxaccordion: cdnPath + dhxPath +"dhtmlxAccordion/codebase/dhtmlxaccordion",
+					dhtmlxlayout: cdnPath + dhxPath +"dhtmlxLayout/codebase/dhtmlxlayout"
+				},
+				shim: {
+					dhtmlxtree_json: {
+						deps: ["dhtmlxtabbar","dhtmlxtree","dhtmlxaccordion"]
+					},
+					backbone: {
+                        deps: ["underscore"],
+                        exports: "Backbone"
+                    }
+				},
+				callback: function(){
+					//console.log(arguments);
+				}
+			};
 		</script>
-
-	</body>
-</html>
+        <script data-main="${virtualPath}public/tradition/index" src="http://localhost:8082/cdn/js/require/2.1.6/require.js"></script>
+	</BODY>
+</HTML>

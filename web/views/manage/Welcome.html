@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+		</style>
+	</head>
+	<body>
+		Welcome
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+		<script type="text/javascript">
+			function validateForm(){
+				var formObj = $("#loginForm").serializeObjectForm();
+				return formObj;
+			}
+
+			$(function(){
+				$('#btn_login').click(function(){
+					location.href = '../index'
+				});
+			});
+		</script>
+	</body>
+</html>

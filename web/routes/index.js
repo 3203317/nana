@@ -40,5 +40,6 @@ module.exports = function(app) {
 	app.get('/manage', manage.validate);
 	app.post('/manage', manage.validate);
 	app.get('/manage/index', manage.indexUI);
+	app.get('/manage/welcome', manage.welcomeUI);
 	app.get('/manage/user/index', user.indexUI);
 };
