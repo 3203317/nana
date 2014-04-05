@@ -1,3 +1,4 @@
+var conf = require('../settings');
 var util = require('../libs/utils');
 
 var virtualPath = '';
@@ -9,7 +10,8 @@ exports.indexUI = function(req, res, next) {
 		atitle: '角色管理',
 		description: '个人博客',
 		keywords: ',角色管理,Bootstrap3',
-		virtualPath: virtualPath +'/'
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
 	});
 };
 
@@ -19,7 +21,8 @@ exports.welcomeUI = function(req, res, next) {
 		atitle: '角色管理',
 		description: '个人博客',
 		keywords: ',角色管理,Bootstrap3',
-		virtualPath: virtualPath +'/'
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
 	});
 };
 

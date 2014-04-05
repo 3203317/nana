@@ -1,3 +1,4 @@
+var conf = require('../settings');
 var User = require('../modules/User.js');
 var util = require('../libs/utils');
 
@@ -13,7 +14,8 @@ exports.loginUI = function(req, res, next) {
 		atitle: '登陆',
 		description: '个人博客',
 		keywords: ',登陆,Bootstrap3',
-		virtualPath: virtualPath +'/'
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
 	});
 };
 
@@ -23,7 +25,8 @@ exports.registerUI = function(req, res, next) {
 		atitle: '新用户注册',
 		description: '个人博客',
 		keywords: ',新用户注册,Bootstrap3',
-		virtualPath: virtualPath +'/'
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
 	});
 };
 
