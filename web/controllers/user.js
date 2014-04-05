@@ -4,6 +4,9 @@ var util = require('../libs/utils');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+
+exports.indexUI = function(req, res, next) {};
+
 exports.loginUI = function(req, res, next) {
 	res.render('User/Login', {
 		title: title,

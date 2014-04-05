@@ -1,5 +1,6 @@
 var user = require('../controllers/user');
 var role = require('../controllers/role');
+var manage = require('../controllers/manage');
 
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
@@ -34,4 +35,10 @@ module.exports = function(app) {
 
 	app.get('/role/index', role.indexUI);
 	app.post('/role/saveNew.do', valiPostData, role.saveNew);
+
+	app.get('/manage/login', manage.loginUI);
+	app.get('/manage', manage.validate);
+	app.post('/manage', manage.validate);
+	app.get('/manage/index', manage.indexUI);
+	app.get('/manage/user/index', user.indexUI);
 };
