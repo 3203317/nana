@@ -65,7 +65,8 @@ app.use(function (err, req, res, next){
 		atitle: '500',
 		description: '500',
 		keywords: ',500,Bootstrap3',
-		virtualPath: virtualPath
+		virtualPath: virtualPath,
+		cdn: settings.cdn
 	});
 });
 
@@ -83,7 +84,8 @@ app.use(function (req, res) {
 		atitle: '404',
 		description: '个人博客',
 		keywords: ',个人博客,Bootstrap3',
-		virtualPath: virtualPath
+		virtualPath: virtualPath,
+		cdn: settings.cdn
 	});
 });
 

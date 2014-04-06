@@ -4,11 +4,11 @@
 		<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<TITLE>核心平台</TITLE>
-		<link rel="STYLESHEET" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxTabbar/codebase/dhtmlxtabbar.css">
-		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxTree/codebase/dhtmlxtree.css">
-		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxAccordion/codebase/skins/dhtmlxaccordion_dhx_skyblue.css">
-		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxLayout/codebase/dhtmlxlayout.css">
-		<link rel="stylesheet" type="text/css" href="http://localhost:8082/cdn/js/dhtmlx/3.6/dhtmlxLayout/codebase/skins/dhtmlxlayout_dhx_skyblue.css">
+		<link rel="STYLESHEET" type="text/css" href="${cdn}/dhtmlx/3.6/dhtmlxTabbar/codebase/dhtmlxtabbar.css">
+		<link rel="stylesheet" type="text/css" href="${cdn}/dhtmlx/3.6/dhtmlxTree/codebase/dhtmlxtree.css">
+		<link rel="stylesheet" type="text/css" href="${cdn}/dhtmlx/3.6/dhtmlxAccordion/codebase/skins/dhtmlxaccordion_dhx_skyblue.css">
+		<link rel="stylesheet" type="text/css" href="${cdn}/dhtmlx/3.6/dhtmlxLayout/codebase/dhtmlxlayout.css">
+		<link rel="stylesheet" type="text/css" href="${cdn}/dhtmlx/3.6/dhtmlxLayout/codebase/skins/dhtmlxlayout_dhx_skyblue.css">
 
 		<link rel="stylesheet" type="text/css" href="${virtualPath}public/tradition/style.css">
 	<!--[if lt IE 8 ]>
@@ -28,7 +28,7 @@
 								<table width="100%" border="0" cellspacing="1" cellpadding="1">
 									<tr>
 										<td height="14" align="right" class="top_a">
-											<a href="#page/welcome.html">首页</a>&nbsp;|
+											<a href="#page/welcome">首页</a>&nbsp;|
 											<a href="javascript:void(0);">语言设置</a>&nbsp;|
 											<a href="javascript:void(0);">皮肤设置</a>&nbsp;|
 											<a href="javascript:void(0);">修改密码</a>&nbsp;|
@@ -52,9 +52,9 @@
 		<div id="div_foot"><span>版权所有：核心科技</span></div>	
 		<div id="div_tree"></div>
 		<div id="div_center"></div>
-		<!--[if lt IE 10]> <script type="text/javascript" src="http://localhost:8082/cdn/js/html5shiv/3.6.2/html5.js"></script> <![endif]-->
+		<!--[if lt IE 10]> <script type="text/javascript" src="${cdn}/html5shiv/3.6.2/html5.js"></script> <![endif]-->
 		<script>
-			var	cdnPath = "http://localhost:8082/cdn/js/";
+			var	cdnPath = "${cdn}/";
 			var dhxPath = "dhtmlx/3.6/";
 			var require = {
 				waitSeconds: 0,
@@ -95,6 +95,6 @@
 				}
 			};
 		</script>
-        <script data-main="${virtualPath}public/tradition/main" src="http://localhost:8082/cdn/js/require/2.1.6/require.js"></script>
+        <script data-main="${virtualPath}public/tradition/main" src="${cdn}/require/2.1.6/require.js"></script>
 	</BODY>
 </HTML>
