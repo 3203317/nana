@@ -36,7 +36,8 @@ exports.loginBackStageUI = function(req, res, next) {
 		atitle: '后台登陆',
 		description: '后台登陆',
 		keywords: ',后台登陆,Bootstrap3',
-		virtualPath: virtualPath +'/'
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
 	});
 };
 
