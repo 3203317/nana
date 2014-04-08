@@ -37,7 +37,7 @@ ModuleSchema.post('save', function(){
 });
 
 ModuleSchema.statics.saveNew = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
+	newInfo.Id = newInfo.Id || util.uuid(false);
 	this.create(newInfo, function(err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
@@ -48,6 +48,12 @@ ModuleSchema.statics.findModules = function(cb) {
 	this.find(null, null, null, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
+	});
+};
+
+ModuleSchema.statics.removeAll = function(newInfo, cb) {
+	this.remove(function(err){
+		
 	});
 };
 
