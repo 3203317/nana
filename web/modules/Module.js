@@ -44,8 +44,8 @@ ModuleSchema.statics.saveNew = function(newInfo, cb) {
 	});
 };
 
-ModuleSchema.statics.findModules = function(cb) {
-	this.find(null, null, null, function(err, docs){
+ModuleSchema.statics.findModules = function(fields, cb) {
+	this.find(null, fields, null, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -53,7 +53,7 @@ ModuleSchema.statics.findModules = function(cb) {
 
 ModuleSchema.statics.removeAll = function(newInfo, cb) {
 	this.remove(function(err){
-		
+
 	});
 };
 
