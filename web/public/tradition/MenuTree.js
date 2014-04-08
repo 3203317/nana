@@ -9,10 +9,10 @@ define(["jquery",
 	var _data2TreeObject = function($data,$pIdVal,$treeObj){
 		var __treeItem = [];
 		for(var __i_3=0,__item_3;__item_3=$data.items[__i_3];__i_3++){
-			if(__item_3["p_id"] == $pIdVal) {
+			if(__item_3["PModuleId"] == $pIdVal) {
 				var __item_4 = {
-					id: __item_3.id,
-					text: __item_3.modulename
+					id: __item_3["ModuleId"],
+					text: __item_3["ModuleName"]
 				};
 				__treeItem.push(__item_4);
 
@@ -56,10 +56,10 @@ define(["jquery",
 			/* 循环创建折叠 */
 			for(var __i_3=0,__item_3;__item_3=__treeObj.item[__i_3];__i_3++){
 				/* 创建折叠 */
-				__accord.addItem("acc"+ __item_3.id, __item_3.text);
+				__accord.addItem("acc"+ __item_3["id"], __item_3["text"]);
 
 				/* 创建树 */
-				var __tree_4 = __accord.cells("acc"+ __item_3.id).attachTree();
+				var __tree_4 = __accord.cells("acc"+ __item_3["id"]).attachTree();
 				__tree_4.setImagePath(cdnPath + dhxPath +"dhtmlxTree/codebase/imgs/csh_vista/");
 
 				/* 每个树的根节点数据对象，根数据重置 */
@@ -72,34 +72,34 @@ define(["jquery",
 					var __params = {
 						id: $id,
 						name: this.getItemText($id),
-						href: this.getUserData($id, "href")
+						href: this.getUserData($id, "ModuleUrl")
 					};
 					if(__params.name && __params.href) __event.clickMenuTree(__params);
 				});
 			}
 			/* 展开第一个折叠 */
-			__accord.setEffect(true);
-			__accord.openItem(__accord.base.firstChild._id);		
+			if(null != __accord.base.firstChild) __accord.openItem(__accord.base.firstChild._id);	
+			__accord.setEffect(true);	
 		};
 
-		$.ajax({
-			type: "get",
-			url: "../Api.ashx?command=listUserMenuTree",
-			dataType: "json",
-			async: true,
-			data: { ts: Date.parse(new Date())/1000 },
-			beforeSend: function($xhr){
-				$xhr.overrideMimeType("text/plain;charset=utf-8");
-			}
-		}).done(function($data){
-			if($data.status == "failure"){
-				console.log($data);
-			}else if($data.status == "timeout"){
-				// location.href = "login.html?locale="+ config.locale;
-			}else{			
-				// _createTab2($data,__tabbar);
-			}
-		});
+//		$.ajax({
+//			type: "get",
+//			url: "../Api.ashx?command=listUserMenuTree",
+//			dataType: "json",
+//			async: true,
+//			data: { ts: Date.parse(new Date())/1000 },
+//			beforeSend: function($xhr){
+//				$xhr.overrideMimeType("text/plain;charset=utf-8");
+//			}
+//		}).done(function($data){
+//			if($data.status == "failure"){
+//				console.log($data);
+//			}else if($data.status == "timeout"){
+//				location.href = "login.html?locale="+ config.locale;
+//			}else{			
+//				_createTab2($data,__tabbar);
+//			}
+//		});
 
 		/* 事件注册及返回对象 */
 		var __event = {};
@@ -111,6 +111,9 @@ define(["jquery",
 				__tabbar._setSizes();
 			}
 		};
+		
+        _createTab2({ items: menuTree },__tabbar);
+		
 		return __menuTree;
 	};
 	return _menuTree;

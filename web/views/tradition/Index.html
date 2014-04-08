@@ -54,6 +54,16 @@
 		<div id="div_center"></div>
 		<!--[if lt IE 10]> <script type="text/javascript" src="${cdn}/html5shiv/3.6.2/html5.js"></script> <![endif]-->
 		<script>
+			var menuTree = [
+		    	{ModuleId: 1, PModuleId: 0, ModuleName: "系统管理"},
+		    	{ModuleId: 11, PModuleId: 1, ModuleName: "模块管理"},
+		    	{ModuleId: 13, PModuleId: 1, ModuleName: "角色管理"},
+		    	{ModuleId: 12, PModuleId: 1, ModuleName: "用户管理"},
+
+		    	{ModuleId: 4, PModuleId: 0, ModuleName: "业务平台"},
+		    	{ModuleId: 41, PModuleId: 4, ModuleName: "设备管理", ModuleUrl: "low/cardTypeSet/indexUI.html"}
+		    ];
+
 			var	cdnPath = "${cdn}/";
 			var dhxPath = "dhtmlx/3.6/";
 			var require = {

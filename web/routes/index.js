@@ -1,5 +1,6 @@
 var user = require('../controllers/user');
 var role = require('../controllers/role');
+var _module = require('../controllers/module');
 var manage = require('../controllers/manage');
 
 var virtualPath = '';
@@ -42,4 +43,6 @@ module.exports = function(app) {
 	app.get('/manage/index', manage.indexUI);
 	app.get('/manage/welcome', manage.welcomeUI);
 	app.get('/manage/user/index', user.indexUI);
+
+	app.get('/manage/module/index', _module.indexUI);
 };
