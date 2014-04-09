@@ -9,9 +9,9 @@ define(["jquery",
 	var _data2TreeObject = function($data,$pIdVal,$treeObj){
 		var __treeItem = [];
 		for(var __i_3=0,__item_3;__item_3=$data.items[__i_3];__i_3++){
-			if(__item_3["PModuleId"] == $pIdVal) {
+			if(__item_3["PId"] == $pIdVal) {
 				var __item_4 = {
-					id: __item_3["ModuleId"],
+					id: __item_3["Id"],
 					text: __item_3["ModuleName"]
 				};
 				__treeItem.push(__item_4);

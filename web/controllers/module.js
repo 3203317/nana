@@ -10,16 +10,15 @@ exports.indexUI = function(req, res, next) {
 		_id: 0,
 		CreateTime: 0
 	}, function(err, docs){
-		if(docs){
-			res.render('Manage/Module/Index', {
-				title: title,
-				atitle: '模块管理',
-				description: '后台管理',
-				keywords: ',模块管理,Bootstrap3',
-				virtualPath: virtualPath +'/',
-				cdn: conf.cdn,
-				modules: docs
-			});
-		}
+		if(err) return next(err);
+		res.render('Manage/Module/Index', {
+			title: title,
+			atitle: '模块管理',
+			description: '后台管理',
+			keywords: ',模块管理,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			modules: docs
+		});
 	});
 };

@@ -1,5 +1,6 @@
 var db = require('./mongodb');
 var util = require('../libs/utils');
+var Module = require('./Module');
 
 var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
@@ -61,6 +62,16 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 		if(err) return cb(err);
 		if(doc) return cb(null, doc);
 		cb('没有找到该用户');
+	});
+};
+
+UserSchema.statics.getMenuTree = function(userId, cb) {
+	Module.findModules({
+		_id: 0,
+		CreateTime: 0
+	}, function(err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
 	});
 };
 
