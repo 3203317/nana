@@ -54,12 +54,6 @@ ModuleSchema.statics.findModules = function(fields, cb) {
 	});
 };
 
-ModuleSchema.statics.removeAll = function(newInfo, cb) {
-	this.remove(function(err){
-
-	});
-};
-
 var ModuleModel = mongoose.model('module', ModuleSchema);
 
 exports = module.exports = ModuleModel;

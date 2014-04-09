@@ -5,7 +5,7 @@ var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
 exports.indexUI = function(req, res, next) {
-	res.render('Tradition/Index', {
+	res.render('Manage/Main', {
 		title: title,
 		atitle: '角色管理',
 		description: '个人博客',

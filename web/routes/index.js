@@ -45,6 +45,4 @@ module.exports = function(app) {
 	app.get('/manage/user/index', user.indexUI);
 
 	app.get('/manage/module/index', _module.indexUI);
-	app.get('/module/install', _module.install);
-	app.get('/module/uninstall', _module.uninstall);
 };
