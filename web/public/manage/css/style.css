@@ -1,0 +1,21 @@
+body {
+	padding-top: 50px;
+}
+.container {
+	width: 100%;
+}
+.olx-glyphicon {
+	position: relative;
+	display: inline-block;
+	font-family: "Glyphicons Halflings";
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-weight: normal;
+	-moz-osx-font-smoothing: grayscale;
+}
+.olx-table-th-center {
+	text-align: center;
+}
+.olx-table-td-center {
+	text-align: center;
+}
