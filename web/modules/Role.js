@@ -18,7 +18,13 @@ var RoleSchema = new Schema({
 	RoleDesc: {
 		type: String
 	},
-	createTime: {
+	StartTime: {
+		type: Date
+	},
+	EndTime: {
+		type: Date
+	},
+	CreateTime: {
 		type: Date,
 		default: Date.now
 	}
