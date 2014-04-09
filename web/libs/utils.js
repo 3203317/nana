@@ -15,3 +15,10 @@ exports.uuid = function(b) {
 exports.md5 = function(str) {
 	return str;
 };
+
+/**
+ * 日期小于10补0
+ **/
+exports.pdate = function(s) {
+	return 10 > s ? '0' + s : s;
+}
