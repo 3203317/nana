@@ -1,0 +1,1 @@
+mongoimport -d nana -c modules d:\GitHub\nana\asset\modules.json --jsonArray

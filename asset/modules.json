@@ -1,0 +1,4 @@
+{Id: '9dea3de18553497284a0e9777c37291b', PId: '0', ModuleName: '系统管理', ModuleUrl: '', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: 'c5f1f1c14a9c42d88629498054bf5ba2', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '模块管理', ModuleUrl: '', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: 'a4c691697b8a4d5baf63ee2b54f37a31', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '角色管理', ModuleUrl: '', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: '7888a2a5de5c47d68cb80fe8415b2b0b', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '用户管理', ModuleUrl: '', Sort: 1, CreateTime: {'$date': 1397005200993}}
