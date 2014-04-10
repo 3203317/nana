@@ -21,6 +21,8 @@ module.exports = function(app) {
 			});
 		}
 	}
+	
+	app.get('/my', user.analyticsUI);
 
 	/**
 	 * 登陆及注册

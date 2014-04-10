@@ -5,6 +5,16 @@ var util = require('../libs/utils');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+exports.analyticsUI = function(req, res, next) {
+	res.render('User/Analytics', {
+		title: title,
+		atitle: '我的...',
+		description: '我的...',
+		keywords: ',我的...,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
+	});
+};
 
 exports.indexUI = function(req, res, next) {
 	User.findUsers([1, 10], function(err, docs){
