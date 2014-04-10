@@ -42,6 +42,16 @@
 								<div class="form-group">
 									<input type="text" class="form-control" id="inputEmail3" placeholder="设备名称">
 								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="inputEmail3" placeholder="设备拥有者">
+								</div>
+								<div class="form-group">						
+									<select class="form-control" id="certificateType">
+										#foreach($deviceType in $deviceTypes)
+										<option value="$deviceType.Id">$deviceType.DeviceTypeName</option>
+										#end
+									</select>
+								</div>
 								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
 							</form>
 						</div>

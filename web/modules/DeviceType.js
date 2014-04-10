@@ -48,6 +48,6 @@ DeviceTypeSchema.statics.saveNew = function(newInfo, cb) {
 	});
 };
 
-var DeviceTypeModel = mongoose.model('deviceType', DeviceTypeSchema);
+var DeviceTypeModel = mongoose.model('devicetype', DeviceTypeSchema);
 
 exports = module.exports = DeviceTypeModel;
