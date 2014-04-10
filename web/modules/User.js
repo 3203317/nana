@@ -47,8 +47,8 @@ UserSchema.virtual('sSex').get(function(){
 });
 
 UserSchema.virtual('sBirthday').get(function(){
-	return this.Birthday.getFullYear() +'-'+
-			util.pdate(this.Birthday.getMonth()+1) +'-'+
+	return this.Birthday.getFullYear() +'/'+
+			util.pdate(this.Birthday.getMonth()+1) +'/'+
 			util.pdate(this.Birthday.getDate()) +' '+
 			this.Birthday.getHours() +':'+
 			util.pdate(this.Birthday.getMinutes()) +':'+
@@ -56,8 +56,8 @@ UserSchema.virtual('sBirthday').get(function(){
 });
 
 UserSchema.virtual('sRegTime').get(function(){
-	return this.RegTime.getFullYear() +'-'+
-			util.pdate(this.RegTime.getMonth()+1) +'-'+
+	return this.RegTime.getFullYear() +'/'+
+			util.pdate(this.RegTime.getMonth()+1) +'/'+
 			util.pdate(this.RegTime.getDate()) +' '+
 			this.RegTime.getHours() +':'+
 			util.pdate(this.RegTime.getMinutes()) +':'+

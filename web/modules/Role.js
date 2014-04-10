@@ -33,29 +33,29 @@ var RoleSchema = new Schema({
 });
 
 RoleSchema.virtual('sStartTime').get(function(){
-	return this.StartTime.getFullYear() +'-'+ 
-			util.pdate(this.StartTime.getMonth()+1) +'-'+ 
-			util.pdate(this.StartTime.getDate()) +' '+ 
-			this.StartTime.getHours() +':'+ 
-			util.pdate(this.StartTime.getMinutes()) +':'+ 
+	return this.StartTime.getFullYear() +'/'+
+			util.pdate(this.StartTime.getMonth()+1) +'/'+
+			util.pdate(this.StartTime.getDate()) +' '+
+			this.StartTime.getHours() +':'+
+			util.pdate(this.StartTime.getMinutes()) +':'+
 			util.pdate(this.StartTime.getSeconds());
 });
 
 RoleSchema.virtual('sEndTime').get(function(){
-	return this.EndTime.getFullYear() +'-'+ 
-			util.pdate(this.EndTime.getMonth()+1) +'-'+ 
-			util.pdate(this.EndTime.getDate()) +' '+ 
-			this.EndTime.getHours() +':'+ 
-			util.pdate(this.EndTime.getMinutes()) +':'+ 
+	return this.EndTime.getFullYear() +'/'+
+			util.pdate(this.EndTime.getMonth()+1) +'/'+
+			util.pdate(this.EndTime.getDate()) +' '+
+			this.EndTime.getHours() +':'+
+			util.pdate(this.EndTime.getMinutes()) +':'+
 			util.pdate(this.EndTime.getSeconds());
 });
 
 RoleSchema.virtual('sCreateTime').get(function(){
-	return this.CreateTime.getFullYear() +'-'+ 
-			util.pdate(this.CreateTime.getMonth()+1) +'-'+ 
-			util.pdate(this.CreateTime.getDate()) +' '+ 
-			this.CreateTime.getHours() +':'+ 
-			util.pdate(this.CreateTime.getMinutes()) +':'+ 
+	return this.CreateTime.getFullYear() +'/'+
+			util.pdate(this.CreateTime.getMonth()+1) +'/'+
+			util.pdate(this.CreateTime.getDate()) +' '+
+			this.CreateTime.getHours() +':'+
+			util.pdate(this.CreateTime.getMinutes()) +':'+
 			util.pdate(this.CreateTime.getSeconds());
 });
 
