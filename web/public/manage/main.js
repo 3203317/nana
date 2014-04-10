@@ -19,6 +19,7 @@ require(["jquery",
 		/* 退出注册事件 */
 		_a_quit.click(function(){
 			console.log("退出");
+			location.href = 'user/login'
 		});
 
 		/* 主框架布局 */

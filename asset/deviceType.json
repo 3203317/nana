@@ -1,0 +1,3 @@
+{Id: '5552ed8d88e44710928fe736281e79ce', DeviceTypeName: 'Android', DeviceTypeDesc: '', CreateTime: {'$date': 1397005200993}}
+{Id: 'cdf70f0387bb49e5973fa57905d10fe7', DeviceTypeName: 'IPad', DeviceTypeDesc: '', CreateTime: {'$date': 1397005200993}}
+{Id: '471dc608dc5e43fa87a9024f825d9f6c', DeviceTypeName: 'IPhone', DeviceTypeDesc: '', CreateTime: {'$date': 1397005200993}}

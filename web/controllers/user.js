@@ -6,7 +6,21 @@ var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
 
-exports.indexUI = function(req, res, next) {};
+exports.indexUI = function(req, res, next) {
+	User.findUsers([1, 10], function(err, docs){
+		if(err) return next(err);
+
+		res.render('Manage/User/Index', {
+			title: title,
+			atitle: '用户管理',
+			description: '用户管理',
+			keywords: ',用户管理,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			users: docs
+		});
+	});
+};
 
 exports.loginUI = function(req, res, next) {
 	res.render('User/Login', {

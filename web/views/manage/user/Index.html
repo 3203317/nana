@@ -9,27 +9,15 @@
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap.min.css" media="screen">
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap-theme.min.css" media="screen">
-		<link rel="stylesheet" type="text/css" href="${cdn}/ztree/3.5.15/css/zTreeStyle/zTreeStyle.css" type="text/css">
 
 		<link rel="stylesheet" type="text/css" href="${virtualPath}public/manage/css/style.css">
-
-	    <style type="text/css">
-			.ztree{
-				background: none repeat scroll 0 0 #F0F6E4;
-				border: 1px solid #DDDDDD;
-				height: 260px;
-				overflow-x: auto;
-				overflow-y: scroll;
-				width: 100%;
-			}
-	    </style>
 	</head>
 	<body>
 		<div class="navbar navbar-fixed-top" role="navigation">
 			<ul class="breadcrumb">
 				<li>当前位置：<div class="glyphicon glyphicon-home"></div> <a href="javascript:;" onclick="top.location.href='../index#page/welcome'">首页</a></li>
 				<li class="active">系统管理</li>
-				<li><a href="javascript:;" onclick="location.reload()">模块管理</a></li>				
+				<li><a href="javascript:;" onclick="location.reload()">用户管理</a></li>				
 			</ul>
 		</div>
 
@@ -38,7 +26,7 @@
 				<div class="col-md-12">
 					<div id="info_alert" class="alert alert-info">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>提示：</strong>设置系统中所有的模块信息。
+						<strong>提示：</strong>设置系统中所有的用户信息。
 					</div>
 				</div>
 			</div>
@@ -52,7 +40,7 @@
 						<div class="panel-body">
 							<form class="form-inline" role="form">
 								<div class="form-group">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="模块名称">
+									<input type="text" class="form-control" id="inputEmail3" placeholder="用户名称">
 								</div>
 								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
 							</form>
@@ -62,10 +50,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-3">
-					<div id="modTree" class='ztree'></div>
-				</div>
-				<div class="col-md-9">
+				<div class="col-md-12">
  					<div class="panel panel-default table-responsive">
 						<div class="panel-heading">
 							<div class="btn-group">
@@ -79,22 +64,24 @@
 							<thead>
 								<tr>
 									<th class="olx-table-th-center"><input type="checkbox" title="全选/取消"></th>
-									<th>#</th>
-									<th>模块名称</th>
-									<th>模块地址</th>
-									<th>排序</th>
-									<th>创建时间</th>
+									<th>用户名</th>
+									<th>密码</th>
+									<th>性别</th>
+									<th>出生日期</th>
+									<th>注册时间</th>
 								</tr>
 							</thead>
 							<tbody>
+								#foreach($user in $users)
 								<tr>
-									<td class="olx-table-td-center"><input type="checkbox" value="1"></td>
-									<td>1</td>
-									<td>4255563853</td>
-									<td>张三</td>
-									<td>男</td>
-									<td>2013/12/11 10:50:57</td>
+									<td class="olx-table-td-center"><input type="checkbox" value="$user.Id"></td>
+									<td>$user.UserName</td>
+									<td>$user.UserPass</td>
+									<td>$user.sSex</td>
+									<td>${user.sBirthday}</td>
+									<td>${user.sRegTime}</td>
 								</tr>
+								#end
 							</tbody>
 						</table>
 					</div>
@@ -105,37 +92,12 @@
 		<script type="text/javascript" src="${cdn}/jquery/2.0.2/jquery.min.js"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
-		<script type="text/javascript" src="${cdn}/ztree/3.5.15/js/jquery.ztree.core-3.5.js"></script>
 		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
 
 		<!-- Own -->
 		<script type="text/javascript">
-			var setting = {
-				data: {
-					simpleData: {
-						enable: true
-					}
-				},
-				callback: {
-					beforeClick: function(treeId, treeNode) {
-						console.log(arguments)
-					}
-				}
-			};
-
-			var modules = [${modules}];
-
-			for(var i=0; i<modules.length; i++){
-				var module = modules[i];
-				module.id = module.Id;
-				module.pId = module.PId;
-				module.name = module.ModuleName;
-				module.file = module.ModuleUrl;
-				module.open = true;
-			}
 
 			$(function(){
-				$ .fn.zTree.init($("#modTree"), setting, modules);
 			});
 
 		</script>

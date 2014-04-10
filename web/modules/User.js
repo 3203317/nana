@@ -24,12 +24,46 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 1
 	},
-	regTime: {
+	Birthday: {
+		type: Date
+	},
+	Email: {
+		type: String
+	},
+	RegTime: {
 		type: Date,
 		default: Date.now
 	}
 }, {
 	versionKey: false
+});
+
+UserSchema.virtual('sSex').get(function(){
+	switch(this.Sex){
+		case 1: return '男';
+		case 2: return '女';
+		default: return '未知';
+	}
+});
+
+UserSchema.virtual('sBirthday').get(function(){
+	var bt = this.Birthday;
+	return bt ? bt.getFullYear() +'/'+
+			util.pdate(bt.getMonth()+1) +'/'+
+			util.pdate(bt.getDate()) +' '+
+			bt.getHours() +':'+
+			util.pdate(bt.getMinutes()) +':'+
+			util.pdate(bt.getSeconds()) : '';
+});
+
+UserSchema.virtual('sRegTime').get(function(){
+	var rt = this.RegTime;
+	return rt.getFullYear() +'/'+
+			util.pdate(rt.getMonth()+1) +'/'+
+			util.pdate(rt.getDate()) +' '+
+			rt.getHours() +':'+
+			util.pdate(rt.getMinutes()) +':'+
+			util.pdate(rt.getSeconds());
 });
 
 UserSchema.pre('save', function(next, done){
@@ -39,8 +73,18 @@ UserSchema.pre('save', function(next, done){
 UserSchema.post('save', function(){
 });
 
-UserSchema.statics.findUsers = function(cb) {
-	this.find(null, null, null, function(err, docs){
+UserSchema.statics.findUsers = function(pagination, cb) {
+	pagination[0] = pagination[0] || 1;
+
+	var para3 = {
+		sort: {
+			RegTime: -1
+		},
+		skip: (pagination[0] - 1) * pagination[1],
+		limit: pagination[1]
+	};
+
+	this.find(null, null, para3, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});

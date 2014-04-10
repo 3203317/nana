@@ -1,5 +1,6 @@
 var user = require('../controllers/user');
 var role = require('../controllers/role');
+var device = require('../controllers/device');
 var _module = require('../controllers/module');
 var manage = require('../controllers/manage');
 
@@ -46,4 +47,6 @@ module.exports = function(app) {
 	app.get('/manage/user/index', user.indexUI);
 	app.get('/manage/module/index', _module.indexUI);
 	app.get('/manage/role/index', role.indexUI);
+	app.get('/manage/device/index', device.indexUI);
+	app.get('/manage/devicelog/index', device.logUI);
 };
