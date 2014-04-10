@@ -24,7 +24,13 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 1
 	},
-	regTime: {
+	Birthday: {
+		type: Date
+	},
+	Email: {
+		type: String
+	},
+	RegTime: {
 		type: Date,
 		default: Date.now
 	}
@@ -39,8 +45,18 @@ UserSchema.pre('save', function(next, done){
 UserSchema.post('save', function(){
 });
 
-UserSchema.statics.findUsers = function(cb) {
-	this.find(null, null, null, function(err, docs){
+UserSchema.statics.findUsers = function(pagination, cb) {
+	pagination[0] = pagination[0] || 1;
+
+	var para3 = {
+		sort: {
+			regTime: -1
+		},
+		skip: (pagination[0] - 1) * pagination[1],
+		limit: pagination[1]
+	};
+
+	this.find(null, null, para3, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
