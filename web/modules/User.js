@@ -76,7 +76,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 
 	var para3 = {
 		sort: {
-			regTime: -1
+			RegTime: -1
 		},
 		skip: (pagination[0] - 1) * pagination[1],
 		limit: pagination[1]
