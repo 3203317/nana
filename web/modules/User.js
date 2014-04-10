@@ -38,6 +38,32 @@ var UserSchema = new Schema({
 	versionKey: false
 });
 
+UserSchema.virtual('sSex').get(function(){
+	switch(this.Sex){
+		case 1: return '男';
+		case 2: return '女';
+		default: return '未知';
+	}
+});
+
+UserSchema.virtual('sBirthday').get(function(){
+	return this.Birthday.getFullYear() +'-'+
+			util.pdate(this.Birthday.getMonth()+1) +'-'+
+			util.pdate(this.Birthday.getDate()) +' '+
+			this.Birthday.getHours() +':'+
+			util.pdate(this.Birthday.getMinutes()) +':'+
+			util.pdate(this.Birthday.getSeconds());
+});
+
+UserSchema.virtual('sRegTime').get(function(){
+	return this.RegTime.getFullYear() +'-'+
+			util.pdate(this.RegTime.getMonth()+1) +'-'+
+			util.pdate(this.RegTime.getDate()) +' '+
+			this.RegTime.getHours() +':'+
+			util.pdate(this.RegTime.getMinutes()) +':'+
+			util.pdate(this.RegTime.getSeconds());
+});
+
 UserSchema.pre('save', function(next, done){
 	next();
 });

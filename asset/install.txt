@@ -1,3 +1,5 @@
 mongoimport -d nana -c modules d:\GitHub\nana\asset\modules.json --jsonArray
 
 mongoimport -d nana -c roles d:\GitHub\nana\asset\role.json --jsonArray
+
+mongoimport -d nana -c users d:\GitHub\nana\asset\user.json --jsonArray
