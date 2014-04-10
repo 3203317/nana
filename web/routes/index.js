@@ -48,4 +48,5 @@ module.exports = function(app) {
 	app.get('/manage/module/index', _module.indexUI);
 	app.get('/manage/role/index', role.indexUI);
 	app.get('/manage/device/index', device.indexUI);
+	app.get('/manage/devicelog/index', device.logUI);
 };
