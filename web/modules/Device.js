@@ -37,12 +37,13 @@ var DeviceSchema = new Schema({
 });
 
 DeviceSchema.virtual('sCreateTime').get(function(){
-	return this.CreateTime.getFullYear() +'/'+
-			util.pdate(this.CreateTime.getMonth()+1) +'/'+
-			util.pdate(this.CreateTime.getDate()) +' '+
-			this.CreateTime.getHours() +':'+
-			util.pdate(this.CreateTime.getMinutes()) +':'+
-			util.pdate(this.CreateTime.getSeconds());
+	var ct = this.CreateTime;
+	return ct.getFullYear() +'/'+
+			util.pdate(ct.getMonth()+1) +'/'+
+			util.pdate(ct.getDate()) +' '+
+			ct.getHours() +':'+
+			util.pdate(ct.getMinutes()) +':'+
+			util.pdate(ct.getSeconds());
 });
 
 DeviceSchema.pre('save', function(next, done){

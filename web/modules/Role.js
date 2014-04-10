@@ -33,30 +33,33 @@ var RoleSchema = new Schema({
 });
 
 RoleSchema.virtual('sStartTime').get(function(){
-	return this.StartTime.getFullYear() +'/'+
-			util.pdate(this.StartTime.getMonth()+1) +'/'+
-			util.pdate(this.StartTime.getDate()) +' '+
-			this.StartTime.getHours() +':'+
-			util.pdate(this.StartTime.getMinutes()) +':'+
-			util.pdate(this.StartTime.getSeconds());
+	var st = this.StartTime;
+	return st.getFullYear() +'/'+
+			util.pdate(st.getMonth()+1) +'/'+
+			util.pdate(st.getDate()) +' '+
+			st.getHours() +':'+
+			util.pdate(st.getMinutes()) +':'+
+			util.pdate(st.getSeconds());
 });
 
 RoleSchema.virtual('sEndTime').get(function(){
-	return this.EndTime.getFullYear() +'/'+
-			util.pdate(this.EndTime.getMonth()+1) +'/'+
-			util.pdate(this.EndTime.getDate()) +' '+
-			this.EndTime.getHours() +':'+
-			util.pdate(this.EndTime.getMinutes()) +':'+
-			util.pdate(this.EndTime.getSeconds());
+	var et = this.EndTime;
+	return et.getFullYear() +'/'+
+			util.pdate(et.getMonth()+1) +'/'+
+			util.pdate(et.getDate()) +' '+
+			et.getHours() +':'+
+			util.pdate(et.getMinutes()) +':'+
+			util.pdate(et.getSeconds());
 });
 
 RoleSchema.virtual('sCreateTime').get(function(){
-	return this.CreateTime.getFullYear() +'/'+
-			util.pdate(this.CreateTime.getMonth()+1) +'/'+
-			util.pdate(this.CreateTime.getDate()) +' '+
-			this.CreateTime.getHours() +':'+
-			util.pdate(this.CreateTime.getMinutes()) +':'+
-			util.pdate(this.CreateTime.getSeconds());
+	var ct = this.CreateTime;
+	return ct.getFullYear() +'/'+
+			util.pdate(ct.getMonth()+1) +'/'+
+			util.pdate(ct.getDate()) +' '+
+			ct.getHours() +':'+
+			util.pdate(ct.getMinutes()) +':'+
+			util.pdate(ct.getSeconds());
 });
 
 RoleSchema.pre('save', function(next, done){
