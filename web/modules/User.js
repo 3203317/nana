@@ -132,6 +132,23 @@ UserSchema.statics.register = function(newInfo, cb) {
 	});
 };
 
+function valiLogForm(data){
+	if('' === data.UserName || '' === data.UserPass){
+		return '用户名或密码不能为空';
+	}
+}
+
+UserSchema.statics.login = function(logInfo, cb) {
+	var valiResu = valiLogForm(logInfo);
+	if(valiResu) return cb(valiResu);
+
+	this.findUserByUserName(logInfo.UserName, function (err, doc){
+		if(err) return cb(err);
+		if(util.md5(logInfo.UserPass) === doc.UserPass) return cb(null, doc);
+		cb('用户名或密码输入错误');
+	});
+};
+
 UserSchema.statics.findUserByUserName = function(userName, cb) {
 	this.findOne({
 		UserName: userName

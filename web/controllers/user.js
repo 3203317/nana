@@ -69,26 +69,16 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	/* 表单参数验证 */
-	if('' === data.UserName || '' === data.UserPass){
-		result.msg = '用户名或密码不能为空';
-		return res.send(result);
-	}
-
-	User.findUserByUserName(data.UserName, function (err, doc){
-		if('string' === typeof err){
-			result.msg = err;
-			return res.send(result);
-		}
-		if(!err){
-			if(util.md5(data.UserPass) === doc.UserPass){
-				result.success = true;
+	User.login(data, function (err, doc){
+		if(err){
+			if('string' === typeof err){
+				result.msg = err;
 				return res.send(result);
 			}
-			result.msg = '用户名或密码输入错误';
-			return res.send(result);
+			return next(err);
 		}
-		next(err);
+		result.success = true;
+		res.send(result);
 	});
 };
 
