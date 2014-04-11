@@ -22,7 +22,10 @@ var DeviceSchema = new Schema({
 	DeviceDesc: {
 		type: String
 	},
-	DeviceType: {
+	DeviceType_Id: {	//Android, IPad, IPhone, Other
+		type: String
+	},
+	DeviceVer: {
 		type: String
 	},
 	User_Id: {
