@@ -97,7 +97,10 @@ UserSchema.statics.findUsers = function(pagination, cb) {
  * @return 
  */
 function valiRegForm(data){
-	if('' === data.UserName || '' === data.UserPass){
+	data.UserName = data.UserName.trim();
+	data.UserPass = data.UserPass.trim();
+
+	if(0 === data.UserName.length || 0 === data.UserPass.length){
 		return '用户名或密码不能为空';
 	}
 }
@@ -133,7 +136,10 @@ UserSchema.statics.register = function(newInfo, cb) {
 };
 
 function valiLogForm(data){
-	if('' === data.UserName || '' === data.UserPass){
+	data.UserName = data.UserName.trim();
+	data.UserPass = data.UserPass.trim();
+
+	if(0 === data.UserName.length || 0 === data.UserPass.length){
 		return '用户名或密码不能为空';
 	}
 }
