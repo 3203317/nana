@@ -73,11 +73,52 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 	});
 };
 
+function valiAddForm(data){
+	if('' === data.DeviceId){
+		return '设备Id不能为空';
+	}
+}
+
 DeviceSchema.statics.saveNew = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	this.create(newInfo, function(err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+	var valiResu = valiAddForm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	var that = this;
+
+	var para1 = {
+		DeviceId: deviceId,
+		User_Id: user_id
+	};
+
+	this.findDeviceByUser(para1, function (err, doc){
+		if(err){
+			if('string' === typeof err){
+				newInfo.Id = util.uuid(false);
+				that.create(newInfo, function (err, doc){
+					if(err) return cb(err);
+					cb(null, doc);
+				});
+				return;
+			}
+			return cb(err);
+		}
+		cb('该设备已注册');
+	});
+};
+
+function valiFindPara(data){
+	if('' === data.DeviceId) return '设备Id不能为空';
+	if('' === data.User_Id) return '用户Id不能为空';
+}
+
+DeviceSchema.statics.findDeviceByUser = function(para1, cb) {
+	var valiResu = valiFindPara(para1);
+	if(valiResu) return cb(valiResu);
+
+	this.findOne(para1, null, null, function (err, doc){
+		if(err) return next(err);
+		if(doc) return cb(null, doc);
+		cb('找不到该设备');
 	});
 };
 
