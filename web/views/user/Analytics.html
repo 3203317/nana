@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+
+		<header id="header"></header>
+
+		<section class="container">
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>概要</strong></h3>
+						</div>
+						<div class="panel-body">
+							<p>我的设备：3个</p>
+							<p>搜索：3个</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>地图</strong></h3>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>概要</strong></h3>
+						</div>
+						<div class="panel-body">
+							<p>我的设备：3个</p>
+							<p>搜索：3个</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>地图</strong></h3>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>概要</strong></h3>
+						</div>
+						<div class="panel-body">
+							<p>我的设备：3个</p>
+							<p>搜索：3个</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>地图</strong></h3>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>概要</strong></h3>
+						</div>
+						<div class="panel-body">
+							<p>我的设备：3个</p>
+							<p>搜索：3个</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>地图</strong></h3>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>概要</strong></h3>
+						</div>
+						<div class="panel-body">
+							<p>我的设备：3个</p>
+							<p>搜索：3个</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>地图</strong></h3>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+		<script type="text/javascript">
+			function validateForm(){
+				var formObj = $("#loginForm").serializeObjectForm();
+				return formObj;
+			}
+
+			$(function(){
+				$('#btn_login').click(function(){
+					var formObj = validateForm();
+					if(!formObj){
+						alert('表单验证失败')
+						return;
+					}
+
+        			var data = { data: JSON.stringify(formObj) };
+
+					$.ajax({
+						url: '/user/login.do',
+						type: "POST",
+						dataType: "json",
+						data: data
+					}).done(function(responseText) {
+						console.log(responseText)
+					}).complete(function(){
+					});
+				});
+			});
+		</script>
+
+	</body>
+</html>

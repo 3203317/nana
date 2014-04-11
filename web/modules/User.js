@@ -90,12 +90,45 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 	});
 };
 
-UserSchema.statics.register = function(registerInfo, cb) {
-	registerInfo.Id = util.uuid(false);
-	registerInfo.UserPass = util.md5(registerInfo.UserPass);
-	this.create(registerInfo, function(err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+/**
+ *
+ * @method 验证注册表单
+ * @params 
+ * @return 
+ */
+function valiRegForm(data){
+	if('' === data.UserName || '' === data.UserPass){
+		return '用户名或密码不能为空';
+	}
+}
+
+/**
+ *
+ * @method 新用户注册
+ * @params 
+ * @return 
+ */
+UserSchema.statics.register = function(newInfo, cb) {
+	var valiResu = valiRegForm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	var that = this;
+
+	this.findUserByUserName(newInfo.UserName, function (err, doc){
+		if(err){
+			if('string' === typeof err){
+				newInfo.Id = util.uuid(false);
+				newInfo.UserPass = util.md5(newInfo.UserPass);
+
+				that.create(newInfo, function (err, doc){
+					if(err) return cb(err);
+					cb(null, doc);
+				});
+				return;
+			}
+			return cb(err);
+		}
+		cb('用户名已经存在');
 	});
 };
 

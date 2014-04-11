@@ -5,6 +5,16 @@ var util = require('../libs/utils');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+exports.analyticsUI = function(req, res, next) {
+	res.render('User/Analytics', {
+		title: title,
+		atitle: '我的...',
+		description: '我的...',
+		keywords: ',我的...,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
+	});
+};
 
 exports.indexUI = function(req, res, next) {
 	User.findUsers([1, 10], function(err, docs){
@@ -83,45 +93,25 @@ exports.login = function(req, res, next) {
 };
 
 /**
- * todo
  *
- * @method 用户名合法性验证
+ * @method 新用户注册
  * @params userName 用户名
  * @return 成功返回true
  */
-function filterUserName(userName){
-	return true;
-}
-
 exports.register = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	/* 表单参数验证 */
-	if('' === data.UserName || '' === data.UserPass){
-		result.msg = '用户名或密码不能为空';
-		return res.send(result);
-	}
-
-	if(!filterUserName(data.UserName)){
-		result.msg = '用户名不合法';
-		return res.send(result);
-	}
-
-	User.findUserByUserName(data.UserName, function (err, doc){
-		if('string' === typeof err){
-			User.register(data, function (err, doc){
-				if(err) return next(err);
-				result.success = true;
-				result.msg = '新用户注册成功';
-				res.send(result);
-			});
-			return;
+	User.register(data, function (err, doc){
+		if(err){
+			if('string' === typeof err){
+				result.msg = err;
+				return res.send(result);
+			}
+			return next(err);
 		}
-		if(!err){
-			result.msg = '用户名已经存在';
-			return res.send(result);
-		}
-		next(err);
+		result.success = true;
+		result.msg = '新用户注册成功';
+		res.send(result);
 	});
 };
