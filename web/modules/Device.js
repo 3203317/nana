@@ -104,7 +104,7 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
 			}
 			return cb(err);
 		}
-		cb('该设备已注册');
+		cb('该设备已被注册');
 	});
 };
 

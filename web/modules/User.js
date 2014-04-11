@@ -14,6 +14,7 @@ var UserSchema = new Schema({
 	},
 	UserName: {
 		type: String,
+		match: /[a-z]/,
 		required: true
 	},
 	UserPass: {
@@ -27,7 +28,7 @@ var UserSchema = new Schema({
 	Birthday: {
 		type: Date
 	},
-	Email: {
+	QQ: {
 		type: String
 	},
 	RegTime: {
