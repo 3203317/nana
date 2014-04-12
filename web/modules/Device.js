@@ -100,19 +100,16 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
 
 	var that = this;
 
-	this.findDeviceByUser(newInfo.User_Id, newInfo.DeviceId, function (err, doc){
-		if(err){
-			if('string' === typeof err){
-				newInfo.Id = util.uuid(false);
-				that.create(newInfo, function (err, doc){
-					if(err) return cb(err);
-					cb(null, doc);
-				});
-				return;
-			}
-			return cb(err);
-		}
-		cb('该设备已被注册');
+	that.findDeviceByUser(newInfo.User_Id, newInfo.DeviceId, function (err, doc){
+		if(err) return cb(err);
+
+		if('string' === typeof doc) return cb(doc);
+
+		newInfo.Id = util.uuid(false);
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
 	});
 };
 
@@ -137,9 +134,8 @@ DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
 	};
 
 	this.findOne(para1, null, null, function (err, doc){
-		if(err) return next(err);
-		if(doc) return cb(null, doc);
-		cb('找不到该设备');
+		if(err) return cb(err);
+		cb(null, doc ? doc : '找不到该设备');
 	});
 };
 
