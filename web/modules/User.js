@@ -81,32 +81,19 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 
 /**
  *
- * @method 验证注册表单
- * @params 
- * @return 
- */
-function valiRegForm(data){
-	data.UserName = data.UserName.trim();
-	data.UserPass = data.UserPass.trim();
-
-	if(0 === data.UserName.length || 0 === data.UserPass.length){
-		return '用户名或密码不能为空';
-	}
-}
-
-/**
- *
  * @method 新用户注册
  * @params 
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
-	var valiResu = valiRegForm(newInfo);
-	if(valiResu) return cb(valiResu);
+	if(!data.UserName || !data.UserPass) return cb('用户名或密码不能为空');
+	data.UserName = data.UserName.trim();
+	data.UserPass = data.UserPass.trim();
+	if(0 === data.UserName.length || 0 === data.UserPass.length) return cb('用户名或密码不能为空');
 
 	var that = this;
 
-	this.findUserByUserName(newInfo.UserName, function (err, doc){
+	that.findUserByUserName(newInfo.UserName, function (err, doc){
 		if(err){
 			if('string' === typeof err){
 				newInfo.Id = util.uuid(false);
@@ -144,13 +131,22 @@ UserSchema.statics.login = function(logInfo, cb) {
 	});
 };
 
+/**
+ *
+ * @method 通过用户名查找用户
+ * @params userName 用户名
+ * @return 
+ */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
+	if(!userName) return cb('用户名不能为空');
+	userName = userName.trim();
+	if(0 === userName.length) return cb('用户名不能为空');
+
 	this.findOne({
 		UserName: userName
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		if(doc) return cb(null, doc);
-		cb('没有找到该用户');
+		cb(null, doc ? doc : '没有找到该用户');
 	});
 };
 
