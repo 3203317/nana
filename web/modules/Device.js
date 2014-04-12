@@ -57,7 +57,7 @@ DeviceSchema.post('save', function(){
  * @return 
  */
 DeviceSchema.statics.isExist = function(id, cb) {
-	if(!id) return '设备Id不能为空';
+	if(!id) return cb('设备Id不能为空');
 	id = id.trim();
 	if(0 === id.length) return cb('设备Id不能为空');
 
@@ -87,12 +87,6 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 	});
 };
 
-function valiAddForm(data){
-	if(!data.DeviceId) return '设备Id不能为空';
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return '设备Id不能为空';
-}
-
 /**
  *
  * @method 新增设备
@@ -100,8 +94,9 @@ function valiAddForm(data){
  * @return 
  */
 DeviceSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiAddForm(newInfo);
-	if(valiResu) return cb(valiResu);
+	if(!newInfo.DeviceId) return cb('设备Id不能为空');
+	newInfo.DeviceId = newInfo.DeviceId.trim();
+	if(0 === newInfo.DeviceId.length) return cb('设备Id不能为空');
 
 	var that = this;
 
@@ -133,13 +128,13 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
  * @return 
  */
 DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
-	if(!deviceId) return '设备Id不能为空';
+	if(!deviceId) return cb('设备Id不能为空');
 	deviceId = deviceId.trim();
-	if(0 === deviceId.length) return '设备Id不能为空';
+	if(0 === deviceId.length) return cb('设备Id不能为空');
 
-	if(!user_id) return '用户Id不能为空';
+	if(!user_id) return cb('用户Id不能为空');
 	user_id = user_id.trim();
-	if(0 === user_id.length) return '用户Id不能为空';
+	if(0 === user_id.length) return cb('用户Id不能为空');
 
 	var para1 = {
 		DeviceId: deviceId,
@@ -160,7 +155,7 @@ DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
  * @return 
  */
 DeviceSchema.statics.findDevicesByUserId = function(userId, cb) {
-	if(!userId) return '用户Id不能为空';
+	if(!userId) return cb('用户Id不能为空');
 	var user_id = userId.trim();
 	if(0 === user_id.length) return cb('用户Id不能为空');
 
