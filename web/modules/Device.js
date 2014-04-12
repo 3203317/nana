@@ -88,6 +88,7 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 };
 
 function valiAddForm(data){
+	if(!data.DeviceId) return '设备Id不能为空';
 	data.DeviceId = data.DeviceId.trim();
 	if(0 === data.DeviceId.length) return '设备Id不能为空';
 }
@@ -126,9 +127,11 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
 };
 
 function valiFindPara(data){
+	if(!data.DeviceId) return '设备Id不能为空';
 	data.DeviceId = data.DeviceId.trim();
 	if(0 === data.DeviceId.length) return '设备Id不能为空';
 
+	if(!data.User_Id) return '用户Id不能为空';
 	data.User_Id = data.User_Id.trim();
 	if(0 === data.User_Id.length) return '用户Id不能为空';
 }
@@ -157,6 +160,7 @@ DeviceSchema.statics.findDeviceByUser = function(para1, cb) {
  * @return 
  */
 DeviceSchema.statics.findDevicesByUserId = function(userId, cb) {
+	if(!userId) return '用户Id不能为空';
 	var user_id = userId.trim();
 	if(0 === user_id.length) return cb('用户Id不能为空');
 
