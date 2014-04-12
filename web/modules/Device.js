@@ -100,12 +100,7 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
 
 	var that = this;
 
-	var para1 = {
-		DeviceId: deviceId,
-		User_Id: user_id
-	};
-
-	this.findDeviceByUser(para1, function (err, doc){
+	this.findDeviceByUser(newInfo.User_Id, newInfo.DeviceId, function (err, doc){
 		if(err){
 			if('string' === typeof err){
 				newInfo.Id = util.uuid(false);
