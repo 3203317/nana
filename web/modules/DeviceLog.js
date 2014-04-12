@@ -63,7 +63,7 @@ function valiAddForm(data){
 
 /**
  *
- * @method 新增设备
+ * @method 新增设备日志
  * @params 
  * @return 
  */
