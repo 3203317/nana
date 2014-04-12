@@ -5,6 +5,12 @@ var util = require('../libs/utils');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+/**
+ *
+ * @method 模块管理
+ * @params 
+ * @return 
+ */
 exports.indexUI = function(req, res, next) {
 	Module.findModules({
 		_id: 0,

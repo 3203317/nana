@@ -76,11 +76,33 @@ RoleSchema.statics.findRoles = function(cb) {
 	});
 };
 
+function valiSaveForm(data){
+	data.RoleName = data.RoleName.trim();
+
+	if(0 === data.RoleName.length){
+		return '角色名称不能为空';
+	}
+}
+
 RoleSchema.statics.saveNew = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	this.create(newInfo, function(err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+	var valiResu = valiSaveForm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	var that = this;
+
+	this.findRoleByRoleName(data.RoleName, function (err, doc){
+		if(err){
+			if('string' === typeof err){
+				newInfo.Id = util.uuid(false);
+				that.create(newInfo, function (err, doc){
+					if(err) return cb(err);
+					cb(null, doc);
+				});
+				return;
+			}
+			return cb(err);
+		}
+		cb('角色名已经存在');
 	});
 };
 

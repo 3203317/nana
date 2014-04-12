@@ -8,6 +8,12 @@ var DeviceType = require('../modules/DeviceType.js');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+/**
+ *
+ * @method 设备管理
+ * @params 
+ * @return 
+ */
 exports.indexUI = function(req, res, next) {
 	var proxy = EventProxy.create('devices', 'deviceTypes', function(devices, deviceTypes){
 		res.render('Manage/Device/Index', {
@@ -33,6 +39,12 @@ exports.indexUI = function(req, res, next) {
 	});
 };
 
+/**
+ *
+ * @method 设备日志
+ * @params 
+ * @return 
+ */
 exports.logUI = function(req, res, next) {
 	var proxy = EventProxy.create('deviceTypes', function(deviceTypes){
 		res.render('Manage/DeviceLog/Index', {

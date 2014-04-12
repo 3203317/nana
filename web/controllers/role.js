@@ -5,6 +5,12 @@ var util = require('../libs/utils');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+/**
+ *
+ * @method 角色管理
+ * @params 
+ * @return 
+ */
 exports.indexUI = function(req, res, next) {
 	Role.findRoles(function(err, docs){
 		if(err) return next(err);
@@ -20,6 +26,12 @@ exports.indexUI = function(req, res, next) {
 	});
 };
 
+/**
+ *
+ * @method 添加新角色
+ * @params 
+ * @return 
+ */
 exports.saveNew = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;

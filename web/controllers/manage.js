@@ -5,6 +5,12 @@ var User = require('../modules/User.js');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+/**
+ *
+ * @method 后台管理
+ * @params 
+ * @return 
+ */
 exports.indexUI = function(req, res, next) {
 	User.getMenuTree('abc', function(err, docs){
 		if(err) return next(err);
@@ -20,6 +26,12 @@ exports.indexUI = function(req, res, next) {
 	});
 };
 
+/**
+ *
+ * @method 后台管理欢迎页
+ * @params 
+ * @return 
+ */
 exports.welcomeUI = function(req, res, next) {
 	res.render('Manage/Welcome', {
 		title: title,
