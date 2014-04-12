@@ -57,6 +57,7 @@ DeviceSchema.post('save', function(){
  * @return 
  */
 DeviceSchema.statics.isExist = function(id, cb) {
+	if(!id) return '设备Id不能为空';
 	id = id.trim();
 	if(0 === id.length) return cb('设备Id不能为空');
 
@@ -65,7 +66,7 @@ DeviceSchema.statics.isExist = function(id, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		if(doc) return cb(null, doc);
-		cb('该设备已被注册');
+		cb('没有找到该设备');
 	});
 };
 

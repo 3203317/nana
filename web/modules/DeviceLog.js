@@ -1,6 +1,8 @@
 var db = require('./mongodb');
 var util = require('../libs/utils');
 
+var Device = require('./Device');
+
 var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
@@ -39,8 +41,29 @@ DeviceLogSchema.pre('save', function (next, done){
 DeviceLogSchema.post('save', function(){
 });
 
-DeviceLogSchema.statics.findDevices = function(pagination, cb) {
+var str1 = '设备Id不能为空';
+var str2 = '用户Id不能为空';
+var str3 = '找不到该设备';
+var str4 = '用户Id不能为空';
+
+/**
+ *
+ * @method 通过设备Id获取日志记录(分页)
+ * @params device_id 设备Id(必须)
+ * @params startTime 开始时间
+ * @params endTime 结束时间
+ * @return 
+ */
+DeviceLogSchema.statics.findDeviceLogsByDeviceId = function(device_id, startTime, endTime, pagination, cb) {
+	if(!device_id) return cb(str1);
+	device_id = device_id.trim();
+	if(0 === device_id.length) return cb(str1);
+
 	pagination[0] = pagination[0] || 1;
+
+	var para1 = {
+		Device_Id: device_id
+	};
 
 	var para3 = {
 		sort: {
@@ -50,15 +73,16 @@ DeviceLogSchema.statics.findDevices = function(pagination, cb) {
 		limit: pagination[1]
 	};
 
-	this.find(null, null, para3, function (err, docs){
+	this.find(para1, null, para3, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
 };
 
 function valiAddForm(data){
+	if(!data.DeviceId) return str1;
 	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return '设备Id不能为空';
+	if(0 === data.DeviceId.length) return str1;
 }
 
 /**
@@ -73,33 +97,24 @@ DeviceLogSchema.statics.saveNew = function(newInfo, cb) {
 
 	var that = this;
 
-	var para1 = {
-		DeviceId: deviceId,
-		User_Id: user_id
-	};
-
-	this.findDeviceByUser(para1, function (err, doc){
-		if(err){
-			if('string' === typeof err){
-				newInfo.Id = util.uuid(false);
-				that.create(newInfo, function (err, doc){
-					if(err) return cb(err);
-					cb(null, doc);
-				});
-				return;
-			}
-			return cb(err);
-		}
-		cb('该设备已被注册');
+	Device.isExist(newInfo.DeviceId, function (err, doc){
+		if(err) return cb(err);
+		
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(next, doc);
+		});
 	});
 };
 
 function valiFindPara(data){
+	if(!data.DeviceId) return str1;
 	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return '设备Id不能为空';
+	if(0 === data.DeviceId.length) return str1;
 
+	if(!data.User_Id) return str2;
 	data.User_Id = data.User_Id.trim();
-	if(0 === data.User_Id.length) return '用户Id不能为空';
+	if(0 === data.User_Id.length) return str2;
 }
 
 /**
@@ -115,7 +130,7 @@ DeviceLogSchema.statics.findDeviceByUser = function(para1, cb) {
 	this.findOne(para1, null, null, function (err, doc){
 		if(err) return next(err);
 		if(doc) return cb(null, doc);
-		cb('找不到该设备');
+		cb(str3);
 	});
 };
 
@@ -127,7 +142,7 @@ DeviceLogSchema.statics.findDeviceByUser = function(para1, cb) {
  */
 DeviceLogSchema.statics.findDevicesByUserId = function(userId, cb) {
 	var user_id = userId.trim();
-	if(0 === user_id.length) return cb('用户Id不能为空');
+	if(0 === user_id.length) return cb(str4);
 
 	this.find({
 		User_Id: user_id
