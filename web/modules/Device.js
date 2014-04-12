@@ -126,25 +126,25 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
 	});
 };
 
-function valiFindPara(data){
-	if(!data.DeviceId) return '设备Id不能为空';
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return '设备Id不能为空';
-
-	if(!data.User_Id) return '用户Id不能为空';
-	data.User_Id = data.User_Id.trim();
-	if(0 === data.User_Id.length) return '用户Id不能为空';
-}
-
 /**
  *
- * @method 查询单个设备
- * @params 
+ * @method 查询用户单个设备
+ * @params deviceId 设备唯一编号
  * @return 
  */
-DeviceSchema.statics.findDeviceByUser = function(para1, cb) {
-	var valiResu = valiFindPara(para1);
-	if(valiResu) return cb(valiResu);
+DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
+	if(!deviceId) return '设备Id不能为空';
+	deviceId = deviceId.trim();
+	if(0 === deviceId.length) return '设备Id不能为空';
+
+	if(!user_id) return '用户Id不能为空';
+	user_id = user_id.trim();
+	if(0 === user_id.length) return '用户Id不能为空';
+
+	var para1 = {
+		DeviceId: deviceId,
+		User_Id: user_id
+	};
 
 	this.findOne(para1, null, null, function (err, doc){
 		if(err) return next(err);
