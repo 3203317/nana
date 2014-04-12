@@ -29,13 +29,7 @@ var DeviceLogSchema = new Schema({
 });
 
 DeviceLogSchema.virtual('sCreateTime').get(function(){
-	var ct = this.CreateTime;
-	return ct.getFullYear() +'/'+
-			util.pdate(ct.getMonth()+1) +'/'+
-			util.pdate(ct.getDate()) +' '+
-			ct.getHours() +':'+
-			util.pdate(ct.getMinutes()) +':'+
-			util.pdate(ct.getSeconds());
+	return util.formatDate(this.CreateTime);
 });
 
 DeviceLogSchema.pre('save', function (next, done){

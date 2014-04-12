@@ -19,6 +19,22 @@ exports.md5 = function(str) {
 /**
  * 日期小于10补0
  **/
-exports.pdate = function(s) {
+function pdate(s) {
 	return 10 > s ? '0' + s : s;
 }
+
+exports.formatDate = function(date){
+	var strs = [];
+	strs.push(date.getFullYear());
+	strs.push('/');
+	strs.push(pdate(date.getMonth()+1));
+	strs.push('/');
+	strs.push(pdate(date.getDate()));
+	strs.push(' ');
+	strs.push(date.getHours());
+	strs.push(':');
+	strs.push(pdate(date.getMinutes()));
+	strs.push(':');
+	strs.push(pdate(date.getSeconds()));
+	return  strs.join('');
+};

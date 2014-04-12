@@ -33,33 +33,15 @@ var RoleSchema = new Schema({
 });
 
 RoleSchema.virtual('sStartTime').get(function(){
-	var st = this.StartTime;
-	return st.getFullYear() +'/'+
-			util.pdate(st.getMonth()+1) +'/'+
-			util.pdate(st.getDate()) +' '+
-			st.getHours() +':'+
-			util.pdate(st.getMinutes()) +':'+
-			util.pdate(st.getSeconds());
+	return util.formatDate(this.StartTime);
 });
 
 RoleSchema.virtual('sEndTime').get(function(){
-	var et = this.EndTime;
-	return et.getFullYear() +'/'+
-			util.pdate(et.getMonth()+1) +'/'+
-			util.pdate(et.getDate()) +' '+
-			et.getHours() +':'+
-			util.pdate(et.getMinutes()) +':'+
-			util.pdate(et.getSeconds());
+	return util.formatDate(this.EndTime);
 });
 
 RoleSchema.virtual('sCreateTime').get(function(){
-	var ct = this.CreateTime;
-	return ct.getFullYear() +'/'+
-			util.pdate(ct.getMonth()+1) +'/'+
-			util.pdate(ct.getDate()) +' '+
-			ct.getHours() +':'+
-			util.pdate(ct.getMinutes()) +':'+
-			util.pdate(ct.getSeconds());
+	return util.formatDate(this.CreateTime);
 });
 
 RoleSchema.pre('save', function(next, done){
