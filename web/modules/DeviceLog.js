@@ -44,7 +44,6 @@ DeviceLogSchema.post('save', function(){
 var str1 = '设备Id不能为空';
 var str2 = '用户Id不能为空';
 var str3 = '找不到该设备';
-var str4 = '用户Id不能为空';
 
 /**
  *
@@ -142,7 +141,7 @@ DeviceLogSchema.statics.findDeviceByUser = function(para1, cb) {
  */
 DeviceLogSchema.statics.findDevicesByUserId = function(userId, cb) {
 	var user_id = userId.trim();
-	if(0 === user_id.length) return cb(str4);
+	if(0 === user_id.length) return cb(str2);
 
 	this.find({
 		User_Id: user_id
