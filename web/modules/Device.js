@@ -50,6 +50,25 @@ DeviceSchema.pre('save', function (next, done){
 DeviceSchema.post('save', function(){
 });
 
+/**
+ *
+ * @method 监测设备是否存在
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.isExist = function(id, cb) {
+	id = id.trim();
+	if(0 === id.length) return cb('设备Id不能为空');
+
+	this.findOne({
+		Id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		if(doc) return cb(null, doc);
+		cb('该设备已被注册');
+	});
+};
+
 DeviceSchema.statics.findDevices = function(pagination, cb) {
 	pagination[0] = pagination[0] || 1;
 
