@@ -48,23 +48,11 @@ UserSchema.virtual('sSex').get(function(){
 });
 
 UserSchema.virtual('sBirthday').get(function(){
-	var bt = this.Birthday;
-	return bt ? bt.getFullYear() +'/'+
-			util.pdate(bt.getMonth()+1) +'/'+
-			util.pdate(bt.getDate()) +' '+
-			bt.getHours() +':'+
-			util.pdate(bt.getMinutes()) +':'+
-			util.pdate(bt.getSeconds()) : '';
+	return this.Birthday ? util.formatDate(this.Birthday) : '';
 });
 
 UserSchema.virtual('sRegTime').get(function(){
-	var rt = this.RegTime;
-	return rt.getFullYear() +'/'+
-			util.pdate(rt.getMonth()+1) +'/'+
-			util.pdate(rt.getDate()) +' '+
-			rt.getHours() +':'+
-			util.pdate(rt.getMinutes()) +':'+
-			util.pdate(rt.getSeconds());
+	return util.formatDate(this.RegTime);
 });
 
 UserSchema.pre('save', function(next, done){
