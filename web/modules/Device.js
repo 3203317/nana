@@ -49,7 +49,7 @@ DeviceSchema.virtual('sCreateTime').get(function(){
 			util.pdate(ct.getSeconds());
 });
 
-DeviceSchema.pre('save', function(next, done){
+DeviceSchema.pre('save', function (next, done){
 	next();
 });
 
@@ -67,7 +67,7 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 		limit: pagination[1]
 	};
 
-	this.find(null, null, para3, function(err, docs){
+	this.find(null, null, para3, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -75,12 +75,15 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 
 function valiAddForm(data){
 	data.DeviceId = data.DeviceId.trim();
-
-	if(0 === data.DeviceId.length){
-		return '设备Id不能为空';
-	}
+	if(0 === data.DeviceId.length) return '设备Id不能为空';
 }
 
+/**
+ *
+ * @method 新增设备
+ * @params 
+ * @return 
+ */
 DeviceSchema.statics.saveNew = function(newInfo, cb) {
 	var valiResu = valiAddForm(newInfo);
 	if(valiResu) return cb(valiResu);
@@ -116,6 +119,12 @@ function valiFindPara(data){
 	if(0 === data.User_Id.length) return '用户Id不能为空';
 }
 
+/**
+ *
+ * @method 查询单个设备
+ * @params 
+ * @return 
+ */
 DeviceSchema.statics.findDeviceByUser = function(para1, cb) {
 	var valiResu = valiFindPara(para1);
 	if(valiResu) return cb(valiResu);
@@ -124,6 +133,24 @@ DeviceSchema.statics.findDeviceByUser = function(para1, cb) {
 		if(err) return next(err);
 		if(doc) return cb(null, doc);
 		cb('找不到该设备');
+	});
+};
+
+/**
+ *
+ * @method 查询用户的全部设备
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.findDevicesByUserId = function(userId, cb) {
+	var user_id = userId.trim();
+	if(0 === user_id.length) return cb('用户Id不能为空');
+
+	this.find({
+		User_Id: user_id
+	}, null, null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
 	});
 };
 
