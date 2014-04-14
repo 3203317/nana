@@ -77,7 +77,7 @@ app.use(function (req, res) {
 			msg: 'Not found'
 		});
 	}
-	return res.render(404, {
+	res.render(404, {
 		state: 404,
 		url: req.url,
 		title: title,
