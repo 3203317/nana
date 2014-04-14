@@ -22,6 +22,10 @@ var DeviceLogSchema = new Schema({
 	Latitude: {
 		type: String
 	},
+	/* 客户端创建时间 */
+	ClientTime: {
+		type: Date
+	},
 	CreateTime: {
 		type: Date,
 		default: Date.now
