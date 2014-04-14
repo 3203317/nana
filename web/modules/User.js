@@ -81,6 +81,12 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 	});
 };
 
+function valiRegForm(data){
+	if(!data.UserName) return '用户名不能为空';
+
+	if(!data.UserPass) return '密码不能为空';
+}
+
 /**
  *
  * @method 新用户注册
@@ -88,39 +94,36 @@ UserSchema.statics.findUsers = function(pagination, cb) {
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
-	if(!data.UserName || !data.UserPass) return cb('用户名或密码不能为空');
-	data.UserName = data.UserName.trim();
-	data.UserPass = data.UserPass.trim();
-	if(0 === data.UserName.length || 0 === data.UserPass.length) return cb('用户名或密码不能为空');
+	var valiResu = valiRegForm(newInfo);
+	if(valiResu) return cb(valiResu);
 
 	var that = this;
 
 	that.findUserByUserName(newInfo.UserName, function (err, doc){
-		if(err){
-			if('string' === typeof err){
-				newInfo.Id = util.uuid(false);
-				newInfo.UserPass = util.md5(newInfo.UserPass);
+		if(err) return cb(err);
+		if('string' === typeof doc){
+			newInfo.Id = util.uuid(false);
+			newInfo.UserName = newInfo.UserName.toLowerCase();
+			newInfo.UserPass = util.md5(newInfo.UserPass);
 
-				that.create(newInfo, function (err, doc){
-					if(err) return cb(err);
-					cb(null, doc);
-				});
-				return;
-			}
-			return cb(err);
+			that.create(newInfo, function (err, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			});
+			return;
 		}
-		cb('用户名已经存在');
+		cb(null, '用户名已经存在');
 	});
 };
 
 UserSchema.statics.login = function(userName, userPass, cb) {
-	if(!userName) return cb(null, '用户名或密码不能为空');
+	if(!userName) return cb('用户名或密码不能为空');
 	userName = userName.trim();
-	if(0 === userName.length) return cb(null, '用户名或密码不能为空');
+	if(0 === userName.length) return cb('用户名或密码不能为空');
 
-	if(!userPass) return cb(null, '用户名或密码不能为空');
+	if(!userPass) return cb('用户名或密码不能为空');
 	userPass = userPass.trim();
-	if(0 === userPass.length) return cb(null, '用户名或密码不能为空');
+	if(0 === userPass.length) return cb('用户名或密码不能为空');
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -137,9 +140,9 @@ UserSchema.statics.login = function(userName, userPass, cb) {
  * @return 
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
-	if(!userName) return cb(null, '用户名不能为空');
+	if(!userName) return cb('用户名不能为空');
 	userName = userName.trim();
-	if(0 === userName.length) return cb(null, '用户名不能为空');
+	if(0 === userName.length) return cb('用户名不能为空');
 	/* 用户名转换小写 */
 	userName = userName.toLowerCase();
 

@@ -55,10 +55,10 @@ app.use(function (err, req, res, next){
 	if(req.xhr){
 		return res.send({
 			success: false,
-			msg: err.message
+			msg: 'string' === typeof err ? err : err.message
 		});
 	}
-	res.render(500, {		
+	res.render(500, {
 		state: 500,
 		url: err.message,
 		title: title,
