@@ -90,7 +90,7 @@ function valiAddFrm(data){
 
 /**
  *
- * @method 新增设备日志
+ * @method 新增设备日志(单条)
  * @params 
  * @return 
  */
@@ -105,7 +105,7 @@ DeviceLogSchema.statics.saveNew = function(newInfo, cb) {
 		if('string' === typeof doc) return cb(null, doc);
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(next, doc);
+			cb(null, doc);
 		});
 	});
 };
