@@ -111,15 +111,6 @@ UserSchema.statics.register = function(newInfo, cb) {
 	});
 };
 
-function valiLogForm(data){
-	data.UserName = data.UserName.trim();
-	data.UserPass = data.UserPass.trim();
-
-	if(0 === data.UserName.length || 0 === data.UserPass.length){
-		return '用户名或密码不能为空';
-	}
-}
-
 UserSchema.statics.login = function(userName, userPass, cb) {
 	if(!userName) return cb(null, '用户名或密码不能为空');
 	userName = userName.trim();
