@@ -110,51 +110,6 @@ DeviceLogSchema.statics.saveNew = function(newInfo, cb) {
 	});
 };
 
-function valiFindPara(data){
-	if(!data.DeviceId) return str1;
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return str1;
-
-	if(!data.User_Id) return str2;
-	data.User_Id = data.User_Id.trim();
-	if(0 === data.User_Id.length) return str2;
-}
-
-/**
- *
- * @method 查询单个设备
- * @params 
- * @return 
- */
-DeviceLogSchema.statics.findDeviceByUser = function(para1, cb) {
-	var valiResu = valiFindPara(para1);
-	if(valiResu) return cb(valiResu);
-
-	this.findOne(para1, null, null, function (err, doc){
-		if(err) return next(err);
-		if(doc) return cb(null, doc);
-		cb(str3);
-	});
-};
-
-/**
- *
- * @method 查询用户的全部设备
- * @params 
- * @return 
- */
-DeviceLogSchema.statics.findDevicesByUserId = function(userId, cb) {
-	var user_id = userId.trim();
-	if(0 === user_id.length) return cb(str2);
-
-	this.find({
-		User_Id: user_id
-	}, null, null, function (err, docs){
-		if(err) return cb(err);
-		cb(null, docs);
-	});
-};
-
 var DeviceLogModel = mongoose.model('devicelog', DeviceLogSchema);
 
 exports = module.exports = DeviceLogModel;
