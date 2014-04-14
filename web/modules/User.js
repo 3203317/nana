@@ -6,6 +6,8 @@ var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
+var str1 = '用户名或密码不能为空';
+
 var UserSchema = new Schema({
 	Id: {
 		type: String,
