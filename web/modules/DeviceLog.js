@@ -82,10 +82,10 @@ DeviceLogSchema.statics.findDeviceLogsByDeviceId = function(device_id, startTime
 	});
 };
 
-function valiAddForm(data){
-	if(!data.DeviceId) return str1;
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return str1;
+function valiAddFrm(data){
+	if(!data.Device_Id) return str1;
+	data.Device_Id = data.Device_Id.trim();
+	if(0 === data.Device_Id.length) return str1;
 }
 
 /**
@@ -95,14 +95,14 @@ function valiAddForm(data){
  * @return 
  */
 DeviceLogSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiAddForm(newInfo);
+	var valiResu = valiAddFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
 	var that = this;
 
-	Device.isExist(newInfo.DeviceId, function (err, doc){
+	Device.isExist(newInfo.Device_Id, function (err, doc){
 		if(err) return cb(err);
-		
+		if('string' === typeof doc) return cb(null, doc);
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
 			cb(next, doc);
