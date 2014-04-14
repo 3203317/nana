@@ -69,13 +69,11 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	User.login(data, function (err, doc){
-		if(err){
-			if('string' === typeof err){
-				result.msg = err;
-				return res.send(result);
-			}
-			return next(err);
+	User.login(data.UserName, data.UserPass, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
 		}
 		result.success = true;
 		res.send(result);
@@ -93,12 +91,10 @@ exports.register = function(req, res, next) {
 		data = req._data;
 
 	User.register(data, function (err, doc){
-		if(err){
-			if('string' === typeof err){
-				result.msg = err;
-				return res.send(result);
-			}
-			return next(err);
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
 		}
 		result.success = true;
 		result.msg = '新用户注册成功';

@@ -22,6 +22,10 @@ var DeviceLogSchema = new Schema({
 	Latitude: {
 		type: String
 	},
+	/* 客户端创建时间 */
+	ClientTime: {
+		type: Date
+	},
 	CreateTime: {
 		type: Date,
 		default: Date.now
@@ -78,76 +82,31 @@ DeviceLogSchema.statics.findDeviceLogsByDeviceId = function(device_id, startTime
 	});
 };
 
-function valiAddForm(data){
-	if(!data.DeviceId) return str1;
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return str1;
+function valiAddFrm(data){
+	if(!data.Device_Id) return str1;
+	data.Device_Id = data.Device_Id.trim();
+	if(0 === data.Device_Id.length) return str1;
 }
 
 /**
  *
- * @method 新增设备日志
+ * @method 新增设备日志(单条)
  * @params 
  * @return 
  */
 DeviceLogSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiAddForm(newInfo);
+	var valiResu = valiAddFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
 	var that = this;
 
-	Device.isExist(newInfo.DeviceId, function (err, doc){
+	Device.isExist(newInfo.Device_Id, function (err, doc){
 		if(err) return cb(err);
-		
+		if('string' === typeof doc) return cb(null, doc);
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(next, doc);
+			cb(null, doc);
 		});
-	});
-};
-
-function valiFindPara(data){
-	if(!data.DeviceId) return str1;
-	data.DeviceId = data.DeviceId.trim();
-	if(0 === data.DeviceId.length) return str1;
-
-	if(!data.User_Id) return str2;
-	data.User_Id = data.User_Id.trim();
-	if(0 === data.User_Id.length) return str2;
-}
-
-/**
- *
- * @method 查询单个设备
- * @params 
- * @return 
- */
-DeviceLogSchema.statics.findDeviceByUser = function(para1, cb) {
-	var valiResu = valiFindPara(para1);
-	if(valiResu) return cb(valiResu);
-
-	this.findOne(para1, null, null, function (err, doc){
-		if(err) return next(err);
-		if(doc) return cb(null, doc);
-		cb(str3);
-	});
-};
-
-/**
- *
- * @method 查询用户的全部设备
- * @params 
- * @return 
- */
-DeviceLogSchema.statics.findDevicesByUserId = function(userId, cb) {
-	var user_id = userId.trim();
-	if(0 === user_id.length) return cb(str2);
-
-	this.find({
-		User_Id: user_id
-	}, null, null, function (err, docs){
-		if(err) return cb(err);
-		cb(null, docs);
 	});
 };
 

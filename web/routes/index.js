@@ -7,15 +7,29 @@ var manage = require('../controllers/manage');
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
+var str1 = '参数异常';
+
 module.exports = function(app) {
 
 	function valiPostData(req, res, next){
+		var data = req.body.data;
+		if(!data) return res.send({
+			success: false,
+			msg: str1
+		});
+
 		try{
-			var data = eval('('+ req.body.data +')');
-			req._data = data;
-			next();
+			data = JSON.parse(data);
+			if('object' === typeof data){
+				req._data = data;
+				return next();
+			}
+			res.send({
+				success: false,
+				msg: str1
+			});
 		}catch(ex){
-			return res.send({
+			res.send({
 				success: false,
 				msg: ex.message
 			});

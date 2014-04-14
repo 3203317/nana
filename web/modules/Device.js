@@ -31,6 +31,10 @@ var DeviceSchema = new Schema({
 	User_Id: {
 		type: String
 	},
+	Status: {
+		type: Number,
+		default: 1
+	},
 	CreateTime: {
 		type: Date,
 		default: Date.now
@@ -52,21 +56,20 @@ DeviceSchema.post('save', function(){
 
 /**
  *
- * @method 监测设备是否存在
+ * @method 注册设备
  * @params 
  * @return 
  */
 DeviceSchema.statics.isExist = function(id, cb) {
-	if(!id) return cb('设备Id不能为空');
+	if(!id) return '主键Id不能为空';
 	id = id.trim();
-	if(0 === id.length) return cb('设备Id不能为空');
+	if(0 === id.length) return '主键Id不能为空';
 
 	this.findOne({
 		Id: id
 	}, null, null, function (err, doc){
-		if(err) return cb(err);
-		if(doc) return cb(null, doc);
-		cb('没有找到该设备');
+		if(err) return next(err);
+		cb(null, doc ? doc : '没有找到该设备');
 	});
 };
 
@@ -87,26 +90,40 @@ DeviceSchema.statics.findDevices = function(pagination, cb) {
 	});
 };
 
+function valiRegFrm(data){
+	if(!data.DeviceId) return '设备Id不能为空';
+	data.DeviceId = data.DeviceId.trim();
+	if(0 === data.DeviceId.length) return '设备Id不能为空';
+
+	if(!data.User_Id) return '用户Id不能为空';
+	data.User_Id = data.User_Id.trim();
+	if(0 === data.User_Id.length) return '用户Id不能为空';
+}
+
 /**
  *
- * @method 新增设备
+ * @method 注册设备
  * @params 
  * @return 
  */
-DeviceSchema.statics.saveNew = function(newInfo, cb) {
-	if(!newInfo.DeviceId) return cb('设备Id不能为空');
-	newInfo.DeviceId = newInfo.DeviceId.trim();
-	if(0 === newInfo.DeviceId.length) return cb('设备Id不能为空');
+DeviceSchema.statics.register = function(newInfo, cb) {
+	var valiResu = valiRegFrm(newInfo);
+	if(valiResu) return cb(valiResu);
 
 	var that = this;
 
 	that.findDeviceByUser(newInfo.User_Id, newInfo.DeviceId, function (err, doc){
 		if(err) return cb(err);
-
-		if('string' === typeof doc) return cb(doc);
-
-		newInfo.Id = util.uuid(false);
-		that.create(newInfo, function (err, doc){
+		if('string' === typeof doc){
+			newInfo.Id = util.uuid(false);
+			that.create(newInfo, function (err, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			});
+			return;
+		}
+		/* 设置曾经注册设备的状态启用 */
+		that.setStatusEnable(doc.Id, function (err, doc){
 			if(err) return cb(err);
 			cb(null, doc);
 		});
@@ -120,13 +137,13 @@ DeviceSchema.statics.saveNew = function(newInfo, cb) {
  * @return 
  */
 DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
-	if(!deviceId) return cb('设备Id不能为空');
+	if(!deviceId) return '设备Id不能为空';
 	deviceId = deviceId.trim();
-	if(0 === deviceId.length) return cb('设备Id不能为空');
+	if(0 === deviceId.length) return '设备Id不能为空';
 
-	if(!user_id) return cb('用户Id不能为空');
+	if(!user_id) return '用户Id不能为空';
 	user_id = user_id.trim();
-	if(0 === user_id.length) return cb('用户Id不能为空');
+	if(0 === user_id.length) return '用户Id不能为空';
 
 	var para1 = {
 		DeviceId: deviceId,
@@ -136,6 +153,52 @@ DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
 	this.findOne(para1, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '找不到该设备');
+	});
+};
+
+/**
+ *
+ * @method 设置单个设备状态启用
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.setStatusEnable = function(id, cb) {
+	if(!id) return '主键Id不能为空';
+	id = id.trim();
+	if(0 === id.length) return '主键Id不能为空';
+
+	this.update({
+		Id: id
+	}, {
+		'$set': {
+			Status: 1
+		}
+	}, function (err, doc){
+		if(err) return next(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ *
+ * @method 设置单个设备状态禁用
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.setStatusDisable = function(id, cb) {
+	if(!id) return '主键Id不能为空';
+	id = id.trim();
+	if(0 === id.length) return '主键Id不能为空';
+
+	this.update({
+		Id: id
+	}, {
+		'$set': {
+			Status: 2
+		}
+	}, function (err, doc){
+		if(err) return next(err);
+		cb(null, doc);
 	});
 };
 

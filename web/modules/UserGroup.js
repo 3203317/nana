@@ -18,10 +18,10 @@ var UserGroupSchema = new Schema({
 	UserGroupDesc: {
 		type: String
 	},
-	Create_User_Id: {
+	User_Id: {
 		type: String
 	},
-	createTime: {
+	CreateTime: {
 		type: Date,
 		default: Date.now
 	}
@@ -36,12 +36,27 @@ UserGroupSchema.pre('save', function(next, done){
 UserGroupSchema.post('save', function(){
 });
 
+function valiAddFrm(data){
+	if(!data.UserGroupName) return '用户组名称不能为空';
+}
+
 UserGroupSchema.statics.saveNew = function(newInfo, cb) {
+	var valiResu = valiAddFrm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	var that = this;
+
 	newInfo.Id = util.uuid(false);
-	this.create(newInfo, function(err, doc){
+	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});
+};
+
+UserGroupSchema.statics.findUserGroupsByUser = function(userId, cb) {
+	if(!userId) return '用户Id不能为空';
+	var user_id = userId.trim();
+	if(0 === user_id.length) return '用户Id不能为空';
 };
 
 var UserGroupModel = mongoose.model('userGroup', UserGroupSchema);
