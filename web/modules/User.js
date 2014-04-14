@@ -81,7 +81,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 	});
 };
 
-function valiRegForm(data){
+function valiRegFrm(data){
 	if(!data.UserName) return '用户名不能为空';
 
 	if(!data.UserPass) return '密码不能为空';
@@ -94,7 +94,7 @@ function valiRegForm(data){
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
-	var valiResu = valiRegForm(newInfo);
+	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
 	var that = this;
