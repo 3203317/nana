@@ -120,14 +120,20 @@ function valiLogForm(data){
 	}
 }
 
-UserSchema.statics.login = function(logInfo, cb) {
-	var valiResu = valiLogForm(logInfo);
-	if(valiResu) return cb(valiResu);
+UserSchema.statics.login = function(userName, userPass, cb) {
+	if(!userName) return cb(null, '用户名或密码不能为空');
+	userName = userName.trim();
+	if(0 === userName.length) return cb(null, '用户名或密码不能为空');
 
-	this.findUserByUserName(logInfo.UserName, function (err, doc){
+	if(!userPass) return cb(null, '用户名或密码不能为空');
+	userPass = userPass.trim();
+	if(0 === userPass.length) return cb(null, '用户名或密码不能为空');
+
+	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(util.md5(logInfo.UserPass) === doc.UserPass) return cb(null, doc);
-		cb('用户名或密码输入错误');
+		if('string' === typeof doc) return cb(null, doc);
+		if(util.md5(userPass) === doc.UserPass) return cb(null, doc);
+		cb(null, '用户名或密码输入错误');
 	});
 };
 
@@ -138,9 +144,9 @@ UserSchema.statics.login = function(logInfo, cb) {
  * @return 
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
-	if(!userName) return cb('用户名不能为空');
+	if(!userName) return cb(null, '用户名不能为空');
 	userName = userName.trim();
-	if(0 === userName.length) return cb('用户名不能为空');
+	if(0 === userName.length) return cb(null, '用户名不能为空');
 
 	this.findOne({
 		UserName: userName
