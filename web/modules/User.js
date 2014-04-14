@@ -138,6 +138,8 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 	if(!userName) return cb(null, '用户名不能为空');
 	userName = userName.trim();
 	if(0 === userName.length) return cb(null, '用户名不能为空');
+	/* 用户名转换小写 */
+	userName = userName.toLowerCase();
 
 	this.findOne({
 		UserName: userName

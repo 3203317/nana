@@ -1,3 +1,3 @@
-{Id: '15ea39fac7714d8580c435019adf1a63', UserName: 'Admin', UserPass: '123456', Sex: 1, Email: '', Birthday: {'$date': 1397005200993}, RegTime: {'$date': 1397005200993}}
+{Id: '15ea39fac7714d8580c435019adf1a63', UserName: 'admin', UserPass: '123456', Sex: 1, Email: '', Birthday: {'$date': 1397005200993}, RegTime: {'$date': 1397005200993}}
 {Id: '1eda41a36bf44a929c6559983e698e8a', UserName: '张三', UserPass: '', Sex: 2, Email: '', Birthday: {'$date': 1397005200993}, RegTime: {'$date': 1397005200993}}
 {Id: '5e7d52a45ee546a38d681965ca5828c1', UserName: '李四', UserPass: '', Sex: 2, Email: '', Birthday: {'$date': 1397005200993}, RegTime: {'$date': 1397005200993}}
