@@ -45,12 +45,34 @@
 		<script type="text/javascript">
 			function validateForm(){
 				var formObj = $("#loginForm").serializeObjectForm();
+				if(0 === formObj.UserName.length) return;
+				if(0 === formObj.UserPass.length) return;
 				return formObj;
 			}
 
 			$(function(){
 				$('#btn_login').click(function(){
-					location.href = '../index'
+					var formObj = validateForm();
+					if(!formObj){
+						alert('表单验证失败')
+						return;
+					}
+
+					var data = { data: JSON.stringify(formObj) };
+
+					$.ajax({
+						url: '/manage/user/login.do',
+						type: "POST",
+						dataType: "json",
+						data: data
+					}).done(function(responseText) {
+						if(responseText.success){
+							location.href = "../index?locale="+ (location.search.match(/locale=([\w\-]+)/) ? RegExp.$1 : "zh") +"#page/welcome";
+						}else{
+							alert(responseText.msg);
+						}
+					}).complete(function(){
+					});
 				});
 			});
 		</script>

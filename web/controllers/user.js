@@ -69,6 +69,8 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
+	req.session.destroy();
+
 	User.login(data.UserName, data.UserPass, function (err, doc){
 		if(err) return next(err);
 		if('string' === typeof doc){
@@ -78,6 +80,32 @@ exports.login = function(req, res, next) {
 		result.success = true;
 		res.send(result);
 	});
+};
+
+exports.loginBackStage = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	User.loginBackStage(data.UserName, data.UserPass, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
+		}
+		req.session.userId = doc.Id;
+		req.session.lv = doc.Lv;
+		req.session.user = doc;
+		result.success = true;
+		res.send(result);
+	});
+};
+
+exports.logoutBackStage = function(req, res, next) {
+	var result = { success: false };
+
+	req.session.destroy();
+	result.success = true;
+	res.send(result);
 };
 
 /**
