@@ -80,6 +80,21 @@ exports.login = function(req, res, next) {
 	});
 };
 
+exports.loginBackStage = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	User.loginBackStage(data.UserName, data.UserPass, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
+		}
+		result.success = true;
+		res.send(result);
+	});
+};
+
 /**
  *
  * @method 新用户注册

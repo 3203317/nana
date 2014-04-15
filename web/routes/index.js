@@ -55,6 +55,7 @@ module.exports = function(app) {
 	app.post('/role/saveNew.do', valiPostData, role.saveNew);
 
 	app.get('/manage/user/login', user.loginBackStageUI);
+	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 	app.get('/manage', manage.validate);
 	app.post('/manage', manage.validate);
 	app.get('/manage/index', manage.indexUI);
