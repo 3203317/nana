@@ -66,11 +66,13 @@
 						dataType: "json",
 						data: data
 					}).done(function(responseText) {
-						console.log(responseText);
+						if(responseText.success){
+							location.href = "../index?locale="+ (location.search.match(/locale=([\w\-]+)/) ? RegExp.$1 : "zh") +"#page/welcome";
+						}else{
+							alert(responseText.msg);
+						}
 					}).complete(function(){
 					});
-
-					// location.href = '../index'
 				});
 			});
 		</script>

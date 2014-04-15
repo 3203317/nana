@@ -44,5 +44,12 @@ exports.welcomeUI = function(req, res, next) {
 };
 
 exports.validate = function(req, res, next) {
-	
+	if(1 === req.session.lv) return next();
+	if(req.xhr){
+		return res.send({
+			success: false,
+			msg: '无权访问'
+		});
+	}
+	res.redirect('/manage/user/login');
 };

@@ -56,14 +56,13 @@ module.exports = function(app) {
 
 	app.get('/manage/user/login', user.loginBackStageUI);
 	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
-	app.get('/manage', manage.validate);
-	app.post('/manage', manage.validate);
-	app.get('/manage/index', manage.indexUI);
-	app.get('/manage/welcome', manage.welcomeUI);
+	app.post('/manage/user/logout.do', manage.validate, user.logoutBackStage);
+	app.get('/manage/index', manage.validate, manage.indexUI);
+	app.get('/manage/welcome', manage.validate, manage.welcomeUI);
 
-	app.get('/manage/user/index', user.indexUI);
-	app.get('/manage/module/index', _module.indexUI);
-	app.get('/manage/role/index', role.indexUI);
-	app.get('/manage/device/index', device.indexUI);
-	app.get('/manage/devicelog/index', device.logUI);
+	app.get('/manage/user/index', manage.validate, user.indexUI);
+	app.get('/manage/module/index', manage.validate, _module.indexUI);
+	app.get('/manage/role/index', manage.validate, role.indexUI);
+	app.get('/manage/device/index', manage.validate, device.indexUI);
+	app.get('/manage/devicelog/index', manage.validate, device.logUI);
 };
