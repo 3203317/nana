@@ -2,7 +2,6 @@
 	<thead>
 		<tr>
 			<th class="olx-table-th-center"><input type="checkbox" title="全选/取消"></th>
-			<th>#</th>
 			<th>模块名称</th>
 			<th>模块地址</th>
 			<th>排序</th>
@@ -10,13 +9,14 @@
 		</tr>
 	</thead>
 	<tbody>
+		#foreach($module in $cmodules)
 		<tr>
-			<td class="olx-table-td-center"><input type="checkbox" value="1"></td>
-			<td>11</td>
-			<td>4255563853</td>
-			<td>张三</td>
-			<td>男</td>
-			<td>2013/12/11 10:50:57</td>
+			<td class="olx-table-td-center"><input type="checkbox" value="$module.Id"></td>
+			<td>$module.ModuleName</td>
+			<td>$module.ModuleUrl</td>
+			<td>$module.Sort</td>
+			<td>$module.sCreateTime</td>
 		</tr>
+		#end
 	</tbody>
 </table>

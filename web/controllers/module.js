@@ -1,4 +1,5 @@
 var conf = require('../settings');
+var EventProxy = require('eventproxy');
 var Module = require('../modules/Module.js');
 var util = require('../libs/utils');
 
@@ -12,11 +13,7 @@ var title = 'FOREWORLD 洪荒';
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	Module.findModules({
-		_id: 0,
-		CreateTime: 0
-	}, function(err, docs){
-		if(err) return next(err);
+	var proxy = EventProxy.create('modules', 'cmodules', function(modules, cmodules){
 		res.render('Manage/Module/Index', {
 			title: title,
 			atitle: '模块管理',
@@ -24,7 +21,21 @@ exports.indexUI = function(req, res, next) {
 			keywords: ',模块管理,Bootstrap3',
 			virtualPath: virtualPath +'/',
 			cdn: conf.cdn,
-			modules: docs
+			modules: modules,
+			cmodules: cmodules
 		});
+	});
+
+	Module.findModules({
+		_id: 0,
+		CreateTime: 0
+	}, function(err, docs){
+		if(err) return next(err);
+		proxy.emit('modules', docs);
+	});
+
+	Module.findModulesByPId('0', function(err, docs){
+		if(err) return next(err);
+		proxy.emit('cmodules', docs);
 	});
 };

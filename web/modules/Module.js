@@ -32,6 +32,10 @@ var ModuleSchema = new Schema({
 	versionKey: false
 });
 
+ModuleSchema.virtual('sCreateTime').get(function(){
+	return util.formatDate(this.CreateTime);
+});
+
 ModuleSchema.pre('save', function(next, done){
 	next();
 });
@@ -67,7 +71,11 @@ ModuleSchema.statics.findModulesByPId = function(pid, cb) {
 
 	this.find({
 		PId: pid
-	}, null, null, function (err, docs){
+	}, null, {
+		sort: {
+			Sort: 1
+		}
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
