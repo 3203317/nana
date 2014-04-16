@@ -41,14 +41,33 @@ ModuleSchema.post('save', function(){
 
 ModuleSchema.statics.saveNew = function(newInfo, cb) {
 	newInfo.Id = newInfo.Id || util.uuid(false);
-	this.create(newInfo, function(err, doc){
+	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});
 };
 
 ModuleSchema.statics.findModules = function(fields, cb) {
-	this.find(null, fields, null, function(err, docs){
+	this.find(null, fields, null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
+ *
+ * @method 通过父主键获取模块列表
+ * @params pid 父主键
+ * @return 
+ */
+ModuleSchema.statics.findModulesByPId = function(pid, cb) {
+	if(!pid) return cb('父主键不能为空');
+	pid = pid.trim();
+	if(0 === pid.length) return cb('父主键不能为空');
+
+	this.find({
+		PId: pid
+	}, null, null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
