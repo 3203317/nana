@@ -1,5 +1,6 @@
 var db = require('./mongodb');
 var util = require('../libs/utils');
+var md5 = require('../libs/md5');
 var Module = require('./Module');
 
 var mongoose = db.mongoose,
@@ -107,7 +108,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 		if('string' === typeof doc){
 			newInfo.Id = util.uuid(false);
 			newInfo.UserName = newInfo.UserName.toLowerCase();
-			newInfo.UserPass = util.md5(newInfo.UserPass);
+			newInfo.UserPass = md5.hex(newInfo.UserPass);
 
 			that.create(newInfo, function (err, doc){
 				if(err) return cb(err);
@@ -131,7 +132,7 @@ UserSchema.statics.login = function(userName, userPass, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(util.md5(userPass) === doc.UserPass) return cb(null, doc);
+		if(md5.hex(userPass) === doc.UserPass) return cb(null, doc);
 		cb(null, '用户名或密码输入错误');
 	});
 };
@@ -148,7 +149,7 @@ UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(util.md5(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		if(1 !== doc.Lv) return cb(null, '无权访问');
 		cb(null, doc);
 	});

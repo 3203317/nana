@@ -12,10 +12,6 @@ exports.uuid = function(b) {
 	return uuid;
 };
 
-exports.md5 = function(str) {
-	return str;
-};
-
 /**
  * 日期小于10补0
  **/
