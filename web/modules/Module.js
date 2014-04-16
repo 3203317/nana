@@ -52,7 +52,11 @@ ModuleSchema.statics.saveNew = function(newInfo, cb) {
 };
 
 ModuleSchema.statics.findModules = function(fields, cb) {
-	this.find(null, fields, null, function (err, docs){
+	this.find(null, fields, {
+		sort: {
+			Sort: 1
+		}
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
