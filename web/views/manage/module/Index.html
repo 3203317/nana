@@ -24,6 +24,8 @@
 				overflow-y: scroll;
 				width: 100%;
 			}
+			.ztree li span.button.switch.level0 {visibility:hidden; width:1px;}
+			.ztree li ul.level0 {padding:0; background:none;}
 	    </style>
 	</head>
 	<body>
@@ -248,7 +250,14 @@
 				forceParse: 0
 			});
 
+			function dblClickExpand(treeId, treeNode) {
+				return treeNode.level > 0;
+			}
+
 			var setting = {
+				view: {
+					dblClickExpand: dblClickExpand
+				},
 				data: {
 					simpleData: {
 						enable: true
@@ -256,7 +265,20 @@
 				},
 				callback: {
 					beforeClick: function(treeId, treeNode) {
-						console.log(arguments)
+						var pid = treeNode.id;
+
+						$.ajax({
+							url: '/manage/module/list',
+							type: "POST",
+							dataType: "json",
+							data: {
+								data : JSON.stringify({
+									PId: pid
+								})
+							}
+						}).done(function(responseText) {
+						}).complete(function(){
+						});
 					}
 				}
 			};
@@ -275,7 +297,7 @@
 			modules.push({
 				id: '0',
 				pid: 'root',
-				name: '根',
+				name: '根 Root',
 				open: true
 			});
 

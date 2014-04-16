@@ -13,7 +13,7 @@ var title = 'FOREWORLD 洪荒';
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	var proxy = EventProxy.create('modules', 'cmodules', function(modules, cmodules){
+	var proxy = EventProxy.create('modules', 'cmodules', function (modules, cmodules){
 		res.render('Manage/Module/Index', {
 			title: title,
 			atitle: '模块管理',
@@ -29,13 +29,24 @@ exports.indexUI = function(req, res, next) {
 	Module.findModules({
 		_id: 0,
 		CreateTime: 0
-	}, function(err, docs){
+	}, function (err, docs){
 		if(err) return next(err);
 		proxy.emit('modules', docs);
 	});
 
-	Module.findModulesByPId('0', function(err, docs){
+	Module.findModulesByPId('0', function (err, docs){
 		if(err) return next(err);
 		proxy.emit('cmodules', docs);
+	});
+};
+
+exports.moduleListUI = function(req, res, next) {
+	var data = req._data;
+
+	Module.findModulesByPId(data.PId, function (err, docs){
+		if(err) return next(err);
+		res.render('Manage/Module/ModuleList', {
+			cmodules: docs
+		});
 	});
 };
