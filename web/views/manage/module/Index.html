@@ -9,6 +9,7 @@
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap.min.css" media="screen">
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap-theme.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css" media="screen">
 		<link rel="stylesheet" type="text/css" href="${cdn}/ztree/3.5.15/css/zTreeStyle/zTreeStyle.css" type="text/css">
 	    <link rel="stylesheet" type="text/css" href="${cdn}/olxjs/1.0.0/css/olx/olx.css" media="screen">
 
@@ -99,6 +100,55 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="addModal" class="modal fade" aria-hidden="true" aria-labelledby="editModalLabel" role="dialog" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+						<h4 id="editModalLabel" class="modal-title"><b>新增</b></h4>
+					</div>
+					<form id="editForm" name="editForm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="editForm_customerName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>模块名称</label>
+								<div class="col-sm-7">
+									<input type="text" data-olx-type="olx.form.input" data-pattern="^\d{6}$" data-required="true" class="form-control" id="editForm_customerName" name="editForm_customerName" placeholder="模块名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="editForm_customerNameAddr" class="col-sm-3 control-label">模块地址</label>
+								<div class="col-sm-7">
+									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_customerNameAddr" name="editForm_customerNameAddr" placeholder="模块地址">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="editForm_telNum" class="col-sm-3 control-label">排序</label>
+								<div class="col-sm-7">
+									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_telNum" name="editForm_telNum" placeholder="排序">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="editForm_email" class="col-sm-3 control-label">创建时间</label>
+								<div class="col-sm-7">
+									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="editForm_email" data-link-format="yyyy-mm-dd">
+										<input class="form-control" type="text" value="" readonly>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="editForm_email" name="editForm_email" placeholder="创建时间">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
+							<button class="btn btn-warning" type="reset">重置</button>
+							<button class="btn btn-primary" type="submit">保存</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -204,9 +254,22 @@
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
 		<script type="text/javascript" src="${cdn}/ztree/3.5.15/js/jquery.ztree.core-3.5.js"></script>
 		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 		<!-- Own -->
 		<script type="text/javascript">
+			$('.form_date').datetimepicker({
+				language:  'zh-CN',
+				weekStart: 1,
+				todayBtn:  1,
+				autoclose: 1,
+				todayHighlight: 1,
+				startView: 2,
+				minView: 2,
+				forceParse: 0
+			});
+
 			var setting = {
 				data: {
 					simpleData: {
