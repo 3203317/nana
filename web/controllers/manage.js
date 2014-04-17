@@ -48,6 +48,7 @@ exports.validate = function(req, res, next) {
 	if(req.xhr){
 		return res.send({
 			success: false,
+			code: 300,
 			msg: '无权访问'
 		});
 	}
