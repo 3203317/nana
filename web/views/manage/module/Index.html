@@ -349,11 +349,11 @@
 				if(!selIds.length) return;
 
 				$.ajax({
-					url: 'abc',
+					url: 'del.do',
 					type: "POST",
 					dataType: "json",
 					data: {
-						data: JSON.stringify(selIds)
+						data: JSON.stringify({ Ids: selIds })
 					}
 				}).done(function(responseText) {
 					if(300 === responseText.code) return top.location.href = '/manage/user/login';

@@ -44,6 +44,19 @@ ModuleSchema.pre('save', function(next, done){
 ModuleSchema.post('save', function(){
 });
 
+ModuleSchema.statics.removes = function(ids, cb) {
+	if(!ids || !ids.length) return cb('参数不能为空');
+
+	this.remove({
+		Id: {
+			'$in': ids
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};
+
 function valiAddFrm(data){
 	data.Id = data.Id || util.uuid(false);
 	data.Sort = data.Sort || 1;

@@ -79,4 +79,10 @@ exports.add = function(req, res, next) {
 exports.del = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
+
+	Module.removes(data.Ids, function (err, count){
+		if(err) return next(err);
+		result.success = data.Ids.length === count;
+		res.send(result);
+	});
 };
