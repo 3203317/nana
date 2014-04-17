@@ -44,8 +44,16 @@ ModuleSchema.pre('save', function(next, done){
 ModuleSchema.post('save', function(){
 });
 
+function valiAddFrm(data){
+	data.Id = data.Id || util.uuid(false);
+	data.Sort = data.Sort || 1;
+	data.CreateTime = data.CreateTime || new Date();
+}
+
 ModuleSchema.statics.saveNew = function(newInfo, cb) {
-	newInfo.Id = newInfo.Id || util.uuid(false);
+	var valiResu = valiAddFrm(newInfo);
+	if(valiResu) return cb(valiResu);
+
 	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);

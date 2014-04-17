@@ -84,19 +84,20 @@
 			</div>
 		</div>
 
-		<div id="addModal" class="modal fade" aria-hidden="true" aria-labelledby="editModalLabel" role="dialog" tabindex="-1">
+		<div id="addModal" class="modal fade" aria-hidden="true" aria-labelledby="addModalLabel" role="dialog" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
-						<h4 id="editModalLabel" class="modal-title"><b>新增</b></h4>
+						<h4 id="addModalLabel" class="modal-title"><b>新增</b></h4>
 					</div>
 					<form id="addForm" name="AddForm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="add.do">
+						<input type="hidden" id="addForm_PId" name="PId" value="0">
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="addForm_ModuleName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>模块名称</label>
 								<div class="col-sm-7">
-									<input type="text" data-olx-type="olx.form.input" data-pattern="^\d{6}$" data-required="true" class="form-control" id="addForm_ModuleName" name="ModuleName" placeholder="模块名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
+									<input type="text" data-olx-type="olx.form.input" data-required="true" class="form-control" id="addForm_ModuleName" name="ModuleName" placeholder="模块名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
 								</div>
 							</div>
 							<div class="form-group">
@@ -266,6 +267,7 @@
 				callback: {
 					beforeClick: function(treeId, treeNode) {
 						var pid = treeNode.id;
+						$('#addForm_PId').val(pid);
 
 						$.ajax({
 							url: '/manage/module/list',
@@ -343,8 +345,19 @@
 			});
 
 			$('#addForm_btn_submit').click(function(){
-				$('#addForm').olxForm('submit', function(data){
-					console.log(data)
+				$('#addForm').olxForm('submit', function(responseText){
+					if(responseText.code){
+						if(300 === responseText.code){
+							top.location.href = '/manage/user/login';
+							return;
+						}
+					}
+
+					if(responseText.success){
+						location.reload();
+					}else{
+						alert(responseText.msg);
+					}
 				});
 			});
 		</script>
