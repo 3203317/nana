@@ -3,6 +3,10 @@ var EventProxy = require('eventproxy');
 var Module = require('../modules/Module.js');
 var util = require('../libs/utils');
 
+var fs = require('fs')
+var velocity = require('velocityjs')
+var cwd = process.cwd();
+
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
 
@@ -41,12 +45,24 @@ exports.indexUI = function(req, res, next) {
 };
 
 exports.moduleListUI = function(req, res, next) {
-	var data = req._data;
+	var result = { success: false },
+		data = req._data;
 
 	Module.findModulesByPId(data.PId, function (err, docs){
 		if(err) return next(err);
-		res.render('Manage/Module/ModuleList', {
-			cmodules: docs
+
+		fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, data){
+			if(err) return next(err);
+
+			var template = data;
+
+			var html = velocity.render(template, {
+				cmodules: docs
+			});
+
+			result.msg = html;
+			result.success = true;
+			res.send(result);
 		});
 	});
 };

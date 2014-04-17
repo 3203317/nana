@@ -277,6 +277,12 @@
 								})
 							}
 						}).done(function(responseText) {
+							if(responseText.success){
+								var tab1 = $('#table1');
+								var prev = tab1.prev();
+								tab1.remove();
+								prev.after(responseText.msg);
+							}
 						}).complete(function(){
 						});
 					}
