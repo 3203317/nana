@@ -63,6 +63,7 @@ module.exports = function(app) {
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.get('/manage/module/index', manage.validate, _module.indexUI);
 	app.post('/manage/module/list', manage.validate, valiPostData, _module.moduleListUI);
+	app.post('/manage/module/add.do', manage.validate, valiPostData, _module.add);
 	app.get('/manage/role/index', manage.validate, role.indexUI);
 	app.get('/manage/device/index', manage.validate, device.indexUI);
 	app.get('/manage/devicelog/index', manage.validate, device.logUI);

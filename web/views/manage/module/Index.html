@@ -126,7 +126,7 @@
 						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
 							<button class="btn btn-warning" type="reset">重置</button>
-							<button class="btn btn-primary" type="submit">保存</button>
+							<button id='addForm_btn_submit' class="btn btn-primary" type="button">保存</button>
 						</div>
 					</form>
 				</div>
@@ -272,7 +272,7 @@
 							type: "POST",
 							dataType: "json",
 							data: {
-								data : JSON.stringify({
+								data: JSON.stringify({
 									PId: pid
 								})
 							}
@@ -340,6 +340,12 @@
 			/* 绑定删除按钮，弹出提示对话框或确认对话框 */
 			$("#btn_del").click(function(){
 				$("#delConfirmModal").modal();
+			});
+
+			$('#addForm_btn_submit').click(function(){
+				$('#addForm').olxForm('submit', function(data){
+					console.log(data)
+				});
 			});
 		</script>
 	</body>

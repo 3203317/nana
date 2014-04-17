@@ -64,3 +64,14 @@ exports.moduleListUI = function(req, res, next) {
 		});
 	});
 };
+
+exports.add = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	Module.saveNew(data, function (err, doc){
+		if(err) return next(err);
+		result.success = !!doc;
+		res.send(result);
+	});
+};

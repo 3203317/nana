@@ -22,7 +22,8 @@ var ModuleSchema = new Schema({
 		type: String
 	},
 	Sort: {
-		type: Number
+		type: Number,
+		default: 1
 	},
 	CreateTime: {
 		type: Date,
