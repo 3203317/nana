@@ -269,30 +269,13 @@
 						var pid = treeNode.id;
 						$('#addForm_PId').val(pid);
 
-						$.ajax({
-							url: '/manage/module/list',
-							type: "POST",
-							dataType: "json",
-							data: {
-								data: JSON.stringify({
-									PId: pid
-								})
+						$("#table1").olxGrid("loadData", [{
+							PId: pid
+						}, function(data){
+							if(300 === data.responseJSON.code){
+								top.location.href = '/manage/user/login';
 							}
-						}).done(function(responseText) {
-							if(responseText.code){
-								if(300 === responseText.code){
-									top.location.href = '/manage/user/login';
-									return;
-								}
-							}
-
-							var tab1 = $('#table1');
-							var prev = tab1.prev();
-							tab1.remove();
-
-							if(responseText.success) prev.after(responseText.msg);
-						}).complete(function(){
-						});
+						}]);
 					}
 				}
 			};
