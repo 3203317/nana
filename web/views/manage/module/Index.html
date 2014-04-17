@@ -343,6 +343,25 @@
 					}
 				});
 			});
+
+			$('#delConfirmModal_btn_submit').click(function(){
+				var selIds = $("#table1").olxGrid("getCheckedRowsValue", 1);
+				if(!selIds.length) return;
+
+				$.ajax({
+					url: 'abc',
+					type: "POST",
+					dataType: "json",
+					data: {
+						data: JSON.stringify(selIds)
+					}
+				}).done(function(responseText) {
+					if(300 === responseText.code) return top.location.href = '/manage/user/login';
+					if(!responseText.success) return alert(responseText.msg);
+					location.reload();
+				}).complete(function(){
+				});
+			});
 		</script>
 	</body>
 </html>
