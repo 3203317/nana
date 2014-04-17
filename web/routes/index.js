@@ -65,6 +65,7 @@ module.exports = function(app) {
 	app.post('/manage/module/list', manage.validate, valiPostData, _module.moduleListUI);
 	app.post('/manage/module/add.do', manage.validate, valiPostData, _module.add);
 	app.post('/manage/module/del.do', manage.validate, valiPostData, _module.del);
+	app.post('/manage/module/edit.do', manage.validate, valiPostData, _module.edit);
 	app.get('/manage/role/index', manage.validate, role.indexUI);
 	app.get('/manage/device/index', manage.validate, device.indexUI);
 	app.get('/manage/devicelog/index', manage.validate, device.logUI);

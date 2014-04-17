@@ -86,3 +86,14 @@ exports.del = function(req, res, next) {
 		res.send(result);
 	});
 };
+
+exports.edit = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	Module.edit(data, function (err, doc){
+		if(err) return next(err);
+		result.success = !!doc;
+		res.send(result);
+	});
+};

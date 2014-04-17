@@ -44,6 +44,21 @@ ModuleSchema.pre('save', function(next, done){
 ModuleSchema.post('save', function(){
 });
 
+ModuleSchema.statics.edit = function(newInfo, cb) {
+	var valiResu = valiAddFrm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	this.update({
+		Id: newInfo.Id
+	}, {
+		'$set': newInfo
+	}, function (err, doc){
+		console.log(arguments);
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
 ModuleSchema.statics.removes = function(ids, cb) {
 	if(!ids || !ids.length) return cb('参数不能为空');
 

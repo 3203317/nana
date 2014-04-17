@@ -141,37 +141,43 @@
 						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
 						<h4 id="editModalLabel" class="modal-title"><b>编辑</b></h4>
 					</div>
-					<form id="editForm" name="editForm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
+					<form id="editForm" name="EditForm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
+						<input type="hidden" id="editForm_PId" name="PId" value="0">
 						<div class="modal-body">
 							<div class="form-group">
-								<label for="editForm_customerName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>模块名称</label>
+								<label for="editForm_ModuleName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>模块名称</label>
 								<div class="col-sm-7">
-									<input type="text" data-olx-type="olx.form.input" data-pattern="^\d{6}$" data-required="true" class="form-control" id="editForm_customerName" name="editForm_customerName" placeholder="模块名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
+									<input type="text" data-olx-type="olx.form.input" data-required="true" class="form-control" id="editForm_ModuleName" name="ModuleName" placeholder="模块名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="editForm_customerNameAddr" class="col-sm-3 control-label">模块地址</label>
+								<label for="editForm_ModuleUrl" class="col-sm-3 control-label">模块地址</label>
 								<div class="col-sm-7">
-									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_customerNameAddr" name="editForm_customerNameAddr" placeholder="模块地址">
+									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_ModuleUrl" name="ModuleUrl" placeholder="模块地址">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="editForm_telNum" class="col-sm-3 control-label">排序</label>
+								<label for="editForm_Sort" class="col-sm-3 control-label">排序</label>
 								<div class="col-sm-7">
-									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_telNum" name="editForm_telNum" placeholder="排序">
+									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_Sort" name="Sort" placeholder="排序">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="editForm_email" class="col-sm-3 control-label">创建时间</label>
+								<label for="editForm_CreateTime" class="col-sm-3 control-label">创建时间</label>
 								<div class="col-sm-7">
-									<input type="text" data-olx-type="olx.form.input" class="form-control" id="editForm_email" name="editForm_email" placeholder="创建时间">
+									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="editForm_CreateTime" data-link-format="yyyy-mm-dd">
+										<input class="form-control" type="text" value="" readonly placeholder="创建时间">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="editForm_CreateTime" name="CreateTime" placeholder="创建时间">
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
 							<button class="btn btn-warning" type="reset">重置</button>
-							<button class="btn btn-primary" type="submit">保存</button>
+							<button id='editForm_btn_submit' class="btn btn-primary" type="button">保存</button>
 						</div>
 					</form>
 				</div>
