@@ -51,10 +51,8 @@ exports.moduleListUI = function(req, res, next) {
 	Module.findModulesByPId(data.PId, function (err, docs){
 		if(err) return next(err);
 
-		fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, data){
+		fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, template){
 			if(err) return next(err);
-
-			var template = data;
 
 			var html = velocity.render(template, {
 				cmodules: docs
