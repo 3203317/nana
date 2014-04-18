@@ -99,3 +99,19 @@ exports.edit = function(req, res, next) {
 		res.send(result);
 	});
 };
+
+exports.getId = function(req, res, next) {
+	var result = { success: false },
+		id = req.params.id.trim();
+
+	Module.findModuleById(id, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
+		}
+		result.data = doc;
+		result.success = true;
+		res.send(result);
+	});
+};

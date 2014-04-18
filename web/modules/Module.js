@@ -125,6 +125,17 @@ ModuleSchema.statics.findModulesByPId = function(pid, cb) {
 	});
 };
 
+ModuleSchema.statics.findModuleById = function(id, cb) {
+	if(!id) return cb('主键不能为空');
+
+	this.findOne({
+		Id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该记录');
+	});
+};
+
 var ModuleModel = mongoose.model('module', ModuleSchema);
 
 exports = module.exports = ModuleModel;

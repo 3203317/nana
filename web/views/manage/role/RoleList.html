@@ -1,0 +1,24 @@
+<table id="table1" data-olx-type="olx.grid" class="table table-bordered table-hover table-condensed table-striped" data-url="/manage/role/list" data-current="1" data-pagesize="20" data-count="561">
+	<thead>
+		<tr>
+			<th class="olx-table-th-center"><input type="checkbox" title="全选/取消"></th>
+			<th>角色名称</th>
+			<th>角色描述</th>
+			<th>启用时间</th>
+			<th>禁用时间</th>
+			<th>创建时间</th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($role in $roles)
+		<tr>
+			<td class="olx-table-td-center"><input type="checkbox" value="$role.Id"></td>
+			<td>$role.RoleName</td>
+			<td>$role.RoleDesc</td>
+			<td>$role.sStartTime</td>
+			<td>${role.sEndTime}</td>
+			<td>${role.sCreateTime}</td>
+		</tr>
+		#end
+	</tbody>
+</table>

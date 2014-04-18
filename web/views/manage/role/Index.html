@@ -61,31 +61,7 @@
 							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
 							</div>
  						</div>
- 						
-						<table id="table1" data-olx-type="olx.grid" class="table table-bordered table-hover table-condensed table-striped" data-url="grid_2.html" data-current="2" data-pagesize="20" data-count="561">
-							<thead>
-								<tr>
-									<th class="olx-table-th-center"><input type="checkbox" title="全选/取消"></th>
-									<th>角色名称</th>
-									<th>角色描述</th>
-									<th>启用时间</th>
-									<th>禁用时间</th>
-									<th>创建时间</th>
-								</tr>
-							</thead>
-							<tbody>
-								#foreach($role in $roles)
-								<tr>
-									<td class="olx-table-td-center"><input type="checkbox" value="$role.Id"></td>
-									<td>$role.RoleName</td>
-									<td>$role.RoleDesc</td>
-									<td>$role.sStartTime</td>
-									<td>${role.sEndTime}</td>
-									<td>${role.sCreateTime}</td>
-								</tr>
-								#end
-							</tbody>
-						</table>
+ 						#parse("Manage/Role/RoleList.html")
 					</div>
 				</div>
 			</div>
@@ -95,13 +71,24 @@
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
 		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 		<!-- Own -->
 		<script type="text/javascript">
+			$('.form_date').datetimepicker({
+				language:  'zh-CN',
+				weekStart: 1,
+				todayBtn:  1,
+				autoclose: 1,
+				todayHighlight: 1,
+				startView: 2,
+				minView: 2,
+				forceParse: 0
+			});
 
 			$(function(){
 			});
-
 		</script>
 	</body>
 </html>
