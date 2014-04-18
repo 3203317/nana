@@ -166,7 +166,7 @@
 								<label for="editForm_CreateTime" class="col-sm-3 control-label">创建时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="editForm_CreateTime" data-link-format="yyyy-mm-dd">
-										<input class="form-control" type="text" value="" readonly placeholder="创建时间">
+										<input class="form-control" id="editForm_shadow_CreateTime" type="text" value="" readonly placeholder="创建时间">
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
@@ -323,6 +323,7 @@
 				$('#editForm_ModuleUrl').val(data.ModuleUrl);
 				$('#editForm_Sort').val(data.Sort);
 				$('#editForm_CreateTime').val(data.CreateTime);
+				$('#editForm_shadow_CreateTime').val(data.CreateTime);
 			})
 
 			$("#btn_edit").click(function(){
