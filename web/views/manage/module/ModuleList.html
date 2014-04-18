@@ -11,7 +11,7 @@
 	<tbody>
 		#foreach($module in $cmodules)
 		<tr>
-			<td class="olx-table-td-center"><input type="checkbox" value="$module.Id"></td>
+			<td class="olx-table-td-center"><input type="checkbox" value="$module.Id" data-object='{"ModuleName":"$module.ModuleName","ModuleUrl":"$module.ModuleUrl","Sort":"$module.Sort","CreateTime":"$module.sCreateTime"}'></td>
 			<td>$module.ModuleName</td>
 			<td>$module.ModuleUrl</td>
 			<td>$module.Sort</td>

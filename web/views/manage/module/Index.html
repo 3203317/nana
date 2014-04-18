@@ -142,7 +142,7 @@
 						<h4 id="editModalLabel" class="modal-title"><b>编辑</b></h4>
 					</div>
 					<form id="editForm" name="EditForm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
-						<input type="hidden" id="editForm_PId" name="PId" value="0">
+						<input type="hidden" id="editForm_Id" name="Id" value="0">
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="editForm_ModuleName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>模块名称</label>
@@ -170,7 +170,7 @@
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
-									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="editForm_CreateTime" name="CreateTime" placeholder="创建时间">
+									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="editForm_CreateTime" placeholder="创建时间">
 								</div>
 							</div>
 						</div>
@@ -314,6 +314,15 @@
 					$("#editAlertModal").modal();
 					return e.preventDefault();
 				}
+				var checkboxs = $("#table1").olxGrid("getCheckedRowsCheckbox", 1);
+				var checkbox = checkboxs[0];
+				var data = checkbox.data('object');
+
+				$('#editForm_Id').val(vals[0]);
+				$('#editForm_ModuleName').val(data.ModuleName);
+				$('#editForm_ModuleUrl').val(data.ModuleUrl);
+				$('#editForm_Sort').val(data.Sort);
+				$('#editForm_CreateTime').val(data.CreateTime);
 			})
 
 			$("#btn_edit").click(function(){
@@ -335,6 +344,23 @@
 
 			$('#addForm_btn_submit').click(function(){
 				$('#addForm').olxForm('submit', function(responseText){
+					if(responseText.code){
+						if(300 === responseText.code){
+							top.location.href = '/manage/user/login';
+							return;
+						}
+					}
+
+					if(responseText.success){
+						location.reload();
+					}else{
+						alert(responseText.msg);
+					}
+				});
+			});
+
+			$('#editForm_btn_submit').click(function(){
+				$('#editForm').olxForm('submit', function(responseText){
 					if(responseText.code){
 						if(300 === responseText.code){
 							top.location.href = '/manage/user/login';

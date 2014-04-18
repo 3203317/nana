@@ -44,18 +44,21 @@ ModuleSchema.pre('save', function(next, done){
 ModuleSchema.post('save', function(){
 });
 
+function valiEditFrm(data){
+	data.Sort = data.Sort || 1;
+}
+
 ModuleSchema.statics.edit = function(newInfo, cb) {
-	var valiResu = valiAddFrm(newInfo);
+	var valiResu = valiEditFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
 	this.update({
 		Id: newInfo.Id
 	}, {
 		'$set': newInfo
-	}, function (err, doc){
-		console.log(arguments);
+	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, doc);
+		cb(null, count);
 	});
 };
 

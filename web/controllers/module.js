@@ -82,7 +82,8 @@ exports.del = function(req, res, next) {
 
 	Module.removes(data.Ids, function (err, count){
 		if(err) return next(err);
-		result.success = data.Ids.length === count;
+		result.success = !!count;
+		result.msg = count;
 		res.send(result);
 	});
 };
@@ -91,9 +92,10 @@ exports.edit = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Module.edit(data, function (err, doc){
+	Module.edit(data, function (err, count){
 		if(err) return next(err);
-		result.success = !!doc;
+		result.success = !!count;
+		result.msg = count;
 		res.send(result);
 	});
 };
