@@ -113,10 +113,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="addFrm_CreateTime" class="col-sm-3 control-label">创建时间</label>
+								<label for="addFrm_shadow_CreateTime" class="col-sm-3 control-label">创建时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="addFrm_CreateTime" data-link-format="yyyy-mm-dd">
-										<input class="form-control" type="text" value="" readonly placeholder="创建时间">
+										<input class="form-control" id='addFrm_shadow_CreateTime' type="text" value="" readonly placeholder="创建时间">
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
@@ -163,7 +163,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="editFrm_CreateTime" class="col-sm-3 control-label">创建时间</label>
+								<label for="editFrm_shadow_CreateTime" class="col-sm-3 control-label">创建时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="editFrm_CreateTime" data-link-format="yyyy-mm-dd">
 										<input class="form-control" id="editFrm_shadow_CreateTime" type="text" value="" readonly placeholder="创建时间">
@@ -327,8 +327,8 @@
 					$('#editFrm_ModuleName').val(data[0].ModuleName);
 					$('#editFrm_ModuleUrl').val(data[0].ModuleUrl);
 					$('#editFrm_Sort').val(data[0].Sort);
-					$('#editFrm_CreateTime').val(data[1].sCreateTime);
-					$('#editFrm_shadow_CreateTime').val(data[1].sCreateTime);
+					$('#editFrm_CreateTime').val(data[1].CreateTime);
+					$('#editFrm_shadow_CreateTime').val(data[1].CreateTime);
 				});
 			});
 

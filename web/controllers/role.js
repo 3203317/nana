@@ -82,9 +82,9 @@ exports.getId = function(req, res, next) {
 			return res.send(result);
 		}
 		result.data = [doc, {
-			sStartTime: doc.sStartTime,
-			sEndTime: doc.sEndTime,
-			sCreateTime: doc.sCreateTime
+			StartTime: doc.sStartTime,
+			EndTime: doc.sEndTime,
+			CreateTime: doc.sCreateTime
 		}];
 		result.success = true;
 		res.send(result);

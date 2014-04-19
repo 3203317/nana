@@ -111,7 +111,7 @@ exports.getId = function(req, res, next) {
 			return res.send(result);
 		}
 		result.data = [doc, {
-			sCreateTime: doc.sCreateTime
+			CreateTime: doc.sCreateTime
 		}];
 		result.success = true;
 		res.send(result);

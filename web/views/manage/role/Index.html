@@ -89,10 +89,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="addFrm_StartTime" class="col-sm-3 control-label">启用时间</label>
+								<label for="addFrm_shadow_StartTime" class="col-sm-3 control-label">启用时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy/mm/dd" data-link-field="addFrm_StartTime" data-link-format="yyyy/mm/dd">
-										<input class="form-control" type="text" value="" readonly placeholder="启用时间">
+										<input class="form-control" id='addFrm_shadow_StartTime' type="text" value="" readonly placeholder="启用时间">
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
@@ -100,10 +100,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="addFrm_EndTime" class="col-sm-3 control-label">禁用时间</label>
+								<label for="addFrm_shadow_EndTime" class="col-sm-3 control-label">禁用时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy/mm/dd" data-link-field="addFrm_EndTime" data-link-format="yyyy/mm/dd">
-										<input class="form-control" type="text" value="" readonly placeholder="禁用时间">
+										<input class="form-control" id='addFrm_shadow_EndTime' type="text" value="" readonly placeholder="禁用时间">
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
@@ -111,10 +111,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="addFrm_CreateTime" class="col-sm-3 control-label">创建时间</label>
+								<label for="addFrm_shadow_CreateTime" class="col-sm-3 control-label">创建时间</label>
 								<div class="col-sm-7">
 									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy/mm/dd" data-link-field="addFrm_CreateTime" data-link-format="yyyy/mm/dd">
-										<input class="form-control" type="text" value="" readonly placeholder="创建时间">
+										<input class="form-control" id='addFrm_shadow_CreateTime' type="text" value="" readonly placeholder="创建时间">
 										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
@@ -308,9 +308,9 @@
 					$('#editFrm_Id').val(vals[0]);
 					$('#editFrm_RoleName').val(data[0].RoleName);
 					$('#editFrm_RoleDesc').val(data[0].RoleDesc);
-					$('#editFrm_shadow_StartTime').val(data[1].sStartTime);
-					$('#editFrm_shadow_EndTime').val(data[1].sEndTime);
-					$('#editFrm_shadow_CreateTime').val(data[1].sCreateTime);
+					$('#editFrm_shadow_StartTime').val(data[1].StartTime);
+					$('#editFrm_shadow_EndTime').val(data[1].EndTime);
+					$('#editFrm_shadow_CreateTime').val(data[1].CreateTime);
 				});
 			});
 
