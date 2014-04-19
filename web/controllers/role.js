@@ -46,3 +46,47 @@ exports.add = function(req, res, next) {
 		res.send(result);
 	});
 };
+
+exports.del = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	Role.removes(data.Ids, function (err, count){
+		if(err) return next(err);
+		result.success = !!count;
+		result.msg = count;
+		res.send(result);
+	});
+};
+
+exports.edit = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	Role.edit(data, function (err, count){
+		if(err) return next(err);
+		result.success = !!count;
+		result.msg = count;
+		res.send(result);
+	});
+};
+
+exports.getId = function(req, res, next) {
+	var result = { success: false },
+		id = req.params.id.trim();
+
+	Role.findRoleById(id, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
+		}
+		result.data = [doc, {
+			sStartTime: doc.sStartTime,
+			sEndTime: doc.sEndTime,
+			sCreateTime: doc.sCreateTime
+		}];
+		result.success = true;
+		res.send(result);
+	});
+};

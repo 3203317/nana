@@ -68,6 +68,9 @@ module.exports = function(app) {
 
 	app.get('/manage/role/index', manage.validate, role.indexUI);
 	app.post('/manage/role/add.do', manage.validate, valiPostData, role.add);
+	app.post('/manage/role/del.do', manage.validate, valiPostData, role.del);
+	app.post('/manage/role/edit.do', manage.validate, valiPostData, role.edit);
+	app.post('/manage/role/:id.do', manage.validate, role.getId);
 
 	app.get('/manage/device/index', manage.validate, device.indexUI);
 	

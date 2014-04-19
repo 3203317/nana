@@ -51,6 +51,27 @@ RoleSchema.pre('save', function(next, done){
 RoleSchema.post('save', function(){
 });
 
+function valiEditFrm(data){
+	data.StartTime = new Date(data.StartTime);
+	data.EndTime = new Date(data.EndTime);
+	
+	delete data.CreateTime;
+}
+
+RoleSchema.statics.edit = function(newInfo, cb) {
+	var valiResu = valiEditFrm(newInfo);
+	if(valiResu) return cb(valiResu);
+
+	this.update({
+		Id: newInfo.Id
+	}, {
+		'$set': newInfo
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};
+
 RoleSchema.statics.findRoles = function(cb) {
 	this.find(null, null, null, function(err, docs){
 		if(err) return cb(err);
@@ -98,6 +119,30 @@ RoleSchema.statics.findRoleByRoleName = function(roleName, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '没有找到该角色');
+	});
+};
+
+RoleSchema.statics.removes = function(ids, cb) {
+	if(!ids || !ids.length) return cb('参数不能为空');
+
+	this.remove({
+		Id: {
+			'$in': ids
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};
+
+RoleSchema.statics.findRoleById = function(id, cb) {
+	if(!id) return cb('主键不能为空');
+
+	this.findOne({
+		Id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该记录');
 	});
 };
 
