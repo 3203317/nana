@@ -55,19 +55,23 @@ module.exports = function(app) {
 	app.post('/role/saveNew.do', valiPostData, role.saveNew);
 
 	app.get('/manage/user/login', user.loginBackStageUI);
+	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 	app.post('/manage/user/logout.do', manage.validate, user.logoutBackStage);
+
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);
 
-	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.get('/manage/module/index', manage.validate, _module.indexUI);
 	app.post('/manage/module/list', manage.validate, valiPostData, _module.moduleListUI);
 	app.post('/manage/module/add.do', manage.validate, valiPostData, _module.add);
 	app.post('/manage/module/del.do', manage.validate, valiPostData, _module.del);
 	app.post('/manage/module/edit.do', manage.validate, valiPostData, _module.edit);
 	app.post('/manage/module/:id.do', manage.validate, _module.getId);
+
 	app.get('/manage/role/index', manage.validate, role.indexUI);
+
 	app.get('/manage/device/index', manage.validate, device.indexUI);
+	
 	app.get('/manage/devicelog/index', manage.validate, device.logUI);
 };

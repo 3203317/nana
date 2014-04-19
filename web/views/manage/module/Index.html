@@ -308,26 +308,22 @@
 				$.fn.zTree.init($("#modTree"), setting, modules);
 			});
 
-			$("#editModal").on("show.bs.modal", function (e) {
+			$("#btn_edit").click(function(){
 				var vals = $("#table1").olxGrid("getCheckedRowsValue", 1);
-				if(1 != vals.length) {
-					$("#editAlertModal").modal();
-					return e.preventDefault();
-				}
+				if(1 !== vals.length) return $("#editAlertModal").modal();
 
 				$.ajax({
+					async: true,
 					url: vals[0] +'.do',
 					type: "POST",
 					dataType: "json"
 				}).done(function(responseText) {
 					if(300 === responseText.code) return top.location.href = '/manage/user/login';
-					if(!responseText.success){
-						alert(responseText.msg);
-						return e.preventDefault();
-					}
+					if(!responseText.success) return alert(responseText.msg);
+
+					$("#editModal").modal();
 
 					var data = responseText.data;
-
 					$('#editFrm_Id').val(vals[0]);
 					$('#editFrm_ModuleName').val(data[0].ModuleName);
 					$('#editFrm_ModuleUrl').val(data[0].ModuleUrl);
@@ -335,10 +331,6 @@
 					$('#editFrm_CreateTime').val(data[1].sCreateTime);
 					$('#editFrm_shadow_CreateTime').val(data[1].sCreateTime);
 				});
-			})
-
-			$("#btn_edit").click(function(){
-				$("#editModal").modal();
 			});
 
 			$("#delConfirmModal").on("show.bs.modal", function (e) {
