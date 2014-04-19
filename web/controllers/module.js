@@ -110,7 +110,9 @@ exports.getId = function(req, res, next) {
 			result.msg = doc;
 			return res.send(result);
 		}
-		result.data = doc;
+		result.data = [doc, {
+			sCreateTime: doc.sCreateTime
+		}];
 		result.success = true;
 		res.send(result);
 	});

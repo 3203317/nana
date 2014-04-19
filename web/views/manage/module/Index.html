@@ -314,16 +314,27 @@
 					$("#editAlertModal").modal();
 					return e.preventDefault();
 				}
-				var checkboxs = $("#table1").olxGrid("getCheckedRowsCheckbox", 1);
-				var checkbox = checkboxs[0];
-				var data = checkbox.data('object');
 
-				$('#editFrm_Id').val(vals[0]);
-				$('#editFrm_ModuleName').val(data.ModuleName);
-				$('#editFrm_ModuleUrl').val(data.ModuleUrl);
-				$('#editFrm_Sort').val(data.Sort);
-				$('#editFrm_CreateTime').val(data.CreateTime);
-				$('#editFrm_shadow_CreateTime').val(data.CreateTime);
+				$.ajax({
+					url: vals[0] +'.do',
+					type: "POST",
+					dataType: "json"
+				}).done(function(responseText) {
+					if(300 === responseText.code) return top.location.href = '/manage/user/login';
+					if(!responseText.success){
+						alert(responseText.msg);
+						return e.preventDefault();
+					}
+
+					var data = responseText.data;
+
+					$('#editFrm_Id').val(vals[0]);
+					$('#editFrm_ModuleName').val(data[0].ModuleName);
+					$('#editFrm_ModuleUrl').val(data[0].ModuleUrl);
+					$('#editFrm_Sort').val(data[0].Sort);
+					$('#editFrm_CreateTime').val(data[1].sCreateTime);
+					$('#editFrm_shadow_CreateTime').val(data[1].sCreateTime);
+				});
 			})
 
 			$("#btn_edit").click(function(){
