@@ -43,6 +43,8 @@
 
 		<!-- Own -->
 		<script type="text/javascript">
+			if(window.top !== window.self) top.location.href = '/manage/user/login';
+
 			function validateForm(){
 				var formObj = $("#loginForm").serializeObjectForm();
 				if(0 === formObj.UserName.length) return;
