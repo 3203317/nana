@@ -313,7 +313,6 @@
 				if(1 !== vals.length) return $("#editAlertModal").modal();
 
 				$.ajax({
-					async: true,
 					url: vals[0] +'.do',
 					type: "POST",
 					dataType: "json"
