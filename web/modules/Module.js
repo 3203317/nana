@@ -46,6 +46,7 @@ ModuleSchema.post('save', function(){
 
 function valiEditFrm(data){
 	data.Sort = data.Sort || 1;
+	delete data.CreateTime;
 }
 
 ModuleSchema.statics.edit = function(newInfo, cb) {
@@ -78,7 +79,7 @@ ModuleSchema.statics.removes = function(ids, cb) {
 function valiAddFrm(data){
 	data.Id = data.Id || util.uuid(false);
 	data.Sort = data.Sort || 1;
-	data.CreateTime = data.CreateTime || new Date();
+	data.CreateTime = new Date();
 }
 
 ModuleSchema.statics.saveNew = function(newInfo, cb) {
