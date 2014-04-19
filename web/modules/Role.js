@@ -58,29 +58,33 @@ RoleSchema.statics.findRoles = function(cb) {
 	});
 };
 
-function valiSaveFrm(data){
+function valiRegFrm(data){
 	if(!data.RoleName) return '角色名称不能为空';
 	data.RoleName = data.RoleName.trim();
 	if(0 === data.RoleName.length) return '角色名称不能为空';
+
+	data.StartTime = new Date(data.StartTime);
+	data.EndTime = new Date(data.EndTime);
 }
 
 RoleSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiSaveFrm(newInfo);
+	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
 	var that = this;
 
-	that.findRoleByRoleName(data.RoleName, function (err, doc){
+	that.findRoleByRoleName(newInfo.RoleName, function (err, doc){
 		if(err) return next(err);
 		if('string' === typeof doc){
 			newInfo.Id = util.uuid(false);
+			newInfo.CreateTime = new Date();
 			that.create(newInfo, function (err, doc){
 				if(err) return cb(err);
 				cb(null, doc);
 			});
 			return;
 		}
-		cb(null, '角色名已经存在');
+		cb(null, '角色名称已经存在');
 	});
 };
 

@@ -51,9 +51,6 @@ module.exports = function(app) {
 	app.post('/user/login.do', valiPostData, user.login);
 	app.post('/user/register.do', valiPostData, user.register);
 
-	app.get('/role/index', role.indexUI);
-	app.post('/role/saveNew.do', valiPostData, role.saveNew);
-
 	app.get('/manage/user/login', user.loginBackStageUI);
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
@@ -70,6 +67,7 @@ module.exports = function(app) {
 	app.post('/manage/module/:id.do', manage.validate, _module.getId);
 
 	app.get('/manage/role/index', manage.validate, role.indexUI);
+	app.post('/manage/role/add.do', manage.validate, valiPostData, role.add);
 
 	app.get('/manage/device/index', manage.validate, device.indexUI);
 	
