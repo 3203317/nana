@@ -42,6 +42,12 @@
 								<div class="form-group">
 									<input type="text" class="form-control" id="inputEmail3" placeholder="用户名称">
 								</div>
+								<div class="form-group">		
+									<select class="form-control" id="certificate">
+										<option value="1">级别1</option>
+										<option value="2">级别2</option>
+									</select>
+								</div>
 								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
 							</form>
 						</div>
@@ -54,7 +60,6 @@
  					<div class="panel panel-default table-responsive">
 						<div class="panel-heading">
 							<div class="btn-group">
-							    <button class="btn btn-primary olx-glyphicon glyphicon-plus-sign olx-glyphicon-btn" data-toggle="modal" data-target="#addModal">新增</button>
 								<button id="btn_edit" class="btn btn-default olx-glyphicon glyphicon-edit olx-glyphicon-btn">编辑</button>
 							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
 							</div>
@@ -67,6 +72,7 @@
 									<th>用户名</th>
 									<th>密码</th>
 									<th>性别</th>
+									<th>级别</th>
 									<th>出生日期</th>
 									<th>注册时间</th>
 								</tr>
@@ -78,6 +84,7 @@
 									<td>$user.UserName</td>
 									<td>$user.UserPass</td>
 									<td>$user.sSex</td>
+									<td>$user.Lv</td>
 									<td>${user.sBirthday}</td>
 									<td>${user.sRegTime}</td>
 								</tr>

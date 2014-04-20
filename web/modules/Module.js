@@ -37,7 +37,7 @@ ModuleSchema.virtual('sCreateTime').get(function(){
 	return util.formatDate(this.CreateTime);
 });
 
-ModuleSchema.pre('save', function(next, done){
+ModuleSchema.pre('save', function (next, done){
 	next();
 });
 
