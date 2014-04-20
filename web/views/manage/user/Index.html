@@ -9,13 +9,15 @@
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap.min.css" media="screen">
 	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap-theme.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/olxjs/1.0.0/css/olx/olx.css" media="screen">
 
 		<link rel="stylesheet" type="text/css" href="${virtualPath}public/manage/css/style.css">
 	</head>
 	<body>
 		<div class="navbar navbar-fixed-top" role="navigation">
 			<ul class="breadcrumb">
-				<li>当前位置：<div class="glyphicon glyphicon-home"></div> <a href="javascript:;" onclick="top.location.href='../index#page/welcome'">首页</a></li>
+				<li>当前位置：<div class="glyphicon glyphicon-home"></div> 首页</li>
 				<li class="active">系统管理</li>
 				<li><a href="javascript:;" onclick="location.reload()">用户管理</a></li>				
 			</ul>
@@ -38,19 +40,20 @@
 							<h3 class="panel-title"><strong>查询条件</strong></h3>
 						</div>
 						<div class="panel-body">
-							<form class="form-inline" role="form">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox"> 回收站
-									</label>
-								</div>
+							<form class="form-inline" role="form" onsubmit='return false;'>
 								<div class="form-group">
 									<input type="text" class="form-control" id="inputEmail3" placeholder="用户名称">
 								</div>
-								<div class="form-group">		
+								<div class="form-group">
 									<select class="form-control" id="certificate">
 										<option value="1">级别1</option>
 										<option value="2">级别2</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<select class="form-control" id="certificate">
+										<option value="1">启用</option>
+										<option value="2">禁用</option>
 									</select>
 								</div>
 								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
@@ -67,6 +70,12 @@
 							<div class="btn-group">
 								<button id="btn_edit" class="btn btn-default olx-glyphicon glyphicon-edit olx-glyphicon-btn">编辑</button>
 							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
+							    <button id="btn_status" class="btn btn-warning olx-glyphicon glyphicon-thumbs-up olx-glyphicon-btn">状态</button>
+							</div>
+						    <div class="navbar-btn navbar-right hide-xs">
+								<div class="btn-group">
+									<button type="button" class="btn btn-info olx-glyphicon glyphicon-trash olx-glyphicon-btn">查看回收站</button>
+								</div>
 							</div>
  						</div>
  						
@@ -111,6 +120,8 @@
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
 		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 		<!-- Own -->
 		<script type="text/javascript">
