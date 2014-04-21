@@ -21,12 +21,22 @@ var UserSchema = new Schema({
 		required: true
 	},
 	UserPass: {
+		type: String
+	},
+	SecretPass: {
 		type: String,
 		default: '123456'
 	},
 	Sex: {
 		type: Number,
 		default: 1
+	},
+	Nickname: {
+		type: String
+	},
+	MaxDeviceNum: {
+		type: Number,
+		default: 3
 	},
 	Birthday: {
 		type: Date
@@ -40,9 +50,26 @@ var UserSchema = new Schema({
 	RegTime: {
 		type: Date,
 		default: Date.now
+	},
+	Status: {
+		type: Number,
+		default: 0
+	},
+	IsDel: {
+		type: Number,
+		default: 0
 	}
 }, {
 	versionKey: false
+});
+
+UserSchema.virtual('sStatus').get(function(){
+	switch(this.Status){
+		case 0: return '未激活';
+		case 1: return '邮箱';
+		case 2: return '短信';
+		default: return '未知';
+	}
 });
 
 UserSchema.virtual('sSex').get(function(){
@@ -87,8 +114,6 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 
 function valiRegFrm(data){
 	if(!data.UserName) return '用户名不能为空';
-
-	if(!data.UserPass) return '密码不能为空';
 }
 
 /**
@@ -108,7 +133,14 @@ UserSchema.statics.register = function(newInfo, cb) {
 		if('string' === typeof doc){
 			newInfo.Id = util.uuid(false);
 			newInfo.UserName = newInfo.UserName.toLowerCase();
-			newInfo.UserPass = md5.hex(newInfo.UserPass);
+			newInfo.MaxDeviceNum = 3;
+			newInfo.Lv = 2;
+			newInfo.RegTime = new Date();
+			newInfo.Status = 0;
+			newInfo.IsDel = 0;
+
+			newInfo.SecretPass = util.random(6);
+			newInfo.UserPass = md5.hex(newInfo.SecretPass);
 
 			that.create(newInfo, function (err, doc){
 				if(err) return cb(err);
