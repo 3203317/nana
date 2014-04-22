@@ -34,7 +34,7 @@ DeviceTypeSchema.post('save', function(){
 });
 
 DeviceTypeSchema.statics.findDeviceTypes = function(cb) {
-	this.find(null, null, null, function(err, docs){
+	this.find(null, null, null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -42,7 +42,7 @@ DeviceTypeSchema.statics.findDeviceTypes = function(cb) {
 
 DeviceTypeSchema.statics.saveNew = function(newInfo, cb) {
 	newInfo.Id = util.uuid(false);
-	this.create(newInfo, function(err, doc){
+	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});

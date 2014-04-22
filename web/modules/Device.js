@@ -38,6 +38,10 @@ var DeviceSchema = new Schema({
 	CreateTime: {
 		type: Date,
 		default: Date.now
+	},
+	IsDel: {
+		type: Number,
+		default: 0
 	}
 }, {
 	versionKey: false
