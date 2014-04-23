@@ -124,6 +124,11 @@ exports.register = function(req, res, next) {
 			result.msg = doc;
 			return res.send(result);
 		}
+
+		User.sendRegEmail(doc.UserName, function (err, count){
+
+		});
+
 		result.success = true;
 		result.msg = '新用户注册成功';
 		res.send(result);

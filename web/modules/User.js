@@ -152,6 +152,16 @@ UserSchema.statics.register = function(newInfo, cb) {
 	});
 };
 
+/**
+ *
+ * @method 发送确认邮件(用户启用时)
+ * @params 
+ * @return 
+ */
+UserSchema.statics.sendRegEmail = function(userName, cb) {
+	cb(null, null);
+};
+
 UserSchema.statics.login = function(userName, userPass, cb) {
 	if(!userName) return cb('用户名或密码不能为空');
 	userName = userName.trim();
