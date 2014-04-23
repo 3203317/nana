@@ -38,6 +38,10 @@ var DeviceSchema = new Schema({
 	CreateTime: {
 		type: Date,
 		default: Date.now
+	},
+	IsDel: {
+		type: Number,
+		default: 0
 	}
 }, {
 	versionKey: false
@@ -136,18 +140,18 @@ DeviceSchema.statics.register = function(newInfo, cb) {
  * @params deviceId 设备唯一编号
  * @return 
  */
-DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
-	if(!deviceId) return '设备Id不能为空';
+DeviceSchema.statics.findDeviceByUser = function(userId, deviceId, cb) {
+	if(!deviceId) return cb('设备Id不能为空');
 	deviceId = deviceId.trim();
-	if(0 === deviceId.length) return '设备Id不能为空';
+	if(0 === deviceId.length) return cb('设备Id不能为空');
 
-	if(!user_id) return '用户Id不能为空';
-	user_id = user_id.trim();
-	if(0 === user_id.length) return '用户Id不能为空';
+	if(!userId) return cb('用户Id不能为空');
+	userId = userId.trim();
+	if(0 === userId.length) return cb('用户Id不能为空');
 
 	var para1 = {
 		DeviceId: deviceId,
-		User_Id: user_id
+		User_Id: userId
 	};
 
 	this.findOne(para1, null, null, function (err, doc){
@@ -163,9 +167,9 @@ DeviceSchema.statics.findDeviceByUser = function(user_id, deviceId, cb) {
  * @return 
  */
 DeviceSchema.statics.setStatusEnable = function(id, cb) {
-	if(!id) return '主键Id不能为空';
+	if(!id) return cb('主键Id不能为空');
 	id = id.trim();
-	if(0 === id.length) return '主键Id不能为空';
+	if(0 === id.length) return cb('主键Id不能为空');
 
 	this.update({
 		Id: id
@@ -186,9 +190,9 @@ DeviceSchema.statics.setStatusEnable = function(id, cb) {
  * @return 
  */
 DeviceSchema.statics.setStatusDisable = function(id, cb) {
-	if(!id) return '主键Id不能为空';
+	if(!id) return cb('主键Id不能为空');
 	id = id.trim();
-	if(0 === id.length) return '主键Id不能为空';
+	if(0 === id.length) return cb('主键Id不能为空');
 
 	this.update({
 		Id: id

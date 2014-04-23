@@ -47,6 +47,9 @@ var UserSchema = new Schema({
 	Lv: {
 		type: Number
 	},
+	AckCode: {			//用户注册邮箱认证码
+		type: String
+	},
 	RegTime: {
 		type: Date,
 		default: Date.now
@@ -152,6 +155,50 @@ UserSchema.statics.register = function(newInfo, cb) {
 	});
 };
 
+/**
+ *
+ * @method 发送注册认证邮件(用户启用时)
+ * @params 
+ * @return 
+ */
+UserSchema.statics.sendRegEmail = function(userName, cb) {
+
+	this.findUserAckStatus(userName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+
+		doc.update({
+			AckCode: util.random(12)
+		}, function (err, doc){
+			if(err) return cb(err);
+			/* 尝试发送注册邮件确认 */
+			cb(null, null);
+		});
+	});
+};
+
+/**
+ *
+ * @method 注册认证邮件确认
+ * @params ackInfo 确认信息
+ * @return 
+ */
+UserSchema.statics.ackRegEmail = function(ackInfo, cb) {
+
+	this.findUserAckStatus(ackInfo.UserName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(ackInfo.AckCode !== doc.AckCode) return cb(null, '认证码输入错误');
+
+		doc.update({
+			Status: 1
+		}, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
+	});
+};
+
 UserSchema.statics.login = function(userName, userPass, cb) {
 	if(!userName) return cb('用户名或密码不能为空');
 	userName = userName.trim();
@@ -164,6 +211,7 @@ UserSchema.statics.login = function(userName, userPass, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
+		if(!doc.Status) return cb(null, '用户未通过认证');
 		if(md5.hex(userPass) === doc.UserPass) return cb(null, doc);
 		cb(null, '用户名或密码输入错误');
 	});
@@ -181,8 +229,8 @@ UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		if(1 !== doc.Lv) return cb(null, '无权访问');
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		cb(null, doc);
 	});
 };
@@ -194,9 +242,6 @@ UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
  * @return 
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
-	if(!userName) return cb('用户名不能为空');
-	userName = userName.trim();
-	if(0 === userName.length) return cb('用户名不能为空');
 	/* 用户名转换小写 */
 	userName = userName.toLowerCase();
 
@@ -205,6 +250,22 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '没有找到该用户');
+	});
+};
+
+/**
+ *
+ * @method 查询用户认证状态
+ * @params userName 用户名
+ * @return 
+ */
+UserSchema.statics.findUserAckStatus = function(userName, cb) {
+
+	that.findUserByUserName(userName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(doc.Status) return cb(null, '用户已认证通过');
+		cb(null, doc);
 	});
 };
 
