@@ -20,15 +20,7 @@ require(["jquery",
 		_a_quit.click(function(){
 			console.log("退出");
 			if(confirm('您确定要退出系统吗？')){
-				$.ajax({
-					url: '/manage/user/logout.do',
-					type: "POST",
-					dataType: "json",
-					data: "{}"
-				}).done(function(responseText) {
-					location.href = 'user/login';
-				}).complete(function(){
-				});
+				top.location.href = '/manage/user/logout';
 			}
 		});
 

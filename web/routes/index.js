@@ -53,8 +53,8 @@ module.exports = function(app) {
 
 	app.get('/manage/user/login', user.loginBackStageUI);
 	app.get('/manage/user/index', manage.validate, user.indexUI);
+	app.get('/manage/user/logout', manage.validate, user.logoutBackStage);
 	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
-	app.post('/manage/user/logout.do', manage.validate, user.logoutBackStage);
 
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);

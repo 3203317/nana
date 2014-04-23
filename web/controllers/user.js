@@ -101,11 +101,8 @@ exports.loginBackStage = function(req, res, next) {
 };
 
 exports.logoutBackStage = function(req, res, next) {
-	var result = { success: false };
-
 	req.session.destroy();
-	result.success = true;
-	res.send(result);
+	res.redirect('/manage/user/login');
 };
 
 /**
@@ -131,6 +128,23 @@ exports.register = function(req, res, next) {
 
 		result.success = true;
 		result.msg = '新用户注册成功';
+		res.send(result);
+	});
+};
+
+/**
+ *
+ * @method 发送注册用户确认邮件
+ * @params 
+ * @return 
+ */
+exports.sendRegEmail = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	User.sendRegEmail(data.UserName, function (err, doc){
+		if(err) return next(err);
+		result.success = true;
 		res.send(result);
 	});
 };
