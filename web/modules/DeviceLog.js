@@ -13,13 +13,16 @@ var DeviceLogSchema = new Schema({
 		unique: true,
 		index: true
 	},
-	Device_Id: {
-		type: String
-	},
 	Longitude: {
 		type: String
 	},
 	Latitude: {
+		type: String
+	},
+	DeviceId: {
+		type: String
+	},
+	User_Id: {
 		type: String
 	},
 	/* 客户端创建时间 */
