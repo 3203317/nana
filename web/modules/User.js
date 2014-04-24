@@ -2,6 +2,7 @@ var db = require('./mongodb');
 var util = require('../libs/utils');
 var md5 = require('../libs/md5');
 var Module = require('./Module');
+var Device = require('./Device');
 
 var mongoose = db.mongoose,
 	Schema = mongoose.Schema,
@@ -34,10 +35,6 @@ var UserSchema = new Schema({
 	Nickname: {
 		type: String
 	},
-	MaxDeviceNum: {
-		type: Number,
-		default: 3
-	},
 	Birthday: {
 		type: Date
 	},
@@ -46,6 +43,9 @@ var UserSchema = new Schema({
 	},
 	Lv: {
 		type: Number
+	},
+	DeviceId: {			//设备唯一码(用户正在使用)
+		type: String
 	},
 	AckCode: {			//用户注册邮箱认证码
 		type: String
@@ -58,7 +58,7 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 0
 	},
-	IsDel: {
+	IsDel: {			//删除标记, 删除1, 否0
 		type: Number,
 		default: 0
 	}
@@ -133,25 +133,22 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 	that.findUserByUserName(newInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc){
-			newInfo.Id = util.uuid(false);
-			newInfo.UserName = newInfo.UserName.toLowerCase();
-			newInfo.MaxDeviceNum = 3;
-			newInfo.Lv = 2;
-			newInfo.RegTime = new Date();
-			newInfo.Status = 0;
-			newInfo.IsDel = 0;
+		if('string' !== typeof doc) return cb(null, '用户名已经存在');
+		/* 数据入库 */
+		newInfo.Id = util.uuid(false);
+		newInfo.UserName = newInfo.UserName.toLowerCase();
+		newInfo.Lv = 2;
+		newInfo.RegTime = new Date();
+		newInfo.Status = 0;
+		newInfo.IsDel = 0;
 
-			newInfo.SecretPass = util.random(6);
-			newInfo.UserPass = md5.hex(newInfo.SecretPass);
+		newInfo.SecretPass = util.random(6);
+		newInfo.UserPass = md5.hex(newInfo.SecretPass);
 
-			that.create(newInfo, function (err, doc){
-				if(err) return cb(err);
-				cb(null, doc);
-			});
-			return;
-		}
-		cb(null, '用户名已经存在');
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
 	});
 };
 
@@ -163,9 +160,12 @@ UserSchema.statics.register = function(newInfo, cb) {
  */
 UserSchema.statics.sendRegEmail = function(userName, cb) {
 
-	this.findUserAckStatus(userName, function (err, doc){
+	var that = this;
+
+	that.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
+		if(doc.Status) return cb(null, '用户已认证通过');
 
 		doc.update({
 			AckCode: util.random(12)
@@ -185,9 +185,12 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
  */
 UserSchema.statics.ackRegEmail = function(ackInfo, cb) {
 
-	this.findUserAckStatus(ackInfo.UserName, function (err, doc){
+	var that = this;
+
+	that.findUserByUserName(ackInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
+		if(doc.Status) return cb(null, '用户已认证通过');
 		if(ackInfo.AckCode !== doc.AckCode) return cb(null, '认证码输入错误');
 
 		doc.update({
@@ -199,32 +202,31 @@ UserSchema.statics.ackRegEmail = function(ackInfo, cb) {
 	});
 };
 
+/**
+ *
+ * @method 网站登陆
+ * @params 
+ * @return 
+ */
 UserSchema.statics.login = function(userName, userPass, cb) {
-	if(!userName) return cb('用户名或密码不能为空');
-	userName = userName.trim();
-	if(0 === userName.length) return cb('用户名或密码不能为空');
-
-	if(!userPass) return cb('用户名或密码不能为空');
-	userPass = userPass.trim();
-	if(0 === userPass.length) return cb('用户名或密码不能为空');
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
+		if(doc.IsDel) return cb(null, '用户已删除,禁止登陆');
 		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(userPass) === doc.UserPass) return cb(null, doc);
-		cb(null, '用户名或密码输入错误');
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		cb(null, doc);
 	});
 };
 
+/**
+ *
+ * @method 后台管理登陆
+ * @params 
+ * @return 
+ */
 UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
-	if(!userName) return cb('用户名或密码不能为空');
-	userName = userName.trim();
-	if(0 === userName.length) return cb('用户名或密码不能为空');
-
-	if(!userPass) return cb('用户名或密码不能为空');
-	userPass = userPass.trim();
-	if(0 === userPass.length) return cb('用户名或密码不能为空');
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -232,6 +234,56 @@ UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
 		if(1 !== doc.Lv) return cb(null, '无权访问');
 		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		cb(null, doc);
+	});
+};
+
+/**
+ *
+ * @method 登陆客户端
+ * @params 
+ * @return 
+ */
+UserSchema.statics.loginClient = function(clientInfo, cb) {
+
+	this.findUserByUserName(clientInfo.UserName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(doc.IsDel) return cb(null, '用户已删除,禁止登陆');
+		if(!doc.Status) return cb(null, '用户未通过认证');
+		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		
+		var deviceInfo = clientInfo.Device;
+		deviceInfo.User_Id = doc.Id;
+
+		Device.deviceLogin(deviceInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
+	});
+};
+
+/**
+ *
+ * @method 退出客户端
+ * @params 
+ * @return 
+ */
+UserSchema.statics.logoutClient = function(clientInfo, cb) {
+
+	this.findUserByUserName(clientInfo.UserName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(doc.IsDel) return cb(null, '用户已删除,禁止退出');
+		if(!doc.Status) return cb(null, '用户未通过认证');
+		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		
+		var deviceInfo = clientInfo.Device;
+		deviceInfo.User_Id = doc.Id;
+
+		Device.deviceLogout(deviceInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
 	});
 };
 
@@ -250,22 +302,6 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '没有找到该用户');
-	});
-};
-
-/**
- *
- * @method 查询用户认证状态
- * @params userName 用户名
- * @return 
- */
-UserSchema.statics.findUserAckStatus = function(userName, cb) {
-
-	that.findUserByUserName(userName, function (err, doc){
-		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.Status) return cb(null, '用户已认证通过');
-		cb(null, doc);
 	});
 };
 

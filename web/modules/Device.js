@@ -31,17 +31,12 @@ var DeviceSchema = new Schema({
 	User_Id: {
 		type: String
 	},
-	Status: {
-		type: Number,
-		default: 1
+	IsLogin: {			//设备登陆1，退出为0
+		type: Number
 	},
 	CreateTime: {
 		type: Date,
 		default: Date.now
-	},
-	IsDel: {
-		type: Number,
-		default: 0
 	}
 }, {
 	versionKey: false
@@ -57,6 +52,40 @@ DeviceSchema.pre('save', function (next, done){
 
 DeviceSchema.post('save', function(){
 });
+
+/**
+ *
+ * @method 设备登陆
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.deviceLogin = function(newInfo, cb) {
+	newInfo.Id = util.uuid(false);
+	newInfo.IsLogin = 1;
+	newInfo.CreateTime = new Date();
+
+	this.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ *
+ * @method 设备退出
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.deviceLogout = function(newInfo, cb) {
+	newInfo.Id = util.uuid(false);
+	newInfo.IsLogin = 0;
+	newInfo.CreateTime = new Date();
+
+	this.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
 
 /**
  *
