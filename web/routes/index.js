@@ -37,24 +37,16 @@ module.exports = function(app) {
 	}
 	
 	app.get('/my', user.analyticsUI);
-
-	/**
-	 * 登陆及注册
-	 *
-	 * @method
-	 * @params req
-	 * @params res
-	 * @return
-	 */
+	
 	app.get('/user/login', user.loginUI);
-	app.get('/user/register', user.registerUI);
 	app.post('/user/login.do', valiPostData, user.login);
+	app.get('/user/register', user.registerUI);
 	app.post('/user/register.do', valiPostData, user.register);
 
 	app.get('/manage/user/login', user.loginBackStageUI);
+	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.get('/manage/user/logout', manage.validate, user.logoutBackStage);
-	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);
