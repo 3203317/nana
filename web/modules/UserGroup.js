@@ -11,11 +11,11 @@ var UserGroupSchema = new Schema({
 		unique: true,
 		index: true
 	},
-	UserGroupName: {
+	GroupName: {
 		type: String,
 		required: true
 	},
-	UserGroupDesc: {
+	GroupDesc: {
 		type: String
 	},
 	User_Id: {
@@ -24,6 +24,10 @@ var UserGroupSchema = new Schema({
 	CreateTime: {
 		type: Date,
 		default: Date.now
+	},
+	IsDel: {			//删除标记, 删除1, 否0
+		type: Number,
+		default: 0
 	}
 }, {
 	versionKey: false
@@ -37,7 +41,6 @@ UserGroupSchema.post('save', function(){
 });
 
 function valiAddFrm(data){
-	if(!data.UserGroupName) return '用户组名称不能为空';
 }
 
 UserGroupSchema.statics.saveNew = function(newInfo, cb) {
