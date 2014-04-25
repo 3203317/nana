@@ -54,7 +54,7 @@ exports.del = function(req, res, next) {
 	Role.removes(data.Ids, function (err, count){
 		if(err) return next(err);
 		result.success = !!count;
-		result.msg = count;
+		result.data = count;
 		res.send(result);
 	});
 };
@@ -66,7 +66,7 @@ exports.edit = function(req, res, next) {
 	Role.edit(data, function (err, count){
 		if(err) return next(err);
 		result.success = !!count;
-		result.msg = count;
+		result.data = count;
 		res.send(result);
 	});
 };

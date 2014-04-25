@@ -296,7 +296,7 @@
 
 				$.ajax({
 					url: vals[0] +'.do',
-					type: "POST",
+					type: "GET",
 					dataType: "json"
 				}).done(function(responseText) {
 					if(300 === responseText.code) return top.location.href = '/manage/user/login';
