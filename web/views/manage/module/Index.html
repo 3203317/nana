@@ -240,7 +240,7 @@
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
 		<script type="text/javascript" src="${cdn}/ztree/3.5.15/js/jquery.ztree.core-3.5.js"></script>
-		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.min.js?v12"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
@@ -275,9 +275,7 @@
 						var pid = treeNode.id;
 						$('#addFrm_PId').val(pid);
 
-						$("#table1").olxGrid("loadData", [{
-							PId: pid
-						}, function(data){
+						$("#table1").data('url', ['/manage/module/', pid, '/children'].join('')).olxGrid("loadData", [null, function(data){
 							if(300 === data.responseJSON.code){
 								top.location.href = '/manage/user/login';
 							}

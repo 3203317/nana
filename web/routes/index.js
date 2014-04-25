@@ -37,30 +37,22 @@ module.exports = function(app) {
 	}
 	
 	app.get('/my', user.analyticsUI);
-
-	/**
-	 * 登陆及注册
-	 *
-	 * @method
-	 * @params req
-	 * @params res
-	 * @return
-	 */
+	
 	app.get('/user/login', user.loginUI);
-	app.get('/user/register', user.registerUI);
 	app.post('/user/login.do', valiPostData, user.login);
+	app.get('/user/register', user.registerUI);
 	app.post('/user/register.do', valiPostData, user.register);
 
 	app.get('/manage/user/login', user.loginBackStageUI);
+	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 	app.get('/manage/user/logout', manage.validate, user.logoutBackStage);
-	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);
 
 	app.get('/manage/module/index', manage.validate, _module.indexUI);
-	app.post('/manage/module/list', manage.validate, valiPostData, _module.moduleListUI);
+	app.get('/manage/module/:id/children', manage.validate, _module.moduleListUI);
 	app.post('/manage/module/add.do', manage.validate, valiPostData, _module.add);
 	app.post('/manage/module/del.do', manage.validate, valiPostData, _module.del);
 	app.post('/manage/module/edit.do', manage.validate, valiPostData, _module.edit);

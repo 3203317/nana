@@ -110,9 +110,6 @@ ModuleSchema.statics.findModules = function(fields, cb) {
  * @return 
  */
 ModuleSchema.statics.findModulesByPId = function(pid, cb) {
-	if(!pid) return cb('父主键不能为空');
-	pid = pid.trim();
-	if(0 === pid.length) return cb('父主键不能为空');
 
 	this.find({
 		PId: pid
@@ -127,7 +124,6 @@ ModuleSchema.statics.findModulesByPId = function(pid, cb) {
 };
 
 ModuleSchema.statics.findModuleById = function(id, cb) {
-	if(!id) return cb('主键不能为空');
 
 	this.findOne({
 		Id: id

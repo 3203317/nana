@@ -46,9 +46,9 @@ exports.indexUI = function(req, res, next) {
 
 exports.moduleListUI = function(req, res, next) {
 	var result = { success: false },
-		data = req._data;
+		id = req.params.id.trim();
 
-	Module.findModulesByPId(data.PId, function (err, docs){
+	Module.findModulesByPId(id, function (err, docs){
 		if(err) return next(err);
 
 		fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, template){
@@ -58,7 +58,7 @@ exports.moduleListUI = function(req, res, next) {
 				cmodules: docs
 			});
 
-			result.msg = html;
+			result.data = html;
 			result.success = true;
 			res.send(result);
 		});

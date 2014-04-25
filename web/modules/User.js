@@ -50,11 +50,14 @@ var UserSchema = new Schema({
 	AckCode: {			//用户注册邮箱认证码
 		type: String
 	},
+	SafeEmail: {		//安全邮箱
+		type: String
+	},
 	RegTime: {
 		type: Date,
 		default: Date.now
 	},
-	Status: {
+	Status: {			//状态, 未激活0, 邮箱激活1, 短信激活2
 		type: Number,
 		default: 0
 	},
@@ -133,7 +136,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 	that.findUserByUserName(newInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('string' !== typeof doc) return cb(null, '用户名已经存在');
+		if('object' === typeof doc) return cb(null, '用户名已经存在');
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
 		newInfo.UserName = newInfo.UserName.toLowerCase();
@@ -160,9 +163,7 @@ UserSchema.statics.register = function(newInfo, cb) {
  */
 UserSchema.statics.sendRegEmail = function(userName, cb) {
 
-	var that = this;
-
-	that.findUserByUserName(userName, function (err, doc){
+	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
 		if(doc.Status) return cb(null, '用户已认证通过');
@@ -185,9 +186,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
  */
 UserSchema.statics.ackRegEmail = function(ackInfo, cb) {
 
-	var that = this;
-
-	that.findUserByUserName(ackInfo.UserName, function (err, doc){
+	this.findUserByUserName(ackInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
 		if(doc.Status) return cb(null, '用户已认证通过');
@@ -248,7 +247,7 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 	this.findUserByUserName(clientInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除,禁止登陆');
+		if(doc.IsDel) return cb(null, '用户已删除');
 		if(!doc.Status) return cb(null, '用户未通过认证');
 		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		
@@ -273,7 +272,7 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
 	this.findUserByUserName(clientInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除,禁止退出');
+		if(doc.IsDel) return cb(null, '用户已删除');
 		if(!doc.Status) return cb(null, '用户未通过认证');
 		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
 		
@@ -302,6 +301,32 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '没有找到该用户');
+	});
+};
+
+/**
+ *
+ * @method 找回密码
+ * @params userName 用户名
+ * @return 
+ */
+UserSchema.statics.findPassword = function(userName, cb) {
+
+	this.findUserByUserName(userName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(doc.IsDel) return cb(null, '用户已删除');
+		if(!doc.Status) return cb(null, '用户未通过认证');
+
+		var para1 = {};
+		para1.SecretPass = util.random(6);
+		para1.UserPass = md5.hex(para1.SecretPass);
+
+		doc.update(para1, function (err, doc){
+			if(err) return cb(err);
+			/* 发送密码邮件 */
+			cb(null, null);
+		});
 	});
 };
 
