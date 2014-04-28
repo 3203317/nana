@@ -59,7 +59,7 @@ DeviceSchema.post('save', function(){
  * @params 
  * @return 
  */
-DeviceSchema.statics.deviceLogin = function(newInfo, cb) {
+DeviceSchema.statics.login = function(newInfo, cb) {
 	newInfo.Id = util.uuid(false);
 	newInfo.IsLogin = 1;
 	newInfo.CreateTime = new Date();
@@ -76,7 +76,7 @@ DeviceSchema.statics.deviceLogin = function(newInfo, cb) {
  * @params 
  * @return 
  */
-DeviceSchema.statics.deviceLogout = function(newInfo, cb) {
+DeviceSchema.statics.logout = function(newInfo, cb) {
 	newInfo.Id = util.uuid(false);
 	newInfo.IsLogin = 0;
 	newInfo.CreateTime = new Date();

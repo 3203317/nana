@@ -41,12 +41,6 @@ var UserSchema = new Schema({
 	QQ: {
 		type: String
 	},
-	Lv: {
-		type: Number
-	},
-	DeviceId: {			//设备唯一码(用户正在使用)
-		type: String
-	},
 	AckCode: {			//用户注册邮箱认证码
 		type: String
 	},
@@ -140,7 +134,6 @@ UserSchema.statics.register = function(newInfo, cb) {
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
 		newInfo.UserName = newInfo.UserName.toLowerCase();
-		newInfo.Lv = 2;
 		newInfo.RegTime = new Date();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
@@ -221,23 +214,6 @@ UserSchema.statics.login = function(userName, userPass, cb) {
 
 /**
  *
- * @method 后台管理登陆
- * @params 
- * @return 
- */
-UserSchema.statics.loginBackStage = function(userName, userPass, cb) {
-
-	this.findUserByUserName(userName, function (err, doc){
-		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(1 !== doc.Lv) return cb(null, '无权访问');
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
-		cb(null, doc);
-	});
-};
-
-/**
- *
  * @method 登陆客户端
  * @params 
  * @return 
@@ -254,7 +230,7 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
-		Device.deviceLogin(deviceInfo, function (err, doc){
+		Device.login(deviceInfo, function (err, doc){
 			if(err) return cb(err);
 			cb(null, doc);
 		});
@@ -279,7 +255,7 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
-		Device.deviceLogout(deviceInfo, function (err, doc){
+		Device.logout(deviceInfo, function (err, doc){
 			if(err) return cb(err);
 			cb(null, doc);
 		});

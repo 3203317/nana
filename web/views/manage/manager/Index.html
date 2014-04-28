@@ -18,7 +18,7 @@
 		<div class="navbar navbar-fixed-top" role="navigation">
 			<ul class="breadcrumb">
 				<li>当前位置：<div class="glyphicon glyphicon-home"></div> 首页</li>
-				<li class="active">业务系统</li>
+				<li class="active">系统管理</li>
 				<li><a href="javascript:;" onclick="location.reload()">用户管理</a></li>				
 			</ul>
 		</div>
@@ -52,14 +52,6 @@
 										<option value="3">未知</option>
 									</select>
 								</div>
-								<div class="form-group">
-									<select class="form-control" id="certificate">
-										<option value="">状态</option>
-										<option value="0">未激活</option>
-										<option value="1">邮箱</option>
-										<option value="2">短信</option>
-									</select>
-								</div>
 								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
 							</form>
 						</div>
@@ -74,7 +66,6 @@
 							<div class="btn-group">
 								<button id="btn_edit" class="btn btn-default olx-glyphicon glyphicon-edit olx-glyphicon-btn">编辑</button>
 							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
-							    <button id="btn_status" class="btn btn-warning olx-glyphicon glyphicon-thumbs-up olx-glyphicon-btn">状态</button>
 							</div>
 						    <div class="navbar-btn navbar-right hide-xs">
 								<div class="btn-group">
@@ -82,7 +73,7 @@
 								</div>
 							</div>
  						</div>
- 						#parse("Manage/User/UserList.html")
+ 						#parse("Manage/Manager/UserList.html")
 					</div>
 				</div>
 			</div>
@@ -91,7 +82,7 @@
 		<script type="text/javascript" src="${cdn}/jquery/2.0.2/jquery.min.js"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
-		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.min.js?v12"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 

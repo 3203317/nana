@@ -43,7 +43,7 @@
 
 		<!-- Own -->
 		<script type="text/javascript">
-			if(window.top !== window.self) top.location.href = '/manage/user/login';
+			if(window.top !== window.self) top.location.href = '/manage/manager/login';
 
 			function validateForm(){
 				var formObj = $("#loginForm").serializeObjectForm();
@@ -63,7 +63,7 @@
 					var data = { data: JSON.stringify(formObj) };
 
 					$.ajax({
-						url: '/manage/user/login.do',
+						url: '/manage/manager/login.do',
 						type: "POST",
 						dataType: "json",
 						data: data

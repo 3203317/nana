@@ -3,6 +3,7 @@ var role = require('../controllers/role');
 var device = require('../controllers/device');
 var _module = require('../controllers/module');
 var manage = require('../controllers/manage');
+var manager = require('../controllers/manager');
 
 var virtualPath = '';
 var title = 'FOREWORLD 洪荒';
@@ -43,10 +44,12 @@ module.exports = function(app) {
 	app.get('/user/register', user.registerUI);
 	app.post('/user/register.do', valiPostData, user.register);
 
-	app.get('/manage/user/login', user.loginBackStageUI);
-	app.post('/manage/user/login.do', valiPostData, user.loginBackStage);
 	app.get('/manage/user/index', manage.validate, user.indexUI);
-	app.get('/manage/user/logout', manage.validate, user.logoutBackStage);
+
+	app.get('/manage/manager/login', manager.loginUI);
+	app.post('/manage/manager/login.do', valiPostData, manager.login);
+	app.get('/manage/manager/index', manage.validate, manager.indexUI);
+	app.get('/manage/manager/logout', manage.validate, manager.logout);
 
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);

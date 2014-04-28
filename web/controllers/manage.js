@@ -44,7 +44,7 @@ exports.welcomeUI = function(req, res, next) {
 };
 
 exports.validate = function(req, res, next) {
-	if(1 === req.session.lv) return next();
+	if('manager' === req.session.role) return next();
 	if(req.xhr){
 		return res.send({
 			success: false,
@@ -52,5 +52,5 @@ exports.validate = function(req, res, next) {
 			msg: '无权访问'
 		});
 	}
-	res.redirect('/manage/user/login');
+	res.redirect('/manage/manager/login');
 };
