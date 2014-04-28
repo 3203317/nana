@@ -54,17 +54,6 @@ exports.registerUI = function(req, res, next) {
 	});
 };
 
-exports.loginBackStageUI = function(req, res, next) {
-	res.render('Manage/User/Login', {
-		title: title,
-		atitle: '后台登陆',
-		description: '后台登陆',
-		keywords: ',后台登陆,Bootstrap3',
-		virtualPath: virtualPath +'/',
-		cdn: conf.cdn
-	});
-};
-
 exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
@@ -80,29 +69,6 @@ exports.login = function(req, res, next) {
 		result.success = true;
 		res.send(result);
 	});
-};
-
-exports.loginBackStage = function(req, res, next) {
-	var result = { success: false },
-		data = req._data;
-
-	User.loginBackStage(data.UserName, data.UserPass, function (err, doc){
-		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
-		req.session.userId = doc.Id;
-		req.session.lv = doc.Lv;
-		req.session.user = doc;
-		result.success = true;
-		res.send(result);
-	});
-};
-
-exports.logoutBackStage = function(req, res, next) {
-	req.session.destroy();
-	res.redirect('/manage/user/login');
 };
 
 /**
