@@ -20,7 +20,7 @@ require(["jquery",
 		_a_quit.click(function(){
 			console.log("退出");
 			if(confirm('您确定要退出系统吗？')){
-				top.location.href = '/manage/user/logout';
+				top.location.href = '/manage/manager/logout';
 			}
 		});
 

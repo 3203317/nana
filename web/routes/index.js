@@ -44,6 +44,8 @@ module.exports = function(app) {
 	app.get('/user/register', user.registerUI);
 	app.post('/user/register.do', valiPostData, user.register);
 
+	app.get('/manage/user/index', manage.validate, user.indexUI);
+
 	app.get('/manage/manager/login', manager.loginUI);
 	app.post('/manage/manager/login.do', valiPostData, manager.login);
 	app.get('/manage/manager/index', manage.validate, manager.indexUI);

@@ -1,8 +1,9 @@
 {Id: '9dea3de18553497284a0e9777c37291b', PId: '0', ModuleName: '系统管理', ModuleUrl: '', Sort: 1, CreateTime: {'$date': 1397005200993}}
 {Id: 'c5f1f1c14a9c42d88629498054bf5ba2', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '模块管理', ModuleUrl: '/manage/module/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
 {Id: 'a4c691697b8a4d5baf63ee2b54f37a31', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '角色管理', ModuleUrl: '/manage/role/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
-{Id: '7888a2a5de5c47d68cb80fe8415b2b0b', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '用户管理', ModuleUrl: '/manage/user/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
-{Id: 'f7f4b33ef6ef4af289a307b12095b0c3', PId: '0', ModuleName: '业务管理', ModuleUrl: '', Sort: 2, CreateTime: {'$date': 1397007354544}}
-{Id: '6b23c8a4559646d5a23796222b654dc6', PId: 'f7f4b33ef6ef4af289a307b12095b0c3', ModuleName: '设备管理', ModuleUrl: '/manage/device/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
-{Id: 'd3245e0014854a0e8321e85b3bbd2429', PId: 'f7f4b33ef6ef4af289a307b12095b0c3', ModuleName: '设备日志', ModuleUrl: '/manage/devicelog/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: '7888a2a5de5c47d68cb80fe8415b2b0b', PId: '9dea3de18553497284a0e9777c37291b', ModuleName: '用户管理', ModuleUrl: '/manage/manager/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: 'f7f4b33ef6ef4af289a307b12095b0c3', PId: '0', ModuleName: '业务系统', ModuleUrl: '', Sort: 2, CreateTime: {'$date': 1397007354544}}
+{Id: 'd9a2a83a8895483a90ffed76ae880c26', PId: 'f7f4b33ef6ef4af289a307b12095b0c3', ModuleName: '用户管理', ModuleUrl: '/manage/user/index', Sort: 1, CreateTime: {'$date': 1397005200993}}
+{Id: '6b23c8a4559646d5a23796222b654dc6', PId: 'f7f4b33ef6ef4af289a307b12095b0c3', ModuleName: '设备管理', ModuleUrl: '/manage/device/index', Sort: 2, CreateTime: {'$date': 1397005200993}}
+{Id: 'd3245e0014854a0e8321e85b3bbd2429', PId: 'f7f4b33ef6ef4af289a307b12095b0c3', ModuleName: '设备日志', ModuleUrl: '/manage/devicelog/index', Sort: 2, CreateTime: {'$date': 1397005200993}}
 {Id: '0d4425e82b434601bbbb9f80f886f96a', PId: '0', ModuleName: '统计分析', ModuleUrl: '', Sort: 3, CreateTime: {'$date': 1397007354544}}
