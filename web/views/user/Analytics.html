@@ -2,158 +2,72 @@
 <html lang="zh-CN">
 	<head>
 		#parse('pagelet/IndexHeader.html')
+		<style type="text/css">
+			#footer{
+				position:fixed;
+				left:0;
+				bottom:0;
+				width:100%;
+			}
+			#mymap{
+				height: 350px;
+			}
+		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
-
 		<header id="header"></header>
 
 		<section class="container">
 			<div class="row">
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-3 col-sm-3">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<h3 class="panel-title"><strong>概要</strong></h3>
+							<h3 class="panel-title"><strong>我的信息</strong></h3>
 						</div>
 						<div class="panel-body">
 							<p>我的设备：3个</p>
 							<p>搜索：3个</p>
 						</div>
 					</div>
+
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>朋友们</strong></h3>
+						</div>
+						<div class="panel-body">
+							<div class="list-group">
+								<a class="list-group-item active">我的好友<span class="badge pull-right">3</span></a>
+								<a href="javascript:;" class="list-group-item">张三</a>
+								<a href="javascript:;" class="list-group-item">李四</a>
+								<a href="javascript:;" class="list-group-item">王五</a>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-6 col-sm-6">
+				<div class="col-md-9 col-sm-9">
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>地图</strong></h3>
 						</div>
 						<div class="panel-body">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>概要</strong></h3>
-						</div>
-						<div class="panel-body">
-							<p>我的设备：3个</p>
-							<p>搜索：3个</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>地图</strong></h3>
-						</div>
-						<div class="panel-body">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>概要</strong></h3>
-						</div>
-						<div class="panel-body">
-							<p>我的设备：3个</p>
-							<p>搜索：3个</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>地图</strong></h3>
-						</div>
-						<div class="panel-body">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>概要</strong></h3>
-						</div>
-						<div class="panel-body">
-							<p>我的设备：3个</p>
-							<p>搜索：3个</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>地图</strong></h3>
-						</div>
-						<div class="panel-body">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>概要</strong></h3>
-						</div>
-						<div class="panel-body">
-							<p>我的设备：3个</p>
-							<p>搜索：3个</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title"><strong>地图</strong></h3>
-						</div>
-						<div class="panel-body">
+							<div id="mymap"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-
         #parse('pagelet/IndexFooter.html')
-
         #parse('pagelet/IndexJs.html')
 
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=AD9bcc791cbf496a7dde082ac2e875ce"></script>
 		<!-- Own -->
 		<script type="text/javascript">
-			function validateForm(){
-				var formObj = $("#loginForm").serializeObjectForm();
-				return formObj;
-			}
-
 			$(function(){
-				$('#btn_login').click(function(){
-					var formObj = validateForm();
-					if(!formObj){
-						alert('表单验证失败')
-						return;
-					}
-
-        			var data = { data: JSON.stringify(formObj) };
-
-					$.ajax({
-						url: '/user/login.do',
-						type: "POST",
-						dataType: "json",
-						data: data
-					}).done(function(responseText) {
-						console.log(responseText)
-					}).complete(function(){
-					});
-				});
+				var map = new BMap.Map("mymap");
+				var point = new BMap.Point(116.404, 39.915);
+				map.centerAndZoom(point, 15);
 			});
 		</script>
-
 	</body>
 </html>
