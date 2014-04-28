@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>OverAll</title>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap/3.0.3/dist/css/bootstrap-theme.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css" media="screen">
+	    <link rel="stylesheet" type="text/css" href="${cdn}/olxjs/1.0.0/css/olx/olx.css" media="screen">
+
+		<link rel="stylesheet" type="text/css" href="${virtualPath}public/manage/css/style.css">
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top" role="navigation">
+			<ul class="breadcrumb">
+				<li>当前位置：<div class="glyphicon glyphicon-home"></div> 首页</li>
+				<li class="active">系统管理</li>
+				<li><a href="javascript:;" onclick="location.reload()">用户管理</a></li>				
+			</ul>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="info_alert" class="alert alert-info">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<strong>提示：</strong>设置系统中所有的用户信息。
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>查询条件</strong></h3>
+						</div>
+						<div class="panel-body">
+							<form class="form-inline" role="form" onsubmit='return false;'>
+								<div class="form-group">
+									<input type="text" class="form-control" id="inputEmail3" placeholder="用户名">
+								</div>
+								<div class="form-group">
+									<select class="form-control" id="certificate">
+										<option value="">性别</option>
+										<option value="1">男</option>
+										<option value="2">女</option>
+										<option value="3">未知</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<select class="form-control" id="certificate">
+										<option value="">级别</option>
+										<option value="1">级别1</option>
+										<option value="2">级别2</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<select class="form-control" id="certificate">
+										<option value="">状态</option>
+										<option value="0">未激活</option>
+										<option value="1">邮箱</option>
+										<option value="2">短信</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-default olx-glyphicon glyphicon-search olx-glyphicon-btn">查询</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+ 					<div class="panel panel-default table-responsive">
+						<div class="panel-heading">
+							<div class="btn-group">
+								<button id="btn_edit" class="btn btn-default olx-glyphicon glyphicon-edit olx-glyphicon-btn">编辑</button>
+							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
+							    <button id="btn_status" class="btn btn-warning olx-glyphicon glyphicon-thumbs-up olx-glyphicon-btn">状态</button>
+							</div>
+						    <div class="navbar-btn navbar-right hide-xs">
+								<div class="btn-group">
+									<button type="button" class="btn btn-success olx-glyphicon glyphicon-trash olx-glyphicon-btn">查看回收站</button>
+								</div>
+							</div>
+ 						</div>
+ 						#parse("Manage/User/UserList.html")
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="${cdn}/jquery/2.0.2/jquery.min.js"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
+		<script type="text/javascript" src="${cdn}/olxjs/1.0.0/js/olx.js?v12"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+		<!-- Own -->
+		<script type="text/javascript">
+
+			$(function(){
+			});
+
+		</script>
+	</body>
+</html>
