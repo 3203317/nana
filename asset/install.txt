@@ -8,3 +8,5 @@ mongoimport -d nana -c devices d:\GitHub\nana\asset\device.json --jsonArray
 
 mongoimport -d nana -c devicetypes d:\GitHub\nana\asset\deviceType.json --jsonArray
 
+mongoimport -d nana -c managers d:\GitHub\nana\asset\manager.json --jsonArray
+

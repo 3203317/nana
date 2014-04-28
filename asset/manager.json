@@ -1,0 +1,2 @@
+{Id: 'd961db00c179417a812786c3f8752ab1', UserName: 'admin', UserPass: '96e79218965eb72c92a549dd5a330112', Sex: 2, CreateTime: {'$date': 1397005200993}, IsDel: 0}
+{Id: '1be93fa5058f4bf58f717837fe2b518d', UserName: 'huangxin', UserPass: 'e10adc3949ba59abbe56e057f20f883e', Sex: 1, CreateTime: {'$date': 1397005200993}, IsDel: 0}
