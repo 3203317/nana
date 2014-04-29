@@ -55,3 +55,21 @@ exports.logout = function(req, res, next) {
 	req.session.destroy();
 	res.redirect('/manage/manager/login');
 };
+
+exports.getId = function(req, res, next) {
+	var result = { success: false },
+		id = req.params.id.trim();
+
+	Manager.findUserById(id, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc){
+			result.msg = doc;
+			return res.send(result);
+		}
+		result.data = [doc, {
+			CreateTime: doc.sCreateTime
+		}];
+		result.success = true;
+		res.send(result);
+	});
+};

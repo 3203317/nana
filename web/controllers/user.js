@@ -58,14 +58,15 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	req.session.destroy();
-
 	User.login(data.UserName, data.UserPass, function (err, doc){
 		if(err) return next(err);
 		if('string' === typeof doc){
 			result.msg = doc;
 			return res.send(result);
 		}
+		req.session.userId = doc.Id;
+		req.session.role = 'user';
+		req.session.user = doc;
 		result.success = true;
 		res.send(result);
 	});
@@ -113,4 +114,16 @@ exports.sendRegEmail = function(req, res, next) {
 		result.success = true;
 		res.send(result);
 	});
+};
+
+exports.validate = function(req, res, next) {
+	if('user' === req.session.role) return next();
+	if(req.xhr){
+		return res.send({
+			success: false,
+			code: 300,
+			msg: '无权访问'
+		});
+	}
+	res.redirect('/user/login');
 };

@@ -151,6 +151,15 @@ ManagerSchema.statics.findUserByUserName = function(userName, cb) {
 	});
 };
 
+ManagerSchema.statics.findUserById = function(id, cb) {
+	this.findOne({
+		Id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该记录');
+	});
+};
+
 var ManagerModel = mongoose.model('manager', ManagerSchema);
 
 exports = module.exports = ManagerModel;

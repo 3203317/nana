@@ -64,6 +64,7 @@
  					<div class="panel panel-default table-responsive">
 						<div class="panel-heading">
 							<div class="btn-group">
+							    <button class="btn btn-primary olx-glyphicon glyphicon-plus-sign olx-glyphicon-btn" data-toggle="modal" data-target="#addModal">新增</button>
 								<button id="btn_edit" class="btn btn-default olx-glyphicon glyphicon-edit olx-glyphicon-btn">编辑</button>
 							    <button id="btn_del" class="btn btn-danger olx-glyphicon glyphicon-remove-sign olx-glyphicon-btn">删除</button>
 							</div>
@@ -79,6 +80,101 @@
 			</div>
 		</div>
 
+		<div id="addModal" class="modal fade" aria-hidden="true" aria-labelledby="addModalLabel" role="dialog" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+						<h4 id="addModalLabel" class="modal-title"><b>新增</b></h4>
+					</div>
+					<form id="addFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="add.do">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="addFrm_UserName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>用户名称</label>
+								<div class="col-sm-7">
+									<input type="text" data-olx-type="olx.form.input" data-required="true" class="form-control" id="addFrm_UserName" name="UserName" placeholder="用户名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="addFrm_Sex" class="col-sm-3 control-label"><span class="olx-form-required">*</span>性别</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="addFrm_Sex" name='sex'>
+										<option value="1">男</option>
+										<option value="2">女</option>
+										<option value="3">未知</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="addFrm_shadow_CreateTime" class="col-sm-3 control-label">创建时间</label>
+								<div class="col-sm-7">
+									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy/mm/dd" data-link-field="addFrm_CreateTime" data-link-format="yyyy/mm/dd">
+										<input class="form-control" id='addFrm_shadow_CreateTime' type="text" value="" readonly placeholder="创建时间">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="addFrm_CreateTime" name="CreateTime" placeholder="创建时间">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
+							<button class="btn btn-warning" type="reset">重置</button>
+							<button id='addFrm_btn_submit' class="btn btn-primary" type="button">保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div id="editModal" class="modal fade" aria-hidden="true" aria-labelledby="editModalLabel" role="dialog" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+						<h4 id="editModalLabel" class="modal-title"><b>新增</b></h4>
+					</div>
+					<form id="editFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
+						<input type="hidden" id="editFrm_Id" name="Id" value="0">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="editFrm_UserName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>用户名称</label>
+								<div class="col-sm-7">
+									<input type="text" data-olx-type="olx.form.input" data-required="true" class="form-control" id="editFrm_UserName" name="UserName" placeholder="用户名称" data-placement="bottom" data-original-title="请输入正确的格式。" autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="editFrm_Sex" class="col-sm-3 control-label"><span class="olx-form-required">*</span>性别</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="editFrm_Sex" name='sex'>
+										<option value="1">男</option>
+										<option value="2">女</option>
+										<option value="3">未知</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="editFrm_shadow_CreateTime" class="col-sm-3 control-label">创建时间</label>
+								<div class="col-sm-7">
+									<div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy/mm/dd" data-link-field="editFrm_CreateTime" data-link-format="yyyy/mm/dd">
+										<input class="form-control" id='editFrm_shadow_CreateTime' type="text" value="" readonly placeholder="创建时间">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+									<input type="hidden" data-olx-type="olx.form.input" class="form-control" id="editFrm_CreateTime" name="CreateTime" placeholder="创建时间">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
+							<button class="btn btn-warning" type="reset">重置</button>
+							<button id='editFrm_btn_submit' class="btn btn-primary" type="button">保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 		<script type="text/javascript" src="${cdn}/jquery/2.0.2/jquery.min.js"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap/3.0.3/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="${cdn}/underscore/1.5.1/underscore.min.js"></script>
@@ -88,8 +184,40 @@
 
 		<!-- Own -->
 		<script type="text/javascript">
+			$('.form_date').datetimepicker({
+				language:  'zh-CN',
+				weekStart: 1,
+				todayBtn:  1,
+				autoclose: 1,
+				todayHighlight: 1,
+				startView: 2,
+				minView: 2,
+				forceParse: 0
+			});
 
 			$(function(){
+			});
+
+			$("#btn_edit").click(function(){
+				var vals = $("#table1").olxGrid("getCheckedRowsValue", 1);
+				if(1 !== vals.length) return $("#editAlertModal").modal();
+
+				$.ajax({
+					url: vals[0] +'.do',
+					type: "GET",
+					dataType: "json"
+				}).done(function(responseText) {
+					if(300 === responseText.code) return top.location.href = '/manage/user/login';
+					if(!responseText.success) return alert(responseText.msg);
+
+					$("#editModal").modal();
+
+					var data = responseText.data;
+					$('#editFrm_Id').val(vals[0]);
+					$('#editFrm_UserName').val(data[0].UserName);
+					$('#editFrm_Sex').val(data[0].Sex);
+					$('#editFrm_shadow_CreateTime').val(data[1].CreateTime);
+				});
 			});
 
 		</script>
