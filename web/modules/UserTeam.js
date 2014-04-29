@@ -44,19 +44,29 @@ UserTeamSchema.post('save', function(){
 /**
  *
  * @method 查找我的分组列表
- * @params user_Id 用户id
+ * @params user_id 用户id
  * @return 
  */
-UserTeamSchema.statics.findTeamsByUserId = function(user_Id, cb) {
+UserTeamSchema.statics.findTeamsByUserId = function(user_id, cb) {
 	this.find({
-		User_Id: user_Id
+		User_Id: user_id
 	}, null, {
 		sort: {
-			CreateTime: -1
+			Sort: -1
 		}
 	}, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
+	});
+};
+
+UserTeamSchema.statics.findTeamByName = function(user_id, teamName, cb) {
+	this.findOne({
+		User_Id: user_id,
+		TeamName: teamName
+	}, null, null, function(err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该记录');
 	});
 };
 
@@ -69,9 +79,18 @@ UserTeamSchema.statics.findTeamsByUserId = function(user_Id, cb) {
 UserTeamSchema.statics.saveNew = function(newInfo, cb) {
 	// todo
 
-	this.create(newInfo, function (err, doc){
+	var that = this;
+
+	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc);
+		if('object' === typeof doc) return cb(null, '分组名称已存在');
+		newInfo.Id = util.uuid(false);
+		newInfo.CreateTime = new Date();
+
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
 	});
 };
 
@@ -84,13 +103,14 @@ UserTeamSchema.statics.saveNew = function(newInfo, cb) {
 UserTeamSchema.statics.edit = function(newInfo, cb) {
 	// todo
 
-	delete newInfo.User_Id;
-	delete newInfo.CreateTime;
-
 	this.update({
-		Id: newInfo.Id
+		Id: newInfo.Id,
+		User_Id: newInfo.User_Id
 	}, {
-		'$set': newInfo
+		'$set': {
+			TeamName: newInfo.TeamName,
+			Sort: newInfo.Sort
+		}
 	}, function (err, count){
 		if(err) return cb(err);
 		cb(null, count);
@@ -103,10 +123,11 @@ UserTeamSchema.statics.edit = function(newInfo, cb) {
  * @params 
  * @return 
  */
-UserTeamSchema.statics.removes = function(id, cb) {
+UserTeamSchema.statics.removes = function(id, user_id, cb) {
 
 	this.remove({
-		Id: id
+		Id: id,
+		User_Id: user_id
 	}, function (err, count){
 		if(err) return cb(err);
 		cb(null, count);
