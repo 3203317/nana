@@ -11,10 +11,16 @@ var UserFriendSchema = new Schema({
 		unique: true,
 		index: true
 	},
-	A_UserName: {		//申请方
+	A_User_Id: {		//申请方
 		type: String
 	},
-	B_UserName: {		//被申请方
+	P_User_Id: {		//被申请方
+		type: String
+	},
+	A_Team_Id: {		//申请方
+		type: String
+	},
+	P_Team_Id: {		//被申请方
 		type: String
 	},
 	CreateTime: {
@@ -36,26 +42,23 @@ var UserFriendSchema = new Schema({
 /**
  *
  * @method 判断两人是好友吗
- * @params a_userName 申请方
- * @params b_userName 被申请方
+ * @params 
  * @return true || false
  */
-UserFriendSchema.statics.isFriend = function(a_userName, b_userName, cb) {
+UserFriendSchema.statics.isFriend = function(a_user_id, p_user_id, cb) {
 
 	var that = this;
 
 	that.findOne({
-		A_UserName: a_userName,
-		B_UserName: b_userName,
-		IsDel: 0
+		A_User_Id: a_user_id,
+		P_User_Id: p_user_id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		if(doc) return cb(null, true);
 
 		that.findOne({
-			A_UserName: b_userName,
-			B_UserName: a_userName,
-			IsDel: 0
+			A_User_Id: p_user_id,
+			P_User_Id: a_user_id
 		}, null, null, function (err, doc){
 			if(err) return cb(err);
 			cb(null, !!doc);
@@ -81,21 +84,18 @@ UserFriendSchema.statics.applyFriend = function(a_userName, b_userName, comment,
  * @params 
  * @return 
  */
-UserFriendSchema.statics.getMyFriends = function(userName, cb) {
+UserFriendSchema.statics.getMyFriends = function(user_id, cb) {
+	// todo
 
-	var that = this;
-
-	that.find({
-		A_UserName: userName
+	this.find({
+		'$or': [{
+			A_User_Id: user_id
+		}, {
+			P_User_Id: user_id
+		}]
 	}, null, null, function (err, docs){
 		if(err) return cb(err);
-		var friends = docs;
-		that.find({
-			B_UserName: userName
-		}, null, null, function (err, docs){
-			if(err) return cb(err);
-			cb(null, friends, docs);
-		});
+		cb(null, docs);
 	});
 };
 

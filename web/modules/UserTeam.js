@@ -25,14 +25,114 @@ var UserTeamSchema = new Schema({
 	CreateTime: {
 		type: Date,
 		default: Date.now
-	},
-	IsDel: {			//删除标记, 删除1, 否0
-		type: Number,
-		default: 0
 	}
 }, {
 	versionKey: false
 });
+
+UserTeamSchema.virtual('sCreateTime').get(function(){
+	return util.formatDate(this.CreateTime);
+});
+
+UserTeamSchema.pre('save', function(next, done){
+	next();
+});
+
+UserTeamSchema.post('save', function(){
+});
+
+/**
+ *
+ * @method 查找我的分组列表
+ * @params user_id 用户id
+ * @return 
+ */
+UserTeamSchema.statics.findTeamsByUserId = function(user_id, cb) {
+	this.find({
+		User_Id: user_id
+	}, null, {
+		sort: {
+			Sort: -1
+		}
+	}, function(err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+UserTeamSchema.statics.findTeamByName = function(user_id, teamName, cb) {
+	this.findOne({
+		User_Id: user_id,
+		TeamName: teamName
+	}, null, null, function(err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该记录');
+	});
+};
+
+/**
+ *
+ * @method 新增
+ * @params 
+ * @return 
+ */
+UserTeamSchema.statics.saveNew = function(newInfo, cb) {
+	// todo
+
+	var that = this;
+
+	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
+		if(err) return cb(err);
+		if('object' === typeof doc) return cb(null, '分组名称已存在');
+		newInfo.Id = util.uuid(false);
+		newInfo.CreateTime = new Date();
+
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
+	});
+};
+
+/**
+ *
+ * @method 编辑
+ * @params 
+ * @return 
+ */
+UserTeamSchema.statics.edit = function(newInfo, cb) {
+	// todo
+
+	this.update({
+		Id: newInfo.Id,
+		User_Id: newInfo.User_Id
+	}, {
+		'$set': {
+			TeamName: newInfo.TeamName,
+			Sort: newInfo.Sort
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};
+
+/**
+ *
+ * @method 删除
+ * @params 
+ * @return 
+ */
+UserTeamSchema.statics.removes = function(id, user_id, cb) {
+
+	this.remove({
+		Id: id,
+		User_Id: user_id
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};
 
 var UserTeamModel = mongoose.model('userteam', UserTeamSchema);
 
