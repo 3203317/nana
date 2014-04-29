@@ -44,6 +44,10 @@ var UserSchema = new Schema({
 	AckCode: {			//用户注册邮箱认证码
 		type: String
 	},
+	Email: {			//邮箱
+		type: String,
+		required: true
+	},
 	SafeEmail: {		//安全邮箱
 		type: String
 	},
