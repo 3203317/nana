@@ -217,13 +217,15 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
 
+	var userName = userName.toLowerCase();
+
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除,禁止登陆');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
-		cb(null, doc);
+		if(!doc) return cb(null, 2, '找不到该用户');
+		if(doc.IsDel) return cb(null, 3, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 4, '用户未通过认证', doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 5, '用户名或密码输入错误', doc);
+		cb(null, 1, '登陆成功', doc);
 	});
 };
 
