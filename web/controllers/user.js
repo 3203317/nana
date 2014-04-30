@@ -54,7 +54,6 @@ exports.registerUI = function(req, res, next) {
 	});
 };
 
-<<<<<<< HEAD
 /**
  *
  * @method 发送注册用户确认邮件
@@ -108,16 +107,6 @@ exports.login = function(req, res, next) {
 		if(err) return next(err);
 		if(1 !== status){
 			result.msg = msg;
-=======
-exports.login = function(req, res, next) {
-	var result = { success: false },
-		data = req._data;
-
-	User.login(data.UserName, data.UserPass, function (err, doc){
-		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
->>>>>>> 207b6cdde20a1bc1e14ced8ca61675d728d2c347
 			return res.send(result);
 		}
 		req.session.userId = doc.Id;
@@ -146,26 +135,6 @@ exports.register = function(req, res, next) {
 	});
 };
 
-<<<<<<< HEAD
-=======
-/**
- *
- * @method 发送注册用户确认邮件
- * @params 
- * @return 
- */
-exports.sendRegEmail = function(req, res, next) {
-	var result = { success: false },
-		data = req._data;
-
-	User.sendRegEmail(data.UserName, function (err, doc){
-		if(err) return next(err);
-		result.success = true;
-		res.send(result);
-	});
-};
-
->>>>>>> 207b6cdde20a1bc1e14ced8ca61675d728d2c347
 exports.validate = function(req, res, next) {
 	if('user' === req.session.role) return next();
 	if(req.xhr){
