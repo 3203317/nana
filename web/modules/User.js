@@ -44,6 +44,10 @@ var UserSchema = new Schema({
 	AckCode: {			//用户注册邮箱认证码
 		type: String
 	},
+	Email: {			//邮箱
+		type: String,
+		required: true
+	},
 	SafeEmail: {		//安全邮箱
 		type: String
 	},
@@ -128,17 +132,18 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 	var that = this;
 
-	that.findUserByUserName(newInfo.UserName, function (err, doc){
+	that.findUserByNameEmail(newInfo.UserName, newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if('object' === typeof doc) return cb(null, '用户名已经存在');
+		if('object' === typeof doc) return cb(null, '用户名或电子邮箱已经存在');
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
 		newInfo.UserName = newInfo.UserName.toLowerCase();
+		newInfo.Email = newInfo.Email.toLowerCase();
 		newInfo.RegTime = new Date();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
 
-		newInfo.SecretPass = util.random(6);
+		newInfo.SecretPass = newInfo.UserPass;
 		newInfo.UserPass = md5.hex(newInfo.SecretPass);
 
 		that.create(newInfo, function (err, doc){
@@ -274,6 +279,23 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 
 	this.findOne({
 		UserName: userName
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc ? doc : '没有找到该用户');
+	});
+};
+
+UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
+
+	userName = userName.toLowerCase();
+	email = email.toLowerCase();
+
+	this.findOne({
+		'$or': [{
+			UserName: userName
+		}, {
+			Email: email
+		}]
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc ? doc : '没有找到该用户');

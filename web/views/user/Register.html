@@ -20,13 +20,22 @@
 		<section class="container">
 		    <div class="row">		    
                 <div class="col-md-3 col-sm-4">
-                    <form id="registerForm" role="form" onsubmit="return false;">
-                        <h3>新用户注册</h3>
-                        <div class="form-group">
-                            <input type="text" id="userName" name="UserName" class="form-control" placeholder="example@example.com">
-                        </div>
-                        <button id="btn_register" type="button" class="btn btn-primary">注册</button>
-                        <button type="button" class="btn btn-danger" onclick="history.back()">返回</button>
+                    <form id="regForm" role="form" onsubmit="return false;">
+						<h3>新用户注册</h3>
+						<div class="form-group">
+							<input type="text" id="regForm_UserName" name="UserName" class="form-control" placeholder="用户名">
+						</div>
+						<div class="form-group">
+							<input type="text" id="regForm_Email" name="Email" class="form-control" placeholder="电子邮箱">
+						</div>
+						<div class="form-group">
+							<input type="password" id="regForm_UserPass" name="UserPass" class="form-control" placeholder="密码">
+						</div>
+						<div class="form-group">
+							<input type="password" id="regForm_UserPass2" class="form-control" placeholder="密码确认">
+						</div>
+                        <button id="btn_reg" type="button" class="btn btn-primary">注册</button>
+                        <a class="btn btn-danger" href="login">登陆</a>
                     </form>                
                 </div>
 		    </div>
@@ -39,12 +48,12 @@
 		<!-- Own -->
 		<script type="text/javascript">
 			function validateForm(){
-				var formObj = $("#registerForm").serializeObjectForm();
+				var formObj = $("#regForm").serializeObjectForm();
 				return formObj;
 			}
 
 			$(function(){
-				$('#btn_register').click(function(){
+				$('#btn_reg').click(function(){
 					var formObj = validateForm();
 					if(!formObj){
 						alert('表单验证失败')

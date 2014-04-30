@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+		    #footer 
+		    {
+		    	position:fixed;
+		    	left:0;
+		    	bottom:0;
+		    	width:100%;
+		    }
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+		<header id="header"></header>
+
+		<section class="container">
+		    <div class="row">		    
+                <div class="col-md-3 col-sm-4">
+						<h3>激活邮箱</h3>
+                    </form>                
+                </div>
+		    </div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+
+        #parse('pagelet/IndexJs.html')
+
+		<!-- Own -->
+		<script type="text/javascript">
+			$(function(){
+			});
+		</script>
+	</body>
+</html>

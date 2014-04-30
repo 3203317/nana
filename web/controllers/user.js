@@ -54,6 +54,17 @@ exports.registerUI = function(req, res, next) {
 	});
 };
 
+exports.fireRegEmailUI = function(req, res, next) {
+	res.render('User/FireRegEmail', {
+		title: title,
+		atitle: '激活邮箱',
+		description: '激活邮箱',
+		keywords: ',激活邮箱,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
+	});
+};
+
 exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
