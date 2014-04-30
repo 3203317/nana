@@ -30,7 +30,7 @@ var UserSchema = new Schema({
 	},
 	Sex: {
 		type: Number,
-		default: 1
+		default: 3
 	},
 	Nickname: {
 		type: String
@@ -139,10 +139,8 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 	that.findUserByNameEmail(newInfo.UserName, newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if('object' === typeof doc){
-			if(newInfo.UserName === doc.UserName) return cb(null, '用户名已经存在');
-			return cb(null, '电子邮箱已经存在');
-		}
+		if(doc) return cb(null, 2, newInfo.UserName === doc.UserName ? '用户名已经存在' : '电子邮箱已经存在');
+
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
 		newInfo.RegTime = new Date();
@@ -154,7 +152,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, 1, '新用户注册成功', doc);
 		});
 	});
 };
@@ -167,17 +165,21 @@ UserSchema.statics.register = function(newInfo, cb) {
  */
 UserSchema.statics.sendRegEmail = function(userName, cb) {
 
+	var userName = userName.toLowerCase();
+
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.Status) return cb(null, doc);
+		if(!doc) return cb(null, 3, '找不到该用户');
+		if(doc.Status) return cb(null, 2, '已激活用户', doc);
+
+		var ackCode = util.random(12);
 
 		doc.update({
-			AckCode: util.random(12)
+			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
 			/* 尝试发送注册邮件确认 */
-			cb(null, count ? doc : '更新验证码失败');
+			cb(null, 1, '发送注册认证邮件成功', doc, ackCode);
 		});
 	});
 };
@@ -185,22 +187,24 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 /**
  *
  * @method 注册认证邮件确认
- * @params ackInfo 确认信息
+ * @params 
  * @return 
  */
-UserSchema.statics.ackRegEmail = function(ackInfo, cb) {
+UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
 
-	this.findUserByUserName(ackInfo.UserName, function (err, doc){
+	var userName = userName.toLowerCase();
+
+	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.Status) return cb(null, '用户已认证通过');
-		if(ackInfo.AckCode !== doc.AckCode) return cb(null, '认证码输入错误');
+		if(!doc) return cb(null, 3, '找不到该用户');
+		if(doc.Status) return cb(null, 2, '已激活用户', doc);
+		if(ackCode !== doc.AckCode) return cb(null, 4, '认证码输入错误');
 
 		doc.update({
 			Status: 1
-		}, function (err, doc){
+		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, 1, '已激活成功', doc);
 		});
 	});
 };
@@ -281,20 +285,20 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
 	/* 用户名转换小写 */
-	userName = userName.toLowerCase();
+	var userName = userName.toLowerCase();
 
 	this.findOne({
 		UserName: userName
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该用户');
+		cb(null, doc);
 	});
 };
 
 UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 
-	userName = userName.toLowerCase();
-	email = email.toLowerCase();
+	var userName = userName.toLowerCase();
+	var email = email.toLowerCase();
 
 	this.findOne({
 		'$or': [{
@@ -304,7 +308,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 		}]
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该用户');
+		cb(null, doc);
 	});
 };
 

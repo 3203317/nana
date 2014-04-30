@@ -60,21 +60,41 @@ exports.registerUI = function(req, res, next) {
  * @params 
  * @return 
  */
-exports.fireRegEmailUI = function(req, res, next) {
+exports.sendRegEmailUI = function(req, res, next) {
 	var userName = req.params.name.trim();
-	User.sendRegEmail(userName, function (err, doc){
+
+	User.sendRegEmail(userName, function (err, status, msg, doc, ackCode){
 		if(err) return next(err);
-		if('string' === typeof doc) return next({
-			msg: doc
-		});
-		res.render('User/FireRegEmail', {
+		res.render('User/SendRegEmail', {
 			title: title,
 			atitle: '激活邮箱',
 			description: '激活邮箱',
 			keywords: ',激活邮箱,Bootstrap3',
 			virtualPath: virtualPath +'/',
 			cdn: conf.cdn,
-			user: doc
+			user: doc,
+			ackCode: ackCode,
+			msg: msg,
+			status: status
+		});
+	});
+};
+
+exports.ackRegEmailUI = function(req, res, next) {
+	var userName = req.params.name.trim(),
+		ackCode = req.params.code.trim();
+	User.ackRegEmail(userName, ackCode, function (err, status, msg, doc){
+		if(err) return next(err);
+		res.render('User/AckRegEmail', {
+			title: title,
+			atitle: '用户激活',
+			description: '用户激活',
+			keywords: ',用户激活,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			user: doc,
+			msg: msg,
+			status: status
 		});
 	});
 };
@@ -100,22 +120,17 @@ exports.login = function(req, res, next) {
 /**
  *
  * @method 新用户注册
- * @params userName 用户名
- * @return 成功返回true
+ * @params 
+ * @return 
  */
 exports.register = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	User.register(data, function (err, doc){
+	User.register(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
-
-		result.success = true;
-		result.msg = '新用户注册成功';
+		result.success = !!doc;
+		result.msg = msg;
 		res.send(result);
 	});
 };

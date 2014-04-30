@@ -3,15 +3,14 @@
 	<head>
 		#parse('pagelet/IndexHeader.html')
 		<style>
-		    #footer 
-		    {
+		    #footer {
 		    	position:fixed;
 		    	left:0;
 		    	bottom:0;
 		    	width:100%;
 		    }
 		    a {
-				color: none;
+				color: blue;
 		    }
 		</style>
 	</head>
@@ -22,25 +21,23 @@
 		<section class="container">
 		    <div class="row">		    
                 <div class="col-md-12 col-sm-12">
-					#if(${user.Status} == 0)
+					#if($status == 1)
 					<h3>注册成功</h3>
 					<h5>恭喜您：$user.UserName，请登陆您的电子邮箱，对帐户进行激活操作。</h5>
-					#else
-					<h3>已通过验证</h3>
+					<h5>激活链接：<a href='/user/$user.UserName/ackRegEmail/$ackCode'>激活码</a></h5>
+					#elseif($status == 2)
+					<h3>$msg</h3>
 					<h5>恭喜您：$user.UserName。</h5>
+					#else
+					<h3>操作失败</h3>
+					<h5>$msg</h5>
 					#end
                 </div>
 		    </div>
 		</section>
 
         #parse('pagelet/IndexFooter.html')
-
         #parse('pagelet/IndexJs.html')
-
 		<!-- Own -->
-		<script type="text/javascript">
-			$(function(){
-			});
-		</script>
 	</body>
 </html>

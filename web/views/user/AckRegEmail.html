@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+		    #footer {
+		    	position:fixed;
+		    	left:0;
+		    	bottom:0;
+		    	width:100%;
+		    }
+		    a {
+				color: blue;
+		    }
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+		<header id="header"></header>
+
+		<section class="container">
+		    <div class="row">		    
+                <div class="col-md-12 col-sm-12">
+					<h3>$msg</h3>
+					#if($status == 1)
+					<h5>恭喜您：$user.UserName，请马上<a href='/user/login'>登陆</a>吧。</h5>
+					#else
+					#end
+                </div>
+		    </div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+        #parse('pagelet/IndexJs.html')
+		<!-- Own -->
+	</body>
+</html>

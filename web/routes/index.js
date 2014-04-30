@@ -43,7 +43,8 @@ module.exports = function(app) {
 	app.post('/user/login.do', valiPostData, user.login);
 	app.get('/user/register', user.registerUI);
 	app.post('/user/register.do', valiPostData, user.register);
-	app.get('/user/:name/fireRegEmail', user.fireRegEmailUI);
+	app.get('/user/:name/sendRegEmail', user.sendRegEmailUI);
+	app.get('/user/:name/ackRegEmail/:code', user.ackRegEmailUI);
 
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 

@@ -69,7 +69,7 @@
 						data: data
 					}).done(function(responseText) {
 						if(responseText.success){
-							location.href = $('#regForm_UserName').val() +'/fireRegEmail';
+							location.href = $('#regForm_UserName').val() +'/sendRegEmail';
 						}else{
 							alert(responseText.msg);
 						}
