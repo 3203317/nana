@@ -54,14 +54,28 @@ exports.registerUI = function(req, res, next) {
 	});
 };
 
+/**
+ *
+ * @method 发送注册用户确认邮件
+ * @params 
+ * @return 
+ */
 exports.fireRegEmailUI = function(req, res, next) {
-	res.render('User/FireRegEmail', {
-		title: title,
-		atitle: '激活邮箱',
-		description: '激活邮箱',
-		keywords: ',激活邮箱,Bootstrap3',
-		virtualPath: virtualPath +'/',
-		cdn: conf.cdn
+	var userName = req.params.name.trim();
+	User.sendRegEmail(userName, function (err, doc){
+		if(err) return next(err);
+		if('string' === typeof doc) return next({
+			message: doc
+		});
+		res.render('User/FireRegEmail', {
+			title: title,
+			atitle: '激活邮箱',
+			description: '激活邮箱',
+			keywords: ',激活邮箱,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			user: doc
+		});
 	});
 };
 
@@ -100,29 +114,8 @@ exports.register = function(req, res, next) {
 			return res.send(result);
 		}
 
-		User.sendRegEmail(doc.UserName, function (err, count){
-
-		});
-
 		result.success = true;
 		result.msg = '新用户注册成功';
-		res.send(result);
-	});
-};
-
-/**
- *
- * @method 发送注册用户确认邮件
- * @params 
- * @return 
- */
-exports.sendRegEmail = function(req, res, next) {
-	var result = { success: false },
-		data = req._data;
-
-	User.sendRegEmail(data.UserName, function (err, doc){
-		if(err) return next(err);
-		result.success = true;
 		res.send(result);
 	});
 };

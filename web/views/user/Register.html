@@ -68,7 +68,11 @@
 						dataType: "json",
 						data: data
 					}).done(function(responseText) {
-						console.log(responseText)
+						if(responseText.success){
+							location.href = $('#regForm_UserName').val() +'/fireRegEmail';
+						}else{
+							alert(responseText.msg);
+						}
 					}).complete(function(){
 					});
 				});

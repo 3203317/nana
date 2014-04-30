@@ -10,6 +10,9 @@
 		    	bottom:0;
 		    	width:100%;
 		    }
+		    a {
+				color: none;
+		    }
 		</style>
 	</head>
 	<body>
@@ -18,9 +21,14 @@
 
 		<section class="container">
 		    <div class="row">		    
-                <div class="col-md-3 col-sm-4">
-						<h3>激活邮箱</h3>
-                    </form>                
+                <div class="col-md-12 col-sm-12">
+					#if(${user.Status} == 0)
+					<h3>注册成功</h3>
+					<h5>恭喜您：$user.UserName，请登陆您的电子邮箱，对帐户进行激活操作。</h5>
+					#else
+					<h3>已通过验证</h3>
+					<h5>恭喜您：$user.UserName。</h5>
+					#end
                 </div>
 		    </div>
 		</section>

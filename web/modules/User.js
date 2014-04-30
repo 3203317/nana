@@ -118,6 +118,8 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 
 function valiRegFrm(data){
 	if(!data.UserName) return '用户名不能为空';
+	if('' === data.Email) return '电子邮箱不能为空';
+	if('' === data.UserPass) return '密码不能为空';
 }
 
 /**
@@ -130,15 +132,19 @@ UserSchema.statics.register = function(newInfo, cb) {
 	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(valiResu);
 
+	newInfo.UserName = newInfo.UserName.toLowerCase();
+	newInfo.Email = newInfo.Email.toLowerCase();
+
 	var that = this;
 
 	that.findUserByNameEmail(newInfo.UserName, newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if('object' === typeof doc) return cb(null, '用户名或电子邮箱已经存在');
+		if('object' === typeof doc){
+			if(newInfo.UserName === doc.UserName) return cb(null, '用户名已经存在');
+			return cb(null, '电子邮箱已经存在');
+		}
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
-		newInfo.UserName = newInfo.UserName.toLowerCase();
-		newInfo.Email = newInfo.Email.toLowerCase();
 		newInfo.RegTime = new Date();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
@@ -164,14 +170,14 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if('string' === typeof doc) return cb(null, doc);
-		if(doc.Status) return cb(null, '用户已认证通过');
+		if(doc.Status) return cb(null, doc);
 
 		doc.update({
 			AckCode: util.random(12)
-		}, function (err, doc){
+		}, function (err, count){
 			if(err) return cb(err);
 			/* 尝试发送注册邮件确认 */
-			cb(null, null);
+			cb(null, count ? doc : '更新验证码失败');
 		});
 	});
 };
