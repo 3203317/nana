@@ -65,7 +65,7 @@ exports.fireRegEmailUI = function(req, res, next) {
 	User.sendRegEmail(userName, function (err, doc){
 		if(err) return next(err);
 		if('string' === typeof doc) return next({
-			message: doc
+			msg: doc
 		});
 		res.render('User/FireRegEmail', {
 			title: title,
