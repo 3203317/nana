@@ -143,6 +143,10 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
+<<<<<<< HEAD
+=======
+		newInfo.UserName = newInfo.UserName.toLowerCase();
+>>>>>>> 207b6cdde20a1bc1e14ced8ca61675d728d2c347
 		newInfo.RegTime = new Date();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
@@ -217,6 +221,7 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
 
+<<<<<<< HEAD
 	var userName = userName.toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
@@ -226,6 +231,15 @@ UserSchema.statics.login = function(userName, userPass, cb) {
 		if(!doc.Status) return cb(null, 4, '用户未通过认证', doc);
 		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 5, '用户名或密码输入错误', doc);
 		cb(null, 1, '登陆成功', doc);
+=======
+	this.findUserByUserName(userName, function (err, doc){
+		if(err) return cb(err);
+		if('string' === typeof doc) return cb(null, doc);
+		if(doc.IsDel) return cb(null, '用户已删除,禁止登陆');
+		if(!doc.Status) return cb(null, '用户未通过认证');
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		cb(null, doc);
+>>>>>>> 207b6cdde20a1bc1e14ced8ca61675d728d2c347
 	});
 };
 
