@@ -3,12 +3,17 @@
 	<head>
 		#parse('pagelet/IndexHeader.html')
 		<style>
-		    #footer 
-		    {
-		    	position:fixed;
-		    	left:0;
-		    	bottom:0;
-		    	width:100%;
+			#footer{
+				position:fixed;
+				left:0;
+				bottom:0;
+				width:100%;
+			}
+			label{
+				font-weight: normal;
+				color: red;
+				margin-bottom: 0;
+				display: none;
 		    }
 		</style>
 	</head>
@@ -16,20 +21,31 @@
 		#parse('pagelet/TopBanner.html')
 
 		<header id="header"></header>
-
 		<section class="container">
 		    <div class="row">		    
                 <div class="col-md-3 col-sm-4">
                     <form id="regFrm" role="form" onsubmit="return false;">
 						<h3>新用户注册</h3>
 						<div class="form-group">
+							<label id='lab_regFrm_UserName' for="regFrm_UserName">用户名不能为空</label>
+						</div>
+						<div class="form-group">
 							<input type="text" id="regFrm_UserName" name="UserName" class="form-control" placeholder="用户名">
+						</div>
+						<div class="form-group">
+							<label id='lab_regFrm_Email' for="regFrm_Email">电子邮箱不能为空</label>
 						</div>
 						<div class="form-group">
 							<input type="text" id="regFrm_Email" name="Email" class="form-control" placeholder="电子邮箱">
 						</div>
 						<div class="form-group">
+							<label id='lab_regFrm_UserPass' for='regFrm_UserPass'>密码不能为空</label>
+						</div>
+						<div class="form-group">
 							<input type="password" id="regFrm_UserPass" name="UserPass" class="form-control" placeholder="密码">
+						</div>
+						<div class="form-group">
+							<label id='lab_regFrm_UserPass2' for='regFrm_UserPass2'>密码确认不能为空</label>
 						</div>
 						<div class="form-group">
 							<input type="password" id="regFrm_UserPass2" class="form-control" placeholder="密码确认">
@@ -42,7 +58,6 @@
 		</section>
 
         #parse('pagelet/IndexFooter.html')
-
         #parse('pagelet/IndexJs.html')
         <script type="text/javascript">var exports = {};</script>
 		<script type="text/javascript" src="../public/user/userRegFrm.js" lang='utf-8'></script>
@@ -54,7 +69,16 @@
 					var formObj = $("#regFrm").serializeObjectForm();
 					var valiResu = valiUserRegFrm(formObj);
 					if(valiResu){
-						alert(valiResu[0]);
+						$("label[id^='lab_regFrm_']").each(function (i, lab){
+							var _lab = $(lab);
+							if('lab_regFrm_'+ valiResu[1] === lab.id){
+								_lab.css('display', 'block');
+								_lab.html(valiResu[0]);
+								_lab.focus();
+							}else{
+								_lab.css('display', 'none');
+							}
+						});
 						return;
 					}
 
@@ -76,6 +100,5 @@
 				});
 			});
 		</script>
-
 	</body>
 </html>
