@@ -55,7 +55,7 @@ app.use(function (err, req, res, next){
 	if(req.xhr){
 		return res.send({
 			success: false,
-			msg: 'string' === typeof err ? err : err.message
+			msg: ('string' === typeof err || err instanceof Array) ? err : err.message
 		});
 	}
 	res.render(500, {
