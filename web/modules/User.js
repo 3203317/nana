@@ -1,14 +1,19 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-var md5 = require('../libs/md5');
-var Module = require('./Module');
-var Device = require('./Device');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var str1 = '用户名或密码不能为空';
+var fs = require('fs'),
+	velocity = require('velocityjs'),
+	cwd = process.cwd();
+
+var util = require('../libs/utils'),
+	md5 = require('../libs/md5'),
+	mailer = require('../libs/mailer');
+
+var Module = require('./Module'),
+	Device = require('./Device'),
+	userRegFrm = require('../public/user/userRegFrm');
 
 var UserSchema = new Schema({
 	Id: {
@@ -116,12 +121,6 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 	});
 };
 
-function valiRegFrm(data){
-	if(!data.UserName) return '用户名不能为空';
-	if('' === data.Email) return '电子邮箱不能为空';
-	if('' === data.UserPass) return '密码不能为空';
-}
-
 /**
  *
  * @method 新用户注册
@@ -129,17 +128,14 @@ function valiRegFrm(data){
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
-	var valiResu = valiRegFrm(newInfo);
+	var valiResu = userRegFrm.validate(newInfo);
 	if(valiResu) return cb(valiResu);
-
-	newInfo.UserName = newInfo.UserName.toLowerCase();
-	newInfo.Email = newInfo.Email.toLowerCase();
 
 	var that = this;
 
 	that.findUserByNameEmail(newInfo.UserName, newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(doc) return cb(null, 2, newInfo.UserName === doc.UserName ? '用户名已经存在' : '电子邮箱已经存在');
+		if(doc) return cb(null, 3, newInfo.UserName === doc.UserName ? ['用户名已经存在', 'UserName'] : ['电子邮箱已经存在', 'Email'], doc);
 
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
@@ -152,7 +148,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, 1, '新用户注册成功', doc);
+			cb(null, doc ? 1 : 2, [doc ? '新用户注册成功' : '新用户注册失败'], doc);
 		});
 	});
 };
@@ -164,13 +160,12 @@ UserSchema.statics.register = function(newInfo, cb) {
  * @return 
  */
 UserSchema.statics.sendRegEmail = function(userName, cb) {
-
-	var userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, '找不到该用户');
-		if(doc.Status) return cb(null, 2, '已激活用户', doc);
+		if(doc.Status) return cb(null, 2, '用户状态已激活', doc);
 
 		var ackCode = util.random(12);
 
@@ -178,11 +173,45 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			/* 尝试发送注册邮件确认 */
-			cb(null, 1, '发送注册认证邮件成功', doc, ackCode);
+			if(!count) return cb(null, 4, '用户认证码更新失败', doc);
+
+			getRegEmailTemp(function (err, template){
+				if(err) return cb(err);
+
+				var html = velocity.render(template, {
+					user: doc,
+					ackCode: ackCode
+				});
+
+				/* 尝试发送注册邮件确认 */
+				mailer.send({
+					to: doc.Email,
+					subject: '用户认证邮件',
+					html: html
+				}, function (err, ok){
+					if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
+					cb(null, 1, '发送注册认证邮件成功', doc);
+				});
+			});
 		});
 	});
 };
+
+var regEmailTemp;
+/**
+ *
+ * @method 获取注册认证邮件模板
+ * @params 
+ * @return 
+ */
+function getRegEmailTemp(cb){
+	if(regEmailTemp) return cb(null, regEmailTemp);
+	fs.readFile(cwd +'/views/User/SendRegEmail.email.html', 'utf8', function (err, template){
+		if(err) return cb(err);
+		regEmailTemp = template;
+		cb(null, regEmailTemp);
+	});
+}
 
 /**
  *
@@ -286,9 +315,6 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
  * @return 
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
-	/* 用户名转换小写 */
-	var userName = userName.toLowerCase();
-
 	this.findOne({
 		UserName: userName
 	}, null, null, function (err, doc){
@@ -298,10 +324,6 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 };
 
 UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
-
-	var userName = userName.toLowerCase();
-	var email = email.toLowerCase();
-
 	this.findOne({
 		'$or': [{
 			UserName: userName
