@@ -24,13 +24,16 @@
 					#if($status == 1)
 					<h3>注册成功</h3>
 					<h5>恭喜您：$user.UserName，请登陆您的电子邮箱，对帐户进行激活操作。</h5>
-					<h5>激活链接：<a href='/user/$user.UserName/ackRegEmail/$ackCode'>激活码</a></h5>
 					#elseif($status == 2)
 					<h3>$msg</h3>
 					<h5>恭喜您：$user.UserName。</h5>
+					#elseif($status == 3)
+					<h3>$msg</h3>
+					#elseif($status == 4)
+					<h3>$msg</h3>
 					#else
-					<h3>操作失败</h3>
-					<h5>$msg</h5>
+					<h3>$msg</h3>
+					<h5>请<a href='javascript:location.reload()'>重试</a></h5>
 					#end
                 </div>
 		    </div>

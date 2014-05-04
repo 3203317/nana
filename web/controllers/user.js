@@ -63,17 +63,16 @@ exports.registerUI = function(req, res, next) {
 exports.sendRegEmailUI = function(req, res, next) {
 	var userName = req.params.name.trim();
 
-	User.sendRegEmail(userName, function (err, status, msg, doc, ackCode){
+	User.sendRegEmail(userName, function (err, status, msg, doc){
 		if(err) return next(err);
 		res.render('User/SendRegEmail', {
 			title: title,
-			atitle: '激活邮箱',
-			description: '激活邮箱',
-			keywords: ',激活邮箱,Bootstrap3',
+			atitle: '发送邮件',
+			description: '发送邮件',
+			keywords: ',发送邮件,Bootstrap3',
 			virtualPath: virtualPath +'/',
 			cdn: conf.cdn,
 			user: doc,
-			ackCode: ackCode,
 			msg: msg,
 			status: status
 		});
@@ -129,7 +128,7 @@ exports.register = function(req, res, next) {
 
 	User.register(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = !!doc;
+		result.success = 1 === status;
 		result.msg = msg;
 		res.send(result);
 	});

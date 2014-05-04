@@ -52,36 +52,3 @@ exports.random = function(num){
 	}
 	return result.join('');
 };
-
-/**
- *
- * @method 正则验证邮箱
- * @params 
- * @return 
- */
-exports.regexEmail = function(val){
-	var result = /^[-_A-Za-z0-9]+@([_A-Za-z0-9]+.)+[A-Za-z0-9]{2,3}$/.test(val);
-	if(!result) return '电子邮箱不符合要求';
-};
-
-/**
- *
- * @method 验证用户名
- * @params 4-20位数字、字母、下划线或减号
- * @return 
- */
-exports.regexUserName = function(val){
-	var result = /^[a-zA-Z0-9_-]{4,20}$/.test(val);
-	if(!result) return '用户名不符合要求'; 
-};
-
-/**
- *
- * @method 验证密码
- * @params 6-20位数字、字母、下划线或减号
- * @return 
- */
-exports.regexUserPass = function(val){
-	var result = /^[a-zA-Z0-9_-]{6,20}$/.test(val);
-	if(!result) return '密码不符合要求';
-};
