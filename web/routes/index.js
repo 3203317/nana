@@ -1,14 +1,13 @@
-var user = require('../controllers/user');
-var role = require('../controllers/role');
-var device = require('../controllers/device');
-var _module = require('../controllers/module');
-var manage = require('../controllers/manage');
-var manager = require('../controllers/manager');
+var user = require('../controllers/user'),
+	role = require('../controllers/role'),
+	device = require('../controllers/device'),
+	_module = require('../controllers/module'),
+	manage = require('../controllers/manage'),
+	manager = require('../controllers/manager');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
-
-var str1 = '参数异常';
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒',
+	str1 = '参数异常';
 
 module.exports = function(app) {
 
