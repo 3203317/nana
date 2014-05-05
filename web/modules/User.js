@@ -23,7 +23,7 @@ var UserSchema = new Schema({
 	},
 	UserName: {
 		type: String,
-		match: /[a-z]/,
+		// match: /[a-z]/,
 		required: true
 	},
 	UserPass: {
@@ -186,7 +186,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 				/* 尝试发送注册邮件确认 */
 				mailer.send({
 					to: doc.Email,
-					subject: '用户认证邮件',
+					subject: '找呗(www.zhaobe.com)绑定邮箱验证码',
 					html: html
 				}, function (err, ok){
 					// if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
