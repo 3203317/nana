@@ -164,8 +164,8 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, '找不到该用户');
-		if(doc.Status) return cb(null, 2, '用户状态已激活', doc);
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.Status) return cb(null, 2, ['用户状态已激活', 'Status'], doc);
 
 		var ackCode = util.random(12);
 
@@ -173,7 +173,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			if(!count) return cb(null, 4, '用户认证码更新失败', doc);
+			if(!count) return cb(null, 4, ['用户认证码更新失败', 'AckCode'], doc);
 
 			getRegEmailTemp(function (err, template){
 				if(err) return cb(err);
@@ -189,9 +189,9 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 					subject: '用户认证邮件',
 					html: html
 				}, function (err, ok){
-					if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
-					cb(null, 1, '发送注册认证邮件成功', doc);
+					// if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
 				});
+				cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
 			});
 		});
 	});
