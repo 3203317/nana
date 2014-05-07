@@ -11,8 +11,9 @@ var smtp = mailer.createTransport('SMTP', {
 });
 
 module.exports.send = function(options, cb){
-	options.from = 'huangxin@newcapec.net';
+	options.from = '找呗科技 huangxin@newcapec.net';
 	smtp.sendMail(options, function (err, ok){
+		smtp.close();
 		if(err) return cb(err);
 		cb(null, ok);
 	});
