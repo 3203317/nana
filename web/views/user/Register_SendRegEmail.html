@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style>
+		    #footer {
+		    	position:fixed;
+		    	left:0;
+		    	bottom:0;
+		    	width:100%;
+		    }
+		    a {
+				color: blue;
+		    }
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+		<header id="header"></header>
+
+		<section class="container">
+		    <div class="row">		    
+                <div class="col-md-12 col-sm-12">
+					<h3>注册成功</h3>
+					<h5>恭喜您：$user.UserName，激活邮件已发送到您的邮箱，请进行激活操作，如果没有收到邮件，请点击<a href='javascript:sendRegEmail();' style='text-decoration: underline'>重新发送</a>。</h5>
+                </div>
+		    </div>
+		</section>
+
+        #parse('pagelet/IndexFooter.html')
+        #parse('pagelet/IndexJs.html')
+		<!-- Own -->
+		<script type="text/javascript">
+			function sendRegEmail(){
+				$.ajax({
+					url: '/user/$user.UserName/sendRegEmail',
+					type: "POST",
+					dataType: "json",
+					data: {
+						data: JSON.stringify({
+							UserName: '$user.UserName'
+						})
+					}
+				}).done(function(responseText) {
+					location.href = '/user/$user.UserName/sendRegEmail';
+				}).complete(function(){
+				});
+			}
+		</script>
+	</body>
+</html>

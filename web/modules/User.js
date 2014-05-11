@@ -148,7 +148,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, [doc ? '新用户注册成功' : '新用户注册失败'], doc);
+			cb(null, doc ? 1 : 2, doc ? '新用户注册成功' : '新用户注册失败', doc);
 		});
 	});
 };

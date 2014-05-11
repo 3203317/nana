@@ -40,9 +40,14 @@ module.exports = function(app) {
 	
 	app.get('/user/login', user.loginUI);
 	app.post('/user/login.do', valiPostData, user.login);
+
 	app.get('/user/register', user.registerUI);
-	app.post('/user/register.do', valiPostData, user.register);
+	app.post('/user/register', valiPostData, user.register, user.sendRegEmail);
+	app.get('/user/:name/register', user.register_sendRegEmailUI);
+
 	app.get('/user/:name/sendRegEmail', user.sendRegEmailUI);
+	app.post('/user/:name/sendRegEmail', valiPostData, user.sendRegEmail);
+
 	app.get('/user/:name/ackRegEmail/:code', user.ackRegEmailUI);
 
 	app.get('/manage/user/index', manage.validate, user.indexUI);

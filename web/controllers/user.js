@@ -60,22 +60,57 @@ exports.registerUI = function(req, res, next) {
  * @params 
  * @return 
  */
+exports.register_sendRegEmailUI = function(req, res, next) {
+	var userName = req.params.name.trim();
+	res.render('User/Register_SendRegEmail', {
+		title: title,
+		atitle: '注册成功',
+		description: '注册成功',
+		keywords: ',注册成功,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn,
+		user: {
+			UserName: userName
+		}
+	});
+};
+
+/**
+ *
+ * @method 发送注册用户确认邮件
+ * @params 
+ * @return 
+ */
 exports.sendRegEmailUI = function(req, res, next) {
 	var userName = req.params.name.trim();
+	res.render('User/SendRegEmail', {
+		title: title,
+		atitle: '发送邮件',
+		description: '发送邮件',
+		keywords: ',发送邮件,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn,
+		user: {
+			UserName: userName
+		}
+	});
+};
 
-	User.sendRegEmail(userName, function (err, status, msg, doc){
+/**
+ *
+ * @method 发送邮件
+ * @params 
+ * @return 
+ */
+exports.sendRegEmail = function(req, res, next) {
+	var result = { success: false },
+		data = req._data;
+
+	User.sendRegEmail(data.UserName, function (err, status, msg, doc){
 		if(err) return next(err);
-		res.render('User/SendRegEmail', {
-			title: title,
-			atitle: '发送邮件',
-			description: '发送邮件',
-			keywords: ',发送邮件,Bootstrap3',
-			virtualPath: virtualPath +'/',
-			cdn: conf.cdn,
-			user: doc,
-			msg: msg,
-			status: status
-		});
+		result.success = 1 === status;
+		result.msg = msg;
+		res.send(result);
 	});
 };
 
@@ -128,7 +163,7 @@ exports.register = function(req, res, next) {
 
 	User.register(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = 1 === status;
+		if(1 === status) return next();
 		result.msg = msg;
 		res.send(result);
 	});

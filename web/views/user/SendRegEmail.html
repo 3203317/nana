@@ -21,20 +21,8 @@
 		<section class="container">
 		    <div class="row">		    
                 <div class="col-md-12 col-sm-12">
-					#if($status == 1)
-					<h3>注册成功</h3>
-					<h5>恭喜您：$user.UserName，请登陆您的电子邮箱，对帐户进行激活操作。</h5>
-					#elseif($status == 2)
-					<h3>$msg[0]</h3>
-					<h5>恭喜您：$user.UserName。</h5>
-					#elseif($status == 3)
-					<h3>$msg[0]</h3>
-					#elseif($status == 4)
-					<h3>$msg[0]</h3>
-					#else
-					<h3>$msg[0]</h3>
-					<h5>请<a href='javascript:location.reload()'>重试</a></h5>
-					#end
+					<h3>发送成功</h3>
+					<h5>恭喜您：$user.UserName，激活邮件已重新发送到您的邮箱，请进行激活操作，如果没有收到邮件。</h5>
                 </div>
 		    </div>
 		</section>
