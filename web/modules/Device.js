@@ -1,9 +1,9 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
+
+var util = require('../libs/utils');
 
 var DeviceSchema = new Schema({
 	Id: {
@@ -15,6 +15,9 @@ var DeviceSchema = new Schema({
 		type: String,
 		required: true
 	},
+	DeviceType_Id: {	//Android, IPad, IPhone, Other
+		type: String
+	},
 	DeviceName: {
 		type: String,
 		required: true
@@ -22,17 +25,14 @@ var DeviceSchema = new Schema({
 	DeviceDesc: {
 		type: String
 	},
-	DeviceType_Id: {	//Android, IPad, IPhone, Other
-		type: String
-	},
 	DeviceVer: {
-		type: String
-	},
-	User_Id: {
 		type: String
 	},
 	IsLogin: {			//设备登陆1，退出为0
 		type: Number
+	},
+	User_Id: {
+		type: String
 	},
 	CreateTime: {
 		type: Date,
@@ -55,76 +55,11 @@ DeviceSchema.post('save', function(){
 
 /**
  *
- * @method 设备登陆
+ * @method 判断设备Id号是否存在
  * @params 
  * @return 
  */
-DeviceSchema.statics.login = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	newInfo.IsLogin = 1;
-	newInfo.CreateTime = new Date();
-
-	this.create(newInfo, function (err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
-	});
-};
-
-/**
- *
- * @method 设备退出
- * @params 
- * @return 
- */
-DeviceSchema.statics.logout = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	newInfo.IsLogin = 0;
-	newInfo.CreateTime = new Date();
-
-	this.create(newInfo, function (err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
-	});
-};
-
-/**
- *
- * @method 查询用户的全部设备登陆及退出记录
- * @params userId 用户Id
- * @return 
- */
-DeviceSchema.statics.findLogsByUserId = function(userId, cb) {
-
-	this.find({
-		User_Id: userId
-	}, null, {
-		sort: {
-			CreateTime: 1
-		}
-	}, function (err, docs){
-		if(err) return cb(err);
-		cb(null, docs);
-	});
-};
-
-/**
- *
- * @method 查询设备的全部登陆及退出记录
- * @params deviceId 设备Id
- * @return 
- */
-DeviceSchema.statics.findLogsByDeviceId = function(deviceId, cb) {
-
-	this.find({
-		DeviceId: deviceId
-	}, null, {
-		sort: {
-			CreateTime: 1
-		}
-	}, function (err, docs){
-		if(err) return cb(err);
-		cb(null, docs);
-	});
+DeviceSchema.statics.isExist = function(device_id, cb) {
 };
 
 var DeviceModel = mongoose.model('device', DeviceSchema);

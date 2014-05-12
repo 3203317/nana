@@ -23,38 +23,27 @@
 		<header id="header"></header>
 		<section class="container">
 		    <div class="row">		    
-                <div class="col-md-3 col-sm-4">
-                    <form id="regFrm" role="form" onsubmit="return false;">
-						<h3>新用户注册</h3>
-						<div class="form-group">
-							<label id='lab_regFrm_UserName' for="regFrm_UserName"></label>
-						</div>
+				<div class="col-md-3 col-sm-4">
+					<h3>新用户注册</h3>
+					<div id="alert_info" class="alert alert-warning">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
+					</div>
+					<form id="regFrm" role="form" onsubmit="return false;">
 						<div class="form-group">
 							<input type="text" id="regFrm_UserName" name="UserName" class="form-control" placeholder="用户名">
-						</div>
-						<div class="form-group">
-							<label id='lab_regFrm_Email' for="regFrm_Email"></label>
 						</div>
 						<div class="form-group">
 							<input type="text" id="regFrm_Email" name="Email" class="form-control" placeholder="电子邮箱">
 						</div>
 						<div class="form-group">
-							<label id='lab_regFrm_UserPass' for='regFrm_UserPass'></label>
-						</div>
-						<div class="form-group">
 							<input type="password" id="regFrm_UserPass" name="UserPass" class="form-control" placeholder="密码">
-						</div>
-						<div class="form-group">
-							<label id='lab_regFrm_UserPass2' for='regFrm_UserPass2'></label>
 						</div>
 						<div class="form-group">
 							<input type="password" id="regFrm_UserPass2" class="form-control" placeholder="密码确认">
 						</div>
                         <button id="btn_reg" type="button" class="btn btn-primary">注册</button>
                         <a class="btn btn-danger" href="login">登陆</a>
-						<div class="form-group">
-							<label id='lab_regFrm_all'></label>
-						</div>
                     </form>                
                 </div>
 		    </div>
@@ -68,55 +57,41 @@
 		<!-- Own -->
 		<script type="text/javascript">
 			$(function(){
-				var labs = $("label[id^='lab_regFrm_']");
 
 				$('#btn_reg').click(function(){
 					var formObj = $("#regFrm").serializeObjectForm();
 					var valiResu = valiUserRegFrm(formObj);
 					if(valiResu){
-						labs.each(function (i, lab){
-							var _lab = $(lab);
-							if('lab_regFrm_'+ valiResu[1] === lab.id){
-								_lab.css('display', 'block');
-								_lab.html(valiResu[0]);
-								_lab.focus();
-							}else{
-								_lab.css('display', 'none');
-							}
-						});
+						if('string' === valiResu){
+							$('#alert_msg').html(valiResu);
+						}else{
+							$('#alert_msg').html(valiResu[0]);
+							$('#regFrm_'+ valiResu[1]).focus();
+						}
 						return;
 					}
 
-        			var data = { data: JSON.stringify(formObj) };
-
 					$.ajax({
-						url: '/user/register.do',
+						url: '/user/register',
 						type: "POST",
 						dataType: "json",
-						data: data
+						data: {
+							data: JSON.stringify(formObj)
+						}
 					}).done(function(responseText) {
+						var msg, lab;
 						if(responseText.success){
-							location.href = formObj.UserName +'/sendRegEmail';
+							location.href = formObj.UserName +'/register/success';
 						}else{
-							if(responseText.msg instanceof Array){
-								labs.each(function (i, lab){
-									var _lab = $(lab);
-									if('lab_regFrm_'+ responseText.msg[1] === lab.id){
-										_lab.css('display', 'block');
-										_lab.html(responseText.msg[0]);
-										_lab.focus();
-									}else{
-										_lab.css('display', 'none');
-									}
-								});
-							}else{
-								labs.each(function (i, lab){
-									var _lab = $(lab);
-									_lab.css('display', 'none');
-								});
-								$('#lab_regFrm_all').css('display', 'block');
-								$('#lab_regFrm_all').html('提示：'+ responseText.msg);
-							}
+							msg = responseText.msg;
+							if(msg.message) return $('#alert_msg').html(msg.message);
+
+							if('string' === msg) return $('#alert_msg').html(msg);
+
+							$('#alert_msg').html(msg[0]);
+
+							lab = $('#regFrm_'+ msg[1]);
+							if(lab[0]) lab.focus();
 						}
 					}).complete(function(){
 					});

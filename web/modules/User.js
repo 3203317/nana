@@ -148,7 +148,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, [doc ? '新用户注册成功' : '新用户注册失败'], doc);
+			cb(null, doc ? 1 : 2, doc ? '新用户注册成功' : '新用户注册失败', doc);
 		});
 	});
 };
@@ -175,6 +175,8 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			if(err) return cb(err);
 			if(!count) return cb(null, 4, ['用户认证码更新失败', 'AckCode'], doc);
 
+			cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
+
 			getRegEmailTemp(function (err, template){
 				if(err) return cb(err);
 
@@ -191,7 +193,6 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 				}, function (err, ok){
 					// if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
 				});
-				cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
 			});
 		});
 	});
