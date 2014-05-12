@@ -60,9 +60,9 @@ exports.registerUI = function(req, res, next) {
  * @params 
  * @return 
  */
-exports.register_sendRegEmailUI = function(req, res, next) {
+exports.register_success = function(req, res, next) {
 	var userName = req.params.name.trim();
-	res.render('User/Register_SendRegEmail', {
+	res.render('User/Register_Success', {
 		title: title,
 		atitle: '注册成功',
 		description: '注册成功',
