@@ -5,6 +5,7 @@ var db = require('./mongodb'),
 
 var fs = require('fs'),
 	velocity = require('velocityjs'),
+	EventProxy = require('eventproxy'),
 	cwd = process.cwd();
 
 var util = require('../libs/utils'),
@@ -13,6 +14,8 @@ var util = require('../libs/utils'),
 
 var Module = require('./Module'),
 	Device = require('./Device'),
+	UserTeam = require('./UserTeam'),
+	UserFriend = require('./UserFriend'),
 	userRegFrm = require('../public/user/userRegFrm');
 
 var UserSchema = new Schema({
@@ -363,15 +366,28 @@ UserSchema.statics.findPassword = function(userName, cb) {
 	});
 };
 
-UserSchema.statics.findMenuTree = function(userId, cb) {
-	Module.findModules({
-		_id: 0,
-		CreateTime: 0
-	}, function (err, docs){
-		if(err) return cb(err);
-		cb(null, docs);
+/**
+ *
+ * @method 获取好友分组
+ * @params 
+ * @return 
+ */
+UserSchema.statics.findFriendTeams = function(user_id, cb) {
+
+	var proxy = EventProxy.create('teams', 'friends', function (teams, friends){
+	});
+
+	UserTeam.findTeamsByUserId(user_id, function (err, docs){
+		if(err) cb(err);
+		proxy.emit('teams', docs);
+	});
+
+	UserFriend.findFriendsByUserId(user_id, function (err, docs){
+		if(err) cb(err);
+		proxy.emit('friends', docs);
 	});
 };
+
 
 var UserModel = mongoose.model('user', UserSchema);
 

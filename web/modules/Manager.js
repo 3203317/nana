@@ -123,11 +123,11 @@ ManagerSchema.statics.login = function(userName, userPass, cb) {
 	});
 };
 
-ManagerSchema.statics.getMenuTree = function(userId, cb) {
+ManagerSchema.statics.findMenuTree = function(user_id, cb) {
 	Module.findModules({
 		_id: 0,
 		CreateTime: 0
-	}, function(err, docs){
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});

@@ -63,7 +63,7 @@ UserFriendSchema.statics.isFriend = function(a_user_id, p_user_id, cb) {
  * @params 
  * @return 
  */
-UserFriendSchema.statics.findMyFriends = function(user_id, cb) {
+UserFriendSchema.statics.findFriendsByUserId = function(user_id, cb) {
 	// todo
 
 	this.find({
