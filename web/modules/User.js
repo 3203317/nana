@@ -363,11 +363,11 @@ UserSchema.statics.findPassword = function(userName, cb) {
 	});
 };
 
-UserSchema.statics.getMenuTree = function(userId, cb) {
+UserSchema.statics.findMenuTree = function(userId, cb) {
 	Module.findModules({
 		_id: 0,
 		CreateTime: 0
-	}, function(err, docs){
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});

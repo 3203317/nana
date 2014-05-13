@@ -1,9 +1,9 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
+
+var util = require('../libs/utils');
 
 var UserTeamSchema = new Schema({
 	Id: {
@@ -64,9 +64,9 @@ UserTeamSchema.statics.findTeamByName = function(user_id, teamName, cb) {
 	this.findOne({
 		User_Id: user_id,
 		TeamName: teamName
-	}, null, null, function(err, doc){
+	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该记录');
+		cb(null, doc);
 	});
 };
 
@@ -83,13 +83,14 @@ UserTeamSchema.statics.saveNew = function(newInfo, cb) {
 
 	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
 		if(err) return cb(err);
-		if('object' === typeof doc) return cb(null, '分组名称已存在');
+		if(doc) return cb(null, 3, ['分组名称已存在', 'TeamName'], doc);
+
 		newInfo.Id = util.uuid(false);
 		newInfo.CreateTime = new Date();
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, doc ? 1 : 2, doc ? '新分组创建成功' : '新分组创建失败', doc);
 		});
 	});
 };

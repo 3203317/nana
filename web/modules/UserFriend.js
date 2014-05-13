@@ -1,16 +1,11 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
+var util = require('../libs/utils');
+
 var UserFriendSchema = new Schema({
-	Id: {
-		type: String,
-		unique: true,
-		index: true
-	},
 	A_User_Id: {		//申请方
 		type: String
 	},
@@ -26,10 +21,6 @@ var UserFriendSchema = new Schema({
 	CreateTime: {
 		type: Date,
 		default: Date.now
-	},
-	Status: {
-		type: Number,
-		default: 0
 	},
 	IsDel: {			//删除标记, 删除1, 否0
 		type: Number,
@@ -68,23 +59,11 @@ UserFriendSchema.statics.isFriend = function(a_user_id, p_user_id, cb) {
 
 /**
  *
- * @method 好友申请
- * @params a_userName 申请方
- * @params b_userName 被申请方
- * @params comment 申请信息
- * @return 
- */
-UserFriendSchema.statics.applyFriend = function(a_userName, b_userName, comment, cb) {
-
-};
-
-/**
- *
  * @method 获取我的好友
  * @params 
  * @return 
  */
-UserFriendSchema.statics.getMyFriends = function(user_id, cb) {
+UserFriendSchema.statics.findMyFriends = function(user_id, cb) {
 	// todo
 
 	this.find({
