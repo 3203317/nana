@@ -215,3 +215,4 @@ pip-log.txt
 .mr.developer.cfg
 web/public/asset/css/default.css
 web/public/asset/css/olx/olx.css
+android/hyx/target/
