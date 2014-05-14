@@ -118,15 +118,13 @@ UserSchema.post('save', function(){
 UserSchema.statics.findUsers = function(pagination, cb) {
 	pagination[0] = pagination[0] || 1;
 
-	var para3 = {
+	this.find(null, null, {
 		sort: {
 			RegTime: -1
 		},
 		skip: (pagination[0] - 1) * pagination[1],
 		limit: pagination[1]
-	};
-
-	this.find(null, null, para3, function(err, docs){
+	}, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -140,7 +138,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
  */
 UserSchema.statics.register = function(newInfo, cb) {
 	var valiResu = userRegFrm.validate(newInfo);
-	if(valiResu) return cb(valiResu);
+	if(valiResu) return cb(null, 0, valiResu);
 
 	var that = this;
 
@@ -159,7 +157,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, doc ? '新用户注册成功' : '新用户注册失败', doc);
+			cb(null, 1, '新用户注册成功', doc);
 		});
 	});
 };
@@ -176,7 +174,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.Status) return cb(null, 2, ['用户状态已激活', 'Status'], doc);
+		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
 
 		var ackCode = util.random(12);
 
@@ -184,12 +182,10 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			if(!count) return cb(null, 4, ['用户认证码更新失败', 'AckCode'], doc);
-
 			cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
 
 			getRegEmailTemp(function (err, template){
-				if(err) return cb(err);
+				if(err) return;
 
 				var html = velocity.render(template, {
 					user: doc,
@@ -217,13 +213,13 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
  */
 UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
 
-	var userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, '找不到该用户');
-		if(doc.Status) return cb(null, 2, '已激活用户', doc);
-		if(ackCode !== doc.AckCode) return cb(null, 4, '认证码输入错误');
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
+		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误', 'AckCode']);
 
 		doc.update({
 			Status: 1
@@ -242,7 +238,7 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
 
-	userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -262,7 +258,7 @@ UserSchema.statics.login = function(userName, userPass, cb) {
  */
 UserSchema.statics.loginClient = function(clientInfo, cb) {
 
-	userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -319,7 +315,7 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
 
 		Device.logout(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, doc ? '退出成功' : '退出失败', [userInfo, doc]);
+			cb(null, 1, '退出成功', [userInfo, doc]);
 		});
 	});
 };
@@ -349,32 +345,6 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
-	});
-};
-
-/**
- *
- * @method 找回密码
- * @params userName 用户名
- * @return 
- */
-UserSchema.statics.findPassword = function(userName, cb) {
-
-	this.findUserByUserName(userName, function (err, doc){
-		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-
-		var para1 = {};
-		para1.SecPass = util.random(6);
-		para1.UserPass = md5.hex(para1.SecPass);
-
-		doc.update(para1, function (err, doc){
-			if(err) return cb(err);
-			/* 发送密码邮件 */
-			cb(null, null);
-		});
 	});
 };
 
