@@ -32,7 +32,7 @@ var UserSchema = new Schema({
 	UserPass: {
 		type: String
 	},
-	SecretPass: {
+	SecPass: {
 		type: String,
 		default: '123456'
 	},
@@ -70,6 +70,14 @@ var UserSchema = new Schema({
 	IsDel: {			//删除标记, 删除1, 否0
 		type: Number,
 		default: 0
+	},
+	ApiKey: {
+		type: String,
+		required: true
+	},
+	SecKey: {			//密钥
+		type: String,
+		required: true
 	}
 }, {
 	versionKey: false
@@ -93,7 +101,7 @@ UserSchema.virtual('sSex').get(function(){
 });
 
 UserSchema.virtual('sBirthday').get(function(){
-	return this.Birthday ? util.formatDate(this.Birthday) : '';
+	return util.formatDate(this.Birthday);
 });
 
 UserSchema.virtual('sRegTime').get(function(){
@@ -146,8 +154,8 @@ UserSchema.statics.register = function(newInfo, cb) {
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
 
-		newInfo.SecretPass = newInfo.UserPass;
-		newInfo.UserPass = md5.hex(newInfo.SecretPass);
+		newInfo.SecPass = newInfo.UserPass;
+		newInfo.UserPass = md5.hex(newInfo.SecPass);
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
@@ -355,8 +363,8 @@ UserSchema.statics.findPassword = function(userName, cb) {
 		if(!doc.Status) return cb(null, '用户未通过认证');
 
 		var para1 = {};
-		para1.SecretPass = util.random(6);
-		para1.UserPass = md5.hex(para1.SecretPass);
+		para1.SecPass = util.random(6);
+		para1.UserPass = md5.hex(para1.SecPass);
 
 		doc.update(para1, function (err, doc){
 			if(err) return cb(err);
