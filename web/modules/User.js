@@ -307,17 +307,19 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
 
 	this.findUserByUserName(clientInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+
+		var userInfo = doc;
 		
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.logout(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, doc ? 1 : 2, doc ? '退出成功' : '退出失败', [userInfo, doc]);
 		});
 	});
 };

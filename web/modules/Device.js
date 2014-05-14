@@ -80,6 +80,23 @@ DeviceSchema.statics.login = function(newInfo, cb) {
 	});
 };
 
+/**
+ *
+ * @method 设备登出
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.logout = function(newInfo, cb) {
+	newInfo.Id = util.uuid(false);
+	newInfo.CreateTime = new Date();
+	newInfo.IsLogin = 0;
+
+	this.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
 var DeviceModel = mongoose.model('device', DeviceSchema);
 
 exports = module.exports = DeviceModel;
