@@ -209,22 +209,6 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 	});
 };
 
-var regEmailTemp;
-/**
- *
- * @method 获取注册认证邮件模板
- * @params 
- * @return 
- */
-function getRegEmailTemp(cb){
-	if(regEmailTemp) return cb(null, regEmailTemp);
-	fs.readFile(cwd +'/views/User/SendRegEmail.email.html', 'utf8', function (err, template){
-		if(err) return cb(err);
-		regEmailTemp = template;
-		cb(null, regEmailTemp);
-	});
-}
-
 /**
  *
  * @method 注册认证邮件确认
@@ -258,39 +242,57 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
 
-	var userName = userName.toLowerCase();
+	userName = userName.toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 2, '找不到该用户');
-		if(doc.IsDel) return cb(null, 3, '找不到该用户', doc);
-		if(!doc.Status) return cb(null, 4, '用户未通过认证', doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 5, '用户名或密码输入错误', doc);
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 		cb(null, 1, '登陆成功', doc);
 	});
 };
 
 /**
- *
+ * @requir 必已经调用登陆方法
  * @method 登陆客户端
  * @params 
  * @return 
  */
 UserSchema.statics.loginClient = function(clientInfo, cb) {
 
-	this.findUserByUserName(clientInfo.UserName, function (err, doc){
+	userName = userName.toLowerCase();
+
+	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
-		
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+
+		var proxy = EventProxy.create('sec', 'device', function (sec, device){
+			cb(null, 1, '登陆成功', [doc, sec, device]);
+		});
+
+		/* 更新ApiKey和私钥 */
+		var sec = {
+			ApiKey: genApiKey(),
+			SecKey: genSecKey()
+		};
+
+		doc.update(sec, function (err, doc){
+			if(err) return cb(err);
+			proxy.emit('sec', sec);
+		});
+
+		/* 客户端设备登陆 */
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.login(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			proxy.emit('device', device);
 		});
 	});
 };
@@ -400,3 +402,40 @@ UserSchema.statics.findFriendTeams = function(user_id, cb) {
 var UserModel = mongoose.model('user', UserSchema);
 
 exports = module.exports = UserModel;
+
+
+var regEmailTemp;
+/**
+ *
+ * @method 获取注册认证邮件模板
+ * @params 
+ * @return 
+ */
+function getRegEmailTemp(cb){
+	if(regEmailTemp) return cb(null, regEmailTemp);
+	fs.readFile(cwd +'/views/User/SendRegEmail.email.html', 'utf8', function (err, template){
+		if(err) return cb(err);
+		regEmailTemp = template;
+		cb(null, regEmailTemp);
+	});
+}
+
+/**
+ *
+ * @method 生成ApiKey(随机)
+ * @params 
+ * @return 
+ */
+function genApiKey(){
+	return '123456';
+}
+
+/**
+ *
+ * @method 生成私钥(随机)
+ * @params 
+ * @return 
+ */
+function genSecKey(){
+	return '654321';
+}

@@ -16,7 +16,8 @@ var DeviceSchema = new Schema({
 		required: true
 	},
 	DeviceType_Id: {	//Android, IPad, IPhone, Other
-		type: String
+		type: String,
+		default: 'Android'
 	},
 	DeviceName: {
 		type: String,
@@ -60,6 +61,23 @@ DeviceSchema.post('save', function(){
  * @return 
  */
 DeviceSchema.statics.isExist = function(device_id, cb) {
+};
+
+/**
+ *
+ * @method 设备登陆
+ * @params 
+ * @return 
+ */
+DeviceSchema.statics.login = function(newInfo, cb) {
+	newInfo.Id = util.uuid(false);
+	newInfo.CreateTime = new Date();
+	newInfo.IsLogin = 1;
+
+	this.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
 };
 
 var DeviceModel = mongoose.model('device', DeviceSchema);
