@@ -32,7 +32,7 @@ var UserSchema = new Schema({
 	UserPass: {
 		type: String
 	},
-	SecretPass: {
+	SecPass: {
 		type: String,
 		default: '123456'
 	},
@@ -70,6 +70,14 @@ var UserSchema = new Schema({
 	IsDel: {			//删除标记, 删除1, 否0
 		type: Number,
 		default: 0
+	},
+	ApiKey: {
+		type: String,
+		required: true
+	},
+	SecKey: {			//密钥
+		type: String,
+		required: true
 	}
 }, {
 	versionKey: false
@@ -93,7 +101,7 @@ UserSchema.virtual('sSex').get(function(){
 });
 
 UserSchema.virtual('sBirthday').get(function(){
-	return this.Birthday ? util.formatDate(this.Birthday) : '';
+	return util.formatDate(this.Birthday);
 });
 
 UserSchema.virtual('sRegTime').get(function(){
@@ -110,15 +118,13 @@ UserSchema.post('save', function(){
 UserSchema.statics.findUsers = function(pagination, cb) {
 	pagination[0] = pagination[0] || 1;
 
-	var para3 = {
+	this.find(null, null, {
 		sort: {
 			RegTime: -1
 		},
 		skip: (pagination[0] - 1) * pagination[1],
 		limit: pagination[1]
-	};
-
-	this.find(null, null, para3, function(err, docs){
+	}, function(err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -132,7 +138,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
  */
 UserSchema.statics.register = function(newInfo, cb) {
 	var valiResu = userRegFrm.validate(newInfo);
-	if(valiResu) return cb(valiResu);
+	if(valiResu) return cb(null, 0, valiResu);
 
 	var that = this;
 
@@ -146,12 +152,12 @@ UserSchema.statics.register = function(newInfo, cb) {
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
 
-		newInfo.SecretPass = newInfo.UserPass;
-		newInfo.UserPass = md5.hex(newInfo.SecretPass);
+		newInfo.SecPass = newInfo.UserPass;
+		newInfo.UserPass = md5.hex(newInfo.SecPass);
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, doc ? '新用户注册成功' : '新用户注册失败', doc);
+			cb(null, 1, '新用户注册成功', doc);
 		});
 	});
 };
@@ -168,7 +174,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.Status) return cb(null, 2, ['用户状态已激活', 'Status'], doc);
+		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
 
 		var ackCode = util.random(12);
 
@@ -176,12 +182,10 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			if(!count) return cb(null, 4, ['用户认证码更新失败', 'AckCode'], doc);
-
 			cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
 
 			getRegEmailTemp(function (err, template){
-				if(err) return cb(err);
+				if(err) return;
 
 				var html = velocity.render(template, {
 					user: doc,
@@ -201,22 +205,6 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 	});
 };
 
-var regEmailTemp;
-/**
- *
- * @method 获取注册认证邮件模板
- * @params 
- * @return 
- */
-function getRegEmailTemp(cb){
-	if(regEmailTemp) return cb(null, regEmailTemp);
-	fs.readFile(cwd +'/views/User/SendRegEmail.email.html', 'utf8', function (err, template){
-		if(err) return cb(err);
-		regEmailTemp = template;
-		cb(null, regEmailTemp);
-	});
-}
-
 /**
  *
  * @method 注册认证邮件确认
@@ -225,13 +213,13 @@ function getRegEmailTemp(cb){
  */
 UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
 
-	var userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, '找不到该用户');
-		if(doc.Status) return cb(null, 2, '已激活用户', doc);
-		if(ackCode !== doc.AckCode) return cb(null, 4, '认证码输入错误');
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
+		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误', 'AckCode']);
 
 		doc.update({
 			Status: 1
@@ -250,39 +238,57 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
 
-	var userName = userName.toLowerCase();
+	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 2, '找不到该用户');
-		if(doc.IsDel) return cb(null, 3, '找不到该用户', doc);
-		if(!doc.Status) return cb(null, 4, '用户未通过认证', doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 5, '用户名或密码输入错误', doc);
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 		cb(null, 1, '登陆成功', doc);
 	});
 };
 
 /**
- *
+ * @requir 必已经调用登陆方法
  * @method 登陆客户端
  * @params 
  * @return 
  */
 UserSchema.statics.loginClient = function(clientInfo, cb) {
 
-	this.findUserByUserName(clientInfo.UserName, function (err, doc){
+	userName = userName.trim().toLowerCase();
+
+	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
-		
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+
+		var proxy = EventProxy.create('sec', 'device', function (sec, device){
+			cb(null, 1, '登陆成功', [doc, sec, device]);
+		});
+
+		/* 更新ApiKey和私钥 */
+		var sec = {
+			ApiKey: genApiKey(),
+			SecKey: genSecKey()
+		};
+
+		doc.update(sec, function (err, doc){
+			if(err) return cb(err);
+			proxy.emit('sec', sec);
+		});
+
+		/* 客户端设备登陆 */
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.login(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			proxy.emit('device', device);
 		});
 	});
 };
@@ -297,17 +303,19 @@ UserSchema.statics.logoutClient = function(clientInfo, cb) {
 
 	this.findUserByUserName(clientInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-		if(md5.hex(clientInfo.UserPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
+		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
+		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+
+		var userInfo = doc;
 		
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.logout(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, 1, '退出成功', [userInfo, doc]);
 		});
 	});
 };
@@ -342,32 +350,6 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 
 /**
  *
- * @method 找回密码
- * @params userName 用户名
- * @return 
- */
-UserSchema.statics.findPassword = function(userName, cb) {
-
-	this.findUserByUserName(userName, function (err, doc){
-		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(doc.IsDel) return cb(null, '用户已删除');
-		if(!doc.Status) return cb(null, '用户未通过认证');
-
-		var para1 = {};
-		para1.SecretPass = util.random(6);
-		para1.UserPass = md5.hex(para1.SecretPass);
-
-		doc.update(para1, function (err, doc){
-			if(err) return cb(err);
-			/* 发送密码邮件 */
-			cb(null, null);
-		});
-	});
-};
-
-/**
- *
  * @method 获取好友分组
  * @params 
  * @return 
@@ -392,3 +374,40 @@ UserSchema.statics.findFriendTeams = function(user_id, cb) {
 var UserModel = mongoose.model('user', UserSchema);
 
 exports = module.exports = UserModel;
+
+
+var regEmailTemp;
+/**
+ *
+ * @method 获取注册认证邮件模板
+ * @params 
+ * @return 
+ */
+function getRegEmailTemp(cb){
+	if(regEmailTemp) return cb(null, regEmailTemp);
+	fs.readFile(cwd +'/views/User/SendRegEmail.email.html', 'utf8', function (err, template){
+		if(err) return cb(err);
+		regEmailTemp = template;
+		cb(null, regEmailTemp);
+	});
+}
+
+/**
+ *
+ * @method 生成ApiKey(随机)
+ * @params 
+ * @return 
+ */
+function genApiKey(){
+	return '123456';
+}
+
+/**
+ *
+ * @method 生成私钥(随机)
+ * @params 
+ * @return 
+ */
+function genSecKey(){
+	return '654321';
+}

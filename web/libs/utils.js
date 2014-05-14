@@ -20,6 +20,7 @@ function pdate(s) {
 }
 
 exports.formatDate = function(date){
+	if(!date) return;
 	var strs = [];
 	strs.push(date.getFullYear());
 	strs.push('/');
@@ -32,7 +33,7 @@ exports.formatDate = function(date){
 	strs.push(pdate(date.getMinutes()));
 	strs.push(':');
 	strs.push(pdate(date.getSeconds()));
-	return  strs.join('');
+	return strs.join('');
 };
 
 /* 生成随机字符串 */
