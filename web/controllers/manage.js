@@ -1,9 +1,9 @@
 var conf = require('../settings');
-var util = require('../libs/utils');
-var User = require('../modules/User.js');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
+var Manager = require('../modules/Manager.js');
+
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 /**
  *
@@ -12,7 +12,7 @@ var title = 'FOREWORLD 洪荒';
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	User.getMenuTree('abc', function(err, docs){
+	Manager.findMenuTree(req.session.userId, function (err, docs){
 		if(err) return next(err);
 		res.render('Manage/Main', {
 			title: title,
