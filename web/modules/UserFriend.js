@@ -6,6 +6,11 @@ var db = require('./mongodb'),
 var util = require('../libs/utils');
 
 var UserFriendSchema = new Schema({
+	Id: {
+		type: String,
+		unique: true,
+		index: true
+	},
 	A_User_Id: {		//申请方
 		type: String
 	},
@@ -71,7 +76,10 @@ UserFriendSchema.statics.findFriendsByUserId = function(user_id, cb) {
 			A_User_Id: user_id
 		}, {
 			P_User_Id: user_id
-		}]
+		}],
+		'$and': {
+			IsDel: 0
+		}
 	}, null, null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
