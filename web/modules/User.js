@@ -267,8 +267,12 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
 		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 
-		var proxy = EventProxy.create('sec', 'device', function (sec, device){
+		var ep = EventProxy.create('sec', 'device', function (sec, device){
 			cb(null, 1, '登陆成功', [doc, sec, device]);
+		});
+
+		ep.fail(function (err){
+			cb(err);
 		});
 
 		/* 更新ApiKey和私钥 */
@@ -278,18 +282,15 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 		};
 
 		doc.update(sec, function (err, count){
-			if(err) return cb(err);
-			proxy.emit('sec', sec);
+			if(err) return ep.emit('error', err);
+			ep.emit('sec', sec);
 		});
 
 		/* 客户端设备登陆 */
 		var deviceInfo = clientInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
-		Device.login(deviceInfo, function (err, doc){
-			if(err) return cb(err);
-			proxy.emit('device', device);
-		});
+		Device.login(deviceInfo, ep.done('device'));
 	});
 };
 
@@ -356,19 +357,17 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
  */
 UserSchema.statics.findFriendTeams = function(user_id, cb) {
 
-	var proxy = EventProxy.create('teams', 'friends', function (teams, friends){
+	var ep = EventProxy.create('teams', 'friends', function (teams, friends){
 		cb(null, 1, null, [teams, friends]);
 	});
 
-	UserTeam.findTeamsByUserId(user_id, function (err, docs){
-		if(err) cb(err);
-		proxy.emit('teams', docs);
+	ep.fail(function (err){
+		cb(err);
 	});
 
-	UserFriend.findFriendsByUserId(user_id, function (err, docs){
-		if(err) cb(err);
-		proxy.emit('friends', docs);
-	});
+	UserTeam.findTeamsByUserId(user_id, ep.done('teams'));
+
+	UserFriend.findFriendsByUserId(user_id, ep.done('friends'));
 };
 
 

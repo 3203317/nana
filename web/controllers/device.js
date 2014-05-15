@@ -2,11 +2,11 @@ var conf = require('../settings');
 var EventProxy = require('eventproxy');
 var util = require('../libs/utils');
 
-var Device = require('../modules/Device.js');
-var DeviceType = require('../modules/DeviceType.js');
+var Device = require('../modules/Device.js'),
+	DeviceType = require('../modules/DeviceType.js');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 /**
  *
@@ -15,7 +15,7 @@ var title = 'FOREWORLD 洪荒';
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	var proxy = EventProxy.create('devices', 'deviceTypes', function(devices, deviceTypes){
+	var ep = EventProxy.create('devices', 'deviceTypes', function (devices, deviceTypes){
 		res.render('Manage/Device/Index', {
 			title: title,
 			atitle: '设备日志',
@@ -28,15 +28,13 @@ exports.indexUI = function(req, res, next) {
 		});
 	});
 
-	Device.findDevices([1, 10], function(err, docs){
-		if(err) return next(err);		
-		proxy.emit('devices', docs);
+	ep.fail(function (err){
+		next(err);
 	});
 
-	DeviceType.findDeviceTypes(function(err, docs){
-		if(err) return next(err);
-		proxy.emit('deviceTypes', docs);
-	});
+	Device.findDevices([1, 10], ep.done('devices'));
+
+	DeviceType.findDeviceTypes(ep.done('deviceTypes'));
 };
 
 /**
@@ -46,7 +44,7 @@ exports.indexUI = function(req, res, next) {
  * @return 
  */
 exports.logUI = function(req, res, next) {
-	var proxy = EventProxy.create('deviceTypes', function(deviceTypes){
+	var ep = EventProxy.create('deviceTypes', function(deviceTypes){
 		res.render('Manage/DeviceLog/Index', {
 			title: title,
 			atitle: '设备日志',
@@ -58,8 +56,9 @@ exports.logUI = function(req, res, next) {
 		});
 	});
 
-	DeviceType.findDeviceTypes(function(err, docs){
-		if(err) return next(err);
-		proxy.emit('deviceTypes', docs);
+	ep.fail(function (err){
+		next(err);
 	});
+
+	DeviceType.findDeviceTypes(ep.done('deviceTypes'));
 };
