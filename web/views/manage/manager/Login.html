@@ -8,8 +8,7 @@
 				padding-bottom: 40px;
 				padding-top: 40px;
 			}
-		    #loginForm 
-		    {
+		    #loginForm {
 				background-color: #FFFFFF;
 				border: 1px solid #E5E5E5;
 				border-radius: 5px;
@@ -63,7 +62,7 @@
 					var data = { data: JSON.stringify(formObj) };
 
 					$.ajax({
-						url: '/manage/manager/login.do',
+						url: '/manage/manager/login',
 						type: "POST",
 						dataType: "json",
 						data: data

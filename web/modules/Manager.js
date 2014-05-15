@@ -26,6 +26,10 @@ var ManagerSchema = new Schema({
 		type: Number,
 		default: 1
 	},
+	Email: {			//邮箱
+		type: String,
+		required: true
+	},
 	CreateTime: {
 		type: Date,
 		default: Date.now

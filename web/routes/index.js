@@ -37,7 +37,7 @@ module.exports = function(app) {
 	}
 	
 	app.get('/my', user.validate, user.analyticsUI);
-	
+
 	app.get('/user/login', user.loginUI);
 	app.post('/user/login.do', valiPostData, user.login);
 
@@ -53,7 +53,8 @@ module.exports = function(app) {
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 
 	app.get('/manage/manager/login', manager.loginUI);
-	app.post('/manage/manager/login.do', valiPostData, manager.login);
+	app.post('/manage/manager/login', valiPostData, manager.login);
+
 	app.get('/manage/manager/index', manage.validate, manager.indexUI);
 	app.get('/manage/manager/logout', manage.validate, manager.logout);
 	app.get('/manage/manager/:id.do', manage.validate, manager.getId);
