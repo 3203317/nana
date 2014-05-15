@@ -16,7 +16,7 @@ var Module = require('./Module'),
 	Device = require('./Device'),
 	UserTeam = require('./UserTeam'),
 	UserFriend = require('./UserFriend'),
-	userRegFrm = require('../public/user/userRegFrm');
+	userRegFrm = require('../public/user/regFrm');
 
 var UserSchema = new Schema({
 	Id: {
@@ -182,7 +182,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, ['发送注册认证邮件成功', 'Email'], doc);
+			cb(null, 1, ['发送注册认证邮件成功', 'Email'], count);
 
 			getRegEmailTemp(function (err, template){
 				if(err) return;
@@ -219,13 +219,13 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
 		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
-		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误', 'AckCode']);
+		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误', 'AckCode'], doc);
 
 		doc.update({
 			Status: 1
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, '已激活成功', doc);
+			cb(null, 1, '激活成功', count);
 		});
 	});
 };
@@ -277,7 +277,7 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 			SecKey: genSecKey()
 		};
 
-		doc.update(sec, function (err, doc){
+		doc.update(sec, function (err, count){
 			if(err) return cb(err);
 			proxy.emit('sec', sec);
 		});
@@ -357,6 +357,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 UserSchema.statics.findFriendTeams = function(user_id, cb) {
 
 	var proxy = EventProxy.create('teams', 'friends', function (teams, friends){
+		cb(null, 1, null, [teams, friends]);
 	});
 
 	UserTeam.findTeamsByUserId(user_id, function (err, docs){

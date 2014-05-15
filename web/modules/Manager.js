@@ -1,13 +1,13 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-var md5 = require('../libs/md5');
-var Module = require('./Module');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var str1 = '用户名或密码不能为空';
+var util = require('../libs/utils'),
+	md5 = require('../libs/md5');
+
+var Module = require('./Module'),
+	mgrLoginFrm = require('../public/manage/manager/loginFrm');
 
 var ManagerSchema = new Schema({
 	Id: {
@@ -25,6 +25,10 @@ var ManagerSchema = new Schema({
 	Sex: {
 		type: Number,
 		default: 1
+	},
+	Email: {			//邮箱
+		type: String,
+		required: true
 	},
 	CreateTime: {
 		type: Date,
@@ -60,23 +64,17 @@ ManagerSchema.post('save', function(){
 ManagerSchema.statics.findUsers = function(pagination, cb) {
 	pagination[0] = pagination[0] || 1;
 
-	var para3 = {
+	this.find(null, null, {
 		sort: {
 			CreateTime: -1
 		},
 		skip: (pagination[0] - 1) * pagination[1],
 		limit: pagination[1]
-	};
-
-	this.find(null, null, para3, function(err, docs){
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
 };
-
-function valiRegFrm(data){
-	if(!data.UserName) return '用户名不能为空';
-}
 
 /**
  *
@@ -85,8 +83,7 @@ function valiRegFrm(data){
  * @return 
  */
 ManagerSchema.statics.register = function(newInfo, cb) {
-	var valiResu = valiRegFrm(newInfo);
-	if(valiResu) return cb(valiResu);
+	// todo
 
 	var that = this;
 
@@ -113,13 +110,16 @@ ManagerSchema.statics.register = function(newInfo, cb) {
  * @params 
  * @return 
  */
-ManagerSchema.statics.login = function(userName, userPass, cb) {
+ManagerSchema.statics.login = function(logInfo, cb) {
+	var valiResu = mgrLoginFrm.validate(logInfo);
+	if(valiResu) return cb(null, 0, valiResu);
 
-	this.findUserByUserName(userName, function (err, doc){
+	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('string' === typeof doc) return cb(null, doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, '用户名或密码输入错误');
-		cb(null, doc);
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
+		if(doc.IsDel) return cb(null, 4, '找不到该用户。', doc);
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 5, ['用户名或密码输入错误。', 'UserPass'], doc);
+		cb(null, 1, '登陆成功', doc);
 	});
 };
 
@@ -140,14 +140,11 @@ ManagerSchema.statics.findMenuTree = function(user_id, cb) {
  * @return 
  */
 ManagerSchema.statics.findUserByUserName = function(userName, cb) {
-	/* 用户名转换小写 */
-	userName = userName.toLowerCase();
-
 	this.findOne({
 		UserName: userName
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该用户');
+		cb(null, doc);
 	});
 };
 
@@ -156,7 +153,7 @@ ManagerSchema.statics.findUserById = function(id, cb) {
 		Id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该记录');
+		cb(null, doc);
 	});
 };
 

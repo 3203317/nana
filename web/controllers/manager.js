@@ -21,10 +21,10 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Manager.login(data.UserName, data.UserPass, function (err, doc){
+	Manager.login(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
+		if(1 !== status){
+			result.msg = msg;
 			return res.send(result);
 		}
 		req.session.userId = doc.Id;

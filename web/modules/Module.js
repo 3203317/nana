@@ -1,9 +1,9 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
+
+var util = require('../libs/utils');
 
 var ModuleSchema = new Schema({
 	Id: {
