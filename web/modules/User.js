@@ -16,7 +16,7 @@ var Module = require('./Module'),
 	Device = require('./Device'),
 	UserTeam = require('./UserTeam'),
 	UserFriend = require('./UserFriend'),
-	userRegFrm = require('../public/user/userRegFrm');
+	userRegFrm = require('../public/user/regFrm');
 
 var UserSchema = new Schema({
 	Id: {
