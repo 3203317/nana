@@ -90,7 +90,7 @@ UserTeamSchema.statics.saveNew = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc ? 1 : 2, doc ? '新分组创建成功' : '新分组创建失败', doc);
+			cb(null, 1, '新分组创建成功', doc);
 		});
 	});
 };
@@ -104,17 +104,24 @@ UserTeamSchema.statics.saveNew = function(newInfo, cb) {
 UserTeamSchema.statics.edit = function(newInfo, cb) {
 	// todo
 
-	this.update({
-		Id: newInfo.Id,
-		User_Id: newInfo.User_Id
-	}, {
-		'$set': {
-			TeamName: newInfo.TeamName,
-			Sort: newInfo.Sort
-		}
-	}, function (err, count){
+	var that = this;
+
+	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
 		if(err) return cb(err);
-		cb(null, count);
+		if(doc && newInfo.Id !== doc.Id) return cb(null, 3, ['分组名称已存在', 'TeamName'], doc);
+
+		that.update({
+			Id: newInfo.Id,
+			User_Id: newInfo.User_Id
+		}, {
+			'$set': {
+				TeamName: newInfo.TeamName,
+				Sort: newInfo.Sort
+			}
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, 1, '分组信息更新成功', count);
+		});
 	});
 };
 
@@ -131,7 +138,7 @@ UserTeamSchema.statics.removes = function(id, user_id, cb) {
 		User_Id: user_id
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, count);
+		cb(null, 1, '分组删除成功', count);
 	});
 };
 
