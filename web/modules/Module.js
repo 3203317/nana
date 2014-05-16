@@ -5,6 +5,8 @@ var db = require('./mongodb'),
 
 var util = require('../libs/utils');
 
+var modAddFrm = require('../public/manage/module/addFrm');
+
 var ModuleSchema = new Schema({
 	Id: {
 		type: String,
@@ -76,19 +78,17 @@ ModuleSchema.statics.removes = function(ids, cb) {
 	});
 };
 
-function valiAddFrm(data){
-	data.Id = data.Id || util.uuid(false);
-	data.Sort = data.Sort || 1;
-	data.CreateTime = new Date();
-}
-
 ModuleSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiAddFrm(newInfo);
-	if(valiResu) return cb(valiResu);
+	var valiResu = modAddFrm.validate(newInfo);
+	if(valiResu) return cb(null, 0, valiResu);
+
+	newInfo.Id = util.uuid(false);
+	newInfo.Sort = newInfo.Sort || 1;
+	newInfo.CreateTime = new Date();
 
 	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc);
+		cb(null, 1, '新模块创建成功', doc);
 	});
 };
 

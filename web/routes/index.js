@@ -64,10 +64,10 @@ module.exports = function(app) {
 
 	app.get('/manage/module/index', manage.validate, _module.indexUI);
 	app.get('/manage/module/:id/children', manage.validate, _module.moduleListUI);
-	app.post('/manage/module/add.do', manage.validate, valiPostData, _module.add);
-	app.post('/manage/module/del.do', manage.validate, valiPostData, _module.del);
-	app.post('/manage/module/edit.do', manage.validate, valiPostData, _module.edit);
-	app.get('/manage/module/:id.do', manage.validate, _module.getId);
+	app.post('/manage/module/add', manage.validate, valiPostData, _module.add);
+	app.post('/manage/module/del', manage.validate, valiPostData, _module.del);
+	app.post('/manage/module/edit', manage.validate, valiPostData, _module.edit);
+	app.get('/manage/module/:id', manage.validate, _module.getId);
 
 	app.get('/manage/role/index', manage.validate, role.indexUI);
 	app.post('/manage/role/add.do', manage.validate, valiPostData, role.add);
