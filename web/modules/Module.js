@@ -5,8 +5,11 @@ var db = require('./mongodb'),
 
 var util = require('../libs/utils');
 
+<<<<<<< HEAD
 var modAddFrm = require('../public/manage/module/addFrm');
 
+=======
+>>>>>>> fcc55d7bb512899ca1fc915e751c853dacbb4a6b
 var ModuleSchema = new Schema({
 	Id: {
 		type: String,
