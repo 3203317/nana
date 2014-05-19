@@ -1,14 +1,15 @@
-var conf = require('../settings');
-var EventProxy = require('eventproxy');
+var conf = require('../settings'),
+	EventProxy = require('eventproxy'),
+	util = require('../libs/utils');
+
+var fs = require('fs'),
+	velocity = require('velocityjs'),
+	cwd = process.cwd();
+
 var Module = require('../modules/Module.js');
-var util = require('../libs/utils');
 
-var fs = require('fs')
-var velocity = require('velocityjs')
-var cwd = process.cwd();
-
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 /**
  *
@@ -49,7 +50,7 @@ exports.moduleListUI = function(req, res, next) {
 	Module.findModulesByPId(id, function (err, docs){
 		if(err) return next(err);
 
-		fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, template){
+		getModuleListTemp(function (err, template){
 			if(err) return next(err);
 
 			var html = velocity.render(template, {
@@ -67,9 +68,10 @@ exports.add = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Module.saveNew(data, function (err, doc){
+	Module.saveNew(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = !!doc;
+		result.success = 1 === status;
+		result.msg = msg;
 		res.send(result);
 	});
 };
@@ -78,10 +80,11 @@ exports.del = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Module.removes(data.Ids, function (err, count){
+	Module.removes(data, function (err, status, msg, count){
 		if(err) return next(err);
-		result.success = !!count;
-		result.msg = count;
+		result.success = 1 === status;
+		result.msg = msg;
+		result.data = count;
 		res.send(result);
 	});
 };
@@ -90,10 +93,11 @@ exports.edit = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Module.edit(data, function (err, count){
+	Module.edit(data, function (err, status, msg, count){
 		if(err) return next(err);
-		result.success = !!count;
-		result.msg = count;
+		result.success = 1 === status;
+		result.msg = msg;
+		result.data = count;
 		res.send(result);
 	});
 };
@@ -104,10 +108,7 @@ exports.getId = function(req, res, next) {
 
 	Module.findModuleById(id, function (err, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
+		if(!doc) return res.send(result);
 		result.data = [doc, {
 			CreateTime: doc.sCreateTime
 		}];
@@ -115,3 +116,19 @@ exports.getId = function(req, res, next) {
 		res.send(result);
 	});
 };
+
+var moduleListTemp;
+/**
+ *
+ * @method 获取模块列表模板
+ * @params 
+ * @return 
+ */
+function getModuleListTemp(cb){
+	if(moduleListTemp) return cb(null, moduleListTemp);
+	fs.readFile(cwd +'/views/Manage/Module/ModuleList.html', 'utf8', function (err, template){
+		if(err) return cb(err);
+		moduleListTemp = template;
+		cb(null, moduleListTemp);
+	});
+}

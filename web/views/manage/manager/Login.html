@@ -48,41 +48,8 @@
 
         #parse('pagelet/IndexJs.html')
 		<script type="text/javascript">var exports = {};</script>
-		<script type="text/javascript" src="../../public/manage/manager/loginFrm.js" lang='utf-8'></script>
-
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/loginFrm.js" lang='utf-8'></script>
 		<!-- Own -->
-		<script type="text/javascript">
-			if(window.top !== window.self) top.location.href = '/manage/manager/login';
-
-			function frmDeal(valiResu){
-				if('string' === typeof valiResu){
-					$('#alert_msg').html(valiResu);
-				}else{
-					$('#alert_msg').html(valiResu[0]);
-					$('#loginFrm_'+ valiResu[1]).focus();
-				}
-			}
-
-			$(function(){
-				$('#btn_login').click(function(){
-					var formObj = $("#loginFrm").serializeObjectForm();
-					var valiResu = valiLoginFrm(formObj);
-					if(valiResu) return frmDeal(valiResu);
-
-					$.ajax({
-						url: '/manage/manager/login',
-						type: "POST",
-						dataType: "json",
-						data: {
-							data: JSON.stringify(formObj)
-						}
-					}).done(function(data){
-						console.log(data);
-						if(!data.success) return frmDeal(data.msg);
-						location.href = '../index?locale='+ (location.search.match(/locale=([\w\-]+)/) ? RegExp.$1 : 'zh') +'#page/welcome';
-					}).complete(function(){ });
-				});
-			});
-		</script>
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/login.js" lang='utf-8'></script>
 	</body>
 </html>

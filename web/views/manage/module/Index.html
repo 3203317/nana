@@ -311,7 +311,7 @@
 				if(1 !== vals.length) return $("#editAlertModal").modal();
 
 				$.ajax({
-					url: vals[0] +'.do',
+					url: vals[0],
 					type: "GET",
 					dataType: "json"
 				}).done(function(responseText) {

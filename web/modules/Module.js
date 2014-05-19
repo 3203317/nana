@@ -5,7 +5,9 @@ var db = require('./mongodb'),
 
 var util = require('../libs/utils');
 
-var modAddFrm = require('../public/manage/module/addFrm');
+var modAddFrm = require('../public/manage/module/addFrm'),
+	modDelFrm = require('../public/manage/module/delFrm'),
+	modEditFrm = require('../public/manage/module/editFrm');
 
 var ModuleSchema = new Schema({
 	Id: {
@@ -46,14 +48,11 @@ ModuleSchema.pre('save', function (next, done){
 ModuleSchema.post('save', function(){
 });
 
-function valiEditFrm(data){
-	data.Sort = data.Sort || 1;
-	delete data.CreateTime;
-}
-
 ModuleSchema.statics.edit = function(newInfo, cb) {
-	var valiResu = valiEditFrm(newInfo);
+	var valiResu = modEditFrm.validate(newInfo);
 	if(valiResu) return cb(valiResu);
+
+	delete newInfo.CreateTime;
 
 	this.update({
 		Id: newInfo.Id
@@ -61,20 +60,21 @@ ModuleSchema.statics.edit = function(newInfo, cb) {
 		'$set': newInfo
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, count);
+		cb(null, 1, '编辑成功', count);
 	});
 };
 
-ModuleSchema.statics.removes = function(ids, cb) {
-	if(!ids || !ids.length) return cb('参数不能为空');
+ModuleSchema.statics.removes = function(data, cb) {
+	var valiResu = modDelFrm.validate(data);
+	if(valiResu) return cb(valiResu);
 
 	this.remove({
 		Id: {
-			'$in': ids
+			'$in': data.Ids
 		}
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, count);
+		cb(null, 1, '删除成功', count);
 	});
 };
 
@@ -129,7 +129,7 @@ ModuleSchema.statics.findModuleById = function(id, cb) {
 		Id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该记录');
+		cb(null, doc);
 	});
 };
 
