@@ -50,7 +50,7 @@ ModuleSchema.post('save', function(){
 
 ModuleSchema.statics.edit = function(newInfo, cb) {
 	var valiResu = modEditFrm.validate(newInfo);
-	if(valiResu) return cb(valiResu);
+	if(valiResu) return cb(null, 0, valiResu);
 
 	delete newInfo.CreateTime;
 
@@ -66,7 +66,7 @@ ModuleSchema.statics.edit = function(newInfo, cb) {
 
 ModuleSchema.statics.removes = function(data, cb) {
 	var valiResu = modDelFrm.validate(data);
-	if(valiResu) return cb(valiResu);
+	if(valiResu) return cb(null, 0, valiResu);
 
 	this.remove({
 		Id: {
