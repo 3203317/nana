@@ -27,10 +27,8 @@ var setting = {
 			var pid = treeNode.id;
 			$('#addFrm_PId').val(pid);
 
-			$("#table1").data('url', ['/manage/module/', pid, '/children'].join('')).olxGrid("loadData", [null, function (data){
-				if(300 === data.responseJSON.code){
-					top.location.href = '/manage/user/login';
-				}
+			$('#table1').data('url', ['/manage/module/', pid, '/children'].join('')).olxGrid('loadData', [null, function (data){
+				if(300 === data.responseJSON.code) top.location.href = '/manage/user/login';
 			}]);
 		}
 	}
@@ -53,24 +51,24 @@ modules.push({
 });
 
 $(function(){
-	$.fn.zTree.init($("#modTree"), setting, modules);
+	$.fn.zTree.init($('#modTree'), setting, modules);
 });
 
-$("#btn_edit").click(function(){
-	var vals = $("#table1").olxGrid("getCheckedRowsValue", 1);
-	if(1 !== vals.length) return $("#editAlertModal").modal();
+$('#btn_edit').click(function(){
+	var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
+	if(1 !== vals.length) return $('#editAlertModal').modal();
 
 	var id = vals[0];
 
 	$.ajax({
 		url: id,
-		type: "GET",
-		dataType: "json"
+		type: 'GET',
+		dataType: 'json'
 	}).done(function (data){
 		if(300 === data.code) return top.location.href = '/manage/user/login';
 		if(!data.success) return alert(data.msg);
 
-		$("#editModal").modal();
+		$('#editModal').modal();
 
 		var data = data.data;
 		$('#editFrm_Id').val(id);
@@ -82,64 +80,53 @@ $("#btn_edit").click(function(){
 	});
 });
 
-$("#delConfirmModal").on("show.bs.modal", function (e) {
-	var vals = $("#table1").olxGrid("getCheckedRowsValue", 1);
+$('#delConfirmModal').on('show.bs.modal', function (e) {
+	var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
 	if(!vals.length) {
-		$("#delAlertModal").modal();
+		$('#delAlertModal').modal();
 		return e.preventDefault();
 	}
 })
 
 /* 绑定删除按钮，弹出提示对话框或确认对话框 */
-$("#btn_del").click(function(){
-	$("#delConfirmModal").modal();
+$('#btn_del').click(function(){
+	$('#delConfirmModal').modal();
 });
 
 $('#addFrm_btn_submit').click(function(){
 	$('#addFrm').olxForm('submit', [valiAddFrm, null, function (data){
-		if(data.code){
-			if(300 === data.code) return top.location.href = '/manage/user/login';
-		}
-
-		if(data.success){
-			location.reload();
-		}else{
-			alert(data.msg);
-		}
+		if(300 === data.code) return top.location.href = '/manage/user/login';
+		if(!data.success) return alert(data.msg);
+		location.reload();
 	}]);
 });
 
 $('#editFrm_btn_submit').click(function(){
-	$('#editFrm').olxForm('submit', function (data){
-		if(data.code){
-			if(300 === data.code) return top.location.href = '/manage/user/login';
-		}
-
-		if(data.success){
-			location.reload();
-		}else{
-			alert(data.msg);
-		}
-	});
+	$('#editFrm').olxForm('submit', [valiEditFrm, null, function (data){
+		if(300 === data.code) return top.location.href = '/manage/user/login';
+		if(!data.success) return alert(data.msg);
+		location.reload();
+	}]);
 });
 
 $('#delConfirmModal_btn_submit').click(function(){
-	var selIds = $("#table1").olxGrid("getCheckedRowsValue", 1);
-	if(!selIds.length) return;
+	var selIds = $('#table1').olxGrid('getCheckedRowsValue', 1);
+	var data = {
+		Ids: selIds
+	};
+	var valiResu = valiDelFrm(data);
+	if(valiResu) return alert(valiResu);
 
 	$.ajax({
 		url: 'del',
-		type: "POST",
-		dataType: "json",
+		type: 'POST',
+		dataType: 'json',
 		data: {
-			data: JSON.stringify({
-				Ids: selIds
-			})
+			data: JSON.stringify(data)
 		}
 	}).done(function (data) {
 		if(300 === data.code) return top.location.href = '/manage/user/login';
 		if(!data.success) return alert(data.msg);
 		location.reload();
-	}).complete(function(){
 	});
 });
