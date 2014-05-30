@@ -1,12 +1,12 @@
 if(window.top !== window.self) top.location.href = '/manage/manager/login';
 
-function frmSuccess(frmObj, fail){
+function frmSuccess(obj, fail){
 	$.ajax({
 		url: '/manage/manager/login',
 		type: "POST",
 		dataType: "json",
 		data: {
-			data: JSON.stringify(frmObj)
+			data: JSON.stringify(obj)
 		}
 	}).done(function (data){
 		console.log(data);
@@ -24,10 +24,10 @@ function frmFail(valiResu){
 	}
 }
 
-function frmSubmit(frmObj, vali, fail, success){
-	var valiResu = vali(frmObj);
+function frmSubmit(obj, vali, fail, success){
+	var valiResu = vali(obj);
 	if(valiResu) return fail(valiResu);
-	success(frmObj, fail);
+	success(obj, fail);
 }
 
 $(function(){
