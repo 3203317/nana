@@ -96,12 +96,9 @@ $("#btn_del").click(function(){
 });
 
 $('#addFrm_btn_submit').click(function(){
-	$('#addFrm').olxForm('submit', function (data){
+	$('#addFrm').olxForm('submit', [valiAddFrm, null, function (data){
 		if(data.code){
-			if(300 === data.code){
-				top.location.href = '/manage/user/login';
-				return;
-			}
+			if(300 === data.code) return top.location.href = '/manage/user/login';
 		}
 
 		if(data.success){
@@ -109,16 +106,13 @@ $('#addFrm_btn_submit').click(function(){
 		}else{
 			alert(data.msg);
 		}
-	});
+	}]);
 });
 
 $('#editFrm_btn_submit').click(function(){
 	$('#editFrm').olxForm('submit', function (data){
 		if(data.code){
-			if(300 === data.code){
-				top.location.href = '/manage/user/login';
-				return;
-			}
+			if(300 === data.code) return top.location.href = '/manage/user/login';
 		}
 
 		if(data.success){
