@@ -7,7 +7,10 @@ var util = require('../libs/utils'),
 	md5 = require('../libs/md5');
 
 var Module = require('./Module'),
-	mgrLoginFrm = require('../public/manage/manager/loginFrm');
+	mgrLoginFrm = require('../public/manage/manager/loginFrm'),
+	mgrAddFrm = require('../public/manage/manager/addFrm'),
+	mgrDelFrm = require('../public/manage/manager/delFrm'),
+	mgrEditFrm = require('../public/manage/manager/editFrm');
 
 var ManagerSchema = new Schema({
 	Id: {
@@ -83,23 +86,26 @@ ManagerSchema.statics.findUsers = function(pagination, cb) {
  * @return 
  */
 ManagerSchema.statics.register = function(newInfo, cb) {
-	// todo
+	var valiResu = mgrAddFrm.validate(newInfo);
+	if(valiResu) return cb(null, 0, valiResu);
+
+	newInfo.UserName = newInfo.UserName.toLowerCase();
 
 	var that = this;
 
 	that.findUserByUserName(newInfo.UserName, function (err, doc){
 		if(err) return cb(err);
-		if('object' === typeof doc) return cb(null, '用户名已经存在');
+		if(doc) return cb(null, 3, ['用户名已经存在', 'UserName'], doc);
+
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
-		newInfo.UserName = newInfo.UserName.toLowerCase();
 		newInfo.CreateTime = new Date();
 		newInfo.IsDel = 0;
 		newInfo.UserPass = md5.hex('123456');
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, doc);
+			cb(null, 1, null, doc);
 		});
 	});
 };
@@ -117,7 +123,7 @@ ManagerSchema.statics.login = function(logInfo, cb) {
 	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, '找不到该用户。', doc);
+		if(doc.IsDel) return cb(null, 4, ['找不到该用户。', 'UserName'], doc);
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 5, ['用户名或密码输入错误。', 'UserPass'], doc);
 		cb(null, 1, '登陆成功', doc);
 	});

@@ -1,10 +1,10 @@
-var conf = require('../settings');
+var conf = require('../settings'),
+	util = require('../libs/utils');
+
 var Manager = require('../modules/Manager.js');
-var util = require('../libs/utils');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
-
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 exports.loginUI = function(req, res, next) {
 	res.render('Manage/Manager/Login', {
@@ -36,9 +36,8 @@ exports.login = function(req, res, next) {
 };
 
 exports.indexUI = function(req, res, next) {
-	Manager.findUsers([1, 10], function(err, docs){
+	Manager.findUsers([1, 10], function (err, docs){
 		if(err) return next(err);
-
 		res.render('Manage/Manager/Index', {
 			title: title,
 			atitle: '用户管理',
@@ -62,11 +61,9 @@ exports.getId = function(req, res, next) {
 
 	Manager.findUserById(id, function (err, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
+		if(!doc) return res.send(result);
 		result.data = [doc, {
+			Sex: doc.sSex,
 			CreateTime: doc.sCreateTime
 		}];
 		result.success = true;
