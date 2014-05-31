@@ -61,15 +61,25 @@ RoleSchema.statics.edit = function(newInfo, cb) {
 
 	newInfo.StartTime = new Date(newInfo.StartTime);
 	newInfo.EndTime = new Date(newInfo.EndTime);
-	delete newInfo.CreateTime;
 
-	this.update({
-		Id: newInfo.Id
-	}, {
-		'$set': newInfo
-	}, function (err, count){
-		if(err) return cb(err);
-		cb(null, 1, '编辑成功', count);
+	var that = this;
+
+	that.findRoleByRoleName(newInfo.RoleName, function (err, doc){
+		if(err) return next(err);
+		if(doc && newInfo.Id !== doc.Id) return cb(null, 3, ['角色名称已经存在。', 'RoleName'], doc);
+
+		var id = newInfo.Id;
+		delete newInfo.Id;
+		delete newInfo.CreateTime;
+
+		that.update({
+			Id: id
+		}, {
+			'$set': newInfo
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, 1, '编辑成功', count);
+		});
 	});
 };
 
