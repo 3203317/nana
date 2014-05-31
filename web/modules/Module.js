@@ -110,7 +110,6 @@ ModuleSchema.statics.findModules = function(fields, cb) {
  * @return 
  */
 ModuleSchema.statics.findModulesByPId = function(pid, cb) {
-
 	this.find({
 		PId: pid
 	}, null, {
@@ -124,7 +123,6 @@ ModuleSchema.statics.findModulesByPId = function(pid, cb) {
 };
 
 ModuleSchema.statics.findModuleById = function(id, cb) {
-
 	this.findOne({
 		Id: id
 	}, null, null, function (err, doc){

@@ -1,9 +1,13 @@
-var db = require('./mongodb');
-var util = require('../libs/utils');
-
-var mongoose = db.mongoose,
+var db = require('./mongodb'),
+	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
+
+var util = require('../libs/utils');
+
+var roleAddFrm = require('../public/manage/role/addFrm'),
+	roleDelFrm = require('../public/manage/role/delFrm'),
+	roleEditFrm = require('../public/manage/role/editFrm');
 
 var RoleSchema = new Schema({
 	Id: {
@@ -79,46 +83,35 @@ RoleSchema.statics.findRoles = function(cb) {
 	});
 };
 
-function valiRegFrm(data){
-	if(!data.RoleName) return '角色名称不能为空';
-	data.RoleName = data.RoleName.trim();
-	if(0 === data.RoleName.length) return '角色名称不能为空';
-
-	data.StartTime = new Date(data.StartTime);
-	data.EndTime = new Date(data.EndTime);
-}
-
 RoleSchema.statics.saveNew = function(newInfo, cb) {
-	var valiResu = valiRegFrm(newInfo);
-	if(valiResu) return cb(valiResu);
+	var valiResu = roleAddFrm.validate(newInfo);
+	if(valiResu) return cb(null, 0, valiResu);
+
+	newInfo.StartTime = new Date(newInfo.StartTime);
+	newInfo.EndTime = new Date(newInfo.EndTime);
 
 	var that = this;
 
 	that.findRoleByRoleName(newInfo.RoleName, function (err, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			newInfo.Id = util.uuid(false);
-			newInfo.CreateTime = new Date();
-			that.create(newInfo, function (err, doc){
-				if(err) return cb(err);
-				cb(null, doc);
-			});
-			return;
-		}
-		cb(null, '角色名称已经存在');
+		if(doc) return cb(null, 3, ['角色名称已经存在。', 'RoleName'], doc);
+
+		newInfo.Id = util.uuid(false);
+		newInfo.CreateTime = new Date();
+
+		that.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, 1, '新角色创建成功。', doc);
+		});
 	});
 };
 
 RoleSchema.statics.findRoleByRoleName = function(roleName, cb) {
-	if(!roleName) return cb('角色名称不能为空');
-	roleName = roleName.trim();
-	if(0 === roleName.length) return cb('角色名称不能为空');
-
 	this.findOne({
 		RoleName: roleName
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该角色');
+		cb(null, doc);
 	});
 };
 
@@ -136,13 +129,11 @@ RoleSchema.statics.removes = function(ids, cb) {
 };
 
 RoleSchema.statics.findRoleById = function(id, cb) {
-	if(!id) return cb('主键不能为空');
-
 	this.findOne({
 		Id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, doc ? doc : '没有找到该记录');
+		cb(null, doc);
 	});
 };
 

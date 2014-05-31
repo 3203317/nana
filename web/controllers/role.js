@@ -1,9 +1,10 @@
-var conf = require('../settings');
-var Role = require('../modules/Role.js');
-var util = require('../libs/utils');
+var conf = require('../settings'),
+	util = require('../libs/utils');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
+var Role = require('../modules/Role.js');
+
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 /**
  *
@@ -36,13 +37,10 @@ exports.add = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Role.saveNew(data, function (err, doc){
+	Role.saveNew(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
-		result.success = true;
+		result.success = 1 === status;
+		result.msg = msg;
 		res.send(result);
 	});
 };
