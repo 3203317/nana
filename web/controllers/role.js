@@ -49,9 +49,10 @@ exports.del = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Role.removes(data.Ids, function (err, count){
+	Role.removes(data, function (err, status, msg, count){
 		if(err) return next(err);
-		result.success = !!count;
+		result.success = 1 === status;
+		result.msg = msg;
 		result.data = count;
 		res.send(result);
 	});
@@ -61,9 +62,10 @@ exports.edit = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	Role.edit(data, function (err, count){
+	Role.edit(data, function (err, status, msg, count){
 		if(err) return next(err);
-		result.success = !!count;
+		result.success = 1 === status;
+		result.msg = msg;
 		result.data = count;
 		res.send(result);
 	});
@@ -75,10 +77,7 @@ exports.getId = function(req, res, next) {
 
 	Role.findRoleById(id, function (err, doc){
 		if(err) return next(err);
-		if('string' === typeof doc){
-			result.msg = doc;
-			return res.send(result);
-		}
+		if(!doc) return res.send(result);
 		result.data = [doc, {
 			StartTime: doc.sStartTime,
 			EndTime: doc.sEndTime,

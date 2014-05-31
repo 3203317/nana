@@ -36,6 +36,9 @@ $('#btn_edit').click(function(){
 		$('#editFrm_Id').val(id);
 		$('#editFrm_RoleName').val(data[0].RoleName);
 		$('#editFrm_RoleDesc').val(data[0].RoleDesc);
+		$('#editFrm_StartTime').val(data[1].StartTime);
+		$('#editFrm_EndTime').val(data[1].EndTime);
+		$('#editFrm_CreateTime').val(data[1].CreateTime);
 		$('#editFrm_shadow_StartTime').val(data[1].StartTime);
 		$('#editFrm_shadow_EndTime').val(data[1].EndTime);
 		$('#editFrm_shadow_CreateTime').val(data[1].CreateTime);

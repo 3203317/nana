@@ -55,16 +55,13 @@ RoleSchema.pre('save', function(next, done){
 RoleSchema.post('save', function(){
 });
 
-function valiEditFrm(data){
-	data.StartTime = new Date(data.StartTime);
-	data.EndTime = new Date(data.EndTime);
-	
-	delete data.CreateTime;
-}
-
 RoleSchema.statics.edit = function(newInfo, cb) {
-	var valiResu = valiEditFrm(newInfo);
-	if(valiResu) return cb(valiResu);
+	var valiResu = roleEditFrm.validate(newInfo);
+	if(valiResu) return cb(null, 0, valiResu);
+
+	newInfo.StartTime = new Date(newInfo.StartTime);
+	newInfo.EndTime = new Date(newInfo.EndTime);
+	delete newInfo.CreateTime;
 
 	this.update({
 		Id: newInfo.Id
@@ -72,12 +69,12 @@ RoleSchema.statics.edit = function(newInfo, cb) {
 		'$set': newInfo
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, count);
+		cb(null, 1, '编辑成功', count);
 	});
 };
 
 RoleSchema.statics.findRoles = function(cb) {
-	this.find(null, null, null, function(err, docs){
+	this.find(null, null, null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -115,16 +112,17 @@ RoleSchema.statics.findRoleByRoleName = function(roleName, cb) {
 	});
 };
 
-RoleSchema.statics.removes = function(ids, cb) {
-	if(!ids || !ids.length) return cb('参数不能为空');
-
+RoleSchema.statics.removes = function(data, cb) {
+	var valiResu = roleDelFrm.validate(data);
+	if(valiResu) return cb(null, 0, valiResu);
+	
 	this.remove({
 		Id: {
-			'$in': ids
+			'$in': data.Ids
 		}
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, count);
+		cb(null, 1, '删除成功', count);
 	});
 };
 
