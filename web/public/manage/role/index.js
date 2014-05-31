@@ -12,7 +12,7 @@ $('.form_date').datetimepicker({
 $('#addFrm_btn_submit').click(function(){
 	$('#addFrm').olxForm('submit', [valiAddFrm, null, function (data){
 		if(300 === data.code) return top.location.href = '/manage/user/login';
-		if(!data.success) return alert(data.msg);
+		if(!data.success) return $('#addFrm_'+ data.msg[1]).olxFormInput('validate', data.msg);
 		location.reload();
 	}]);
 });
@@ -83,7 +83,7 @@ $('#delConfirmModal_btn_submit').click(function(){
 $('#editFrm_btn_submit').click(function(){
 	$('#editFrm').olxForm('submit', [valiEditFrm, null, function (data){
 		if(300 === data.code) return top.location.href = '/manage/user/login';
-		if(!data.success) return alert(data.msg);
+		if(!data.success) return $('#editFrm_'+ data.msg[1]).olxFormInput('validate', data.msg);
 		location.reload();
 	}]);
 });
