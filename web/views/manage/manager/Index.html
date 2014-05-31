@@ -87,7 +87,7 @@
 						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
 						<h4 id="addModalLabel" class="modal-title"><b>新增</b></h4>
 					</div>
-					<form id="addFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="add.do">
+					<form id="addFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="add">
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="addFrm_UserName" class="col-sm-3 control-label"><span class="olx-form-required">*</span>用户名</label>
@@ -134,7 +134,7 @@
 						<button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
 						<h4 id="editModalLabel" class="modal-title"><b>新增</b></h4>
 					</div>
-					<form id="editFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit.do">
+					<form id="editFrm" data-olx-type="olx.form" class="form-horizontal" role="form" data-url="edit">
 						<input type="hidden" id="editFrm_Id" name="Id" value="0">
 						<div class="modal-body">
 							<div class="form-group">
@@ -182,44 +182,11 @@
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="${cdn}/bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
+		<script type="text/javascript">var exports = {};</script>
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/addFrm.js" lang='utf-8'></script>
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/editFrm.js" lang='utf-8'></script>
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/delFrm.js" lang='utf-8'></script>
 		<!-- Own -->
-		<script type="text/javascript">
-			$('.form_date').datetimepicker({
-				language:  'zh-CN',
-				weekStart: 1,
-				todayBtn:  1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 2,
-				minView: 2,
-				forceParse: 0
-			});
-
-			$(function(){
-			});
-
-			$("#btn_edit").click(function(){
-				var vals = $("#table1").olxGrid("getCheckedRowsValue", 1);
-				if(1 !== vals.length) return $("#editAlertModal").modal();
-
-				$.ajax({
-					url: vals[0] +'.do',
-					type: "GET",
-					dataType: "json"
-				}).done(function(responseText) {
-					if(300 === responseText.code) return top.location.href = '/manage/user/login';
-					if(!responseText.success) return alert(responseText.msg);
-
-					$("#editModal").modal();
-
-					var data = responseText.data;
-					$('#editFrm_Id').val(vals[0]);
-					$('#editFrm_UserName').val(data[0].UserName);
-					$('#editFrm_Sex').val(data[0].Sex);
-					$('#editFrm_shadow_CreateTime').val(data[1].CreateTime);
-				});
-			});
-
-		</script>
+		<script type="text/javascript" src="${virtualPath}public/manage/manager/index.js" lang='utf-8'></script>
 	</body>
 </html>

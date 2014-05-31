@@ -57,7 +57,7 @@ module.exports = function(app) {
 
 	app.get('/manage/manager/index', manage.validate, manager.indexUI);
 	app.get('/manage/manager/logout', manage.validate, manager.logout);
-	app.get('/manage/manager/:id.do', manage.validate, manager.getId);
+	app.get('/manage/manager/:id', manage.validate, manager.getId);
 
 	app.get('/manage/index', manage.validate, manage.indexUI);
 	app.get('/manage/welcome', manage.validate, manage.welcomeUI);
