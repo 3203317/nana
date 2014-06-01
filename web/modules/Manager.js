@@ -120,6 +120,8 @@ ManagerSchema.statics.login = function(logInfo, cb) {
 	var valiResu = mgrLoginFrm.validate(logInfo);
 	if(valiResu) return cb(null, 0, valiResu);
 
+	logInfo.UserName = logInfo.UserName.toLowerCase();
+
 	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);

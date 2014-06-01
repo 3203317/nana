@@ -238,15 +238,17 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  * @params 
  * @return 
  */
-UserSchema.statics.login = function(userName, userPass, cb) {
-	userName = userName.toLowerCase();
+UserSchema.statics.login = function(logInfo, cb) {
+	// todo
 
-	this.findUserByUserName(userName, function (err, doc){
+	logInfo.UserName = logInfo.UserName.toLowerCase();
+
+	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
 		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
 		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 		cb(null, 1, '登陆成功', doc);
 	});
 };
@@ -257,15 +259,17 @@ UserSchema.statics.login = function(userName, userPass, cb) {
  * @params 
  * @return 
  */
-UserSchema.statics.loginClient = function(clientInfo, cb) {
-	userName = userName.trim().toLowerCase();
+UserSchema.statics.loginClient = function(logInfo, cb) {
+	// todo
 
-	this.findUserByUserName(userName, function (err, doc){
+	logInfo.UserName = logInfo.UserName.toLowerCase();
+
+	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
 		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 
 		var ep = EventProxy.create('sec', 'device', function (sec, device){
 			cb(null, 1, '登陆成功', [doc, sec, device]);
@@ -287,7 +291,7 @@ UserSchema.statics.loginClient = function(clientInfo, cb) {
 		});
 
 		/* 客户端设备登陆 */
-		var deviceInfo = clientInfo.Device;
+		var deviceInfo = logInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.login(deviceInfo, ep.done('device'));
@@ -356,6 +360,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
  * @return 
  */
 UserSchema.statics.findFriendTeams = function(user_id, cb) {
+	// todo
 
 	var ep = EventProxy.create('teams', 'friends', function (teams, friends){
 		cb(null, 1, null, [teams, friends]);

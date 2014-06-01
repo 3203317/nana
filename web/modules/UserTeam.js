@@ -34,7 +34,7 @@ UserTeamSchema.virtual('sCreateTime').get(function(){
 	return util.formatDate(this.CreateTime);
 });
 
-UserTeamSchema.pre('save', function(next, done){
+UserTeamSchema.pre('save', function (next, done){
 	next();
 });
 
@@ -54,7 +54,7 @@ UserTeamSchema.statics.findTeamsByUserId = function(user_id, cb) {
 		sort: {
 			Sort: -1
 		}
-	}, function(err, docs){
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -132,7 +132,6 @@ UserTeamSchema.statics.edit = function(newInfo, cb) {
  * @return 
  */
 UserTeamSchema.statics.removes = function(id, user_id, cb) {
-
 	this.remove({
 		Id: id,
 		User_Id: user_id
