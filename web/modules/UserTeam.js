@@ -77,21 +77,12 @@ UserTeamSchema.statics.findTeamByName = function(user_id, teamName, cb) {
  * @return 
  */
 UserTeamSchema.statics.saveNew = function(newInfo, cb) {
-	// todo
+	newInfo.Id = util.uuid(false);
+	newInfo.CreateTime = new Date();
 
-	var that = this;
-
-	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
+	this.create(newInfo, function (err, doc){
 		if(err) return cb(err);
-		if(doc) return cb(null, 3, ['分组名称已存在', 'TeamName'], doc);
-
-		newInfo.Id = util.uuid(false);
-		newInfo.CreateTime = new Date();
-
-		that.create(newInfo, function (err, doc){
-			if(err) return cb(err);
-			cb(null, 1, '新分组创建成功', doc);
-		});
+		cb(null, 1, '新分组创建成功', doc);
 	});
 };
 
@@ -102,26 +93,17 @@ UserTeamSchema.statics.saveNew = function(newInfo, cb) {
  * @return 
  */
 UserTeamSchema.statics.edit = function(newInfo, cb) {
-	// todo
-
-	var that = this;
-
-	that.findTeamByName(newInfo.User_Id, newInfo.TeamName, function (err, doc){
+	this.update({
+		Id: newInfo.Id,
+		User_Id: newInfo.User_Id
+	}, {
+		'$set': {
+			TeamName: newInfo.TeamName,
+			Sort: newInfo.Sort
+		}
+	}, function (err, count){
 		if(err) return cb(err);
-		if(doc && newInfo.Id !== doc.Id) return cb(null, 3, ['分组名称已存在', 'TeamName'], doc);
-
-		that.update({
-			Id: newInfo.Id,
-			User_Id: newInfo.User_Id
-		}, {
-			'$set': {
-				TeamName: newInfo.TeamName,
-				Sort: newInfo.Sort
-			}
-		}, function (err, count){
-			if(err) return cb(err);
-			cb(null, 1, '分组信息更新成功', count);
-		});
+		cb(null, 1, '分组信息修改成功', count);
 	});
 };
 

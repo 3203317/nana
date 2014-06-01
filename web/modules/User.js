@@ -304,18 +304,18 @@ UserSchema.statics.loginClient = function(logInfo, cb) {
  * @params 
  * @return 
  */
-UserSchema.statics.logoutClient = function(clientInfo, cb) {
+UserSchema.statics.logoutClient = function(logInfo, cb) {
 
-	this.findUserByUserName(clientInfo.UserName, function (err, doc){
+	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
 		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 
 		var userInfo = doc;
 		
-		var deviceInfo = clientInfo.Device;
+		var deviceInfo = logInfo.Device;
 		deviceInfo.User_Id = doc.Id;
 
 		Device.logout(deviceInfo, function (err, doc){
