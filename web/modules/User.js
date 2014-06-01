@@ -40,7 +40,7 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 3
 	},
-	Nickname: {
+	Nickname: {			//昵称
 		type: String
 	},
 	Birthday: {
@@ -108,7 +108,7 @@ UserSchema.virtual('sRegTime').get(function(){
 	return util.formatDate(this.RegTime);
 });
 
-UserSchema.pre('save', function(next, done){
+UserSchema.pre('save', function (next, done){
 	next();
 });
 
@@ -124,7 +124,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 		},
 		skip: (pagination[0] - 1) * pagination[1],
 		limit: pagination[1]
-	}, function(err, docs){
+	}, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -139,6 +139,9 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 UserSchema.statics.register = function(newInfo, cb) {
 	var valiResu = userRegFrm.validate(newInfo);
 	if(valiResu) return cb(null, 0, valiResu);
+
+	newInfo.UserName = newInfo.UserName.toLowerCase();
+	newInfo.Email = newInfo.Email.toLowerCase();
 
 	var that = this;
 
@@ -169,7 +172,7 @@ UserSchema.statics.register = function(newInfo, cb) {
  * @return 
  */
 UserSchema.statics.sendRegEmail = function(userName, cb) {
-	userName = userName.trim().toLowerCase();
+	userName = userName.toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -182,7 +185,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, ['发送注册认证邮件成功', 'Email'], count);
+			cb(null, 1, '发送注册认证邮件成功', count);
 
 			getRegEmailTemp(function (err, template){
 				if(err) return;
@@ -212,8 +215,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
  * @return 
  */
 UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
-
-	userName = userName.trim().toLowerCase();
+	userName = userName.toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
@@ -237,13 +239,12 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
  * @return 
  */
 UserSchema.statics.login = function(userName, userPass, cb) {
-
-	userName = userName.trim().toLowerCase();
+	userName = userName.toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, '找不到该用户', doc);
+		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
 		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
 		if(md5.hex(userPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
 		cb(null, 1, '登陆成功', doc);
@@ -257,7 +258,6 @@ UserSchema.statics.login = function(userName, userPass, cb) {
  * @return 
  */
 UserSchema.statics.loginClient = function(clientInfo, cb) {
-
 	userName = userName.trim().toLowerCase();
 
 	this.findUserByUserName(userName, function (err, doc){

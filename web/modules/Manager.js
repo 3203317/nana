@@ -57,7 +57,7 @@ ManagerSchema.virtual('sCreateTime').get(function(){
 	return util.formatDate(this.CreateTime);
 });
 
-ManagerSchema.pre('save', function(next, done){
+ManagerSchema.pre('save', function (next, done){
 	next();
 });
 

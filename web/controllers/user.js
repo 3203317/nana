@@ -1,9 +1,10 @@
-var conf = require('../settings');
-var User = require('../modules/User.js');
-var util = require('../libs/utils');
+var conf = require('../settings'),
+	util = require('../libs/utils');
 
-var virtualPath = '';
-var title = 'FOREWORLD 洪荒';
+var User = require('../modules/User.js');
+
+var virtualPath = '',
+	title = 'FOREWORLD 洪荒';
 
 exports.analyticsUI = function(req, res, next) {
 	res.render('User/Analytics', {
@@ -17,7 +18,7 @@ exports.analyticsUI = function(req, res, next) {
 };
 
 exports.indexUI = function(req, res, next) {
-	User.findUsers([1, 10], function(err, docs){
+	User.findUsers([1, 10], function (err, docs){
 		if(err) return next(err);
 
 		res.render('Manage/User/Index', {
