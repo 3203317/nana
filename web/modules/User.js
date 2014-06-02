@@ -262,8 +262,6 @@ UserSchema.statics.login = function(logInfo, cb) {
 UserSchema.statics.loginClient = function(logInfo, cb) {
 	// todo
 
-	logInfo.UserName = logInfo.UserName.toLowerCase();
-
 	this.findUserByUserName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
