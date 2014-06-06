@@ -216,5 +216,4 @@ pip-log.txt
 web/public/asset/css/default.css
 web/public/asset/css/olx/olx.css
 android/hyx/target/
-android/hyx/gen/com/zhaobe/hyx/BuildConfig.java
-android/hyx/gen/android/support/v7/appcompat/R.java
+android/hyx/gen/
