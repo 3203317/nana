@@ -26,7 +26,6 @@ var setting = {
 		beforeClick: function(treeId, treeNode) {
 			var pid = treeNode.id;
 			$('#addFrm_PId').val(pid);
-
 			$('#table1').data('url', ['/manage/module/', pid, '/children'].join('')).olxGrid('loadData', [null, function (data){
 				if(300 === data.responseJSON.code) top.location.href = '/manage/user/login';
 			}]);
@@ -34,8 +33,8 @@ var setting = {
 	}
 };
 
-for(var i=0; i<modules.length; i++){
-	var module = modules[i];
+for(var m in modules){
+	var module = modules[m];
 	module.id = module.Id;
 	module.pId = module.PId;
 	module.name = module.ModuleName;
