@@ -14,8 +14,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="android.test.runner" />
+
         <activity
-            android:name="com.zhaobe.hyx.MainActivity"
+            android:name="com.zhaobe.hyx.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,5 +29,10 @@
         <service android:name="com.zhaobe.hyx.HyxService" >
         </service>
     </application>
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="test.com.zhaobe.hyx" >
+    </instrumentation>
 
 </manifest>
