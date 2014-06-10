@@ -17,7 +17,7 @@
         <uses-library android:name="android.test.runner" />
 
         <activity
-            android:name="com.zhaobe.hyx.LoginActivity"
+            android:name="com.zhaobe.hyx.activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
