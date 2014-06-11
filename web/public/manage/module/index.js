@@ -93,7 +93,12 @@ $('#btn_del').click(function(){
 });
 
 $('#addFrm_btn_submit').click(function(){
-	$('#addFrm').olxForm('submit', [valiAddFrm, null, function (data){
+	$('#addFrm').olxForm('submit', [valiAddFrm, function (valiResu){
+		if('string' === typeof valiResu){
+			return alert(valiResu);
+		}
+		$('#addFrm_'+ valiResu[1]).olxFormInput('validate', valiResu);
+	}, function (data){
 		if(300 === data.code) return top.location.href = '/manage/user/login';
 		if(!data.success) return alert(data.msg);
 		location.reload();
@@ -101,7 +106,12 @@ $('#addFrm_btn_submit').click(function(){
 });
 
 $('#editFrm_btn_submit').click(function(){
-	$('#editFrm').olxForm('submit', [valiEditFrm, null, function (data){
+	$('#editFrm').olxForm('submit', [valiEditFrm, function (valiResu){
+		if('string' === typeof valiResu){
+			return alert(valiResu);
+		}
+		$('#editFrm_'+ valiResu[1]).olxFormInput('validate', valiResu);
+	}, function (data){
 		if(300 === data.code) return top.location.href = '/manage/user/login';
 		if(!data.success) return alert(data.msg);
 		location.reload();
