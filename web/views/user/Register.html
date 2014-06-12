@@ -9,11 +9,9 @@
 				bottom:0;
 				width:100%;
 			}
-			label{
+			form label{
 				font-weight: normal;
-				color: red;
 				margin-bottom: 0;
-				display: none;
 		    }
 			#img_VerifyCode {
 				border: 1px solid #CCC;
@@ -21,42 +19,71 @@
 				height: 50px;
 				cursor: pointer;
 			}
+			@media screen and (max-width: 640px) {
+				form label{
+					display: none;
+				}
+			}
 		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
 
 		<header id="header"></header>
-		<section class="container">
-		    <div class="row">		    
-				<div class="col-md-3 col-sm-4">
-					<h3>新用户注册</h3>
-					#*<div id="alert_info" class="alert alert-warning">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
-					</div>*#
-					<form id="regFrm" role="form" onsubmit="return false;">
-						<div class="form-group">
-							<input type="text" id="regFrm_UserName" name="UserName" class="form-control" placeholder="电子邮箱">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>新用户注册</b></div>
+						<div class="panel-body">
+							<div class="col-md-4 col-sm-5">
+								#*<div id="alert_info" class="alert alert-warning">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
+								</div>*#
+								<form class="form-horizontal" role="form" id="regFrm" onsubmit="return false;">
+									<div class="form-group">
+										<label for="regFrm_UserName" class="col-sm-3 control-label">电子邮箱</label>
+										<div class="col-sm-9">
+											<input type="email" class="form-control" id="regFrm_UserName" name="UserName" placeholder="电子邮箱">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_UserPass" class="col-sm-3 control-label">登陆密码</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="regFrm_UserPass" name="UserPass" placeholder="登陆密码">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_UserPass2" class="col-sm-3 control-label">确认密码</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="regFrm_UserPass2" name="UserPass2" placeholder="确认密码">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<img id='img_VerifyCode' title='点击更换验证码' src='../public/user/verifyCode.jpg'>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<button id="btn_reg" type="button" class="btn btn-primary">注册</button>
+											<a class="btn btn-danger" href="login">登陆</a>
+										</div>
+									</div>
+								</form>
+			                </div>
 						</div>
-						<div class="form-group">
-							<input type="password" id="regFrm_UserPass" name="UserPass" class="form-control" placeholder="登陆密码">
-						</div>
-						<div class="form-group">
-							<input type="password" id="regFrm_UserPass2" class="form-control" placeholder="确认密码">
-						</div>
-						<div class="form-group">
-							<input type="text" id="regFrm_VerifyCode" name="VerifyCode" class="form-control" placeholder="验证码">
-						</div>
-						<div class="form-group">
-							<img id='img_VerifyCode' title='点击更换验证码' src='../public/user/verifyCode.jpg'>
-						</div>
-                        <button id="btn_reg" type="button" class="btn btn-primary">注册</button>
-                        <a class="btn btn-danger" href="login">登陆</a>
-                    </form>                
-                </div>
-		    </div>
-		</section>
+					</div>
+				</div>
+			</div>
+		</div>
 
         #parse('pagelet/IndexFooter.html')
         #parse('pagelet/IndexJs.html')
