@@ -3,9 +3,7 @@ $('#img_VerifyCode').click(function(){
 });
 
 function showVerifyCode(){
-	var widget = $('#img_VerifyCode');
-	var oldSrc = widget.attr('src');
-	widget.attr('src', oldSrc +'?t='+ new Date());
+	$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?t='+ new Date());
 }
 
 $(function(){
@@ -13,40 +11,51 @@ $(function(){
 });
 
 $('#btn_reg').click(function(){
-	var formObj = $("#regFrm").serializeObjectForm();
-	var valiResu = valiUserRegFrm(formObj);
-	if(valiResu){
-		if('string' === typeof valiResu){
-			$('#alert_msg').html(valiResu);
-		}else{
-			$('#alert_msg').html(valiResu[0]);
-			$('#regFrm_'+ valiResu[1]).focus();
-		}
-		return;
-	}
+	$('#regFrm').olxForm('submit', [valiRegFrm, function (valiResu){
+		$('form label[id$="_Vali"]').each(function (i, label){
+			$(label).parent().css('display', 'none');
+		});
+		if('string' === typeof valiResu) return alert(valiResu);
+		$('#regFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
+		$('#regFrm_'+ valiResu[1]).focus();
+	}, function (data){
+		console.log(data);
+	}]);
 
-	$.ajax({
-		url: '/user/register',
-		type: "POST",
-		dataType: "json",
-		data: {
-			data: JSON.stringify(formObj)
-		}
-	}).done(function(responseText) {
-		var msg, lab;
-		if(responseText.success){
-			location.href = formObj.UserName +'/register/success';
-		}else{
-			msg = responseText.msg;
-			if(msg.message) return $('#alert_msg').html(msg.message);
+	// var formObj = $("#regFrm").serializeObjectForm();
+	// var valiResu = valiUserRegFrm(formObj);
+	// if(valiResu){
+	// 	if('string' === typeof valiResu){
+	// 		$('#alert_msg').html(valiResu);
+	// 	}else{
+	// 		$('#alert_msg').html(valiResu[0]);
+	// 		$('#regFrm_'+ valiResu[1]).focus();
+	// 	}
+	// 	return;
+	// }
 
-			if('string' === msg) return $('#alert_msg').html(msg);
+	// $.ajax({
+	// 	url: '/user/register',
+	// 	type: "POST",
+	// 	dataType: "json",
+	// 	data: {
+	// 		data: JSON.stringify(formObj)
+	// 	}
+	// }).done(function(responseText) {
+	// 	var msg, lab;
+	// 	if(responseText.success){
+	// 		location.href = formObj.UserName +'/register/success';
+	// 	}else{
+	// 		msg = responseText.msg;
+	// 		if(msg.message) return $('#alert_msg').html(msg.message);
 
-			$('#alert_msg').html(msg[0]);
+	// 		if('string' === msg) return $('#alert_msg').html(msg);
 
-			lab = $('#regFrm_'+ msg[1]);
-			if(lab[0]) lab.focus();
-		}
-	}).complete(function(){
-	});
+	// 		$('#alert_msg').html(msg[0]);
+
+	// 		lab = $('#regFrm_'+ msg[1]);
+	// 		if(lab[0]) lab.focus();
+	// 	}
+	// }).complete(function(){
+	// });
 });
