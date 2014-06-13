@@ -20,7 +20,6 @@ exports.analyticsUI = function(req, res, next) {
 exports.indexUI = function(req, res, next) {
 	User.findUsers([1, 10], function (err, docs){
 		if(err) return next(err);
-
 		res.render('Manage/User/Index', {
 			title: title,
 			atitle: '用户管理',
@@ -39,6 +38,7 @@ exports.loginUI = function(req, res, next) {
 		atitle: '登陆',
 		description: '个人博客',
 		keywords: ',登陆,Bootstrap3',
+		refererUrl: escape('http://'+ req.headers.host + req.url),
 		virtualPath: virtualPath +'/',
 		cdn: conf.cdn
 	});
