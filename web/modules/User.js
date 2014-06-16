@@ -15,8 +15,7 @@ var util = require('../libs/utils'),
 var Module = require('./Module'),
 	Device = require('./Device'),
 	UserTeam = require('./UserTeam'),
-	UserFriend = require('./UserFriend'),
-	userRegFrm = require('../public/user/regFrm');
+	UserFriend = require('./UserFriend');
 
 var UserSchema = new Schema({
 	Id: {
@@ -137,7 +136,7 @@ UserSchema.statics.findUsers = function(pagination, cb) {
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
-	var valiResu = userRegFrm.validate(newInfo);
+	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(null, 0, valiResu);
 
 	newInfo.UserName = newInfo.UserName.toLowerCase();
@@ -413,4 +412,12 @@ function genApiKey(){
  */
 function genSecKey(){
 	return '654321';
+}
+
+function valiRegFrm(data){
+	if(!data) return '参数异常';
+	if(!data.UserName || !/^[\w]{4,16}$/.test(data.UserName)) return ['仅支持1-10位中文、数字、字母或下划线。', 'UserName'];
+	if(!data.UserPass || !/^[\w]{4,16}$/.test(data.UserPass)) return ['登陆密码不能为空。', 'UserPass'];
+	if(!data.UserPass2 || !/^[\w]{4,16}$/.test(data.UserPass2)) return ['确认密码不能为空。', 'UserPass2'];
+	if(!data.VerifyCode || !/^[\w]{4,16}$/.test(data.VerifyCode)) return ['验证码不能为空。', 'VerifyCode'];
 }

@@ -17,11 +17,11 @@ function showVali(valiResu){
 }
 
 function subFrm(){
-	$('#regFrm').olxForm('submit', [valiRegFrm, function (valiResu){
-		$('form label[id$="_Vali"]').each(function (i, label){
-			$(label).parent().css('display', 'none');
-		});
-		showVali(valiResu);
+	$('#regFrm').olxForm('submit', [function(){}, function (valiResu){
+		// $('form label[id$="_Vali"]').each(function (i, label){
+		// 	$(label).parent().css('display', 'none');
+		// });
+		// showVali(valiResu);
 	}, function (data){
 		if(data.success) return location.href = 'haha/register/success';
 		showVali(data.msg);
