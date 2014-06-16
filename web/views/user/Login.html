@@ -2,53 +2,105 @@
 <html lang="zh-CN">
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<style>
-		    #footer {
-				position: fixed;
-				left: 0;
-				bottom: 0;
-				width: 100%;
-		    }
-		</style>
+		<link rel="stylesheet" type="text/css" href="${virtualPath}public/user/login.css?v1" media="screen">
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
 
 		<header id="header"></header>
-
-		<section class="container">
-		    <div class="row">		    
-                <div class="col-md-3 col-sm-4">
-                    <form id="loginForm" role="form" onsubmit="return false;">
-                        <h3>请登陆</h3>
-                        <div class="form-group">
-                            <input id="userName" name="UserName" type="text" class="form-control" placeholder="用户名/电子邮箱">
-                        </div>
-                        <div class="form-group">
-                            <input id="userPass" name="UserPass" type="password" class="form-control" placeholder="密码">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> 记住我
-                            </label>
-                        </div>
-                        <button id="btn_login" type="button" class="btn btn-primary">登陆</button>
-                        <a class="btn btn-danger" href="register?redirectURL=${refererUrl}">注册</a>
-                    </form>                
-                </div>
-		    </div>
-		</section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>用户登陆</b></div>
+						<div class="panel-body">
+							<div class="col-md-4 col-sm-5">
+								#*<div id="alert_info" class="alert alert-warning">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
+								</div>*#
+								<form class="form-horizontal" role="form" id="regFrm" onsubmit="return false;" data-url="register">
+									<div class="form-group">
+										<label for="regFrm_UserName" class="col-sm-3 control-label">电子邮箱</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="regFrm_UserName" name="UserName" placeholder="电子邮箱">
+										</div>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_UserName_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_UserPass" class="col-sm-3 control-label">登陆密码</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="regFrm_UserPass" name="UserPass" placeholder="登陆密码">
+										</div>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_UserPass_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
+										</div>
+										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a class="a" href="javascript:showVerifyCode();">换张图</a></label>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<img id='img_VerifyCode' title='点击更换验证码' src=''>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" checked> 记住我的登录信息<span style='color:#A00;'>（请勿在公用电脑或者网吧内使用此项）</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<button id="btn_reg" type="button" class="btn btn-primary">立即登陆</button>
+										</div>
+									</div>
+								</form>
+			                </div>
+							<div id="reg_tip" class="col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4">
+								<div>没有帐号？<a href="register?redirectURL=${refererUrl}">注册新会员</a></div>
+								<div>&nbsp;</div>
+								<div><b>为什么总提示验证码错误？</b></div>
+								<ol>
+									<li>首先请确定浏览器已经启用Cookie。</li>
+									<li>实在不行，邮件给我 3203317 AT qq.com。</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
         #parse('pagelet/IndexFooter.html')
-
         #parse('pagelet/IndexJs.html')
 
 		<!-- Own -->
 		<script type="text/javascript">
 			function validateForm(){
-				var formObj = $("#loginForm").serializeObjectForm();
+				var formObj = $("#loginFrm").serializeObjectForm();
 				return formObj;
 			}
+
+			function showVerifyCode(){
+				$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?t='+ new Date());
+			}
+
+			$(function(){
+				showVerifyCode();
+			});
 
 			$(function(){
 				$('#btn_login').click(function(){
