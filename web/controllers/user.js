@@ -62,29 +62,19 @@ exports.registerUI = function(req, res, next) {
  * @return 
  */
 exports.register_success = function(req, res, next) {
-	var userName = req.params.name.trim();
-	res.render('User/Register_Success', {
-		title: title,
-		atitle: '注册成功',
-		description: '注册成功',
-		keywords: ',注册成功,Bootstrap3',
-		virtualPath: virtualPath +'/',
-		cdn: conf.cdn,
-		user: {
-			UserName: userName
-		}
-	});
+	var email = req.params.email.trim();
+	res.redirect('/user/'+ email +'/register/sendEmail');
 };
 
 /**
  *
- * @method 发送注册用户确认邮件
+ * @method 发送注册用户确认邮件成功
  * @params 
  * @return 
  */
-exports.sendRegEmailUI = function(req, res, next) {
-	var userName = req.params.name.trim();
-	res.render('User/SendRegEmail', {
+exports.sendRegEmail_successUI = function(req, res, next) {
+	var email = req.params.email.trim();
+	res.render('User/SendRegEmail_Success', {
 		title: title,
 		atitle: '发送邮件',
 		description: '发送邮件',
@@ -92,7 +82,7 @@ exports.sendRegEmailUI = function(req, res, next) {
 		virtualPath: virtualPath +'/',
 		cdn: conf.cdn,
 		user: {
-			UserName: userName
+			Email: email
 		}
 	});
 };
@@ -105,13 +95,11 @@ exports.sendRegEmailUI = function(req, res, next) {
  */
 exports.sendRegEmail = function(req, res, next) {
 	var result = { success: false },
-		data = req._data;
+		email = req.params.email.trim();
 
-	User.sendRegEmail(data.UserName, function (err, status, msg, doc){
+	User.sendRegEmail(email, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = 1 === status;
-		result.msg = msg;
-		res.send(result);
+		if(1 === status) return res.redirect('/user/'+ email +'/register/sendEmail/success');
 	});
 };
 

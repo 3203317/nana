@@ -42,13 +42,13 @@ module.exports = function(app) {
 	app.post('/user/login.do', valiPostData, user.login);
 
 	app.get('/user/register', user.registerUI);
-	app.post('/user/register', valiPostData, user.register, user.sendRegEmail);
-	app.get('/user/:name/register/success', user.register_success);
+	app.post('/user/register', valiPostData, user.register);
+	app.get('/user/:email/register/success', user.register_success);
 
-	app.get('/user/:name/sendRegEmail', user.sendRegEmailUI);
-	app.post('/user/:name/sendRegEmail', valiPostData, user.sendRegEmail);
+	app.get('/user/:email/register/sendEmail', user.sendRegEmail);
+	app.get('/user/:email/register/sendEmail/success', user.sendRegEmail_successUI);
 
-	app.get('/user/:name/ackRegEmail/:code', user.ackRegEmailUI);
+	app.get('/user/:email/ackRegEmail/:code', user.ackRegEmailUI);
 
 	app.get('/manage/user/index', manage.validate, user.indexUI);
 

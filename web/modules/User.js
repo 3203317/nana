@@ -166,13 +166,12 @@ UserSchema.statics.register = function(newInfo, cb) {
  * @params 
  * @return 
  */
-UserSchema.statics.sendRegEmail = function(userName, cb) {
-	userName = userName.toLowerCase();
+UserSchema.statics.sendRegEmail = function(email, cb) {
 
-	this.findUserByUserName(userName, function (err, doc){
+	this.findUserByEmail(email, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		if(doc.Status) return cb(null, 4, ['用户状态已激活。', 'Status'], doc);
 
 		var ackCode = util.random(12);
 
@@ -180,7 +179,7 @@ UserSchema.statics.sendRegEmail = function(userName, cb) {
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, '发送注册认证邮件成功', count);
+			cb(null, 1, '发送注册认证邮件成功', doc);
 
 			getRegEmailTemp(function (err, template){
 				if(err) return;
