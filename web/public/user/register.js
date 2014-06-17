@@ -20,7 +20,14 @@ function showVali(valiResu){
 }
 
 function subFrm(){
-	$('#regFrm').olxForm('submit', [function(){}, null, function (data){
+	$('#regFrm').olxForm('submit', [function(){
+		if(!$('#regFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
+		if(!$('#regFrm_UserPass').val().trim().length) return ['登陆密码不能为空。', 'UserPass'];
+		if($('#regFrm_UserPass').val() !== $('#regFrm_UserPass2').val()) return ['确认密码必须填写，且要匹配登陆密码。', 'UserPass2'];
+		if(!$('#regFrm_VerifyCode').val().trim().length) return ['验证码不能为空。', 'VerifyCode'];
+	}, function (valiResu){
+		showVali(valiResu);
+	}, function (data){
 		if(!data.success) return showVali(data.msg);
 		location.href = $('#regFrm_Email').val().trim() +'/register/success';
 	}]);
