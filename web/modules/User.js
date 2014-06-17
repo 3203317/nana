@@ -53,6 +53,7 @@ var UserSchema = new Schema({
 	},
 	Email: {			//邮箱
 		type: String,
+		index: true,
 		required: true
 	},
 	SafeEmail: {		//安全邮箱
@@ -139,14 +140,11 @@ UserSchema.statics.register = function(newInfo, cb) {
 	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(null, 0, valiResu);
 
-	newInfo.UserName = newInfo.UserName.toLowerCase();
-	newInfo.Email = newInfo.Email.toLowerCase();
-
 	var that = this;
 
-	that.findUserByNameEmail(newInfo.UserName, newInfo.Email, function (err, doc){
+	that.findUserByEmail(newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(doc) return cb(null, 3, newInfo.UserName === doc.UserName ? ['用户名已经存在', 'UserName'] : ['电子邮箱已经存在', 'Email'], doc);
+		if(doc) return cb(null, 3, ['电子邮箱已经存在', 'Email'], doc);
 
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
@@ -350,6 +348,15 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 	});
 };
 
+UserSchema.statics.findUserByEmail = function(email, cb) {
+	this.findOne({
+		Email: email
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
 /**
  *
  * @method 获取好友分组
@@ -416,6 +423,6 @@ function genSecKey(){
 
 function valiRegFrm(data){
 	if(!data) return '参数异常';
-	if(!data.UserName || !/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(data.UserName)) return ['请输入正确的格式，例如:example@example.com。', 'UserName'];
-	if(!data.UserPass || !/^[\w]{4,16}$/.test(data.UserPass)) return ['登陆密码不能为空。', 'UserPass'];
+	if(!util.isEmail(data.Email)) return ['请输入正确的格式，例如:example@example.com。', 'Email'];
+	if(!data.UserPass || !/^[\w]{4,16}$/.test(data.UserPass)) return ['仅支持4-16位数字、字母（大小写）或下划线。', 'UserPass'];
 }

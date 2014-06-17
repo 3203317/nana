@@ -53,3 +53,13 @@ exports.random = function(num){
 	}
 	return result.join('');
 };
+
+/**
+ *
+ * @method 判断是否是Email格式
+ * @params 
+ * @return 
+ */
+exports.isEmail = function(email){
+	return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
+}

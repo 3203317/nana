@@ -22,7 +22,7 @@ function showVali(valiResu){
 function subFrm(){
 	$('#regFrm').olxForm('submit', [function(){}, null, function (data){
 		if(!data.success) return showVali(data.msg);
-		location.href = $('#regFrm_UserName').val().trim() +'/register/success';
+		location.href = $('#regFrm_Email').val().trim() +'/register/success';
 	}]);
 }
 
