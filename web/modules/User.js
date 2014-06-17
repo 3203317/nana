@@ -192,7 +192,7 @@ UserSchema.statics.sendRegEmail = function(email, cb) {
 				/* 尝试发送注册邮件确认 */
 				mailer.send({
 					to: doc.Email,
-					subject: '找呗(www.zhaobe.com)绑定邮箱验证码',
+					subject: '欢迎注册找呗(www.zhaobe.com)(请不要回复此邮件)',
 					html: html
 				}, function (err, ok){
 					// if(err) return cb(null, 5, '发送注册认证邮件失败', doc);
