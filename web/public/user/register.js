@@ -15,8 +15,12 @@ function showVali(valiResu){
 		$(label).parent().css('display', 'none');
 	});
 	if('string' === typeof valiResu) return alert(valiResu);
-	$('#regFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
-	$('#regFrm_'+ valiResu[1]).focus();
+	if('[object Array]' === Object.prototype.toString.call(valiResu)){
+		$('#regFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
+		$('#regFrm_'+ valiResu[1]).focus();
+		return;
+	}
+	alert(valiResu.message);
 }
 
 function subFrm(){

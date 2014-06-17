@@ -24,9 +24,9 @@ var UserSchema = new Schema({
 		index: true
 	},
 	UserName: {
-		type: String,
+		// required: true,
 		// match: /[a-z]/,
-		required: true
+		type: String
 	},
 	UserPass: {
 		type: String
@@ -72,12 +72,10 @@ var UserSchema = new Schema({
 		default: 0
 	},
 	ApiKey: {
-		type: String,
-		required: true
+		type: String
 	},
 	SecKey: {			//密钥
-		type: String,
-		required: true
+		type: String
 	}
 }, {
 	versionKey: false
@@ -144,7 +142,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 	that.findUserByEmail(newInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(doc) return cb(null, 3, ['电子邮箱已经存在', 'Email'], doc);
+		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
 
 		/* 数据入库 */
 		newInfo.Id = util.uuid(false);
@@ -157,7 +155,7 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, 1, '新用户注册成功', doc);
+			cb(null, 1, '新用户注册成功。', doc);
 		});
 	});
 };
@@ -350,7 +348,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 
 UserSchema.statics.findUserByEmail = function(email, cb) {
 	this.findOne({
-		Email: email
+		Email: new RegExp(email, 'i')
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);

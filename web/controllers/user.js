@@ -164,7 +164,7 @@ exports.register = function(req, res, next) {
 
 	User.register(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		if(1 === status) return next();
+		result.success = 1 === status;
 		result.msg = msg;
 		res.send(result);
 	});
