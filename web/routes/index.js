@@ -44,6 +44,8 @@ module.exports = function(app) {
 	app.get('/user/register', user.registerUI);
 	app.post('/user/register', valiPostData, user.register);
 	app.get('/user/:email/register/success', user.register_success);
+	
+	app.get('/user/:email/register/activate', user.register_activateUI);
 
 	app.get('/user/:email/register/sendEmail', user.sendRegEmail);
 	app.get('/user/:email/register/sendEmail/success', user.sendRegEmail_successUI);

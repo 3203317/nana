@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style type="text/css">
+			#footer{
+				position:fixed;
+				left:0;
+				bottom:0;
+				width:100%
+			}
+			form label{
+				font-weight:normal;
+				margin-bottom:0
+			}
+			form a{
+				color:#1a66b3
+			}
+			form a:hover{
+				text-decoration:underline
+			}
+			form .wrong{
+				color:#f00;
+				margin-top:-15px;
+				font-size:12px
+			}
+			form #img_VerifyCode{
+				border:1px solid #ccc;
+				width:100%;
+				height:35px;
+				cursor:pointer
+			}
+			#inp_tip a{
+				color:#1a66b3;
+				text-decoration:underline
+			}
+			#inp_tip ol{
+				padding-left:22px;
+				font-size:12px
+			}
+			@media screen and (max-width:640px){
+				form label{
+					display:none
+				}
+				form #lab_changeImg{
+					display:block
+				}
+				#footer{
+					position:inherit
+				}
+			}
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+
+		<header id="header"></header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>激活帐号</b></div>
+						<div class="panel-body">
+							<div class="col-md-4 col-sm-5">
+								<form class="form-horizontal" role="form" id="regFrm" onsubmit="return false;" data-url="register">
+									<div class="form-group">
+										<label class="col-sm-12" style='font-size:12px;color:#c00'>请输入您注册的邮箱地址，系统将发送激活账号的链接到邮箱中</label>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_Email" class="col-sm-3 control-label">电子邮箱</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="regFrm_Email" name="Email" placeholder="电子邮箱">
+										</div>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_Email_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_UserPass2_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group">
+										<label for="regFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
+										</div>
+										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a class="a" href="javascript:showVerifyCode();">换张图</a></label>
+									</div>
+									<div class="form-group wrong">
+										<label id="regFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<img id='img_VerifyCode' title='点击更换验证码' src=''>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<button id="btn_reg" type="button" class="btn btn-primary">发送邮件</button>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-3 col-sm-9">
+											<a class="a" href='#'>转到登陆页面？</a>
+										</div>
+									</div>
+								</form>
+			                </div>
+							<div id="inp_tip" class="col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4">
+								<div>已有帐号？<a href="login">直接登陆</a></div>
+								<div>&nbsp;</div>
+								<div><b>为什么收不到账号激活邮件？</b></div>
+								<ol>
+									<li>是否输入正确的邮箱地址(注册时使用的)。</li>
+									<li>可能被邮件系统当成垃圾邮件，检查垃圾箱。</li>
+									<li>可能是本站的邮件系统繁忙或者故障，请稍候再试或者联系管理员。</li>
+								</ol>
+								<div><b>为什么总提示验证码错误？</b></div>
+								<ol>
+									<li>首先请确定浏览器已经启用Cookie。</li>
+									<li>实在不行，邮件给我 3203317 AT qq.com。</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        #parse('pagelet/IndexFooter.html')
+        #parse('pagelet/IndexJs.html')
+		<!-- Own -->
+		<script type="text/javascript">
+			$('#img_VerifyCode').click(function(){
+				showVerifyCode();
+			});
+			function showVerifyCode(){
+				$('#img_VerifyCode').attr('src', '/public/user/verifyCode.jpg?t='+ new Date());
+			}
+			$(function(){
+				showVerifyCode();
+			});
+		</script>
+	</body>
+</html>

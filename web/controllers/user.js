@@ -68,6 +68,27 @@ exports.register_success = function(req, res, next) {
 
 /**
  *
+ * @method 注册激活
+ * @params 
+ * @return 
+ */
+exports.register_activateUI = function(req, res, next) {
+	var email = req.params.email.trim();
+	res.render('User/Register_Activate', {
+		title: title,
+		atitle: '新用户注册',
+		description: '个人博客',
+		keywords: ',新用户注册,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn,
+		user: {
+			Email: email
+		}
+	});
+};
+
+/**
+ *
  * @method 发送注册用户确认邮件成功
  * @params 
  * @return 
