@@ -2,33 +2,51 @@
 <html lang="zh-CN">
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<style>
-		    #footer {
-		    	position:fixed;
-		    	left:0;
-		    	bottom:0;
-		    	width:100%;
-		    }
-		    a {
-				color: blue;
-		    }
-		</style>
+		<link rel="stylesheet" type="text/css" href="${virtualPath}public/user/sendEmail_success.css?v1" media="screen">
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
+
 		<header id="header"></header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>@zhaobe：您已经注册成功啦！</b></div>
+						<div class="panel-body">
+							<div class="col-md-2 col-sm-4" style='text-align:center;'>
+								<img title='恭喜恭喜恭喜你呀' src='/public/asset/images/128x128/happy.png'>
+							</div>
+							<div class="col-md-8 col-sm-9">
+								<div class="form-horizontal" id="sendEmail_tip">
+									<div class="form-group">
+										<label class="col-sm-8">
+											请 <span style='color:#c00'>打开邮箱 ($user.Email) 收取账号激活邮件</span>，并点击邮件中的激活链接，方可使用该账号。</label>
+									</div>									
+									<div class="form-group">
+										<label class="col-sm-8"><b>如果您一直收不到激活邮件，请检查：</b></label>
+									</div>									
+									<div class="form-group">
+										<label class="col-sm-8">
+											<ol style="padding-left:20px;margin-top:-15px;">
+												<li>请确认是否填写正确的邮箱地址：<strong style='text-decoration: underline'>$user.Email</strong>。</li>
+												<li>请注意查看您邮箱中的垃圾邮件，可能 <b>zhaobe</b> 的邮件被误杀了。</li>
+												<li>如果还没有收到邮件，请点击重新<a href='/user/$user.Email/register/sendRegEmail'>发送激活邮件</a>。</li>
+											</ol>
+										</label>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-8"><a href="/user/login">进入登陆页面&gt;&gt;</a></label>
+									</div>
+								</div>
+			                </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-		<section class="container">
-		    <div class="row">		    
-                <div class="col-md-12 col-sm-12">
-					<h3>注册成功</h3>
-					<h5>恭喜您：$user.Email，激活邮件已发送到您的邮箱，请进行激活操作，如果没有收到邮件，请点击<a href='/user/$user.Email/register/sendRegEmail' style='text-decoration: underline'>重新发送</a>。</h5>
-                </div>
-		    </div>
-		</section>
-
-        #parse('pagelet/IndexFooter.html')
-        #parse('pagelet/IndexJs.html')
-		<!-- Own -->
+		#parse('pagelet/IndexFooter.html')
+		#parse('pagelet/IndexJs.html')
 	</body>
 </html>
