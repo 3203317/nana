@@ -121,6 +121,18 @@ exports.sendRegEmail = function(req, res, next) {
 	User.sendRegEmail(email, function (err, status, msg, doc){
 		if(err) return next(err);
 		if(1 === status) return res.redirect('/user/'+ email +'/register/sendEmail/success');
+		res.render('User/SendRegEmail_Failure', {
+			title: title,
+			atitle: '发送邮件',
+			description: '发送邮件',
+			keywords: ',发送邮件,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			msg: msg,
+			user: {
+				Email: email
+			}
+		});
 	});
 };
 
@@ -189,4 +201,13 @@ exports.validate = function(req, res, next) {
 		});
 	}
 	res.redirect('/user/login');
+};
+
+exports.register_activate = function(req, res, next) {
+};
+
+exports.register_activate_successUI = function(req, res, next) {
+};
+
+exports.register_activate_failureUI = function(req, res, next) {
 };

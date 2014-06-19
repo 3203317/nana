@@ -2,7 +2,45 @@
 <html lang="zh-CN">
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<link rel="stylesheet" type="text/css" href="${virtualPath}public/user/sendEmail_success.css?v1" media="screen">
+		<style type="text/css">
+		#footer{
+			position:fixed;
+			left:0;
+			bottom:0;
+			width:100%
+		}
+		#inp_tip label{
+			font-weight:normal;
+			margin-bottom:0
+		}
+		#inp_tip a{
+			color:#1a66b3;
+			text-decoration:underline
+		}
+		#inp_tip ol{
+			padding-left:15px;
+			margin-top:-15px;
+			font-size: 12px;
+		}
+		#inp_tip strong{
+			text-decoration: underline
+		}
+		#inp_tip span{
+			color: #C00;
+		}
+		#div_left{
+			 text-align:center;
+		}
+		@media screen and (max-width:640px){
+			#footer{
+				position:inherit
+			}
+			#div_left img{
+				width: 84px;
+				height: 84px;
+			}
+		}
+		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -14,22 +52,22 @@
 					<div class="panel panel-default">
 						<div class="panel-heading"><b>@zhaobe：您已经注册成功啦！</b></div>
 						<div class="panel-body">
-							<div class="col-md-2 col-sm-4" style='text-align:center;'>
+							<div class="col-md-2 col-sm-4" id='div_left'>
 								<img title='恭喜恭喜恭喜你呀' src='/public/asset/images/128x128/happy.png'>
 							</div>
 							<div class="col-md-8 col-sm-9">
-								<div class="form-horizontal" id="sendEmail_tip">
+								<div class="form-horizontal" id="inp_tip">
 									<div class="form-group">
 										<label class="col-sm-8">
-											请 <span style='color:#c00'>打开邮箱 ($user.Email) 收取账号激活邮件</span>，并点击邮件中的激活链接，方可使用该账号。</label>
+											请 <span>打开邮箱 ($user.Email) 收取账号激活邮件</span>，并点击邮件中的激活链接，方可使用该账号。</label>
 									</div>									
 									<div class="form-group">
 										<label class="col-sm-8"><b>如果您一直收不到激活邮件，请检查：</b></label>
 									</div>									
 									<div class="form-group">
 										<label class="col-sm-8">
-											<ol style="padding-left:20px;margin-top:-15px;">
-												<li>请确认是否填写正确的邮箱地址：<strong style='text-decoration: underline'>$user.Email</strong>。</li>
+											<ol>
+												<li>请确认是否填写正确的邮箱地址：<strong>$user.Email</strong>。</li>
 												<li>请注意查看您邮箱中的垃圾邮件，可能 <b>zhaobe</b> 的邮件被误杀了。</li>
 												<li>如果还没有收到邮件，请点击 <a href='/user/$user.Email/register/activate'>这里</a> 重新激活帐号。</li>
 											</ol>
