@@ -3,52 +3,50 @@
 	<head>
 		#parse('pagelet/IndexHeader.html')
 		<style type="text/css">
-			#footer{
-				position:fixed;
-				left:0;
-				bottom:0;
-				width:100%
-			}
+		#footer{
+			position:fixed;
+			left:0;
+			bottom:0;
+			width:100%
+		}
+		form label{
+			font-weight:normal;
+			margin-bottom:0
+		}
+		form a{
+			color:#1a66b3;
+			text-decoration:underline
+		}
+		form .wrong{
+			color:#f00;
+			margin-top:-15px;
+			font-size:12px
+		}
+		form #img_VerifyCode{
+			border:1px solid #ccc;
+			width:100%;
+			height:35px;
+			cursor:pointer
+		}
+		#inp_tip a{
+			color:#1a66b3;
+			text-decoration:underline
+		}
+		#inp_tip ol{
+			padding-left:20px;
+			font-size:12px
+		}
+		@media screen and (max-width:640px){
 			form label{
-				font-weight:normal;
-				margin-bottom:0
+				display:none
 			}
-			form a{
-				color:#1a66b3
+			form #lab_changeImg{
+				display:block
 			}
-			form a:hover{
-				text-decoration:underline
+			#footer{
+				position:inherit
 			}
-			form .wrong{
-				color:#f00;
-				margin-top:-15px;
-				font-size:12px
-			}
-			form #img_VerifyCode{
-				border:1px solid #ccc;
-				width:100%;
-				height:35px;
-				cursor:pointer
-			}
-			#inp_tip a{
-				color:#1a66b3;
-				text-decoration:underline
-			}
-			#inp_tip ol{
-				padding-left:22px;
-				font-size:12px
-			}
-			@media screen and (max-width:640px){
-				form label{
-					display:none
-				}
-				form #lab_changeImg{
-					display:block
-				}
-				#footer{
-					position:inherit
-				}
-			}
+		}
 		</style>
 	</head>
 	<body>
@@ -83,7 +81,7 @@
 										<div class="col-sm-4">
 											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
 										</div>
-										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a class="a" href="javascript:showVerifyCode();">换张图</a></label>
+										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a href="javascript:showVerifyCode();">换张图</a></label>
 									</div>
 									<div class="form-group wrong">
 										<label id="regFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
@@ -100,7 +98,7 @@
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<a class="a" href='#'>转到登陆页面？</a>
+											<a href='#'>转到登陆页面？</a>
 										</div>
 									</div>
 								</form>
