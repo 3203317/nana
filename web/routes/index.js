@@ -53,6 +53,8 @@ module.exports = function(app) {
 	app.get('/user/:email/register/sendEmail', user.sendRegEmail);
 	app.get('/user/:email/register/sendEmail/success', user.sendRegEmail_successUI);
 
+	app.get('/user/:email/register/resendEmail', user.resendRegEmailUI);
+
 	app.get('/user/:email/ackRegEmail/:code', user.ackRegEmailUI);
 
 	app.get('/manage/user/index', manage.validate, user.indexUI);

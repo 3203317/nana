@@ -17,6 +17,9 @@
 			color:#1a66b3;
 			text-decoration:underline
 		}
+		form a:hover{
+			text-decoration:underline
+		}
 		form .wrong{
 			color:#f00;
 			margin-top:-15px;
@@ -60,31 +63,28 @@
 						<div class="panel-heading"><b>激活帐号</b></div>
 						<div class="panel-body">
 							<div class="col-md-4 col-sm-5">
-								<form class="form-horizontal" role="form" id="regFrm" onsubmit="return false;" data-url="activate">
+								<form class="form-horizontal" role="form" id="actFrm" onsubmit="return false;" data-url="activate">
 									<div class="form-group">
 										<label class="col-sm-12" style='font-size:12px;color:#c00'>请输入您注册的邮箱地址，系统将发送激活账号的链接到邮箱中</label>
 									</div>
 									<div class="form-group">
-										<label for="regFrm_Email" class="col-sm-3 control-label">电子邮箱</label>
+										<label for="actFrm_Email" class="col-sm-3 control-label">电子邮箱</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" id="regFrm_Email" name="Email" placeholder="电子邮箱">
+											<input type="text" class="form-control" id="actFrm_Email" name="Email" placeholder="电子邮箱" value='${user.Email}'>
 										</div>
 									</div>
 									<div class="form-group wrong">
-										<label id="regFrm_Email_Vali" class="col-sm-offset-3 col-sm-9"></label>
-									</div>
-									<div class="form-group wrong">
-										<label id="regFrm_UserPass2_Vali" class="col-sm-offset-3 col-sm-9"></label>
+										<label id="actFrm_Email_Vali" class="col-sm-offset-3 col-sm-9"></label>
 									</div>
 									<div class="form-group">
-										<label for="regFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
+										<label for="actFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
 										<div class="col-sm-4">
-											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
+											<input type="text" class="form-control" id="actFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
 										</div>
 										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a href="javascript:showVerifyCode();">换张图</a></label>
 									</div>
 									<div class="form-group wrong">
-										<label id="regFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
+										<label id="actFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
@@ -93,18 +93,18 @@
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<button id="btn_reg" type="button" class="btn btn-primary">发送邮件</button>
+											<button id="btn_act" type="button" class="btn btn-primary">发送邮件</button>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<a href='#'>转到登陆页面？</a>
+											<a href='/user/login'>转到登陆页面？</a>
 										</div>
 									</div>
 								</form>
 			                </div>
 							<div id="inp_tip" class="col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4">
-								<div>已有帐号？<a href="login">直接登陆</a></div>
+								<div>已有帐号？<a href="/user/login">直接登陆</a></div>
 								<div>&nbsp;</div>
 								<div><b>为什么收不到账号激活邮件？</b></div>
 								<ol>
@@ -132,11 +132,35 @@
 				showVerifyCode();
 			});
 			function showVerifyCode(){
-				$('#img_VerifyCode').attr('src', '/public/user/verifyCode.jpg?t='+ new Date());
+				$('#img_VerifyCode').attr('src', '/public/user/verifyCode.jpg?ts='+ (new Date()).valueOf());
 			}
 			$(function(){
 				showVerifyCode();
 			});
+			function showVali(valiResu){
+				$('form label[id$="_Vali"]').each(function (i, label){
+					$(label).parent().css('display', 'none');
+				});
+				if('string' === typeof valiResu) return alert(valiResu);
+				if('[object Array]' === Object.prototype.toString.call(valiResu)){
+					$('#actFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
+					$('#actFrm_'+ valiResu[1]).focus();
+					return;
+				}
+				alert(valiResu.message);
+			}
+			function subFrm(){
+				$('#actFrm').olxForm('submit', [function(){
+					if(!$('#actFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
+					if(!$('#actFrm_VerifyCode').val().trim().length) return ['验证码不能为空。', 'VerifyCode'];
+				}, function (valiResu){
+					showVali(valiResu);
+				}, function (data){
+					if(!data.success) return showVali(data.msg);
+					location.href = $('#actFrm_Email').val().trim() +'/register/resendEmail/success';
+				}]);
+			}
+			$('#btn_act').click(subFrm);
 		</script>
 	</body>
 </html>

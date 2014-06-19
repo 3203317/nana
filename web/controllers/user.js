@@ -73,18 +73,6 @@ exports.register_success = function(req, res, next) {
  * @return 
  */
 exports.register_activateUI = function(req, res, next) {
-	var email = req.params.email.trim();
-	res.render('User/Register_Activate', {
-		title: title,
-		atitle: '新用户注册',
-		description: '个人博客',
-		keywords: ',新用户注册,Bootstrap3',
-		virtualPath: virtualPath +'/',
-		cdn: conf.cdn,
-		user: {
-			Email: email
-		}
-	});
 };
 
 /**
@@ -210,4 +198,19 @@ exports.register_activate_successUI = function(req, res, next) {
 };
 
 exports.register_activate_failureUI = function(req, res, next) {
+};
+
+exports.resendRegEmailUI = function(req, res, next) {
+	var email = req.params.email.trim();
+	res.render('User/Register_Activate', {
+		title: title,
+		atitle: '重新激活帐号',
+		description: '重新激活帐号',
+		keywords: ',重新激活帐号,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn,
+		user: {
+			Email: email
+		}
+	});
 };
