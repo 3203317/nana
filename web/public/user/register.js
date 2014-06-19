@@ -3,7 +3,7 @@ $('#img_VerifyCode').click(function(){
 });
 
 function showVerifyCode(){
-	$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?t='+ new Date());
+	$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?ts='+ new Date());
 }
 
 $(function(){

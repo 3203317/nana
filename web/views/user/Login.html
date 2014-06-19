@@ -2,7 +2,55 @@
 <html lang="zh-CN">
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<link rel="stylesheet" type="text/css" href="${virtualPath}public/user/login.css?v1" media="screen">
+		<style type="text/css">
+		#footer{
+			position:fixed;
+			left:0;
+			bottom:0;
+			width:100%
+		}
+		form label{
+			font-weight:normal;
+			margin-bottom:0
+		}
+		form a{
+			color:#1a66b3;
+			text-decoration:underline
+		}
+		form a:hover{
+			text-decoration:underline
+		}
+		form .wrong{
+			color:#f00;
+			margin-top:-15px;
+			font-size:12px
+		}
+		form #img_VerifyCode{
+			border:1px solid #ccc;
+			width:100%;
+			height:35px;
+			cursor:pointer
+		}
+		#inp_tip a{
+			color:#1a66b3;
+			text-decoration:underline
+		}
+		#inp_tip ol{
+			padding-left:20px;
+			font-size:12px
+		}
+		@media screen and (max-width:640px){
+			form label{
+				display:none
+			}
+			form #lab_changeImg{
+				display:block
+			}
+			#footer{
+				position:inherit
+			}
+		}
+		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -15,38 +63,34 @@
 						<div class="panel-heading"><b>用户登陆</b></div>
 						<div class="panel-body">
 							<div class="col-md-4 col-sm-5">
-								#*<div id="alert_info" class="alert alert-warning">
-									<button type="button" class="close" data-dismiss="alert">&times;</button>
-									<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
-								</div>*#
-								<form class="form-horizontal" role="form" id="regFrm" onsubmit="return false;" data-url="register">
+								<form class="form-horizontal" role="form" id="logFrm" onsubmit="return false;" data-url="login">
 									<div class="form-group">
-										<label for="regFrm_UserName" class="col-sm-3 control-label">电子邮箱</label>
+										<label for="logFrm_Email" class="col-sm-3 control-label">电子邮箱</label>
 										<div class="col-sm-9">
-											<input type="text" class="form-control" id="regFrm_UserName" name="UserName" placeholder="电子邮箱">
+											<input type="text" class="form-control" id="logFrm_Email" name="Email" placeholder="电子邮箱">
 										</div>
 									</div>
 									<div class="form-group wrong">
-										<label id="regFrm_UserName_Vali" class="col-sm-offset-3 col-sm-9"></label>
+										<label id="logFrm_Email_Vali" class="col-sm-offset-3 col-sm-9"></label>
 									</div>
 									<div class="form-group">
-										<label for="regFrm_UserPass" class="col-sm-3 control-label">登陆密码</label>
+										<label for="logFrm_UserPass" class="col-sm-3 control-label">登陆密码</label>
 										<div class="col-sm-9">
-											<input type="password" class="form-control" id="regFrm_UserPass" name="UserPass" placeholder="登陆密码">
+											<input type="password" class="form-control" id="logFrm_UserPass" name="UserPass" placeholder="登陆密码">
 										</div>
 									</div>
 									<div class="form-group wrong">
-										<label id="regFrm_UserPass_Vali" class="col-sm-offset-3 col-sm-9"></label>
+										<label id="logFrm_UserPass_Vali" class="col-sm-offset-3 col-sm-9"></label>
 									</div>
 									<div class="form-group">
-										<label for="regFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
+										<label for="logFrm_VerifyCode" class="col-sm-3 control-label">验证码</label>
 										<div class="col-sm-4">
-											<input type="text" class="form-control" id="regFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
+											<input type="text" class="form-control" id="logFrm_VerifyCode" name="VerifyCode" placeholder="验证码">
 										</div>
 										<label id="lab_changeImg" class="col-sm-5 control-label">看不清？<a class="a" href="javascript:showVerifyCode();">换张图</a></label>
 									</div>
 									<div class="form-group wrong">
-										<label id="regFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
+										<label id="logFrm_VerifyCode_Vali" class="col-sm-offset-3 col-sm-9"></label>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
@@ -64,12 +108,12 @@
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-3 col-sm-9">
-											<button id="btn_reg" type="button" class="btn btn-primary">立即登陆</button>
+											<button id="btn_log" type="button" class="btn btn-primary">立即登陆</button>
 										</div>
 									</div>
 								</form>
 			                </div>
-							<div id="login_tip" class="col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4">
+							<div id="inp_tip" class="col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4">
 								<div>没有帐号？<a href="register?redirectURL=${refererUrl}">注册新会员</a></div>
 								<div>&nbsp;</div>
 								<div><b>为什么总提示验证码错误？</b></div>
@@ -89,44 +133,45 @@
 
 		<!-- Own -->
 		<script type="text/javascript">
-			function validateForm(){
-				var formObj = $("#loginFrm").serializeObjectForm();
-				return formObj;
-			}
+			$('#img_VerifyCode').click(function(){
+				showVerifyCode();
+			});
 
 			function showVerifyCode(){
-				$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?t='+ new Date());
+				$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?ts='+ (new Date()).valueOf());
 			}
 
 			$(function(){
 				showVerifyCode();
 			});
 
-			$(function(){
-				$('#btn_login').click(function(){
-					var formObj = validateForm();
-					if(!formObj){
-						alert('表单验证失败')
-						return;
-					}
-
-        			var data = { data: JSON.stringify(formObj) };
-
-					$.ajax({
-						url: '/user/login.do',
-						type: "POST",
-						dataType: "json",
-						data: data
-					}).done(function(responseText) {
-						if(responseText.success){
-							location.href = '../my';
-						}else{
-							alert(responseText.msg);
-						}
-					}).complete(function(){
-					});
+			function showVali(valiResu){
+				$('form label[id$="_Vali"]').each(function (i, label){
+					$(label).parent().css('display', 'none');
 				});
-			});
+				if('string' === typeof valiResu) return alert(valiResu);
+				if('[object Array]' === Object.prototype.toString.call(valiResu)){
+					$('#logFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
+					$('#logFrm_'+ valiResu[1]).focus();
+					return;
+				}
+				alert(valiResu.message);
+			}
+
+			function subFrm(){
+				$('#logFrm').olxForm('submit', [function(){
+					if(!$('#logFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
+					if(!$('#logFrm_UserPass').val().trim().length) return ['登陆密码不能为空。', 'UserPass'];
+					if(!$('#logFrm_VerifyCode').val().trim().length) return ['验证码不能为空。', 'VerifyCode'];
+				}, function (valiResu){
+					showVali(valiResu);
+				}, function (data){
+					if(!data.success) return showVali(data.msg);
+					location.href = $('#logFrm_Email').val().trim() +'/login/success';
+				}]);
+			}
+
+			$('#btn_log').click(subFrm);
 		</script>
 
 	</body>
