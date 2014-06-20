@@ -77,7 +77,7 @@ exports.register_activateUI = function(req, res, next) {
 
 /**
  *
- * @method 发送注册用户确认邮件成功
+ * @method 帐号激活邮件发送成功
  * @params 
  * @return 
  */
@@ -85,9 +85,9 @@ exports.sendRegEmail_successUI = function(req, res, next) {
 	var email = req.params.email.trim();
 	res.render('User/SendRegEmail_Success', {
 		title: title,
-		atitle: '发送邮件',
-		description: '发送邮件',
-		keywords: ',发送邮件,Bootstrap3',
+		atitle: '帐号激活邮件发送成功',
+		description: '帐号激活邮件发送成功',
+		keywords: ',帐号激活邮件发送成功,Bootstrap3',
 		virtualPath: virtualPath +'/',
 		cdn: conf.cdn,
 		user: {
@@ -111,9 +111,9 @@ exports.sendRegEmail = function(req, res, next) {
 		if(1 === status) return res.redirect('/user/'+ email +'/register/sendEmail/success');
 		res.render('User/SendRegEmail_Failure', {
 			title: title,
-			atitle: '发送邮件',
-			description: '发送邮件',
-			keywords: ',发送邮件,Bootstrap3',
+			atitle: '帐号激活邮件发送失败',
+			description: '帐号激活邮件发送失败',
+			keywords: ',帐号激活邮件发送失败,Bootstrap3',
 			virtualPath: virtualPath +'/',
 			cdn: conf.cdn,
 			msg: msg,

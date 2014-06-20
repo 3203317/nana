@@ -45,10 +45,10 @@ module.exports = function(app) {
 	app.post('/user/register', valiPostData, user.register);
 	app.get('/user/:email/register/success', user.register_success);
 	
-	app.get('/user/:email/register/activate', user.register_activateUI);
-	app.post('/user/:email/register/activate', user.register_activate);
-	app.get('/user/:email/register/activate/success', user.register_activate_successUI);
-	app.get('/user/:email/register/activate/failure', user.register_activate_failureUI);
+	// app.get('/user/:email/register/activate', user.register_activateUI);
+	// app.post('/user/:email/register/activate', user.register_activate);
+	// app.get('/user/:email/register/activate/success', user.register_activate_successUI);
+	// app.get('/user/:email/register/activate/failure', user.register_activate_failureUI);
 
 	app.get('/user/:email/register/sendEmail', user.sendRegEmail);
 	app.get('/user/:email/register/sendEmail/success', user.sendRegEmail_successUI);
