@@ -157,7 +157,7 @@
 					showVali(valiResu);
 				}, function (data){
 					if(!data.success) return showVali(data.msg);
-					location.href = $('#resendFrm_Email').val().trim() +'/register/resendEmail/success';
+					location.href = '/user/'+ $('#resendFrm_Email').val().trim() +'/register/resendEmail/success';
 				}]);
 			}
 			$('#btn_resend').click(subFrm);
