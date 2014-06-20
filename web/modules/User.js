@@ -421,5 +421,5 @@ function genSecKey(){
 function valiRegFrm(data){
 	if(!data) return '参数异常';
 	if(!util.isEmail(data.Email)) return ['请输入正确的格式，例如：example@example.com。', 'Email'];
-	if(!data.UserPass || !/^[\w]{4,16}$/.test(data.UserPass)) return ['仅支持4-16位数字、字母（大小写）或下划线。', 'UserPass'];
+	if(!data.UserPass || !/^[\w]{6,16}$/.test(data.UserPass)) return ['仅支持6-16位数字、字母（大小写）或下划线。', 'UserPass'];
 }

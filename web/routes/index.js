@@ -54,6 +54,8 @@ module.exports = function(app) {
 	app.get('/user/:email/register/sendEmail/success', user.sendRegEmail_successUI);
 
 	app.get('/user/:email/register/resendEmail', user.resendRegEmailUI);
+	app.post('/user/:email/register/resendEmail', user.resendRegEmail);
+	app.get('/user/:email/register/resendEmail/success', user.resendRegEmail_successUI);
 
 	app.get('/user/:email/ackRegEmail/:code', user.ackRegEmailUI);
 

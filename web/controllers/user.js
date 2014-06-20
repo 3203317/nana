@@ -202,7 +202,7 @@ exports.register_activate_failureUI = function(req, res, next) {
 
 exports.resendRegEmailUI = function(req, res, next) {
 	var email = req.params.email.trim();
-	res.render('User/Register_Activate', {
+	res.render('User/ResendRegEmail', {
 		title: title,
 		atitle: '重新激活帐号',
 		description: '重新激活帐号',
@@ -213,4 +213,30 @@ exports.resendRegEmailUI = function(req, res, next) {
 			Email: email
 		}
 	});
+};
+
+exports.resendRegEmail = function(req, res, next) {
+	var result = { success: false },
+		email = req.params.email.trim();
+
+	User.sendRegEmail(email, function (err, status, msg, doc){
+		if(err) return next(err);
+		if(1 === status) return res.redirect('/user/'+ email +'/register/resendEmail/success');
+		res.render('User/SendRegEmail_Failure', {
+			title: title,
+			atitle: '发送邮件',
+			description: '发送邮件',
+			keywords: ',发送邮件,Bootstrap3',
+			virtualPath: virtualPath +'/',
+			cdn: conf.cdn,
+			msg: msg,
+			user: {
+				Email: email
+			}
+		});
+	});
+};
+
+exports.resendRegEmail_successUI = function(req, res, next) {
+
 };
