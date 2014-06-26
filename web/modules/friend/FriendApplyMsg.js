@@ -1,9 +1,9 @@
-var db = require('./mongodb'),
+var db = require('./../mongodb'),
 	mongoose = db.mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var util = require('../libs/utils');
+var util = require('../../libs/utils');
 
 var FriendApplyMsgSchema = new Schema({
 	Id: {
@@ -46,8 +46,17 @@ FriendApplyMsgSchema.virtual('sCreateTime').get(function(){
  * @params newInfo
  * @return 
  */
-UserSchema.statics.saveNew = function(newInfo, cb) {
+FriendApplyMsgSchema.statics.saveNew = function(newInfo, cb) {
 
+	newInfo.Id = util.uuid(false);
+	newInfo.IsPass = 0;
+	newInfo.CreateTime = new Date();
+	newInfo.IsDel = 0;
+
+	this.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
 };
 
 var FriendApplyMsgModel = mongoose.model('friendapplymsg', FriendApplyMsgSchema);

@@ -15,7 +15,8 @@ var util = require('../libs/utils'),
 var Module = require('./Module'),
 	Device = require('./Device'),
 	UserTeam = require('./UserTeam'),
-	UserFriend = require('./UserFriend');
+	UserFriend = require('./UserFriend'),
+	FriendApplyMsg = require('./friend/FriendApplyMsg');
 
 var UserSchema = new Schema({
 	Id: {
@@ -427,6 +428,24 @@ UserSchema.statics.findFriendTeams = function(user_id, cb) {
 	UserTeam.findTeamsByUserId(user_id, ep.done('teams'));
 
 	UserFriend.findFriendsByUserId(user_id, ep.done('friends'));
+};
+
+/**
+ *
+ * @method 申请好友
+ * @params 
+ * @return
+ */
+UserSchema.statics.applyFriend = function(a_user_id, p_user_id, content, cb) {
+
+	FriendApplyMsg.saveNew({
+		A_User_Id: a_user_id,
+		P_User_Id: p_user_id,
+		Content: content
+	}, function (err, doc){
+		if(err) return cb(err);
+		cb(null, +(!!doc), '发送好友申请消息'+ (!!doc ? '成功' : '失败') +'。', doc);
+	});
 };
 
 
