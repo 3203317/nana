@@ -327,18 +327,23 @@ UserSchema.statics.loginClient = function(logInfo, cb) {
 
 /**
  *
- * @method 退出客户端
- * @params 
+ * @method 客户端退出
+ * @params logInfo
  * @return 
  */
 UserSchema.statics.logoutClient = function(logInfo, cb) {
 
-	this.findUserByUserName(logInfo.UserName, function (err, doc){
+	this.findUserByEmail(logInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
-		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+		/* 如果用户对象为空，则说明没有找到该用户，return */
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		/* 如果用户的IsDel属性为1，则说明用户标记为已删除，return */
+		if(doc.IsDel) return cb(null, 4, ['该用户已禁止登陆。', 'Email'], doc);
+		/* 如果用户对象的Status为0，则说明用户状态未激活，return */
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证。', 'Status'], doc);
+		/* 如果用户输入的密码与库中的密码不符，return */
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
+			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
 
 		var userInfo = doc;
 		
@@ -347,7 +352,7 @@ UserSchema.statics.logoutClient = function(logInfo, cb) {
 
 		Device.logout(deviceInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, 1, '退出成功', [userInfo, doc]);
+			cb(null, 1, '退出成功。', [userInfo, doc]);
 		});
 	});
 };
@@ -360,19 +365,26 @@ UserSchema.statics.logoutClient = function(logInfo, cb) {
  */
 UserSchema.statics.findUserByUserName = function(userName, cb) {
 	this.findOne({
-		UserName: userName
+		UserName: new RegExp(userName, 'i')
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});
 };
 
+/**
+ *
+ * @method 通过用户名或电子邮箱查找用户
+ * @params userName 用户名
+ * @params email 电子邮箱
+ * @return 
+ */
 UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 	this.findOne({
 		'$or': [{
-			UserName: userName
+			UserName: new RegExp(userName, 'i')
 		}, {
-			Email: email
+			Email: new RegExp(email, 'i')
 		}]
 	}, null, null, function (err, doc){
 		if(err) return cb(err);

@@ -66,15 +66,15 @@ DeviceSchema.statics.isExist = function(device_id, cb) {
 /**
  *
  * @method 设备登陆
- * @params 
+ * @params logInfo
  * @return 
  */
-DeviceSchema.statics.login = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	newInfo.CreateTime = new Date();
-	newInfo.IsLogin = 1;
+DeviceSchema.statics.login = function(logInfo, cb) {
+	logInfo.Id = util.uuid(false);
+	logInfo.CreateTime = new Date();
+	logInfo.IsLogin = 1;
 
-	this.create(newInfo, function (err, doc){
+	this.create(logInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});
@@ -83,15 +83,15 @@ DeviceSchema.statics.login = function(newInfo, cb) {
 /**
  *
  * @method 设备登出
- * @params 
+ * @params logInfo
  * @return 
  */
-DeviceSchema.statics.logout = function(newInfo, cb) {
-	newInfo.Id = util.uuid(false);
-	newInfo.CreateTime = new Date();
-	newInfo.IsLogin = 0;
+DeviceSchema.statics.logout = function(logInfo, cb) {
+	logInfo.Id = util.uuid(false);
+	logInfo.CreateTime = new Date();
+	logInfo.IsLogin = 0;
 
-	this.create(newInfo, function (err, doc){
+	this.create(logInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
 	});
