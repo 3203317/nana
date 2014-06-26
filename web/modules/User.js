@@ -438,13 +438,17 @@ UserSchema.statics.findFriendTeams = function(user_id, cb) {
  */
 UserSchema.statics.applyFriend = function(a_user_id, p_user_id, content, cb) {
 
-	FriendApplyMsg.saveNew({
-		A_User_Id: a_user_id,
-		P_User_Id: p_user_id,
-		Content: content
-	}, function (err, doc){
-		if(err) return cb(err);
-		cb(null, +(!!doc), '发送好友申请消息'+ (!!doc ? '成功' : '失败') +'。', doc);
+	UserFriend.isFriend(a_user_id, p_user_id, function (err, bool){
+		if(bool) return cb(null, 3, '你们已经是好友啦。', bool);
+
+		FriendApplyMsg.saveNew({
+			A_User_Id: a_user_id,
+			P_User_Id: p_user_id,
+			Content: content
+		}, function (err, doc){
+			if(err) return cb(err);
+			cb(null, +(!!doc), '发送好友申请消息'+ (!!doc ? '成功' : '失败') +'。', doc);
+		});
 	});
 };
 
