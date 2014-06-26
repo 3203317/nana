@@ -113,6 +113,12 @@ UserSchema.pre('save', function (next, done){
 UserSchema.post('save', function(){
 });
 
+/**
+ *
+ * @method 查询所有用户
+ * @params 
+ * @return 
+ */
 UserSchema.statics.findUsers = function(pagination, cb) {
 	pagination[0] = pagination[0] || 1;
 
@@ -131,28 +137,33 @@ UserSchema.statics.findUsers = function(pagination, cb) {
 /**
  *
  * @method 新用户注册
- * @params 
+ * @params newInfo 用户对象
  * @return 
  */
 UserSchema.statics.register = function(newInfo, cb) {
+	/* 表单参数验证 */
 	var valiResu = valiRegFrm(newInfo);
 	if(valiResu) return cb(null, 0, valiResu);
 
 	var that = this;
 
+	/* 查询邮箱是否存在 */
 	that.findUserByEmail(newInfo.Email, function (err, doc){
 		if(err) return cb(err);
+		/* 如果用户对象存在，则说明电子邮箱存在，返回提示信息 */
 		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
 
-		/* 数据入库 */
+		/* 用户对象入库之前的其他数据初始化工作 */
 		newInfo.Id = util.uuid(false);
 		newInfo.RegTime = new Date();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
 
 		newInfo.SecPass = newInfo.UserPass;
+		/* 密码加密 */
 		newInfo.UserPass = md5.hex(newInfo.SecPass);
 
+		/* 开始创建新用户 */
 		that.create(newInfo, function (err, doc){
 			if(err) return cb(err);
 			cb(null, 1, '新用户注册成功。', doc);
@@ -162,28 +173,35 @@ UserSchema.statics.register = function(newInfo, cb) {
 
 /**
  *
- * @method 发送注册认证邮件(用户启用时)
- * @params 
+ * @method 发送注册认证邮件
+ * @params email 电子邮箱
  * @return 
  */
 UserSchema.statics.sendRegEmail = function(email, cb) {
-
+	/* 通过电子邮箱查询用户对象 */
 	this.findUserByEmail(email, function (err, doc){
 		if(err) return cb(err);
+		/* 如果用户对象不存在，则说明没有找到用户，return */
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		/* 如果用户对象的Status不为0，则说明用户状态已经激活，return */
 		if(doc.Status) return cb(null, 4, ['用户状态已激活。', 'Status'], doc);
 
+		/* 生成12位随机确认码 */
 		var ackCode = util.random(12);
 
+		/* 更新用户对象的确认码字段 */
 		doc.update({
 			AckCode: ackCode
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, '发送注册认证邮件成功', doc);
+			/* 更新确认码字段成功 */
+			cb(null, 1, '发送注册认证邮件成功。', doc);
 
+			/* 获取发送给用户的邮件模板 */
 			getRegEmailTemp(function (err, template){
 				if(err) return;
 
+				/* 通过模板生成邮件HTML代码 */
 				var html = velocity.render(template, {
 					user: doc,
 					ackCode: ackCode
@@ -204,24 +222,28 @@ UserSchema.statics.sendRegEmail = function(email, cb) {
 
 /**
  *
- * @method 注册认证邮件确认
- * @params 
+ * @method 新注册用户认证
+ * @params email 电子邮件
+ * @params ackCode 确认码
  * @return 
  */
-UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
-	userName = userName.toLowerCase();
+UserSchema.statics.ackRegEmail = function(email, ackCode, cb) {
 
-	this.findUserByUserName(userName, function (err, doc){
+	this.findUserByEmail(email, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.Status) return cb(null, 4, ['用户状态已激活', 'Status'], doc);
-		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误', 'AckCode'], doc);
+		/* 如果用户对象为空，则说明没有找到该用户，return */
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		/* 如果用户对象的Status不为0，则说明用户状态已经激活，return */
+		if(doc.Status) return cb(null, 4, ['用户状态已激活。', 'Status'], doc);
+		/* 如果用户输入的确认码与库中存的确认码不符，return */
+		if(ackCode !== doc.AckCode) return cb(null, 5, ['认证码输入错误。', 'AckCode'], doc);
 
+		/* 更新用户的Status状态 */
 		doc.update({
 			Status: 1
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 1, '激活成功', count);
+			cb(null, 1, '激活成功。', doc);
 		});
 	});
 };
@@ -229,42 +251,54 @@ UserSchema.statics.ackRegEmail = function(userName, ackCode, cb) {
 /**
  *
  * @method 网站登陆
- * @params 
+ * @params logInfo 用户登陆对象
+ *				  .Email
+ *				  .UserPass
  * @return 
  */
 UserSchema.statics.login = function(logInfo, cb) {
-	// todo
 
-	logInfo.UserName = logInfo.UserName.toLowerCase();
-
-	this.findUserByUserName(logInfo.UserName, function (err, doc){
+	this.findUserByEmail(logInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
-		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
-		cb(null, 1, '登陆成功', doc);
+		/* 如果用户对象为空，则说明没有找到该用户，return */
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		/* 如果用户的IsDel属性为1，则说明用户标记为已删除，return */
+		if(doc.IsDel) return cb(null, 4, ['该用户已禁止登陆。', 'Email'], doc);
+		/* 如果用户对象的Status为0，则说明用户状态未激活，return */
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证。', 'Status'], doc);
+		/* 如果用户输入的密码与库中的密码不符，return */
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
+			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
+
+		cb(null, 1, '登陆成功。', doc);
 	});
 };
 
 /**
  * @requir 必已经调用登陆方法
- * @method 登陆客户端
- * @params 
+ * @method 客户端登陆
+ * @params logInfo 用户登陆对象
+ *				  .Email
+ *				  .UserPass
+ *				  .Device
  * @return 
  */
 UserSchema.statics.loginClient = function(logInfo, cb) {
-	// todo
 
-	this.findUserByUserName(logInfo.UserName, function (err, doc){
+	this.findUserByEmail(logInfo.Email, function (err, doc){
 		if(err) return cb(err);
-		if(!doc) return cb(null, 3, ['找不到该用户', 'UserName']);
-		if(doc.IsDel) return cb(null, 4, ['找不到该用户', 'UserName'], doc);
-		if(!doc.Status) return cb(null, 5, ['用户未通过认证', 'Status'], doc);
-		if(md5.hex(logInfo.UserPass) !== doc.UserPass) return cb(null, 6, ['用户名或密码输入错误', 'UserPass'], doc);
+		/* 如果用户对象为空，则说明没有找到该用户，return */
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		/* 如果用户的IsDel属性为1，则说明用户标记为已删除，return */
+		if(doc.IsDel) return cb(null, 4, ['该用户已禁止登陆。', 'Email'], doc);
+		/* 如果用户对象的Status为0，则说明用户状态未激活，return */
+		if(!doc.Status) return cb(null, 5, ['用户未通过认证。', 'Status'], doc);
+		/* 如果用户输入的密码与库中的密码不符，return */
+		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
+			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
 
 		var ep = EventProxy.create('sec', 'device', function (sec, device){
-			cb(null, 1, '登陆成功', [doc, sec, device]);
+			cb(null, 1, '登陆成功。', [doc, sec, device]);
 		});
 
 		ep.fail(function (err){
@@ -277,6 +311,7 @@ UserSchema.statics.loginClient = function(logInfo, cb) {
 			SecKey: genSecKey()
 		};
 
+		/* 更新密钥 */
 		doc.update(sec, function (err, count){
 			if(err) return ep.emit('error', err);
 			ep.emit('sec', sec);
@@ -345,6 +380,12 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 	});
 };
 
+/**
+ *
+ * @method 通过邮箱查询用户
+ * @params email 电子邮箱（忽略大小写）
+ * @return 用户对象
+ */
 UserSchema.statics.findUserByEmail = function(email, cb) {
 	this.findOne({
 		Email: new RegExp(email, 'i')
