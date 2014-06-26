@@ -281,7 +281,7 @@ UserSchema.statics.login = function(logInfo, cb) {
  *				  .Email
  *				  .UserPass
  *				  .Device
- * @return 
+ * @return [用户信息, 密钥信息, 设备信息]
  */
 UserSchema.statics.loginClient = function(logInfo, cb) {
 
@@ -329,7 +329,7 @@ UserSchema.statics.loginClient = function(logInfo, cb) {
  *
  * @method 客户端退出
  * @params logInfo
- * @return 
+ * @return [用户信息, 设备信息]
  */
 UserSchema.statics.logoutClient = function(logInfo, cb) {
 
@@ -411,7 +411,7 @@ UserSchema.statics.findUserByEmail = function(email, cb) {
  *
  * @method 获取好友分组
  * @params 
- * @return 
+ * @return [我的分组列表, 我的好友列表]
  */
 UserSchema.statics.findFriendTeams = function(user_id, cb) {
 	// todo
