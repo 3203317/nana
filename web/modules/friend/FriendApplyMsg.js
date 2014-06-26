@@ -5,7 +5,7 @@ var db = require('./mongodb'),
 
 var util = require('../libs/utils');
 
-var FriendApplyMsg = new Schema({
+var FriendApplyMsgSchema = new Schema({
 	Id: {
 		type: String,
 		unique: true,
@@ -36,3 +36,20 @@ var FriendApplyMsg = new Schema({
 	versionKey: false
 });
 
+FriendApplyMsgSchema.virtual('sCreateTime').get(function(){
+	return util.formatDate(this.CreateTime);
+});
+
+/**
+ *
+ * @method 好友申请
+ * @params newInfo
+ * @return 
+ */
+UserSchema.statics.saveNew = function(newInfo, cb) {
+
+};
+
+var FriendApplyMsgModel = mongoose.model('friendapplymsg', FriendApplyMsgSchema);
+
+exports = module.exports = FriendApplyMsgModel;
