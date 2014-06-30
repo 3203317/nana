@@ -33,7 +33,7 @@ exports.indexUI = function(req, res, next) {
 };
 
 exports.loginUI = function(req, res, next) {
-	res.render('User/Login', {
+	res.render('user/Login', {
 		title: title,
 		atitle: '登陆',
 		description: '个人博客',
