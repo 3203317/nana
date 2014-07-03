@@ -34,7 +34,6 @@ exports.indexUI = function(req, res, next) {
 };
 
 exports.loginUI = function(req, res, next) {
-	console.log(12121)
 	res.render('user/Login', {
 		title: title,
 		atitle: '登陆',

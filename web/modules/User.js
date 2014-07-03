@@ -250,32 +250,6 @@ UserSchema.statics.ackRegEmail = function(email, ackCode, cb) {
 };
 
 /**
- *
- * @method 网站登陆
- * @params logInfo 用户登陆对象
- *				  .Email
- *				  .UserPass
- * @return 
- */
-UserSchema.statics.login = function(logInfo, cb) {
-
-	this.findUserByEmail(logInfo.Email, function (err, doc){
-		if(err) return cb(err);
-		/* 如果用户对象为空，则说明没有找到该用户，return */
-		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
-		/* 如果用户的IsDel属性为1，则说明用户标记为已删除，return */
-		if(doc.IsDel) return cb(null, 4, ['该用户已禁止登陆。', 'Email'], doc);
-		/* 如果用户对象的Status为0，则说明用户状态未激活，return */
-		if(!doc.Status) return cb(null, 5, ['用户未通过认证。', 'Status'], doc);
-		/* 如果用户输入的密码与库中的密码不符，return */
-		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
-			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
-
-		cb(null, 1, '登陆成功。', doc);
-	});
-};
-
-/**
  * @requir 必已经调用登陆方法
  * @method 客户端登陆
  * @params logInfo 用户登陆对象
@@ -374,11 +348,13 @@ UserSchema.statics.findUserByUserName = function(userName, cb) {
 };
 
 /**
+ * 通过用户名或电子邮箱查找用户
  *
- * @method 通过用户名或电子邮箱查找用户
- * @params userName 用户名
- * @params email 电子邮箱
- * @return 
+ * @params {String} userName 用户名（忽略大小写）
+ * @params {String} email 电子邮箱（忽略大小写）
+ * @params {Function} cb 回调函数
+ *
+ * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 	this.findOne({
@@ -398,6 +374,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
  *
  * @params {String} email 电子邮箱（忽略大小写）
  * @params {Function} cb 回调函数
+ *
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByEmail = function(email, cb) {
