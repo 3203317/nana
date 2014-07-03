@@ -1,4 +1,5 @@
 var conf = require('../settings'),
+	md5 = require('../libs/md5'),
 	util = require('../libs/utils');
 
 var User = require('../modules/User.js');
@@ -33,6 +34,7 @@ exports.indexUI = function(req, res, next) {
 };
 
 exports.loginUI = function(req, res, next) {
+	console.log(12121)
 	res.render('user/Login', {
 		title: title,
 		atitle: '登陆',
@@ -147,12 +149,31 @@ exports.login = function(req, res, next) {
 	var result = { success: false },
 		data = req._data;
 
-	User.login(data.UserName, data.UserPass, function (err, status, msg, doc){
+	User.findUserByEmail(data.Email, function (err, doc){
 		if(err) return next(err);
-		if(1 !== status){
-			result.msg = msg;
+		/* 如果用户对象为空，则说明没有找到该用户，return */
+		if(!doc){
+			result.msg = ['找不到该用户。', 'Email'];
 			return res.send(result);
 		}
+		/* 如果用户的IsDel属性为1，则说明用户标记为已删除，return */
+		if(doc.IsDel){
+			result.msg = ['该用户已禁止登陆。', 'Email'];
+			return res.send(result);
+		}
+
+		/* 如果用户对象的Status为0，则说明用户状态未激活，return */
+		if(!doc.Status){
+			result.msg = ['用户未通过认证。', 'Status'];
+			return res.send(result);
+		}
+
+		/* 如果用户输入的密码与库中的密码不符，return */
+		if(md5.hex(data.UserPass) !== doc.UserPass){
+			result.msg = ['电子邮箱或密码输入错误。', 'UserPass'];
+			return res.send(result);
+		}
+
 		req.session.userId = doc.Id;
 		req.session.role = 'user';
 		req.session.user = doc;
