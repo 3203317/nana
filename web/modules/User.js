@@ -394,10 +394,11 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
 };
 
 /**
+ * 通过邮箱查询用户
  *
- * @method 通过邮箱查询用户
- * @params email 电子邮箱（忽略大小写）
- * @return 用户对象
+ * @params {String} email 电子邮箱（忽略大小写）
+ * @params {Function} cb 回调函数
+ * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByEmail = function(email, cb) {
 	this.findOne({
