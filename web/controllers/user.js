@@ -46,7 +46,7 @@ exports.loginUI = function(req, res, next) {
 };
 
 exports.registerUI = function(req, res, next) {
-	res.render('User/Register', {
+	res.render('user/Register', {
 		title: title,
 		atitle: '新用户注册',
 		description: '个人博客',
