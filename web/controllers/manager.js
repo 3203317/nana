@@ -7,7 +7,7 @@ var virtualPath = '',
 	title = 'FOREWORLD 洪荒';
 
 exports.loginUI = function(req, res, next) {
-	res.render('Manage/Manager/Login', {
+	res.render('manage/manager/Login', {
 		title: title,
 		atitle: '后台登陆',
 		description: '后台登陆',

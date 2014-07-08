@@ -102,7 +102,7 @@ UserSchema.post('save', function(){
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByUserName = function(userName, cb) {
+UserSchema.statics.findUserByName = function(userName, cb) {
 	this.findOne({
 		UserName: new RegExp(userName, 'i')
 	}, null, null, function (err, doc){
