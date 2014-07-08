@@ -1,8 +1,8 @@
-if(window.top !== window.self) top.location.href = '/manage/manager/login';
+if(window.top !== window.self) top.location.href = '/mg/mgr/login';
 
 function frmSuccess(obj, fail){
 	$.ajax({
-		url: '/manage/manager/login',
+		url: '/mg/mgr/login',
 		type: "POST",
 		dataType: "json",
 		data: {

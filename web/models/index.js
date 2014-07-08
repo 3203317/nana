@@ -18,5 +18,7 @@ mongoose.connect(url, function (err){
 
 // models
 require('./User');
+require('./Manager');
 
 exports.User = mongoose.model('User');
+exports.Manager = mongoose.model('Manager');

@@ -153,7 +153,6 @@ exports.login = function(req, res, next) {
 			result.msg = msg;
 			return res.send(result);
 		}
-
 		req.session.userId = doc._id;
 		req.session.role = 'user';
 		req.session.user = doc;

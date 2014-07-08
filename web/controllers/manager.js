@@ -27,8 +27,8 @@ exports.login = function(req, res, next) {
 			result.msg = msg;
 			return res.send(result);
 		}
-		req.session.userId = doc.Id;
-		req.session.role = 'manager';
+		req.session.userId = doc._id;
+		req.session.role = 'mgr';
 		req.session.user = doc;
 		result.success = true;
 		res.send(result);
