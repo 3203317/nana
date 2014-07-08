@@ -1,4 +1,4 @@
-var mongoose = require('./mongodb').mongoose,
+var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 

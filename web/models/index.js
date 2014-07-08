@@ -2,15 +2,16 @@ var mongoose = require('mongoose'),
 	settings = require('../settings');
 
 var db = mongoose.connection;
+var url = 'mongodb://'+ settings.host +':'+ settings.port +'/'+ settings.db;
 
 db.on('error', console.error);
 db.once('open', function(){
-	console.log(settings.db)
+	console.log(url)
 });
 
-mongoose.connect(settings.db, function (err){
+mongoose.connect(url, function (err){
 	if(err){
-		console.log('Connect to %s Error: ', settings.db, err.message);
+		console.log('Connect to %s Error: ', url, err.message);
 		process.exit(1);
 	}
 });
