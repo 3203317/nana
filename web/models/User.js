@@ -1,16 +1,10 @@
-var db = require('./mongodb'),
-	mongoose = db.mongoose,
+var mongoose = require('./mongodb').mongoose,
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
 var util = require('../libs/utils');
 
 var UserSchema = new Schema({
-	Id: {
-		type: String,
-		unique: true,
-		index: true
-	},
 	UserName: {			// 用户名
 		// required: true,
 		// match: /[a-z]/,
