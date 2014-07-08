@@ -71,11 +71,11 @@ var data = ['0','1','2','3','4','5','6','7','8','9',
  * @return 
  */
 exports.random = function(num){
-	var result = [];
-	for(var i=0;i<num;i++){
-		result.push(data[Math.floor(Math.random() * 62)]);
+	var str = '';
+	for(var i=0; i<num; i++){
+		str += (data[Math.floor(Math.random() * 62)]);
 	}
-	return result.join('');
+	return str;
 };
 
 /**

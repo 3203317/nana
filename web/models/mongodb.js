@@ -15,4 +15,7 @@ mongoose.connect(settings.db, function (err){
 	}
 });
 
-exports.mongoose = mongoose;
+// models
+require('./User');
+
+exports.User = mongoose.model('User');

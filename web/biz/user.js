@@ -154,4 +154,4 @@ UserSchema.statics.findUserByEmail = function(email, cb) {
 	});
 };
 
-mongoose.model('User', UserSchema);
+exports = module.exports = mongoose.model('user', UserSchema);

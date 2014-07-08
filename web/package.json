@@ -15,6 +15,7 @@
     "connect-mongo": "*",
     "connect-flash": "*",
     "nodemailer": "*",
+    "node-uuid": "*",
     "eventproxy": "*"
   }
 }
