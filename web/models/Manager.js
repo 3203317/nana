@@ -58,7 +58,7 @@ ManagerSchema.post('save', function(){
  * @params {Function} cb 回调函数
  * @return {Object} mgr object
  */
-ManagerSchema.statics.findUserByName = function(userName, cb) {
+ManagerSchema.statics.findMgrByName = function(userName, cb) {
 	this.findOne({
 		UserName: new RegExp(userName, 'i')
 	}, null, null, function (err, doc){

@@ -1,9 +1,9 @@
-var user = require('../controllers/user')/*,
+var user = require('../controllers/user'),
+	mgr = require('../controllers/manager');/*,
 	role = require('../controllers/role'),
 	device = require('../controllers/device'),
 	_module = require('../controllers/module'),
-	manage = require('../controllers/manage'),
-	manager = require('../controllers/manager');*/
+	manage = require('../controllers/manage')*/
 
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒',
@@ -67,12 +67,12 @@ module.exports = function(app) {
 
 	// app.get('/manage/user/index', manage.validate, user.indexUI);
 
-	// app.get('/manage/manager/login', manager.loginUI);
-	// app.post('/manage/manager/login', valiPostData, manager.login);
+	app.get('/mg/mgr/login', mgr.loginUI);
+	app.post('/mg/mgr/login', valiPostData, mgr.login);
 
-	// app.get('/manage/manager/index', manage.validate, manager.indexUI);
-	// app.get('/manage/manager/logout', manage.validate, manager.logout);
-	// app.get('/manage/manager/:id', manage.validate, manager.getId);
+	// app.get('/manage/manager/index', manage.validate, mgr.indexUI);
+	// app.get('/manage/manager/logout', manage.validate, mgr.logout);
+	// app.get('/manage/manager/:id', manage.validate, mgr.getId);
 
 	// app.get('/manage/index', manage.validate, manage.indexUI);
 	// app.get('/manage/welcome', manage.validate, manage.welcomeUI);

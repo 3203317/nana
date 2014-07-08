@@ -1,7 +1,7 @@
 var conf = require('../settings'),
 	util = require('../libs/utils');
 
-var Manager = require('../modules/Manager.js');
+var Manager = require('../biz/manager');
 
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒';
