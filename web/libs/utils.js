@@ -36,6 +36,30 @@ exports.formatDate = function(date){
 	return strs.join('');
 };
 
+
+/**
+ * 日期格式化
+ *
+ * @params {String} format 格式化字符串，默认为yyyy-MM-dd HH:mm:ss，例2014-07-08 11:57:32
+ *					1、yyyy-MM-dd，例2014-07-08
+ * @return {String} 格式化后日期
+ */
+Date.prototype.format = function(format){
+	switch(format){
+		case 'yyyy-MM-dd':
+			return this.getFullYear() +'-'+
+					pdate(this.getMonth()+1) +'-'+
+					pdate(this.getDate());
+		default: 	// 'yyyy-MM-dd HH:mm:ss'
+			return this.getFullYear() +'-'+
+					pdate(this.getMonth()+1) +'-'+
+					pdate(this.getDate()) +' '+
+					pdate(this.getHours()) +':'+
+					pdate(this.getMinutes()) +':'+
+					pdate(this.getSeconds());
+	}
+};
+
 /* 生成随机字符串 */
 var data = ['0','1','2','3','4','5','6','7','8','9',
 			'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
