@@ -19,3 +19,30 @@ exports.login = function(logInfo, cb){
 		cb(null, 1, null, doc);
 	});
 };
+
+/**
+ * Mgr login
+ *
+ * @params {Object} logInfo
+ * @params {Function} cb 回调函数
+ * @return
+ */
+exports.register = function(newInfo, cb){
+	Manager.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 1, null, doc);
+	});
+};
+
+exports.install = function(cb){
+	var mgr = {
+		UserName: 'admin',
+		UserPass: '111111',
+		Sex: 1,
+		Email: 'huangxin@foreworld.net'
+	};
+
+	this.register(mgr, function (err, doc){
+		console.log('create user: ', doc.UserName);
+	});
+};
