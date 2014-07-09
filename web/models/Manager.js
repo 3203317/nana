@@ -25,7 +25,13 @@ var ManagerSchema = new Schema({
 		default: 0
 	}
 }, {
-	versionKey: false
+	versionKey: false,
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
 });
 
 ManagerSchema.virtual('sSex').get(function(){
