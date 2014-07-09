@@ -37,7 +37,7 @@ ManagerSchema.virtual('sSex').get(function(){
 });
 
 ManagerSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp().valueOf())).format();
+	return (new Date(this._id.getTimestamp())).format();
 });
 
 ManagerSchema.pre('save', function (next, done){
