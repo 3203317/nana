@@ -1,10 +1,11 @@
 var user = require('../controllers/user'),
 	mgr = require('../controllers/manager'),
+	mg = require('../controllers/manage'),
 	site = require('../controllers/site');/*,
 	role = require('../controllers/role'),
 	device = require('../controllers/device'),
 	_module = require('../controllers/module'),
-	manage = require('../controllers/manage')*/
+	*/
 
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒',
@@ -77,7 +78,7 @@ module.exports = function(app) {
 	// app.get('/manage/manager/logout', manage.validate, mgr.logout);
 	// app.get('/manage/manager/:id', manage.validate, mgr.getId);
 
-	// app.get('/manage/index', manage.validate, manage.indexUI);
+	app.get('/mg/index', mg.validate, mg.indexUI);
 	// app.get('/manage/welcome', manage.validate, manage.welcomeUI);
 
 	// app.get('/manage/module/index', manage.validate, _module.indexUI);

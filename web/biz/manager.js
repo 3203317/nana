@@ -1,6 +1,7 @@
 var md5 = require('../libs/md5'),
 	models = require('../models');
-var Manager = models.Manager;
+var Manager = models.Manager,
+	Module = models.Module;
 
 /**
  * Mgr login
@@ -18,6 +19,26 @@ exports.login = function(logInfo, cb){
 			return cb(null, 5, ['用户名或密码输入错误。', 'UserPass'], doc);
 
 		cb(null, 1, null, doc);
+	});
+};
+
+/**
+ * 查询管理员的可显示菜单树
+ *
+ * @params {Object} user_id
+ * @params {Function} cb 回调函数
+ * @return
+ */
+exports.getMenuTree = function(user_id, cb){
+	Module.find(null, {
+		CreateTime: 0
+	}, {
+		sort: {
+			Sort: 1
+		}
+	}, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 1, null, docs);
 	});
 };
 

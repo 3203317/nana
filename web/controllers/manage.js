@@ -1,6 +1,6 @@
 var conf = require('../settings');
 
-var Manager = require('../modules/Manager.js');
+var Manager = require('../biz/manager');
 
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒';
@@ -12,9 +12,9 @@ var virtualPath = '',
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	Manager.findMenuTree(req.session.userId, function (err, docs){
+	Manager.getMenuTree(req.session.userId, function (err, docs){
 		if(err) return next(err);
-		res.render('Manage/Main', {
+		res.render('manage/Main', {
 			title: title,
 			atitle: '后台管理',
 			description: '后台管理',
@@ -44,7 +44,7 @@ exports.welcomeUI = function(req, res, next) {
 };
 
 exports.validate = function(req, res, next) {
-	if('manager' === req.session.role) return next();
+	if('mgr' === req.session.role) return next();
 	if(req.xhr){
 		return res.send({
 			success: false,
@@ -52,5 +52,5 @@ exports.validate = function(req, res, next) {
 			msg: '无权访问'
 		});
 	}
-	res.redirect('/manage/manager/login');
+	res.redirect('/mg/mgr/login');
 };

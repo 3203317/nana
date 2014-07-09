@@ -19,6 +19,8 @@ mongoose.connect(url, function (err){
 // models
 require('./User');
 require('./Manager');
+require('./Module');
 
 exports.User = mongoose.model('User');
 exports.Manager = mongoose.model('Manager');
+exports.Module = mongoose.model('Module');
