@@ -1,5 +1,6 @@
 var user = require('../controllers/user'),
-	mgr = require('../controllers/manager');/*,
+	mgr = require('../controllers/manager'),
+	site = require('../controllers/site');/*,
 	role = require('../controllers/role'),
 	device = require('../controllers/device'),
 	_module = require('../controllers/module'),
@@ -41,6 +42,8 @@ module.exports = function(app) {
 			});
 		}
 	}
+
+	app.get('/install', site.installUI);
 	
 	// app.get('/my', user.validate, user.analyticsUI);
 
