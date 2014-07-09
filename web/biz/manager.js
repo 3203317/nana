@@ -45,7 +45,7 @@ exports.getMenuTree = function(user_id, cb){
 /**
  * Mgr login
  *
- * @params {Object} logInfo
+ * @params {Object} newInfo
  * @params {Function} cb 回调函数
  * @return
  */
@@ -80,7 +80,7 @@ exports.install = function(cb){
 	};
 
 	this.register(mgr, function (err, status, msg, doc){
-		console.log('create user:', doc.UserName);
+		console.log('create a user:', doc.UserName);
 		cb(err, status, msg, doc);
 	});
 };
