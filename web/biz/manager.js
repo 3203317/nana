@@ -55,7 +55,6 @@ exports.register = function(newInfo, cb){
 		if(doc) return cb(null, 3, ['用户名已经存在', 'UserName'], doc);
 
 		newInfo.UserPass = md5.hex(newInfo.UserPass);
-		newInfo.CreateTime = new Date();
 		newInfo.IsDel = 0;
 
 		Manager.create(newInfo, function (err, doc){

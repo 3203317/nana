@@ -20,10 +20,6 @@ var ManagerSchema = new Schema({
 		type: String,
 		required: true
 	},
-	CreateTime: {
-		type: Date,
-		default: Date.now
-	},
 	IsDel: {			//删除标记, 删除1, 否0
 		type: Number,
 		default: 0
@@ -40,8 +36,8 @@ ManagerSchema.virtual('sSex').get(function(){
 	}
 });
 
-ManagerSchema.virtual('sCreateTime').get(function(){
-	return this.CreateTime.format();
+ManagerSchema.virtual('CreateTime').get(function(){
+	return (new Date(this._id.getTimestamp().valueOf())).format();
 });
 
 ManagerSchema.pre('save', function (next, done){

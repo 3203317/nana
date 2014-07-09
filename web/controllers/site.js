@@ -16,7 +16,7 @@ exports.installUI = function(req, res, next) {
 			success: 1 === status,
 			msg: msg,
 			data: [doc, {
-				CreateTime: doc.sCreateTime
+				CreateTime: doc.CreateTime
 			}]
 		});
 	});
