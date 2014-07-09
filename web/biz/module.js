@@ -29,6 +29,8 @@ exports.saveNew = function(newInfo, cb){
  * @return
  */
 exports.install = function(cb){
+	this.uninstall();
+
 	var mod = {
 		PId: ObjectId('53bd13cc0f8ba7a0165764dc'),
 		ModuleName: '系统管理',
@@ -39,5 +41,17 @@ exports.install = function(cb){
 	this.saveNew(mod, function (err, status, msg, doc){
 		console.log('create a module:', doc.ModuleName);
 		cb(err, status, msg, doc);
+	});
+};
+
+/**
+ * Mdl remove all data.
+ *
+ * @params {Function} cb 回调函数
+ * @return
+ */
+exports.uninstall = function(cb){
+	Module.remove({}, function (err, count){
+		console.log(arguments)
 	});
 };
