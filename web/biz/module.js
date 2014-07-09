@@ -1,5 +1,7 @@
-var md5 = require('../libs/md5'),
+var ObjectId = require('mongodb').ObjectID,
+	md5 = require('../libs/md5'),
 	models = require('../models');
+
 var Module = models.Module;
 
 /**
@@ -21,13 +23,14 @@ exports.saveNew = function(newInfo, cb){
 };
 
 /**
- * Mgr 数据初始化安装
+ * Mdl 数据初始化安装
  *
  * @params {Function} cb 回调函数
  * @return
  */
 exports.install = function(cb){
 	var mod = {
+		PId: ObjectId('53bd13cc0f8ba7a0165764dc'),
 		ModuleName: '系统管理',
 		ModuleUrl: '',
 		Sort: 1

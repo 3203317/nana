@@ -2,6 +2,7 @@ var conf = require('../settings'),
 	util = require('../libs/utils');
 
 var User = require('../biz/user'),
+	Mdl = require('../biz/module'),
 	Mgr = require('../biz/manager');
 
 var virtualPath = '',
@@ -16,6 +17,10 @@ exports.installUI = function(req, res, next) {
 			msg: msg,
 			data: doc
 		});
+	});
+
+	Mdl.install(function (err, status, msg, doc){
+		if(err) return next(err);
 	});
 };
 
