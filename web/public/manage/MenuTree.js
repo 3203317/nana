@@ -9,9 +9,9 @@ define(["jquery",
 	var _data2TreeObject = function($data,$pIdVal,$treeObj){
 		var __treeItem = [];
 		for(var __i_3=0,__item_3;__item_3=$data.items[__i_3];__i_3++){
-			if(__item_3["PId"] == $pIdVal) {
+			if(__item_3["pId"] == $pIdVal) {
 				var __item_4 = {
-					id: __item_3["Id"],
+					id: __item_3["id"],
 					text: __item_3["ModuleName"]
 				};
 				__treeItem.push(__item_4);
@@ -49,7 +49,7 @@ define(["jquery",
 		var _createTab2 = function($data,$tabbar){
 			/* 树的根对象 */
 			var __treeObj = { id: 0, item: [] };	
-			_data2TreeObject($data,0,__treeObj);
+			_data2TreeObject($data,'53bd13cc0f8ba7a0165764dc',__treeObj);
 
 			var __accord = $tabbar.cells("tab1").attachAccordion();
 

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 var util = require('../libs/utils');
 
 var ModuleSchema = new Schema({
-	PId: {
+	_pId: {
 		type: ObjectId
 	},
 	ModuleName: {
@@ -33,11 +33,20 @@ ModuleSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
+ModuleSchema.virtual('pId').get(function(){
+	return this._pId.toString();
+});
+
 ModuleSchema.pre('save', function (next, done){
 	next();
 });
 
 ModuleSchema.post('save', function(){
 });
+
+ModuleSchema.options.toObject.transform = function(doc, ret, options){
+	delete ret._id;
+	delete ret._pId;
+}
 
 mongoose.model('Module', ModuleSchema);

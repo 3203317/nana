@@ -12,7 +12,7 @@ var virtualPath = '',
  * @return 
  */
 exports.indexUI = function(req, res, next) {
-	Manager.getMenuTree(req.session.userId, function (err, docs){
+	Manager.getMenuTree(req.session.userId, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('manage/Main', {
 			title: title,

@@ -37,7 +37,7 @@ exports.install = function(cb){
 	async.waterfall([
 		function (cb){
 			that.saveNew({
-				PId: rootId,
+				_pId: rootId,
 				ModuleName: '系统管理',
 				ModuleUrl: '',
 				Sort: 1
@@ -47,7 +47,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '模块管理',
 				ModuleUrl: '/mg/module/index',
 				Sort: 1
@@ -57,7 +57,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '角色管理',
 				ModuleUrl: '/mg/role/index',
 				Sort: 2
@@ -67,7 +67,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '用户管理',
 				ModuleUrl: '/mg/mgr/index',
 				Sort: 3
@@ -77,7 +77,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: rootId,
+				_pId: rootId,
 				ModuleName: '业务系统',
 				ModuleUrl: '',
 				Sort: 2
@@ -87,7 +87,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '用户管理',
 				ModuleUrl: '/mg/user/index',
 				Sort: 1
@@ -97,7 +97,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '设备管理',
 				ModuleUrl: '/mg/device/index',
 				Sort: 2
@@ -107,7 +107,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: n._id,
+				_pId: n._id,
 				ModuleName: '设备日志',
 				ModuleUrl: '/mg/devicelog/index',
 				Sort: 3
@@ -117,7 +117,7 @@ exports.install = function(cb){
 			})
 		}, function (n, cb){
 			that.saveNew({
-				PId: rootId,
+				_pId: rootId,
 				ModuleName: '统计分析',
 				ModuleUrl: '',
 				Sort: 3
