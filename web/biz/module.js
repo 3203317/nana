@@ -14,7 +14,6 @@ var Module = models.Module;
 exports.saveNew = function(newInfo, cb){
 
 	newInfo.Sort = newInfo.Sort || 1;
-	newInfo.CreateTime = new Date();
 
 	Module.create(newInfo, function (err, doc){
 		if(err) return cb(err);
@@ -31,8 +30,10 @@ exports.saveNew = function(newInfo, cb){
 exports.install = function(cb){
 	this.uninstall();
 
+	var rootId = ObjectId('53bd13cc0f8ba7a0165764dc');
+
 	var mod = {
-		PId: ObjectId('53bd13cc0f8ba7a0165764dc'),
+		PId: rootId,
 		ModuleName: '系统管理',
 		ModuleUrl: '',
 		Sort: 1
@@ -40,7 +41,30 @@ exports.install = function(cb){
 
 	this.saveNew(mod, function (err, status, msg, doc){
 		console.log('create a module:', doc.ModuleName);
-		cb(err, status, msg, doc);
+		if(err) return cb(err);
+
+		var mods = [{
+			PId: doc._id,
+			ModuleName: '模块管理',
+			ModuleUrl: '/manage/module/index',
+			Sort: 1
+		}, {
+			PId: doc._id,
+			ModuleName: '角色管理',
+			ModuleUrl: '/manage/role/index',
+			Sort: 2
+		}, {
+			PId: doc._id,
+			ModuleName: '用户管理',
+			ModuleUrl: '/manage/manager/index',
+			Sort: 3
+		}];
+
+		Module.create(mods, function (err, doc){
+			if(err) return cb(err);
+			console.log(arguments)
+			cb(null, 1, null, doc);
+		});
 	});
 };
 

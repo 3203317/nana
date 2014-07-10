@@ -18,17 +18,19 @@ var ModuleSchema = new Schema({
 	Sort: {
 		type: Number,
 		default: 1
-	},
-	CreateTime: {
-		type: Date,
-		default: Date.now
 	}
 }, {
-	versionKey: false
+	versionKey: false,
+	toObject: {
+		virtuals: true
+	},
+	toJSON: {
+		virtuals: true
+	}
 });
 
-ModuleSchema.virtual('sCreateTime').get(function(){
-	return this.CreateTime.format();
+ModuleSchema.virtual('CreateTime').get(function(){
+	return (new Date(this._id.getTimestamp())).format();
 });
 
 ModuleSchema.pre('save', function (next, done){
