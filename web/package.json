@@ -17,6 +17,7 @@
     "nodemailer": "*",
     "node-uuid": "*",
     "async": "*",
+    "log4js": "*",
     "eventproxy": "*"
   }
 }
