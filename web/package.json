@@ -16,6 +16,7 @@
     "connect-flash": "*",
     "nodemailer": "*",
     "node-uuid": "*",
+    "async": "*",
     "eventproxy": "*"
   }
 }

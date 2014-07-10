@@ -1,4 +1,5 @@
 var ObjectId = require('mongodb').ObjectID,
+	async = require('async'),
 	md5 = require('../libs/md5'),
 	models = require('../models');
 
@@ -30,41 +31,104 @@ exports.saveNew = function(newInfo, cb){
 exports.install = function(cb){
 	this.uninstall();
 
-	var rootId = ObjectId('53bd13cc0f8ba7a0165764dc');
+	var that = this,
+		rootId = ObjectId('53bd13cc0f8ba7a0165764dc');
 
-	var mod = {
-		PId: rootId,
-		ModuleName: '系统管理',
-		ModuleUrl: '',
-		Sort: 1
-	};
-
-	this.saveNew(mod, function (err, status, msg, doc){
-		console.log('create a module:', doc.ModuleName);
-		if(err) return cb(err);
-
-		var mods = [{
-			PId: doc._id,
-			ModuleName: '模块管理',
-			ModuleUrl: '/manage/module/index',
-			Sort: 1
-		}, {
-			PId: doc._id,
-			ModuleName: '角色管理',
-			ModuleUrl: '/manage/role/index',
-			Sort: 2
-		}, {
-			PId: doc._id,
-			ModuleName: '用户管理',
-			ModuleUrl: '/manage/manager/index',
-			Sort: 3
-		}];
-
-		Module.create(mods, function (err, doc){
-			if(err) return cb(err);
-			console.log(arguments)
-			cb(null, 1, null, doc);
-		});
+	async.waterfall([
+		function (cb){
+			that.saveNew({
+				PId: rootId,
+				ModuleName: '系统管理',
+				ModuleUrl: '',
+				Sort: 1
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '模块管理',
+				ModuleUrl: '/mg/module/index',
+				Sort: 1
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '角色管理',
+				ModuleUrl: '/mg/role/index',
+				Sort: 2
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '用户管理',
+				ModuleUrl: '/mg/mgr/index',
+				Sort: 3
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: rootId,
+				ModuleName: '业务系统',
+				ModuleUrl: '',
+				Sort: 2
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '用户管理',
+				ModuleUrl: '/mg/user/index',
+				Sort: 1
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '设备管理',
+				ModuleUrl: '/mg/device/index',
+				Sort: 2
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: n._id,
+				ModuleName: '设备日志',
+				ModuleUrl: '/mg/devicelog/index',
+				Sort: 3
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, n);
+			})
+		}, function (n, cb){
+			that.saveNew({
+				PId: rootId,
+				ModuleName: '统计分析',
+				ModuleUrl: '',
+				Sort: 3
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			})
+		}
+	], function (err, result){
+		if(err) that.uninstall();
+		cb(err, result);
 	});
 };
 
