@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 
+var log4js = require('log4js');
 var express = require('express');
 var routes = require('./routes');
 // var user = require('./routes/user');
@@ -22,28 +23,11 @@ var velocity = require('velocityjs')
 var title = 'FOREWORLD 洪荒';
 var virtualPath = '/'
 
-var log4js = require('log4js');
-log4js.configure({
-	appenders: [
-		{ type: 'console' },
-		{ type: 'file', filename: 'cheese.log', category: 'cheese' }
-	]
-});
+var logger = log4js.getLogger('app');
 
-var logger = log4js.getLogger('cheese');
-logger.setLevel('INFO');
-
-app.configure(function() {
-	app.use(log4js.connectLogger(logger, { level: log4js.levels.INFO, format: ':method :url' }));
-});
+app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
 
 logger.info('start')
-
-module.exports.logger = function(name){
-	var logger = log4js.getLogger(name);
-	logger.setLevel('INFO');
-	return logger;
-}
 
 // all environments
 app.set('port', process.env.PORT || 3000);

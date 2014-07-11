@@ -1,3 +1,5 @@
+var log = require('log4js').getLogger("index");
+
 var user = require('../controllers/user'),
 	mgr = require('../controllers/manager'),
 	mg = require('../controllers/manage'),
@@ -10,6 +12,8 @@ var user = require('../controllers/user'),
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒',
 	str1 = '参数异常';
+
+log.info('router');
 
 module.exports = function(app) {
 
