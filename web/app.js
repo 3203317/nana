@@ -23,9 +23,25 @@ var velocity = require('velocityjs')
 var title = 'FOREWORLD 洪荒';
 var virtualPath = '/'
 
-var logger = log4js.getLogger('app');
+log4js.configure({
+	appenders: [
+		{
+			type: 'console'
+		}, {
+			type: 'file',
+			filename: 'logs/access.log',
+			maxLogSize: 20480,
+			backups: 4,
+			category: 'http'
+		}
+	],
+	replaceConsole: true
+});
 
-app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
+var logger = log4js.getLogger('app');
+logger.setLevel('INFO');
+
+app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto', format:':method :url' }));
 
 logger.info('start')
 
