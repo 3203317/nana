@@ -61,28 +61,28 @@ Date.prototype.format = function(format){
 };
 
 /* 生成随机字符串 */
-var data = ['0','1','2','3','4','5','6','7','8','9',
+var a_z0_9A_Z = ['0','1','2','3','4','5','6','7','8','9',
 			'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 			'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 /**
+ * 生成随机字符串
  *
- * @method 生成随机字符串
- * @params num 长度
+ * @params {Number} num 长度
  * @return 
  */
 exports.random = function(num){
 	var str = '';
 	for(var i=0; i<num; i++){
-		str += (data[Math.floor(Math.random() * 62)]);
+		str += (a_z0_9A_Z[Math.floor(Math.random() * 62)]);
 	}
 	return str;
 };
 
 /**
+ * 判断是否是Email格式
  *
- * @method 判断是否是Email格式
- * @params 
- * @return 
+ * @params {String} email
+ * @return bool
  */
 exports.isEmail = function(email){
 	return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
