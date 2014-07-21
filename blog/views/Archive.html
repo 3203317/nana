@@ -1,59 +1,53 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
-
-		<header id="header"></header>
-
-		<section class="container">
-			<div class="row">
-				<div class="col-sm-12 col-md-8">
+		<header id='header'></header>
+		<section class='container'>
+			<div class='row'>
+				<div class='col-sm-12 col-md-8'>
 		            #parse('pagelet/TopMessage.html')
-                    <div class="content-frame clearfix">
-	                    <div class="article-content">
-                            <ol class="breadcrumb">
-                                <li><div class="glyphicon glyphicon-home"></div> <a href="${virtualPath}index.html">首页</a></li>
-                                <li class="active">档案馆</li>
+                    <div class='content-frame clearfix'>
+	                    <div class='article-content'>
+                            <ol class='breadcrumb'>
+                                <li><div class='glyphicon glyphicon-home'></div>
+                                	<a href='${virtualPath}index.html'>首页</a></li>
+                                <li class='active'>档案馆</li>
                             </ol>
-		                    <div id="archiveList">
-                                #parse("pagelet/archiveList.html")
+		                    <div id='archiveList'>
+                                #parse('pagelet/archiveList.html')
 		                    </div>
                             <div>
-			                    <a href="javascript:;"><img src="${virtualPath}public/assets/images/share/16x16/twitter.png"></a>
-			                    <a href="javascript:;"><img src="${virtualPath}public/assets/images/share/16x16/qqwb.png"></a>
-			                    <a href="javascript:;"><img src="${virtualPath}public/assets/images/share/16x16/sinawb.png"></a>
-			                    <a href="javascript:;"><img src="${virtualPath}public/assets/images/share/16x16/baidu.png"></a>
+			                    <a href='javascript:;'>
+			                    	<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
+			                    <a href='javascript:;'>
+			                    	<img src='${virtualPath}public/assets/images/share/16x16/qqwb.png'></a>
+			                    <a href='javascript:;'>
+			                    	<img src='${virtualPath}public/assets/images/share/16x16/sinawb.png'></a>
+			                    <a href='javascript:;'>
+			                    	<img src='${virtualPath}public/assets/images/share/16x16/baidu.png'></a>
 		                    </div>
 	                    </div>				
                     </div>
-				</div>
-				
-				<div class="col-sm-12 col-md-4">
-				
-					#parse("pagelet/top10ViewNums.html")
-
-					#parse("pagelet/top10Comments.html")
-					
-					#parse("pagelet/usefulLinks.html")
-
-					<div id="qrcode">
+				</div>				
+				<div class='col-sm-12 col-md-4'>				
+					#parse('pagelet/top10ViewNums.html')
+					#parse('pagelet/top10Comments.html')					
+					#parse('pagelet/usefulLinks.html')
+					<div id='qrCode'>
 						<figure>
-							<img src="${virtualPath}public/assets/images/archive.png" alt="二维码" title="档案馆">
+							<img src='${virtualPath}public/assets/images/archive.png' alt='二维码' title='档案馆'>
 						</figure>
 					</div>
 				</div>				
 			</div>
 		</section>
-
         #parse('pagelet/IndexFooter.html')
-
         #parse('pagelet/backTop.html')
-
         #parse('pagelet/IndexJs.html')
-
 		<!-- Own -->
 	</body>
 </html>
