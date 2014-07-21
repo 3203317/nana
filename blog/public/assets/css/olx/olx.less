@@ -5,7 +5,6 @@ body, h1, h2, h3, h4, h5, h6 {
 body {
 	background: url('images/bg.jpg') repeat scroll 0 0 rgba(0, 0, 0, 0);
 
-
 	#banner {
 		.navbar-brand {
 			font-weight: bold;
@@ -14,6 +13,40 @@ body {
 
 	#header {
 		margin-top: 70px;
+	}
+
+	#footer {
+		border-top: 1px solid #E5E5E5;
+		margin-top: 20px;
+		padding-bottom: 30px;
+		padding-top: 10px;
+		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 5px rgba(0, 0, 0, 0.075);
+
+		>div {
+			>div {
+				&:first-child {
+					float: left;
+				}
+
+				&:last-child {
+					float: right;
+				}
+
+				p {
+					margin-bottom: 0;
+					&:last-child {
+						a {
+							color: black;
+						}
+					}
+
+					a {
+						color: #CC0000;
+						font-weight: bold;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -40,7 +73,23 @@ a {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1010px) {
-	#topSearchFrm {
-		display: none !important;
+	body {
+		#topSearchFrm {
+			display: none !important;
+		}
+	}
+}
+
+@media screen and (max-width: 800px) {
+	body {
+		#footer {
+			>div {
+				>div {
+					&:last-child {
+						float: left !important;
+					}
+				}
+			}
+		}
 	}
 }
