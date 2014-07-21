@@ -1,4 +1,5 @@
-var user = require('../controllers/user');
+var user = require('../controllers/user'),
+	archive = require('../controllers/archive');
 
 var virtualPath = '',
 	title = 'FOREWORLD 洪荒',
@@ -39,4 +40,6 @@ function valiPostData(req, res, next){
 module.exports = function(app){
 
 	app.get('/user/login', user.loginUI);
+
+	app.get('/archive/', archive.index);
 };
