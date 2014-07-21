@@ -2,55 +2,7 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<style type='text/css'>
-		#footer{
-			position:fixed;
-			left:0;
-			bottom:0;
-			width:100%
-		}
-		form label{
-			font-weight:normal;
-			margin-bottom:0
-		}
-		form a{
-			color:#1a66b3;
-			text-decoration:underline
-		}
-		form a:hover{
-			text-decoration:underline
-		}
-		form .wrong{
-			color:#f00;
-			margin-top:-15px;
-			font-size:12px
-		}
-		form #img_VerifyCode{
-			border:1px solid #ccc;
-			width:100%;
-			height:35px;
-			cursor:pointer
-		}
-		#inp_tip a{
-			color:#1a66b3;
-			text-decoration:underline
-		}
-		#inp_tip ol{
-			padding-left:20px;
-			font-size:12px
-		}
-		@media screen and (max-width:640px){
-			form label{
-				display:none
-			}
-			form #lab_changeImg{
-				display:block
-			}
-			#footer{
-				position:inherit
-			}
-		}
-		</style>
+		<link rel='stylesheet' type='text/css' href='${virtualPath}public/user/login.css'>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
