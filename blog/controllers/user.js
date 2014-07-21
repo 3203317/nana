@@ -1,0 +1,12 @@
+var conf = require('../settings');
+
+exports.loginUI = function(req, res, next){
+	res.render('user/Login', {
+		title: title,
+		atitle: '用户管理',
+		description: '用户管理',
+		keywords: ',用户管理,Bootstrap3',
+		virtualPath: virtualPath +'/',
+		cdn: conf.cdn
+	});
+};
