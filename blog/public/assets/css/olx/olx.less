@@ -73,21 +73,17 @@ a {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1010px) {
-	body {
-		#topSearchFrm {
-			display: none !important;
-		}
+	#topSearchFrm {
+		display: none !important;
 	}
 }
 
 @media screen and (max-width: 800px) {
-	body {
-		#footer {
+	#footer {
+		>div {
 			>div {
-				>div {
-					&:last-child {
-						float: left !important;
-					}
+				&:last-child {
+					float: left !important;
 				}
 			}
 		}
