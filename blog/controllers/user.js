@@ -9,7 +9,7 @@ exports.loginUI = function(req, res, next){
 		atitle: '用户管理',
 		description: '用户管理',
 		keywords: ',用户管理,Bootstrap3',
-		virtualPath: virtualPath +'/',
+		virtualPath: virtualPath,
 		cdn: conf.cdn
 	});
 };
