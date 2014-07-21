@@ -1,0 +1,24 @@
+#foreach($archive in $archives)<h3>${archive.Y4}年<a id="${archive.Y4}"></a></h3>                                
+<div class="panel-group olx-accordion">
+    #foreach($archiveChild in $archive.ArchiveChildren)
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a id="${archive.Y4}${archiveChild.M2}" href="#collapse${archive.Y4}${archiveChild.M2}" data-parent="#accordion" data-toggle="collapse">${archiveChild.M2}月 (${archiveChild.Articles.length}篇文章)</a>
+            </h4>
+        </div>
+        <div id="collapse${archive.Y4}${archiveChild.M2}" class="panel-collapse collapse in">
+            <div class="panel-body">
+                #foreach($article in $archiveChild.Articles)
+                <p>
+                    ${article.PostTime_Day}日:
+                    <a title="创建于 $article.PostTime_Time" href="${virtualPath}archive/${article.Id}.html">${article.ArticleTitle}</a>
+                    <span class="badge">${article.ViewNumsToFormat}</span>
+                </p>
+                #end
+            </div>
+        </div>
+    </div>
+    #end
+</div>
+#end

@@ -1,5 +1,8 @@
 var conf = require('../settings');
 
+var title = 'FOREWORLD 洪荒',
+	virtualPath = '/';
+
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
 		title: title,
