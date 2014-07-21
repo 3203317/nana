@@ -224,3 +224,4 @@ web/public/user/login.css
 web/public/user/sendEmail_success.css
 web/public/cdn/
 web/node_modules/
+blog/node_modules/
