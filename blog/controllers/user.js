@@ -31,13 +31,14 @@ exports.login = function(req, res, next){
 		req.session.role = 'user';
 		req.session.user = doc;
 		result.success = true;
+		result.data = { id: doc._id };
 		res.send(result);
 	});
 };
 
 exports.login_success = function(req, res, next){
-	var email = req.params.email.trim();
-	res.redirect('/my');
+	var id = req.params.id.trim();
+	res.redirect('/u/'+ id +'/admin');
 };
 
 exports.regUI = function(req, res, next){
