@@ -1,5 +1,7 @@
-var models = require('../models');
-var User = models.User;
+var md5 = require('../lib/md5');
+
+var models = require('../models'),
+	User = models.User;
 
 /**
  * 用户登陆

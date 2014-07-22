@@ -41,7 +41,7 @@ module.exports = function(app){
 
 	app.get('/user/login', user.loginUI);
 
-	app.post('/user/register', user.reg);
+	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);
 
 	app.get('/archive/', archive.index);
