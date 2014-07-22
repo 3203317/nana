@@ -47,7 +47,7 @@ module.exports = function(app){
 	app.get('/user/register', user.regUI);
 
 	app.get('/u/:id', user.validate, user.myUI);
-	app.get('/u/:id/admin', user.validate, user.myUI);
+	app.get('/u/:id/admin/new-blog', user.validate, user.newBlogUI);
 
 	app.get('/archive/', archive.index);
 };

@@ -9,86 +9,20 @@
 		<header id='header'></header>
 		<div class='container'>
 			<div class='row'>
-				<div class='col-md-12'>
-					<div class='panel panel-default'>
-						<div class='panel-heading'><b>新用户注册</b></div>
-						<div class='panel-body'>
-							<div class='col-md-4 col-sm-5'>
-								#*<div id='alert_info' class='alert alert-warning'>
-									<button type='button' class='close' data-dismiss='alert'>&times;</button>
-									<strong>提示：</strong><span id='alert_msg'>请按要求输入正确的格式内容。</span>
-								</div>*#
-								<form class='form-horizontal' role='form' id='regFrm' onsubmit='return false;' data-url='register'>
-									<div class='form-group'>
-										<label for='regFrm_Email' class='col-sm-3 control-label'>电子邮箱</label>
-										<div class='col-sm-9'>
-											<input type='text' class='form-control' id='regFrm_Email' name='Email' placeholder='电子邮箱' required data-original-title='电子邮箱不能为空。'>
-										</div>
-									</div>
-									<div class='form-group wrong_tip'>
-										<label id='regFrm_Email_Vali' class='col-sm-offset-3 col-sm-9'></label>
-									</div>
-									<div class='form-group'>
-										<label for='regFrm_UserPass' class='col-sm-3 control-label'>登陆密码</label>
-										<div class='col-sm-9'>
-											<input type='password' class='form-control' id='regFrm_UserPass' name='UserPass' placeholder='登陆密码' required data-original-title='登陆密码不能为空。'>
-										</div>
-									</div>
-									<div class='form-group wrong_tip'>
-										<label id='regFrm_UserPass_Vali' class='col-sm-offset-3 col-sm-9'></label>
-									</div>
-									<div class='form-group'>
-										<label for='regFrm_UserPass2' class='col-sm-3 control-label'>确认密码</label>
-										<div class='col-sm-9'>
-											<input type='password' class='form-control' id='regFrm_UserPass2' name='UserPass2' placeholder='确认密码' required data-original-title='确认密码不能为空。'>
-										</div>
-									</div>
-									<div class='form-group wrong_tip'>
-										<label id='regFrm_UserPass2_Vali' class='col-sm-offset-3 col-sm-9'></label>
-									</div>
-									<div class='form-group'>
-										<label for='regFrm_VerifyCode' class='col-sm-3 control-label'>验证码</label>
-										<div class='col-sm-4'>
-											<input type='text' class='form-control' id='regFrm_VerifyCode' name='VerifyCode' placeholder='验证码' required data-original-title='验证码不能为空。'>
-										</div>
-										<label id='lab_changeImg' class='col-sm-5 control-label'>看不清？<a href='javascript:showVerifyCode();'>换张图</a></label>
-									</div>
-									<div class='form-group wrong_tip'>
-										<label id='regFrm_VerifyCode_Vali' class='col-sm-offset-3 col-sm-9'></label>
-									</div>
-									<div class='form-group'>
-										<div class='col-sm-offset-3 col-sm-9'>
-											<img id='img_VerifyCode' title='点击更换验证码' src=''>
-										</div>
-									</div>
-									<div class='form-group'>
-										<div class='col-sm-offset-3 col-sm-9'>
-											<button id='btn_reg' type='button' class='btn btn-primary'>立即注册</button>
-											#*<a class='btn btn-danger' href='login'>登陆</a>*#
-										</div>
-									</div>
-									<div class='form-group'>
-										<div class='col-sm-offset-3 col-sm-9'>
-											<div class='checkbox'>
-												<label>
-													<input type='checkbox' checked> 我已阅读并同意《<a href='#'>用户注册条款</a>》
-												</label>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div id='help_tip' class='col-md-offset-3 col-sm-offset-3 col-md-5 col-sm-4'>
-								<div>已有帐号？<a href='login'>直接登陆</a></div>
-								<div>&nbsp;</div>
-								<div><b>为什么总提示验证码错误？</b></div>
-								<ol>
-									<li>首先请确定浏览器已经启用Cookie。</li>
-									<li>实在不行，邮件给我 3203317 AT qq.com。</li>
-								</ol>
-							</div>
-						</div>
-					</div>
+				<div class="col-sm-12 col-md-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn" href="#">View details &raquo;</a></p>
+				</div>
+				<div class="col-sm-12 col-md-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn" href="#">View details &raquo;</a></p>
+				</div>
+				<div class="col-sm-12 col-md-4">
+				<h2>Heading</h2>
+				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+				<p><a class="btn" href="#">View details &raquo;</a></p>
 				</div>
 			</div>
 		</div>
@@ -96,46 +30,6 @@
         #parse('pagelet/IndexJs.html')
 		<!-- Own -->
 		<script type="text/javascript">
-			$('#img_VerifyCode').click(function(){
-				showVerifyCode();
-			});
-
-			function showVerifyCode(){
-				$('#img_VerifyCode').attr('src', '../public/user/images/verifyCode.jpg?ts='+ new Date());
-			}
-
-			$(function(){
-				showVerifyCode();
-			});
-
-			function showVali(valiResu){
-				$('form label[id$="_Vali"]').each(function (i, label){
-					$(label).parent().css('display', 'none');
-				});
-				if('string' === typeof valiResu) return alert(valiResu);
-				if('[object Array]' === Object.prototype.toString.call(valiResu)){
-					$('#regFrm_'+ valiResu[1] +'_Vali').text(valiResu[0]).css('display', 'block').parent().css('display', 'block');
-					$('#regFrm_'+ valiResu[1]).focus();
-					return;
-				}
-				alert(valiResu.message);
-			}
-
-			function subFrm(){
-				$('#regFrm').olxForm('submit', [function(){
-					if(!$('#regFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
-					if(!$('#regFrm_UserPass').val().trim().length) return ['登陆密码不能为空。', 'UserPass'];
-					if($('#regFrm_UserPass').val() !== $('#regFrm_UserPass2').val()) return ['确认密码必须填写，且要匹配登陆密码。', 'UserPass2'];
-					if(!$('#regFrm_VerifyCode').val().trim().length) return ['验证码不能为空。', 'VerifyCode'];
-				}, function (valiResu){
-					showVali(valiResu);
-				}, function (data){
-					if(!data.success) return showVali(data.msg);
-					location.href = $('#regFrm_Email').val().trim() +'/register/success';
-				}]);
-			}
-
-			$('#btn_reg').click(subFrm);
 		</script>
 	</body>
 </html>

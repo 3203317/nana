@@ -78,6 +78,20 @@ exports.myUI = function(req, res, next){
 	});
 };
 
+exports.newBlogUI = function(req, res, next){
+	var user = req.session.user,
+		_title = user.Email +'的个人空间';
+
+	res.render('user/admin/NewBlog', {
+		title: title,
+		atitle: _title,
+		description: _title,
+		keywords: ','+ _title +',Bootstrap3',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};
+
 exports.validate = function(req, res, next){
 	if('user' === req.session.role) return next();
 	if(req.xhr){
