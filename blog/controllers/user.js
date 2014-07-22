@@ -17,6 +17,11 @@ exports.loginUI = function(req, res, next){
 	});
 };
 
+exports.login = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+};
+
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
 		title: title,
