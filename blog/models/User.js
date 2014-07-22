@@ -83,7 +83,7 @@ UserSchema.virtual('sSex').get(function(){
 });
 
 UserSchema.virtual('sBirthday').get(function(){
-	return this.Birthday.format('yyyy-MM-dd');
+	return this.Birthday ? this.Birthday.format('yyyy-MM-dd') : null;
 });
 
 UserSchema.virtual('RegTime').get(function(){

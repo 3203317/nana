@@ -18,7 +18,7 @@ exports.uuid = function(b){
  * @params {String}
  * @return {String}
  */
-exports.pdate = function(s){
+var pdate = exports.pdate = function(s){
 	return 10 > s ? '0' + s : s;
 }
 
