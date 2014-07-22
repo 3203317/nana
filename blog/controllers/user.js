@@ -35,6 +35,11 @@ exports.login = function(req, res, next){
 	});
 };
 
+exports.login_success = function(req, res, next){
+	var email = req.params.email.trim();
+	res.redirect('/my');
+};
+
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
 		title: title,
@@ -46,7 +51,6 @@ exports.regUI = function(req, res, next){
 	});
 };
 
-
 exports.reg = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -57,4 +61,30 @@ exports.reg = function(req, res, next){
 		result.msg = msg;
 		res.send(result);
 	});
+};
+
+exports.myUI = function(req, res, next){
+	var user = req.session.user,
+		_title = user.Email +'的个人空间';
+
+	res.render('user/My', {
+		title: title,
+		atitle: _title,
+		description: _title,
+		keywords: ','+ _title +',Bootstrap3',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};
+
+exports.validate = function(req, res, next){
+	if('user' === req.session.role) return next();
+	if(req.xhr){
+		return res.send({
+			success: false,
+			code: 300,
+			msg: '无权访问'
+		});
+	}
+	res.redirect('/user/login');
 };
