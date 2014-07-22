@@ -86,7 +86,7 @@ UserSchema.virtual('sBirthday').get(function(){
 	return this.Birthday.format('yyyy-MM-dd');
 });
 
-ModuleSchema.virtual('RegTime').get(function(){
+UserSchema.virtual('RegTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 

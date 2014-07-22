@@ -40,6 +40,8 @@ function valiPostData(req, res, next){
 module.exports = function(app){
 
 	app.get('/user/login', user.loginUI);
+
+	app.post('/user/register', user.reg);
 	app.get('/user/register', user.regUI);
 
 	app.get('/archive/', archive.index);

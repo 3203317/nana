@@ -18,3 +18,26 @@ exports.login = function(logInfo, cb){
 		cb(null, 1, null, doc);
 	});
 };
+
+exports.register = function(newInfo, cb){
+	/* 查询邮箱是否存在 */
+	User.findUserByEmail(newInfo.Email, function (err, doc){
+		if(err) return cb(err);
+		/* 如果用户对象存在，则说明电子邮箱存在，返回提示信息 */
+		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
+
+		/* 用户对象入库之前的其他数据初始化工作 */
+		newInfo.Status = 0;
+		newInfo.IsDel = 0;
+
+		newInfo.SecPass = newInfo.UserPass;
+		/* 密码加密 */
+		newInfo.UserPass = md5.hex(newInfo.SecPass);
+
+		/* 开始创建新用户 */
+		User.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, 1, null, doc);
+		});
+	});
+};

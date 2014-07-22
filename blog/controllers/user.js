@@ -3,6 +3,8 @@ var conf = require('../settings');
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+var User = require('../biz/user');
+
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
 		title: title,
@@ -23,5 +25,18 @@ exports.regUI = function(req, res, next){
 		keywords: ',新用户注册,Bootstrap3',
 		virtualPath: virtualPath,
 		cdn: conf.cdn
+	});
+};
+
+
+exports.reg = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	User.register(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = 1 === status;
+		result.msg = msg;
+		res.send(result);
 	});
 };
