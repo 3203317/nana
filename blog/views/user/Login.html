@@ -2,7 +2,7 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<link rel='stylesheet' type='text/css' href='${virtualPath}public/user/login.css'>
+		<link rel='stylesheet' type='text/css' href='${virtualPath}public/user/css/login.css'>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -88,7 +88,7 @@
 			});
 
 			function showVerifyCode(){
-				$('#img_VerifyCode').attr('src', '../public/user/verifyCode.jpg?ts='+ (new Date()).valueOf());
+				$('#img_VerifyCode').attr('src', '../public/user/images/verifyCode.jpg?ts='+ (new Date()).valueOf());
 			}
 
 			$(function(){

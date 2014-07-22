@@ -14,3 +14,14 @@ exports.loginUI = function(req, res, next){
 		cdn: conf.cdn
 	});
 };
+
+exports.regUI = function(req, res, next){
+	res.render('user/Register', {
+		title: title,
+		atitle: '新用户注册',
+		description: '新用户注册',
+		keywords: ',新用户注册,Bootstrap3',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};
