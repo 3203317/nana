@@ -38,7 +38,7 @@ exports.login = function(req, res, next){
 
 exports.login_success = function(req, res, next){
 	var id = req.params.id.trim();
-	res.redirect('/u/'+ id +'/admin');
+	res.redirect('/u/'+ id);
 };
 
 exports.regUI = function(req, res, next){

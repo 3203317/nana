@@ -46,6 +46,7 @@ module.exports = function(app){
 	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);
 
+	app.get('/u/:id', user.validate, user.myUI);
 	app.get('/u/:id/admin', user.validate, user.myUI);
 
 	app.get('/archive/', archive.index);
