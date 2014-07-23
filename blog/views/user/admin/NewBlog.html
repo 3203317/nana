@@ -15,24 +15,20 @@
 						</div>
 						<div class="panel-body">
 							<ul class="list-group olx-list-group">
-							    <li class="list-group-item">
-								    <a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="发表博文">
-								        <div class="olx-text-ellipsis">发表博文</div>
-					                </a>						        	
+								<li class="list-group-item">
+									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="发表博文">
+										<div class="olx-text-ellipsis">发表博文</div>
+									</a>
 								</li>
-							</ul>
-							<ul class="list-group olx-list-group">
-							    <li class="list-group-item">
-								    <a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="草稿箱(0)">
-								        <div class="olx-text-ellipsis">草稿箱(0)</div>
-					                </a>						        	
+								<li class="list-group-item">
+									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="草稿箱(0)">
+										<div class="olx-text-ellipsis">草稿箱(0)</div>
+									</a>
 								</li>
-							</ul>
-							<ul class="list-group olx-list-group">
-							    <li class="list-group-item">
-								    <a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="博客导出">
-								        <div class="olx-text-ellipsis">博客导出</div>
-					                </a>						        	
+								<li class="list-group-item">
+									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="博客导出">
+										<div class="olx-text-ellipsis">博客导出</div>
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -66,16 +62,17 @@
 									<label for="exampleInputEmail1">
 										<b>博客正文</b></label>
 									<!-- 加载编辑器的容器 -->
-									<script id="container" name="content" type="text/plain">
-										这里写你的初始化内容
-									</script>
+									<script id="container" name="content" type="text/plain"></script>
 									<!-- 配置文件 -->
 									<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.config.js"></script>
 									<!-- 编辑器源码文件 -->
 									<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.all.js"></script>
 									<!-- 实例化编辑器 -->
 									<script type="text/javascript">
-										var ue = UE.getEditor('container');
+										var ue = UE.getEditor('container', {
+											autoHeightEnabled: false,
+											initialFrameHeight: 200
+										});
 									</script>
 								</div>
 								<div class="form-group">
