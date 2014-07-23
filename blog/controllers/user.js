@@ -3,7 +3,8 @@ var conf = require('../settings');
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
-var User = require('../biz/user');
+var User = require('../biz/user'),
+	Article = require('../biz/article');
 
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
@@ -89,6 +90,19 @@ exports.newBlogUI = function(req, res, next){
 		keywords: ','+ _title +',Bootstrap3',
 		virtualPath: virtualPath,
 		cdn: conf.cdn
+	});
+};
+
+exports.saveNewBlog = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	data.User_Id = req.session.userId;
+
+	Article.saveNew(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = true;
+		res.send(result);
 	});
 };
 
