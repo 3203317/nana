@@ -21,8 +21,9 @@
 									</a>
 								</li>
 								<li class="list-group-item">
-									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="草稿箱(0)">
-										<div class="olx-text-ellipsis">草稿箱(0)</div>
+									<span class="badge">2679</span>
+									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="草稿箱">
+										<div class="olx-text-ellipsis">草稿箱</div>
 									</a>
 								</li>
 								<li class="list-group-item">
@@ -63,17 +64,6 @@
 										<b>博客正文</b></label>
 									<!-- 加载编辑器的容器 -->
 									<script id="container" name="content" type="text/plain"></script>
-									<!-- 配置文件 -->
-									<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.config.js"></script>
-									<!-- 编辑器源码文件 -->
-									<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.all.js"></script>
-									<!-- 实例化编辑器 -->
-									<script type="text/javascript">
-										var ue = UE.getEditor('container', {
-											autoHeightEnabled: false,
-											initialFrameHeight: 200
-										});
-									</script>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">
@@ -90,6 +80,17 @@
 		</div>
         #parse('pagelet/IndexFooter.html')
         #parse('pagelet/IndexJs.html')
+		<!-- 配置文件 -->
+		<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.config.js"></script>
+		<!-- 编辑器源码文件 -->
+		<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.all.js"></script>
+		<!-- 实例化编辑器 -->
+		<script type="text/javascript">
+			var ue = UE.getEditor('container', {
+				autoHeightEnabled: false,
+				initialFrameHeight: 200
+			});
+		</script>
 		<!-- Own -->
 		<script type="text/javascript">
 		</script>
