@@ -73,6 +73,47 @@ a {
 	background-color: #D9534F;
 }
 
+.olx-panel {
+	.panel-title {
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.panel-body {
+		.list-group {
+			.list-group-item {
+				border-left: 0 none;
+				border-right: 0 none;
+				border-bottom: 0 none;
+				&:first-child {
+					border-top: 0 none;
+				}
+			}
+			margin-bottom: 0;
+		}
+		.olx-list-group {
+			li {
+				&:hover, &:focus {
+					background-color: #F5F5F5;
+				}
+				a {
+					&:hover, &:focus {
+						color: #D9534F;
+					}
+					div {
+						padding-right: 10px;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+						font-size: 12px;
+					}
+					color: #555555;
+				}
+			}
+		}
+		padding: 0;
+	}
+}
+
 @font-face {
 	font-family: Spinnaker;
 	font-style:  normal;
