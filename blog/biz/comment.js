@@ -39,23 +39,23 @@ exports.install = function(cb){
 				if(err) return cb(err);
 				cb(null, doc);
 			});
-		}, function (cb){
+		}, function (n, cb){
 			that.saveNew({
 				Content: '最后一关99波31万多分',
 				PostIP: '210.72.9.53',
 				Author: 'don_xu'
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
-				cb(null, doc);
+				cb(null, n);
 			});
-		}, function (cb){
+		}, function (n, cb){
 			that.saveNew({
 				Content: '爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市',
 				PostIP: '118.249.151.16',
 				Author: '嗷嗷嗷'
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
-				cb(null, doc);
+				cb(null, n);
 			});
 		}
 	], function (err, result){

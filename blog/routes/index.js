@@ -1,4 +1,5 @@
 var user = require('../controllers/user'),
+	site = require('../controllers/site'),
 	archive = require('../controllers/archive');
 
 var virtualPath = '',
@@ -38,6 +39,7 @@ function valiPostData(req, res, next){
 }
 
 module.exports = function(app){
+	app.get('/install', site.installUI);
 
 	app.post('/user/login', valiPostData, user.login);
 	app.get('/user/login', user.loginUI);

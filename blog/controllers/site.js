@@ -8,4 +8,13 @@ var title = 'FOREWORLD 洪荒',
 
 exports.installUI = function(req, res, next){
 
+	/* 评论 */
+	Comment.install(function (err, status, msg, doc){
+		if(err) return next(err);
+		res.send({
+			success: 1 === status,
+			msg: msg,
+			data: doc
+		});
+	});
 };
