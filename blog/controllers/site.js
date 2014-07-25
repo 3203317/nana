@@ -6,13 +6,18 @@ var fs = require('fs'),
 	cwd = process.cwd(),
 	velocity = require('velocityjs');
 
-var Comment = require('../biz/comment');
+var Comment = require('../biz/comment'),
+	Link = require('../biz/link');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
+
+	Link.install(function (err, status, msg, doc){
+		if(err) return next(err);
+	});
 
 	/* 评论 */
 	Comment.install(function (err, status, msg, doc){
