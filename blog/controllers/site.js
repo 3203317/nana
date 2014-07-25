@@ -29,7 +29,7 @@ exports.installUI = function(req, res, next){
 					top10Comments: docs
 				});
 
-				fs.writeFile(cwd + path +'top10Comments.html', html, 'utf8', function (err){
+				fs.writeFile(cwd + path +'html/top10Comments.html', html, 'utf8', function (err){
 					if(err) console.log(err);
 				});
 			});

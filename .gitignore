@@ -227,3 +227,4 @@ web/node_modules/
 blog/node_modules/
 blog/public/assets/css/olx/olx.css
 blog/public/user/css/*.css
+blog/views/pagelet/html/*.html
