@@ -4,17 +4,15 @@ var mongoose = require('mongoose'),
 
 var util = require('../lib/util');
 
-var CommentSchema = new Schema({
-	Content: {			// 内容
+var LinkSchema = new Schema({
+	LinkName: {
 		type: String
-	}, PostIP: {		// 提交IP
+	}, LinkUrl: {
 		type: String
-	}, Author: {		// 作者
-		type: String
+	}, Sort: {			// 排序
+		type: Number
 	}, User_Id: {		// 用户Id
 		type: ObjectId
-	}, Article_Id: {
-		type: ObjectId	// 文章Id
 	}
 }, {
 	versionKey: false,
@@ -26,15 +24,15 @@ var CommentSchema = new Schema({
 	}
 });
 
-CommentSchema.virtual('CreateTime').get(function(){
+LinkSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-CommentSchema.pre('save', function (next, done){
+LinkSchema.pre('save', function (next, done){
 	next();
 });
 
-CommentSchema.post('save', function(){
+LinkSchema.post('save', function(){
 });
 
-mongoose.model('Comment', CommentSchema);
+mongoose.model('Link', LinkSchema);
