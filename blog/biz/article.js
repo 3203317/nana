@@ -4,7 +4,7 @@ var models = require('../models'),
 /**
  * 保存新文章
  *
- * @params {Object} logInfo
+ * @params {Object} newInfo
  * @params {Function} cb
  * @return
  */
