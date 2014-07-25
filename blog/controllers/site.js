@@ -12,7 +12,7 @@ exports.installUI = function(req, res, next){
 	Comment.install(function (err, status, msg, doc){
 		if(err) return next(err);
 		res.send({
-			success: 1 === status,
+			success: 0 === status,
 			msg: msg,
 			data: doc
 		});

@@ -39,33 +39,33 @@ exports.install = function(cb){
 				if(err) return cb(err);
 				cb(null, doc);
 			});
-		}, function (n, cb){
+		}, function (doc, cb){
 			that.saveNew({
 				Content: '最后一关99波31万多分',
 				PostIP: '210.72.9.53',
 				Author: 'don_xu'
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
-				cb(null, n);
+				cb(null, doc);
 			});
-		}, function (n, cb){
+		}, function (doc, cb){
 			that.saveNew({
 				Content: '爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市',
 				PostIP: '118.249.151.16',
 				Author: '嗷嗷嗷'
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
-				cb(null, n);
+				cb(null, doc);
 			});
 		}
 	], function (err, result){
 		if(err) that.uninstall();
-		cb(err, result);
+		cb(err, +!!err, null, result);
 	});
 };
 
 exports.uninstall = function(cb){
 	Comment.remove({}, function (err, count){
-		console.log('uninstall Comment.');
+		console.log('uninstall Comments.');
 	});
 };
