@@ -49,7 +49,7 @@ app.set('port', process.env.PORT || 3000)
 			if(err) return fn(err);
 			var macros = {
 				parse: function(file){
-					var template = fs.readFileSync(cwd + '/views/' + file).toString();
+					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
 					return this.eval(template);
 				}
 			}

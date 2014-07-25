@@ -2,6 +2,7 @@ var conf = require('../settings'),
 	util = require('../lib/util');
 
 var fs = require('fs'),
+	path = require('path'),
 	cwd = process.cwd(),
 	velocity = require('velocityjs');
 
@@ -11,7 +12,7 @@ var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
 exports.installUI = function(req, res, next){
-	var path = '/views/pagelet/';
+	var vmPath = path.join(cwd, 'views', 'pagelet');
 
 	/* 评论 */
 	Comment.install(function (err, status, msg, doc){
@@ -21,7 +22,7 @@ exports.installUI = function(req, res, next){
 		Comment.findComments([1, 10], function (err, status, msg, docs){
 			if(err) return next(err);
 
-			fs.readFile(cwd + path +'Top10Comments.vm.html', 'utf8', function (err, template){
+			fs.readFile(path.join(vmPath, 'Top10Comments.vm.html'), 'utf8', function (err, template){
 				if(err) return next(err);
 
 				var html = velocity.render(template, {
@@ -29,7 +30,7 @@ exports.installUI = function(req, res, next){
 					top10Comments: docs
 				});
 
-				fs.writeFile(cwd + path +'html/top10Comments.html', html, 'utf8', function (err){
+				fs.writeFile(path.join(vmPath, 'html', 'top10Comments.html'), html, 'utf8', function (err){
 					if(err) console.log(err);
 				});
 			});
