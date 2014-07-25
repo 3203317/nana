@@ -4,14 +4,12 @@ var mongoose = require('mongoose'),
 
 var util = require('../lib/util');
 
-var ArticleSchema = new Schema({
-	Title: {
+var CommentSchema = new Schema({
+	Content: {			//内容
 		type: String
-	}, Abstracts: {		// 摘要
+	}, PostIP: {		// 提交IP
 		type: String
-	}, Content: {		// 文章内容
-		type: String
-	}, Keys: {			// 关键字
+	}, Author: {		//作者
 		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
@@ -26,15 +24,15 @@ var ArticleSchema = new Schema({
 	}
 });
 
-ArticleSchema.virtual('CreateTime').get(function(){
+CommentSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-ArticleSchema.pre('save', function (next, done){
+CommentSchema.pre('save', function (next, done){
 	next();
 });
 
-ArticleSchema.post('save', function(){
+CommentSchema.post('save', function(){
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Comment', CommentSchema);
