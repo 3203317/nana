@@ -6,9 +6,8 @@
 		</ul>
 	</div>
 	<div class='panel-body'>
-		<div id='usefulLinks' class='list-group'>
-			#foreach($usefulLink in $usefulLinks)<a target='_blank' href='$usefulLink.LinkUrl' 
-				title='$usefulLink.LinkName' class='list-group-item'>$usefulLink.LinkName</a>
+		<div class='list-group'>
+			#foreach($usefulLink in $usefulLinks)<a class='list-group-item' target='_blank' href='$usefulLink.LinkUrl' title='$usefulLink.LinkName'>$usefulLink.LinkName</a>
 			#end</div>
 	</div>
 </div>
