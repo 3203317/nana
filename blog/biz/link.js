@@ -21,7 +21,7 @@ exports.saveNew = function(newInfo, cb){
 exports.findLinks = function(cb){
 	Link.find(null, null, {
 		sort: {
-			Sort: -1
+			Sort: 1
 		}
 	}, function (err, docs){
 		if(err) return cb(err);
@@ -34,13 +34,43 @@ exports.install = function(cb){
 
 	that.uninstall();
 
-	async.waterfall([
+	async.parallel([
 		function (cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				LinkName: '起点中文网',
 				LinkUrl: 'http://www.qidian.com',
 				Sort: 1
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			});
+		}, function (cb){
+			that.saveNew({
+				User_Id: ObjectId(),
+				LinkName: '迅雷看看',
+				LinkUrl: 'http://kankan.xunlei.com',
+				Sort: 2
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			});
+		}, function (cb){
+			that.saveNew({
+				User_Id: ObjectId(),
+				LinkName: '美空',
+				LinkUrl: 'http://www.moko.cc/',
+				Sort: 4
+			}, function (err, status, msg, doc){
+				if(err) return cb(err);
+				cb(null, doc);
+			});
+		}, function (cb){
+			that.saveNew({
+				User_Id: ObjectId(),
+				LinkName: 'VeryCD',
+				LinkUrl: 'http://www.verycd.com',
+				Sort: 3
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
 				cb(null, doc);

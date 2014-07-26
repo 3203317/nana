@@ -17,6 +17,24 @@ exports.installUI = function(req, res, next){
 
 	Link.install(function (err, status, msg, doc){
 		if(err) return next(err);
+
+		/* 生成右侧sider */
+		Link.findLinks(function (err, status, msg, docs){
+			if(err) return next(err);
+
+			fs.readFile(path.join(vmPath, 'UsefulLinks.vm.html'), 'utf8', function (err, template){
+				if(err) return next(err);
+
+				var html = velocity.render(template, {
+					virtualPath: virtualPath,
+					usefulLinks: docs
+				});
+
+				fs.writeFile(path.join(vmPath, 'html', 'usefulLinks.html'), html, 'utf8', function (err){
+					if(err) console.log(err);
+				});
+			});
+		});
 	});
 
 	/* 评论 */
