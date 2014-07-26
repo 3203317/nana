@@ -28,7 +28,7 @@ exports.installUI = function(req, res, next){
 
 				var html = velocity.render(template, {
 					virtualPath: virtualPath,
-					categorys: docs
+					topNavCategory: docs
 				});
 
 				fs.writeFile(path.join(vmPath, 'html', 'topNavCategory.html'), html, 'utf8', function (err){
