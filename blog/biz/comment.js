@@ -30,7 +30,7 @@ exports.findComments = function(page, cb){
 		skip: 0,
 		limit: 10,
 		sort: {
-			_id: -1
+			PostTime: -1
 		}
 	};
 
@@ -60,6 +60,7 @@ exports.install = function(cb){
 		function (cb){
 			that.saveNew({
 				Article_Id: ObjectId(),
+				PostTime: new Date('2009/11/13 22:48:24'),
 				Content: 'OK',
 				PostIP: '222.170.61.69',
 				Author: 'yttyt'
@@ -70,6 +71,7 @@ exports.install = function(cb){
 		}, function (doc, cb){
 			that.saveNew({
 				Article_Id: ObjectId(),
+				PostTime: new Date('2010/1/11 19:01:17'),
 				Content: '最后一关99波31万多分',
 				PostIP: '210.72.9.53',
 				Author: 'don_xu'
@@ -80,6 +82,7 @@ exports.install = function(cb){
 		}, function (doc, cb){
 			that.saveNew({
 				Article_Id: ObjectId(),
+				PostTime: new Date('2010/2/4 11:39:23'),
 				Content: '爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市爱的嗷嗷嗷安达市',
 				PostIP: '118.249.151.16',
 				Author: '嗷嗷嗷'
