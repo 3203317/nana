@@ -7,13 +7,36 @@ var fs = require('fs'),
 	velocity = require('velocityjs');
 
 var Comment = require('../biz/comment'),
-	Link = require('../biz/link');
+	Link = require('../biz/link'),
+	Category = require('../biz/category');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
+
+	Category.install(function (err, status, msg, doc){
+		if(err) return next(err);
+
+		/* 生成top */
+		Category.findCategorys(function (err, status, msg, docs){
+			if(err) return next(err);
+
+			fs.readFile(path.join(vmPath, 'TopNavCategory.vm.html'), 'utf8', function (err, template){
+				if(err) return next(err);
+
+				var html = velocity.render(template, {
+					virtualPath: virtualPath,
+					categorys: docs
+				});
+
+				fs.writeFile(path.join(vmPath, 'html', 'topNavCategory.html'), html, 'utf8', function (err){
+					if(err) console.log(err);
+				});
+			});
+		});
+	});
 
 	Link.install(function (err, status, msg, doc){
 		if(err) return next(err);

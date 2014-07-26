@@ -21,8 +21,10 @@ require('./User');
 require('./Article');
 require('./Comment');
 require('./Link');
+require('./Category');
 
 exports.User = mongoose.model('User');
 exports.Article = mongoose.model('Article');
 exports.Comment = mongoose.model('Comment');
 exports.Link = mongoose.model('Link');
+exports.Category = mongoose.model('Category');
