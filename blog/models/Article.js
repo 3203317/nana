@@ -13,6 +13,8 @@ var ArticleSchema = new Schema({
 		type: String
 	}, Keys: {			// 关键字
 		type: String
+	}, ViewCount: {
+		type: Number
 	}, User_Id: {		// 用户Id
 		type: ObjectId
 	}

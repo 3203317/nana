@@ -1,14 +1,14 @@
-<div class="panel panel-default olx-panel">
-	<div class="panel-heading">
-		<h3 class="panel-title">热门文章</h3>
+<div class='panel panel-default olx-panel'>
+	<div class='panel-heading'>
+		<h3 class='panel-title'>热门文章</h3>
 	</div>
-	<div class="panel-body">
-		<ul class="list-group olx-list-group">
-		    #foreach($top10ViewNum in $top10ViewNums)<li class="list-group-item">					
-		        <span class="badge">$top10ViewNum.ViewNums</span>
-			    <a href="${virtualPath}archive/${top10ViewNum.Id}.html" title="$top10ViewNum.ArticleTitle">
-			        <div class="olx-text-ellipsis">$top10ViewNum.ArticleTitle</div>
-                </a>						        	
+	<div class='panel-body'>
+		<ul class='list-group'>
+			#foreach($article in $top10ViewNums)<li class='list-group-item'>
+				<span class='badge'>$article.ViewCount</span>
+				<a href='${virtualPath}archive/${article._id}.html' title='$article.Title'>
+					<div>$article.Title</div>
+				</a>
 			</li>
 			#end
 		</ul>
