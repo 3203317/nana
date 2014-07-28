@@ -1,0 +1,11 @@
+mongoimport -d foreworld -c articles d:\GitHub\nana\asset\f_article.json --jsonArray
+
+var cursor = db.articles.find();
+cursor.forEach(function(x){
+	db.articles.update(x, {
+		$set:{
+			PostTime:new Date(x.PostTime), 
+			ViewCount:parseInt(x.ViewCount)
+		}
+	});
+});
