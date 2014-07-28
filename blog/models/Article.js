@@ -6,7 +6,8 @@ var util = require('../lib/util');
 
 var ArticleSchema = new Schema({
 	Title: {
-		type: String
+		type: String,
+		required: true
 	}, Abstracts: {		// 摘要
 		type: String
 	}, Content: {		// 文章内容
