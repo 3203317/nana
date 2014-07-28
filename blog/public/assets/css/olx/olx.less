@@ -5,6 +5,29 @@ body, h1, h2, h3, h4, h5, h6 {
 body {
 	background: url('images/bg.jpg') repeat scroll 0 0 rgba(0, 0, 0, 0);
 
+	#archiveList, #tagList {
+		margin-bottom: 10px;
+		a {
+			color: #B94A48;
+			&:hover, &:focus {
+				text-decoration: underline;
+			}
+		}
+		p {
+			font-size: 12px;
+			.badge {
+				background-color: #999999;
+			}
+		}
+	}
+
+	.breadcrumb {
+		font-size: 12px;
+		a {
+			color: #D2322D;
+		}
+	}
+
 	.alert-info {
 		background-image: linear-gradient(to bottom, #F5F5F5 0px, #E8E8E8 100%);
 		border-color: #DDDDDD;

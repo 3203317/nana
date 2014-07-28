@@ -10,16 +10,15 @@
 			<div class='row'>
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
-					<div class='content-frame clearfix'>
-						<div class='article-content'>
+					<div class='panel panel-default'>
+						<div class='panel-body'>
 							<ol class='breadcrumb'>
-								<li><div class='glyphicon glyphicon-home'></div>
-								<a href='${virtualPath}index.html'>首页</a></li>
+								<li>
+									<div class='glyphicon glyphicon-home'></div>
+									<a href='${virtualPath}index.html'>首页</a></li>
 								<li class='active'>档案馆</li>
 							</ol>
-							<div id='archiveList'>
-								#parse('pagelet/archiveList.html')
-							</div>
+							#parse('pagelet/archiveList.html')
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
@@ -39,8 +38,7 @@
 					#parse('pagelet/html/usefulLinks.html')
 					<div id='qrCode'>
 						<figure>
-							<img src='${virtualPath}public/assets/images/archive.png' alt='二维码' title='档案馆'>
-						</figure>
+							<img src='${virtualPath}public/assets/images/archive.png' alt='二维码' title='档案馆'></figure>
 					</div>
 				</div>
 			</div>
