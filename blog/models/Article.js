@@ -37,6 +37,18 @@ ArticleSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
+ArticleSchema.virtual('sPostTime').get(function(){
+	return this.PostTime.format();
+});
+
+ArticleSchema.virtual('PostTime2Day').get(function(){
+	return util.pdate(this.PostTime.getDate());
+});
+
+ArticleSchema.virtual('ViewCount2Money').get(function(){
+	return util.threeSeparator(this.ViewCount);
+});
+
 ArticleSchema.pre('save', function (next, done){
 	next();
 });
