@@ -5,6 +5,27 @@ body, h1, h2, h3, h4, h5, h6 {
 body {
 	background: url('images/bg.jpg') repeat scroll 0 0 rgba(0, 0, 0, 0);
 
+	#backTop {
+		&:before {
+			content: '\e113';
+		}
+		display: inline-block;
+		font-family: 'Glyphicons Halflings';
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1px;
+		bottom: 50px;
+		color: #3D4450;
+		cursor: pointer;
+		display: block;
+		font-size: 30px;
+		position: fixed;
+		right: 40px;
+		top: auto;
+		z-index: 999;
+		display: none;
+	}
+
 	#archiveList, #tagList {
 		margin-bottom: 10px;
 		a {
