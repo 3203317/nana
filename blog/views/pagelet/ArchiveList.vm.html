@@ -1,6 +1,6 @@
 <div id='archiveList'>
 	#foreach($archive in $archives)
-	<h3>2011年<a id='2011'></a></h3>
+	<h3>${archive.Y4}年<a id='${archive.Y4}'></a></h3>
 	<div class='panel-group olx-accordion'>
 		#foreach($archiveChild in $archive.ArchiveChildren)
 		<div class='panel panel-default'>
