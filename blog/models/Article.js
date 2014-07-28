@@ -14,9 +14,13 @@ var ArticleSchema = new Schema({
 	}, Keys: {			// 关键字
 		type: String
 	}, ViewCount: {
-		type: Number
+		type: Number,
+		default: 0
 	}, User_Id: {		// 用户Id
 		type: ObjectId
+	}, PostTime: {
+		type: Date,
+		default: Date.now
 	}
 }, {
 	versionKey: false,
