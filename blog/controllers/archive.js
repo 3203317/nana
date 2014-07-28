@@ -35,11 +35,11 @@ exports.index = function(req, res, next){
 				if(article.PostTime.getFullYear() == archive.Y4){
 					/* 获取最后一条记录月 */
 					archiveChild = archive.ArchiveChildren[archive.ArchiveChildren.length - 1];
-					if(article.PostTime.getMonth() == archiveChild.M2){
+					if(article.PostTime2Month == archiveChild.M2){
 						archiveChild.Articles.push(article);
 					}else{
 						archiveChild = {
-							'M2': article.PostTime.getMonth(),
+							'M2': article.PostTime2Month,
 							'Articles': []
 						};
 
@@ -56,7 +56,7 @@ exports.index = function(req, res, next){
 
 					/* 添加月 */
 					archiveChild = {
-						'M2': article.PostTime.getMonth(),
+						'M2': article.PostTime2Month,
 						'Articles': []
 					}
 
@@ -75,7 +75,7 @@ exports.index = function(req, res, next){
 
 				/* 添加月 */
 				archiveChild = {
-					'M2': article.PostTime.getMonth(),
+					'M2': article.PostTime2Month,
 					'Articles': []
 				}
 
