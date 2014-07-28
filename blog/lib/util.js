@@ -89,3 +89,18 @@ exports.random = function(num){
 exports.isEmail = function(email){
 	return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
 }
+
+/**
+ * 格式化返回货币描述
+ *
+ * @params {Number} email
+ * @return 1,230
+ */
+exports.threeSeparator = function(num){
+	num = num + '';
+	var re = /(-?\d+)(\d{3})/;
+	while(re.test(num)){
+		num = num.replace(re, '$1,$2');
+	}
+	return num;
+};

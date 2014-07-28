@@ -4,6 +4,8 @@ var conf = require('../settings'),
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+var Article = require('../biz/article');
+
 function getTopMessage(){
 	var time = new Date();
 	var year = time.getFullYear();
@@ -13,14 +15,18 @@ function getTopMessage(){
 };
 
 exports.index = function(req, res, next){
-	res.render('Archive', {
-		moduleName: 'archive',
-		title: title,
-		atitle: '档案馆',
-		description: '档案馆',
-		keywords: ',档案馆,Bootstrap3',
-		virtualPath: '..'+ virtualPath,
-		topMessage: getTopMessage(),
-		cdn: conf.cdn
+	Article.findAll(function (err, status, msg, docs){
+		if(err) return next(err);
+
+		res.render('Archive', {
+			moduleName: 'archive',
+			title: title,
+			atitle: '档案馆',
+			description: '档案馆',
+			keywords: ',档案馆,Bootstrap3',
+			virtualPath: virtualPath,
+			topMessage: getTopMessage(),
+			cdn: conf.cdn
+		});
 	});
 };
