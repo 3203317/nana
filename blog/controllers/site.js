@@ -64,6 +64,22 @@ exports.installUI = function(req, res, next){
 				}
 			}
 
+			/* 未添加标签的归为一类 */
+			var tag_3 = {
+				Id: '',
+				TagName: '未归类',
+				Articles: []
+			};
+			tagList.push(tag_3);
+
+			for(var j in articles){
+				var article = articles[j];
+
+				if(!article.Tags.length){
+					tag_3.Articles.push(article);
+				}
+			}
+
 			fs.readFile(path.join(vmPath, 'TagList.vm.html'), 'utf8', function (err, template){
 				if(err) return ep.emit('error', err);
 
