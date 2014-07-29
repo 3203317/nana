@@ -9,3 +9,14 @@ cursor.forEach(function(x){
 		}
 	});
 });
+
+mongoimport -d foreworld -c tags d:\GitHub\nana\asset\f_tag.json --jsonArray
+
+var cursor = db.tags.find();
+cursor.forEach(function(x){
+	db.tags.update(x, {
+		$set:{
+			TagCount:parseInt(x.TagCount)
+		}
+	});
+});
