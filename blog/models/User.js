@@ -46,8 +46,7 @@ var UserSchema = new Schema({
 	versionKey: false,
 	toObject: {
 		virtuals: true
-	},
-	toJSON: {
+	}, toJSON: {
 		virtuals: true
 	}
 });
