@@ -22,9 +22,11 @@ require('./Article');
 require('./Comment');
 require('./Link');
 require('./Category');
+require('./Tag');
 
 exports.User = mongoose.model('User');
 exports.Article = mongoose.model('Article');
 exports.Comment = mongoose.model('Comment');
 exports.Link = mongoose.model('Link');
 exports.Category = mongoose.model('Category');
+exports.Tag = mongoose.model('Tag');

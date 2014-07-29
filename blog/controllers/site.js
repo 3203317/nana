@@ -10,6 +10,7 @@ var fs = require('fs'),
 var Comment = require('../biz/comment'),
 	Link = require('../biz/link'),
 	Article = require('../biz/article'),
+	Tag = require('../biz/tag'),
 	Category = require('../biz/category');
 
 var title = 'FOREWORLD 洪荒',
@@ -18,8 +19,8 @@ var title = 'FOREWORLD 洪荒',
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList',
-		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList){
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tagList',
+		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tagList){
 			res.send({
 				success: true,
 				data: arguments
@@ -29,6 +30,54 @@ exports.installUI = function(req, res, next){
 
 	ep.fail(function (err){
 		next(err);
+	});
+
+	Tag.findAll(function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
+
+		/* 获取全部的标签 */
+		var tags = docs;
+
+		Article.findAll(function (err, status, msg, docs){
+			if(err) return ep.emit('error', err);
+
+			var articles = docs;
+
+			var tagList = [];
+
+			for(var i in tags){
+				var tag = tags[i];
+
+				var tag_2 = {
+					Id: tag._id,
+					TagName: tag.TagName,
+					Articles: []
+				};
+				tagList.push(tag_2);
+
+				for(var j in articles){
+					var article = articles[j];
+
+					if(article.Tags && article.Tags.length && -1 < article.Tags.indexOf(','+ tag.TagName +',')){
+						tag_2.Articles.push(article);
+					}
+				}
+			}
+
+			fs.readFile(path.join(vmPath, 'TagList.vm.html'), 'utf8', function (err, template){
+				if(err) return ep.emit('error', err);
+
+				var html = velocity.render(template, {
+					virtualPath: virtualPath,
+					tagList: tagList
+				});
+
+				fs.writeFile(path.join(vmPath, 'html', 'tagList.html'), html, 'utf8', function (err){
+					if(err) return ep.emit('error', err);
+					ep.emit('tagList', true);
+				});
+			});
+		});
 	});
 
 	/* 档案馆 */
