@@ -42,10 +42,8 @@
 								<li>
 									<div class='glyphicon glyphicon-home'></div>
 									<a href='${virtualPath}index.html'>空间</a></li>
-								<li class='active'>
-									<a>博客</a></li>
-								<li class='active'>
-									<a>发表博文</a></li>
+								<li class='active'>博客</li>
+								<li class='active'>发表博文</li>
 							</ol>
 							<form id='newBlogFrm' role="form" onsubmit='return false;' data-url='new-blog'>
 								<div class="form-group">
@@ -78,8 +76,9 @@
 				</div>
 			</div>
 		</div>
-        #parse('pagelet/IndexFooter.html')
-        #parse('pagelet/IndexJs.html')
+		#parse('pagelet/IndexFooter.html')
+		#parse('pagelet/backTop.html')
+		#parse('pagelet/IndexJs.html')
 		<!-- 配置文件 -->
 		<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.config.js"></script>
 		<!-- 编辑器源码文件 -->
@@ -93,9 +92,7 @@
 		</script>
 		<!-- Own -->
 		<script type="text/javascript">
-
-			function showVali(valiResu){
-			}
+			function showVali(valiResu){ }
 
 			function subFrm(){
 				$('#newBlogFrm').olxForm('submit', [function(){
@@ -105,7 +102,6 @@
 					if(!data.success) return showVali(data.msg);
 				}]);
 			}
-
 			$('#btn_sub').click(subFrm);
 		</script>
 	</body>
