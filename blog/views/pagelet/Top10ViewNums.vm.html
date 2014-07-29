@@ -5,8 +5,8 @@
 	<div class='panel-body'>
 		<ul class='list-group'>
 			#foreach($article in $top10ViewNums)<li class='list-group-item'>
-				<span class='badge'>$article.ViewCount</span>
-				<a href='${virtualPath}archive/${article._id}.html' title='$article.Title'>
+				<span class='badge'>$article.ViewCount2Money</span>
+				<a href='${virtualPath}archive/${article._id}.html' title='创建于 $article.sPostTime'>
 					<div>$article.Title</div>
 				</a>
 			</li>
