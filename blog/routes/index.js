@@ -1,5 +1,6 @@
 var user = require('../controllers/user'),
 	site = require('../controllers/site'),
+	tag = require('../controllers/tag'),
 	archive = require('../controllers/archive');
 
 var virtualPath = '',
@@ -53,4 +54,5 @@ module.exports = function(app){
 	app.post('/u/:id/admin/new-blog', valiPostData, user.validate, user.saveNewBlog);
 
 	app.get('/archive/', archive.index);
+	app.get('/archive/tag/', tag.index);
 };
