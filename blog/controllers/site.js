@@ -1,4 +1,5 @@
 var conf = require('../settings'),
+	EventProxy = require('eventproxy'),
 	util = require('../lib/util');
 
 var fs = require('fs'),
@@ -16,76 +17,73 @@ var title = 'FOREWORLD 洪荒',
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	Category.install(function (err, status, msg, doc){
-		if(err) return next(err);
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments',
+		function (topNavCategory, usefulLinks, top10Comments){
+			res.send({
+				success: true,
+				data: arguments
+			});
+		}
+	);
 
-		/* 生成top */
-		Category.findCategorys(function (err, status, msg, docs){
-			if(err) return next(err);
+	ep.fail(function (err){
+		next(err);
+	});
 
-			fs.readFile(path.join(vmPath, 'TopNavCategory.vm.html'), 'utf8', function (err, template){
-				if(err) return next(err);
+	/* 生成TOP分类 */
+	Category.findCategorys(function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
 
-				var html = velocity.render(template, {
-					virtualPath: virtualPath,
-					topNavCategory: docs
-				});
+		fs.readFile(path.join(vmPath, 'TopNavCategory.vm.html'), 'utf8', function (err, template){
+			if(err) return ep.emit('error', err);
 
-				fs.writeFile(path.join(vmPath, 'html', 'topNavCategory.html'), html, 'utf8', function (err){
-					if(err) console.log(err);
-				});
+			var html = velocity.render(template, {
+				virtualPath: virtualPath,
+				topNavCategory: docs
+			});
+
+			fs.writeFile(path.join(vmPath, 'html', 'topNavCategory.html'), html, 'utf8', function (err){
+				if(err) return ep.emit('error', err);
+				ep.emit('topNavCategory', true);
 			});
 		});
 	});
 
-	Link.install(function (err, status, msg, doc){
-		if(err) return next(err);
+	/* 常用链接 */
+	Link.findLinks(function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
 
-		/* 生成右侧sider */
-		Link.findLinks(function (err, status, msg, docs){
-			if(err) return next(err);
+		fs.readFile(path.join(vmPath, 'UsefulLinks.vm.html'), 'utf8', function (err, template){
+			if(err) return ep.emit('error', err);
 
-			fs.readFile(path.join(vmPath, 'UsefulLinks.vm.html'), 'utf8', function (err, template){
-				if(err) return next(err);
+			var html = velocity.render(template, {
+				virtualPath: virtualPath,
+				usefulLinks: docs
+			});
 
-				var html = velocity.render(template, {
-					virtualPath: virtualPath,
-					usefulLinks: docs
-				});
-
-				fs.writeFile(path.join(vmPath, 'html', 'usefulLinks.html'), html, 'utf8', function (err){
-					if(err) console.log(err);
-				});
+			fs.writeFile(path.join(vmPath, 'html', 'usefulLinks.html'), html, 'utf8', function (err){
+				if(err) return ep.emit('error', err);
+				ep.emit('usefulLinks', true);
 			});
 		});
 	});
 
-	/* 评论 */
-	Comment.install(function (err, status, msg, doc){
-		if(err) return next(err);
+	/* 生成评论 */
+	Comment.findComments([1, 10], function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
 
-		/* 生成右侧sider */
-		Comment.findComments([1, 10], function (err, status, msg, docs){
-			if(err) return next(err);
+		fs.readFile(path.join(vmPath, 'Top10Comments.vm.html'), 'utf8', function (err, template){
+			if(err) return ep.emit('error', err);
 
-			fs.readFile(path.join(vmPath, 'Top10Comments.vm.html'), 'utf8', function (err, template){
-				if(err) return next(err);
-
-				var html = velocity.render(template, {
-					virtualPath: virtualPath,
-					top10Comments: docs
-				});
-
-				fs.writeFile(path.join(vmPath, 'html', 'top10Comments.html'), html, 'utf8', function (err){
-					if(err) console.log(err);
-				});
+			var html = velocity.render(template, {
+				virtualPath: virtualPath,
+				top10Comments: docs
 			});
-		});
 
-		res.send({
-			success: 0 === status,
-			msg: msg,
-			data: doc
+			fs.writeFile(path.join(vmPath, 'html', 'top10Comments.html'), html, 'utf8', function (err){
+				if(err) return ep.emit('error', err);
+				ep.emit('top10Comments', true);
+			});
 		});
 	});
 };
