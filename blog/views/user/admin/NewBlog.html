@@ -8,68 +8,44 @@
 		<header id='header'></header>
 		<div class='container'>
 			<div class='row'>
-				<div class="col-sm-12 col-md-3">
-					<div class="panel panel-default olx-panel">
-						<div class="panel-heading">
-							<h3 class="panel-title">博客管理</h3>
-						</div>
-						<div class="panel-body">
-							<ul class="list-group olx-list-group">
-								<li class="list-group-item">
-									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="发表博文">
-										<div class="olx-text-ellipsis">发表博文</div>
-									</a>
-								</li>
-								<li class="list-group-item">
-									<span class="badge">2679</span>
-									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="草稿箱">
-										<div class="olx-text-ellipsis">草稿箱</div>
-									</a>
-								</li>
-								<li class="list-group-item">
-									<a href="/archive/c8a08e7c920e11e3a195b888e3351e26.html" title="博客导出">
-										<div class="olx-text-ellipsis">博客导出</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md-9">
-					<div class="panel panel-default">
-						<div class="panel-body">
+				#parse('user/admin/Sidebar.html')
+				<div class='col-sm-12 col-md-9'>
+					<div class='panel panel-default'>
+						<div class='panel-body'>
 							<ol class='breadcrumb'>
 								<li>
 									<div class='glyphicon glyphicon-home'></div>
 									<a href='${virtualPath}index.html'>空间</a></li>
-								<li class='active'>博客</li>
-								<li class='active'>发表博文</li>
+								<li class='active'>
+									<a href='javascript:;'>博客</a></li>
+								<li class='active'>
+									<a href='javascript:;'>发表博文</a></li>
 							</ol>
-							<form id='newBlogFrm' role="form" onsubmit='return false;' data-url='new-blog'>
-								<div class="form-group">
-									<label for="newBlogFrm_Title">
+							<form id='newBlogFrm' role='form' onsubmit='return false;' data-url='new-blog'>
+								<div class='form-group'>
+									<label for='newBlogFrm_Title'>
 										<b>博客标题</b></label>
-									<input type="text" class="form-control" name='Title' id="newBlogFrm_Title" placeholder="博客标题">
+									<input type='text' class='form-control' name='Title' id='newBlogFrm_Title' placeholder='博客标题'>
 								</div>
-								<div class="form-group">
-									<label for="newBlogFrm_Abstracts">
+								<div class='form-group'>
+									<label for='newBlogFrm_Abstracts'>
 										<b>博客摘要</b></label>
-									<textarea class="form-control" rows="3" name='Abstracts' id='newBlogFrm_Abstracts'
+									<textarea class='form-control' rows='3' name='Abstracts' id='newBlogFrm_Abstracts'
 										placeholder='我们倡议为您的博客添加摘要，一段好的摘要能为你的博客添分加彩，同时也是对阅读者的一个非常好的引导。'></textarea>
 								</div>
-								<div class="form-group">
-									<label for="container">
+								<div class='form-group'>
+									<label for='container'>
 										<b>博客正文</b></label>
 									<!-- 加载编辑器的容器 -->
-									<script id="container" name="Content" type="text/plain"></script>
+									<script id='container' name='Content' type='text/plain'></script>
 								</div>
-								<div class="form-group">
-									<label for="newBlogFrm_Keys">
+								<div class='form-group'>
+									<label for='newBlogFrm_Keys'>
 										<b>关键字</b></label>
-									<input type="text" class="form-control" name='Keys' id="newBlogFrm_Keys" placeholder="为你的博客设置关键字，用逗号隔开，最多5个哦">
+									<input type='text' class='form-control' name='Keys' id='newBlogFrm_Keys' placeholder='为你的博客设置关键字，用逗号隔开，最多5个哦'>
 								</div>
-								<button type="button" class="btn btn-primary" id='btn_sub'>提交</button>
-								<button type="button" class="btn btn-success">保存草稿</button>
+								<button type='button' class='btn btn-primary' id='btn_sub'>提交</button>
+								<button type='button' class='btn btn-success'>保存草稿</button>
 							</form>
 						</div>
 					</div>
@@ -80,18 +56,18 @@
 		#parse('pagelet/backTop.html')
 		#parse('pagelet/IndexJs.html')
 		<!-- 配置文件 -->
-		<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.config.js"></script>
+		<script type='text/javascript' src='${cdn}ueditor/1.4.3/ueditor.config.js'></script>
 		<!-- 编辑器源码文件 -->
-		<script type="text/javascript" src="${cdn}ueditor/1.4.3/ueditor.all.js"></script>
+		<script type='text/javascript' src='${cdn}ueditor/1.4.3/ueditor.all.js'></script>
 		<!-- 实例化编辑器 -->
-		<script type="text/javascript">
+		<script type='text/javascript'>
 			var ue = UE.getEditor('container', {
 				autoHeightEnabled: false,
 				initialFrameHeight: 200
 			});
 		</script>
 		<!-- Own -->
-		<script type="text/javascript">
+		<script type='text/javascript'>
 			function showVali(valiResu){ }
 
 			function subFrm(){
