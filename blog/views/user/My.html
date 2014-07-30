@@ -12,6 +12,12 @@
 		#table1 tbody td a:hover {
 			color: blue;
 		}
+		#table1 {
+			font-size: 12px;
+		}
+		#table1 a {
+			font-size: 12px;
+		}
 		</style>
 	</head>
 	<body>
@@ -53,9 +59,11 @@
 										</a>
 										<ul class='dropdown-menu' role='menu' aria-labelledby='drop${article._id}'>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='javascript:alert("${article._id}")'>编辑</a></li>
+												<a role='menuitem' tabindex='-1' href='javascript:alert("${article._id}")'>
+													<span class='glyphicon glyphicon-edit'></span> 编辑</a></li>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='javascript:alert("${article._id}")'>删除</a></li>
+												<a role='menuitem' tabindex='-1' href='javascript:alert("${article._id}")'>
+													<span class='glyphicon glyphicon-remove-sign'></span> 删除</a></li>
 										</ul>
 									</div>
 								</td>
