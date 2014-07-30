@@ -2,34 +2,46 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<link rel='stylesheet' type='text/css' href='${virtualPath}public/user/css/register.css?v1' media='screen'>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
 		<header id='header'></header>
 		<div class='container'>
 			<div class='row'>
-				<div class="col-sm-12 col-md-4">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-				<p><a class="btn" href="#">View details &raquo;</a></p>
+				#parse('user/Sidebar.html')
+				<div class='col-sm-12 col-md-6'>
+					<ul class='nav nav-tabs' role='tablist'>
+						<li role='presentation'>
+							<a href='javascript:;'>最新动态</a></li>
+						<li role='presentation' class='active'>
+							<a href='javascript:;'>博客</a></li>
+						<li role='presentation'>
+							<a href='javascript:;'>新闻</a></li>
+					</ul>
+					<table id='table1' data-olx-type='olx.grid'
+						class='table table-hover table-condensed table-striped'
+						data-url='/manage/role/list' data-current='1' data-pagesize='20' data-count='561'>
+						<thead>
+							<tr>
+								<th>标题</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							#foreach($article in $articles)<tr>
+								<td><span title='创建于 $article.sPostTime'>$article.Title</span></td>
+								<td>
+									<a href="javascript:;">编辑</a></td>
+							</tr>#end
+						</tbody>
+					</table>
 				</div>
-				<div class="col-sm-12 col-md-4">
-				<h2>Heading</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-				<p><a class="btn" href="#">View details &raquo;</a></p>
-				</div>
-				<div class="col-sm-12 col-md-4">
-				<h2>Heading</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-				<p><a class="btn" href="#">View details &raquo;</a></p>
-				</div>
+				#parse('user/Sidebar2.html')
 			</div>
 		</div>
-        #parse('pagelet/IndexFooter.html')
-        #parse('pagelet/IndexJs.html')
+		#parse('pagelet/IndexFooter.html')
+		#parse('pagelet/backTop.html')
+		#parse('pagelet/IndexJs.html')
 		<!-- Own -->
-		<script type="text/javascript">
-		</script>
 	</body>
 </html>
