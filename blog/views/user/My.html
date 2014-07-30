@@ -23,12 +23,14 @@
 						data-url='/manage/role/list' data-current='1' data-pagesize='20' data-count='561'>
 						<thead>
 							<tr>
+								<th>#</th>
 								<th>标题</th>
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody>#set ($i=1)
 							#foreach($article in $articles)<tr>
+								<td>$i#set($i=$i+1)</td>
 								<td><span title='创建于 $article.sPostTime'>$article.Title</span></td>
 								<td>
 									<a href="javascript:;">编辑</a></td>
