@@ -14,12 +14,13 @@ a {
 	font-size: 12px;
 }
 
-.owner {
-	div {
-		&:first-child {
+body {
+	.owner {
+		.owner-left {
 			float: left;
 			overflow: hidden;
 			width: 60px;
+			padding-bottom: 10px;
 			.face {
 				img {
 					border: 1px solid #ccc;
@@ -27,10 +28,22 @@ a {
 				}
 			}
 		}
-		&:last-child {
+		.owner-right {
+			padding-left: 60px;
 			.user_name {
-				color: #663300
+				margin-bottom: 2px;
+				padding: 5px;
+				a {
+					color: #663300;
+				}
 			}
+			.opt {
+				font-size: 12px;
+			}
+		}
+		.owner-bot {
+			clear: both;
+			font-size: 12px;
 		}
 	}
 }
