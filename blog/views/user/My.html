@@ -2,6 +2,17 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
+		<style type='text/css'>
+		a {
+			color: #999999;
+		}
+		#table1 tbody td:nth-child(2) a {
+			color: black;
+		}
+		#table1 tbody td a:hover {
+			color: blue;
+		}
+		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -31,9 +42,12 @@
 						<tbody>#set ($i=1)
 							#foreach($article in $articles)<tr>
 								<td>$i#set($i=$i+1)</td>
-								<td><span title='创建于 $article.sPostTime'>$article.Title</span></td>
 								<td>
-									<a href="javascript:;">编辑</a></td>
+									<a title='创建于 $article.sPostTime' target='_blank'
+										href='${virtualPath}archive/${article._id}.html'>${article.Title}</a></td>
+								<td>
+									<a href='javascript:;'>编辑</a>
+									<span class='caret'></span></td>
 							</tr>#end
 						</tbody>
 					</table>
