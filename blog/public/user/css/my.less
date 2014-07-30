@@ -1,0 +1,36 @@
+a {
+	color: #999999;
+}
+#table1 tbody td:nth-child(2) a {
+	color: black;
+}
+#table1 tbody td a:hover {
+	color: blue;
+}
+#table1 {
+	font-size: 12px;
+}
+#table1 a {
+	font-size: 12px;
+}
+
+.owner {
+	div {
+		&:first-child {
+			float: left;
+			overflow: hidden;
+			width: 60px;
+			.face {
+				img {
+					border: 1px solid #ccc;
+					padding: 2px;
+				}
+			}
+		}
+		&:last-child {
+			.user_name {
+				color: #663300
+			}
+		}
+	}
+}
