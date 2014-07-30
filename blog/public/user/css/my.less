@@ -1,20 +1,23 @@
-a {
-	color: #999999;
-}
-#table1 tbody td:nth-child(2) a {
-	color: black;
-}
-#table1 tbody td a:hover {
-	color: blue;
-}
 #table1 {
 	font-size: 12px;
+	tbody {
+		td {
+			&:nth-child(2) a {
+				color: black;
+			}
+			a {
+				font-size: 12px;
+				&:hover {
+					color: blue;
+				}
+			}
+		}
+	}
 }
-#table1 a {
-	font-size: 12px;
-}
-
 body {
+	a {
+		color: #999999;
+	}
 	.owner {
 		.owner-left {
 			float: left;
