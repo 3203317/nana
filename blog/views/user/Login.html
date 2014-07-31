@@ -117,7 +117,7 @@
 					showVali(valiResu);
 				}, function (data){
 					if(!data.success) return showVali(data.msg);
-					location.href = data.data.id +'/login/success';
+					location.href = data.data.UserName +'/login/success';
 				}]);
 			}
 

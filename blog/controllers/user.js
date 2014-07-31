@@ -32,14 +32,14 @@ exports.login = function(req, res, next){
 		req.session.role = 'user';
 		req.session.user = doc;
 		result.success = true;
-		result.data = { id: doc._id };
+		result.data = { UserName: doc.UserName };
 		res.send(result);
 	});
 };
 
 exports.login_success = function(req, res, next){
-	var id = req.params.id.trim();
-	res.redirect('/u/'+ id);
+	var name = req.params.name.trim();
+	res.redirect('/u/'+ name);
 };
 
 exports.regUI = function(req, res, next){

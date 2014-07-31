@@ -20,3 +20,7 @@ cursor.forEach(function(x){
 		}
 	});
 });
+
+db.users.update({"IsDel":0}, {'$set':{ Email:'huangxin@foreworld.net' }})
+db.users.update({"IsDel":0}, {'$set':{ UserName:'foreworld' }})
+db.users.update({"IsDel":0}, {'$set':{ Nickname:'洪荒' }})
