@@ -102,6 +102,20 @@ exports.newBlogUI = function(req, res, next){
 	});
 };
 
+exports.editBlogUI = function(req, res, next){
+	var user = req.session.user,
+		_title = '的个人空间';
+
+	res.render('user/admin/EditBlog', {
+		title: title,
+		atitle: _title,
+		description: _title,
+		keywords: ','+ _title +',Bootstrap3',
+		virtualPath: virtualPath,
+		cdn: conf.cdn
+	});
+};
+
 exports.saveNewBlog = function(req, res, next){
 	var result = { success: false },
 		data = req._data;

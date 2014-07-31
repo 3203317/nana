@@ -53,6 +53,8 @@ module.exports = function(app){
 	app.get('/u/:name/admin/new/blog', user.validate2, user.newBlogUI);
 	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.saveNewBlog);
 
+	app.get('/u/:name/admin/edit/blog/:aid', user.validate2, user.editBlogUI);
+
 	app.get('/archive/', archive.index);
 	app.get('/archive/tag/', tag.index);
 };
