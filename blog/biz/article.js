@@ -18,10 +18,11 @@ exports.saveNew = function(newInfo, cb){
 /**
  * 查询所有文章
  *
+ * @params {ObjectId}
  * @params {Function} cb
  * @return
  */
-exports.findAll = function(cb){
+exports.findAll = function(user_id, cb){
 	Article.find(null, null, {
 		sort: {
 			PostTime: -1

@@ -66,12 +66,12 @@ exports.reg = function(req, res, next){
 };
 
 exports.myUI = function(req, res, next){
-	var name = req.params.name.trim();
-
-	var user = req.session.user,
+	var name = req.params.name.trim(),
+		_user = req.flash('user')[0],
+		user = req.session.user,
 		_title = name +'的个人空间';
 
-	Article.findAll(function (err, status, msg, docs){
+	Article.findAll(_user._id, function (err, status, msg, docs){
 		if(err) return next(err);
 
 		res.render('user/My', {
@@ -81,6 +81,8 @@ exports.myUI = function(req, res, next){
 			keywords: ','+ _title +',Bootstrap3',
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
+			_user: _user,
+			user: user,
 			articles: docs
 		});
 	});
@@ -132,6 +134,7 @@ exports.valiUserName = function(req, res, next){
 	User.findByName(name, function (err, status, msg, doc){
 		if(err) return next(err);
 		if(!doc) return next(new Error('Not Found User.'));
+		req.flash('user', doc);
 		next();
 	});
 };
