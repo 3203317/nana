@@ -15,8 +15,7 @@ function getTopMessage(){
 exports.index = function(req, res, next){
 	res.render('Tags', {
 		moduleName: 'tag',
-		title: title,
-		atitle: '标签',
+		title: title +' - 标签',
 		description: '标签',
 		keywords: ',标签,Bootstrap3',
 		virtualPath: virtualPath,

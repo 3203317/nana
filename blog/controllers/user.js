@@ -8,10 +8,9 @@ var User = require('../biz/user'),
 
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
-		title: title,
-		atitle: '用户管理',
-		description: '用户管理',
-		keywords: ',用户管理,Bootstrap3',
+		title: title +' - 用户登陆',
+		description: '用户登陆',
+		keywords: ',用户登陆,Bootstrap3',
 		virtualPath: virtualPath,
 		refererUrl: escape('http://'+ req.headers.host + req.url),
 		cdn: conf.cdn
@@ -44,8 +43,7 @@ exports.login_success = function(req, res, next){
 
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
-		title: title,
-		atitle: '新用户注册',
+		title: title +' - 新用户注册',
 		description: '新用户注册',
 		keywords: ',新用户注册,Bootstrap3',
 		virtualPath: virtualPath,
@@ -88,12 +86,13 @@ exports.myUI = function(req, res, next){
 };
 
 exports.newBlogUI = function(req, res, next){
-	var user = req.session.user,
-		_title = '的个人空间';
+	var name = req.params.name.trim(),
+		_user = req.flash('user')[0],
+		user = req.session.user,
+		_title = '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
 	res.render('user/admin/NewBlog', {
-		title: title,
-		atitle: _title,
+		title: _title,
 		description: _title,
 		keywords: ','+ _title +',Bootstrap3',
 		virtualPath: virtualPath,
@@ -103,16 +102,17 @@ exports.newBlogUI = function(req, res, next){
 
 exports.editBlogUI = function(req, res, next){
 	var aid = req.params.aid.trim(),
+		name = req.params.name.trim(),
+		_user = req.flash('user')[0],
 		user = req.session.user,
-		_title = '的个人空间';
+		_title = '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
 	Article.findById(aid, function (err, status, msg, doc){
 		if(err) return next(err);
 		if(!doc) return next(new Error('Not Found.'));
 
 		res.render('user/admin/EditBlog', {
-			title: title,
-			atitle: _title,
+			title: _title,
 			description: _title,
 			keywords: ','+ _title +',Bootstrap3',
 			virtualPath: virtualPath,
