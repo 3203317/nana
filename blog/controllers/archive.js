@@ -5,18 +5,17 @@ var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
 function getTopMessage(){
-	var time = new Date();
-	var year = time.getFullYear();
-	var month = util.pdate(time.getMonth() + 1);
-	var day = util.pdate(time.getDate());
-	return '欢迎您。今天是'+ year +'年'+ month +'月'+ day +'日。';
+	var t = new Date();
+	var y = t.getFullYear();
+	var m = util.pdate(t.getMonth() + 1);
+	var d = util.pdate(t.getDate());
+	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
 exports.index = function(req, res, next){
 	res.render('Archive', {
 		moduleName: 'archive',
-		title: title,
-		atitle: '档案馆',
+		title: title +' - 档案馆',
 		description: '档案馆',
 		keywords: ',档案馆,Bootstrap3',
 		virtualPath: virtualPath,
