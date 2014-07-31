@@ -38,7 +38,7 @@ exports.installUI = function(req, res, next){
 		/* 获取全部的标签 */
 		var tags = docs;
 
-		Article.findAll(function (err, status, msg, docs){
+		Article.findAll(null, function (err, status, msg, docs){
 			if(err) return ep.emit('error', err);
 
 			var articles = docs;
@@ -97,7 +97,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 档案馆 */
-	Article.findAll(function (err, status, msg, docs){
+	Article.findAll(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		/* 生成档案馆对象 */
