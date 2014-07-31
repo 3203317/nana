@@ -39,7 +39,7 @@ exports.login = function(req, res, next){
 
 exports.login_success = function(req, res, next){
 	var name = req.params.name.trim();
-	res.redirect('/u/'+ name);
+	res.redirect('/u/'+ name +'/');
 };
 
 exports.regUI = function(req, res, next){
@@ -90,7 +90,7 @@ exports.myUI = function(req, res, next){
 
 exports.newBlogUI = function(req, res, next){
 	var user = req.session.user,
-		_title = user.Email +'的个人空间';
+		_title = '的个人空间';
 
 	res.render('user/admin/NewBlog', {
 		title: title,
