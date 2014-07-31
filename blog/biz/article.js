@@ -59,3 +59,19 @@ exports.findByViewCount = function(page, cb){
 		cb(null, 1, null, docs);
 	});
 };
+
+/**
+ * 通过id查询
+ *
+ * @params {String}
+ * @params {Function} cb
+ * @return
+ */
+exports.findById = function(id, cb){
+	Article.findOne({
+		_id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 1, null, doc);
+	});
+};
