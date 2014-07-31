@@ -129,8 +129,9 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByEmail = function(email, cb) {
+	email = email.toLowerCase();
 	this.findOne({
-		Email: new RegExp(email, 'i')
+		Email: email
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
