@@ -43,3 +43,10 @@ exports.register = function(newInfo, cb){
 		});
 	});
 };
+
+exports.findByName = function(userName, cb){
+	User.findUserByName(userName, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 1, null, doc);
+	});
+};

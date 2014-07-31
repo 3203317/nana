@@ -8,6 +8,7 @@ var UserSchema = new Schema({
 	UserName: {			// 用户名
 		// required: true,
 		// match: /[a-z]/,
+		unique: true,
 		type: String
 	}, UserPass: {			// 密码
 		type: String

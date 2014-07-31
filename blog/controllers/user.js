@@ -66,8 +66,10 @@ exports.reg = function(req, res, next){
 };
 
 exports.myUI = function(req, res, next){
+	var name = req.params.name.trim();
+
 	var user = req.session.user,
-		_title = user.Email +'的个人空间';
+		_title = name +'的个人空间';
 
 	Article.findAll(function (err, status, msg, docs){
 		if(err) return next(err);
@@ -121,4 +123,15 @@ exports.validate = function(req, res, next){
 		});
 	}
 	res.redirect('/user/login');
+};
+
+
+exports.valiUserName = function(req, res, next){
+	var name = req.params.name.trim();
+
+	User.findByName(name, function (err, status, msg, doc){
+		if(err) return next(err);
+		if(!doc) return next(new Error('Not Found User.'));
+		next();
+	});
 };
