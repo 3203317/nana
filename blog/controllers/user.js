@@ -127,6 +127,11 @@ exports.validate = function(req, res, next){
 	res.redirect('/user/login');
 };
 
+exports.validate2 = function(req, res, next){
+	if('user' === req.session.role) return next();
+	var name = req.params.name.trim();
+	res.redirect('/u/'+ name +'/');
+};
 
 exports.valiUserName = function(req, res, next){
 	var name = req.params.name.trim();

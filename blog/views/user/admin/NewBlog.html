@@ -27,16 +27,16 @@
 								<li class='active'>
 									<a href='javascript:;'>发表博文</a></li>
 							</ol>
-							<form id='newBlogFrm' role='form' onsubmit='return false;' data-url='new-blog'>
+							<form id='blogFrm' role='form' onsubmit='return false;' data-url='new-blog'>
 								<div class='form-group'>
-									<label for='newBlogFrm_Title'>
+									<label for='blogFrm_Title'>
 										<b>博客标题</b></label>
-									<input type='text' class='form-control' name='Title' id='newBlogFrm_Title' placeholder='博客标题'>
+									<input type='text' class='form-control' name='Title' id='blogFrm_Title' placeholder='博客标题'>
 								</div>
 								<div class='form-group'>
-									<label for='newBlogFrm_Abstracts'>
+									<label for='blogFrm_Abstracts'>
 										<b>博客摘要</b></label>
-									<textarea class='form-control' rows='3' name='Abstracts' id='newBlogFrm_Abstracts'
+									<textarea class='form-control' rows='3' name='Abstracts' id='blogFrm_Abstracts'
 										placeholder='我们倡议为您的博客添加摘要，一段好的摘要能为你的博客添分加彩，同时也是对阅读者的一个非常好的引导。'></textarea>
 								</div>
 								<div class='form-group'>
@@ -46,9 +46,9 @@
 									<script id='container' name='Content' type='text/plain'></script>
 								</div>
 								<div class='form-group'>
-									<label for='newBlogFrm_Keys'>
+									<label for='blogFrm_Keys'>
 										<b>关键字</b></label>
-									<input type='text' class='form-control' name='Keys' id='newBlogFrm_Keys' placeholder='为你的博客设置关键字，用逗号隔开，最多5个哦'>
+									<input type='text' class='form-control' name='Keys' id='blogFrm_Keys' placeholder='为你的博客设置关键字，用逗号隔开，最多5个哦'>
 								</div>
 								<button type='button' class='btn btn-primary' id='btn_sub'>提交</button>
 								<button type='button' class='btn btn-success'>保存草稿</button>
@@ -77,7 +77,7 @@
 			function showVali(valiResu){ }
 
 			function subFrm(){
-				$('#newBlogFrm').olxForm('submit', [function(){
+				$('#blogFrm').olxForm('submit', [function(){
 				}, function (valiResu){
 					showVali(valiResu);
 				}, function (data){

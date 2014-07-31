@@ -49,8 +49,8 @@ module.exports = function(app){
 	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);
 
-	app.get('/u/:name', user.valiUserName, user.myUI);
-	app.get('/u/:name/admin/new/blog', user.newBlogUI);
+	app.get('/u/:name/', user.valiUserName, user.myUI);
+	app.get('/u/:name/admin/new/blog', user.validate2, user.newBlogUI);
 	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.saveNewBlog);
 
 	app.get('/archive/', archive.index);
