@@ -1,10 +1,9 @@
-<section class="slider">
-	<div class="flexslider">
-		<ul class="slides">
-		    #foreach($topMark in $topMarks)<li>
-				<a href="${virtualPath}archive/${topMark.Id}.html"><img src="${virtualPath}userData/${topMark.ArticleAuthor}/${topMark.ArticleImage}" alt="${topMark.ArticleTitle}"/></a>
-			</li>
-			#end
-		</ul>
-	</div>
+<section class='flexslider'>
+	<ul class='slides'>
+		#foreach($topMark in $topMarks)<li>
+			<a href='${virtualPath}archive/${topMark.Id}.html'>
+				<img src='${virtualPath}public/udata/${topMark.ArticleAuthor}/${topMark.ArticleImage}'
+					title='${topMark.ArticleTitle}' alt='${topMark.ArticleTitle}' /></a>
+		</li>#end
+	</ul>
 </section>

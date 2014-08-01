@@ -19,6 +19,14 @@ var ArticleSchema = new Schema({
 	}, ViewCount: {
 		type: Number,
 		default: 0
+	}, Bookmark: {
+		type: Number,
+		default: 0
+	}, Topmark: {
+		type: Number,
+		default: 0
+	}, Photo: {
+		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
 	}, PostTime: {
