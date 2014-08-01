@@ -8,7 +8,7 @@ var ArticleSchema = new Schema({
 	Title: {
 		type: String,
 		required: true
-	}, Abstracts: {		// 摘要
+	}, Intro: {			// 摘要
 		type: String
 	}, Content: {		// 文章内容
 		type: String
