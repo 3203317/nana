@@ -75,3 +75,22 @@ exports.findById = function(id, cb){
 		cb(null, 1, null, doc);
 	});
 };
+
+/**
+ * 查询
+ *
+ * @params {Function} cb
+ * @return
+ */
+exports.findTopmarks = function(cb) {
+	Article.find({
+		TopMark: 1
+	}, null, {
+		sort: {
+			PostTime: -1
+		}
+	}, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 1, null, docs);
+	});
+};
