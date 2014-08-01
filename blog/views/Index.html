@@ -10,6 +10,7 @@
 			<div class='row'>
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
+					#parse('pagelet/topMarks.html')
 					<div class='panel panel-default'>
 						<div class='panel-body'>
 							<ol class='breadcrumb'>
@@ -18,7 +19,6 @@
 									<a href='${virtualPath}index.html'>首页</a></li>
 								<li class='active'>档案馆</li>
 							</ol>
-							#parse('pagelet/html/archiveList.html')
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
@@ -38,7 +38,7 @@
 					#parse('pagelet/html/usefulLinks.html')
 					<div id='qrCode'>
 						<figure>
-							<img src='${virtualPath}public/assets/images/archive.png' alt='二维码' title='档案馆'></figure>
+							<img src='${virtualPath}public/assets/images/foreworld.png' alt='二维码' title='洪荒世界'></figure>
 					</div>
 				</div>
 			</div>
@@ -47,5 +47,12 @@
 		#parse('pagelet/backTop.html')
 		#parse('pagelet/IndexJs.html')
 		<!-- Own -->
+		<script type='text/javascript'>
+		$(function(){
+			$('.flexslider').flexslider({
+				animation: 'slide'
+			});
+		});
+		</script>
 	</body>
 </html>
