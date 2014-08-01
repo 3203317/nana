@@ -2,6 +2,7 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
+		<link rel='stylesheet' type='text/css' href='${virtualPath}public/site/css/index.css?v3' media='screen' />
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -11,26 +12,7 @@
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
 					#parse('pagelet/html/topMarks.html')
-					<div class='panel panel-default'>
-						<div class='panel-body'>
-							<ol class='breadcrumb'>
-								<li>
-									<div class='glyphicon glyphicon-home'></div>
-									<a href='${virtualPath}index.html'>首页</a></li>
-								<li class='active'>档案馆</li>
-							</ol>
-							<div>
-								<a href='javascript:;'>
-									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
-								<a href='javascript:;'>
-									<img src='${virtualPath}public/assets/images/share/16x16/qqwb.png'></a>
-								<a href='javascript:;'>
-									<img src='${virtualPath}public/assets/images/share/16x16/sinawb.png'></a>
-								<a href='javascript:;'>
-									<img src='${virtualPath}public/assets/images/share/16x16/baidu.png'></a>
-							</div>
-						</div>
-					</div>
+					#parse('pagelet/articleIntros.top10.html')
 				</div>
 				<div class='col-sm-12 col-md-4'>
 					#parse('pagelet/html/top10ViewNums.html')
