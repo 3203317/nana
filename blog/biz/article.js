@@ -94,3 +94,23 @@ exports.findTopmarks = function(cb){
 		cb(null, 1, null, docs);
 	});
 };
+
+exports.findArticles = function(page, cb){
+	var option = {
+		skip: 0,
+		limit: 10,
+		sort: {
+			PostTime: -1
+		}
+	};
+
+	if(page){
+		option.limit = page[1];
+		option.skip = ((page[0] - 1) * option.limit);
+	}
+
+	Article.find(null, null, option, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 1, null, docs);
+	});
+};
