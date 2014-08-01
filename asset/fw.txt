@@ -5,7 +5,9 @@ cursor.forEach(function(x){
 	db.articles.update(x, {
 		$set:{
 			PostTime:new Date(x.PostTime), 
-			ViewCount:parseInt(x.ViewCount)
+			ViewCount:parseInt(x.ViewCount),
+			Bookmark:parseInt(x.Bookmark),
+			Topmark:parseInt(x.Topmark)
 		}
 	});
 });

@@ -39,8 +39,8 @@ exports.index = function(req, res, next){
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tagList',
-		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tagList){
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tagList', 'topMarks',
+		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tagList, topMarks){
 			res.send({
 				success: true,
 				data: arguments
@@ -50,6 +50,24 @@ exports.installUI = function(req, res, next){
 
 	ep.fail(function (err){
 		next(err);
+	});
+
+	Article.findTopmarks(function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
+
+		fs.readFile(path.join(vmPath, 'TopMarks.vm.html'), 'utf8', function (err, template){
+			if(err) return ep.emit('error', err);
+
+			var html = velocity.render(template, {
+				virtualPath: virtualPath,
+				topMarks: docs
+			});
+
+			fs.writeFile(path.join(vmPath, 'html', 'topMarks.html'), html, 'utf8', function (err){
+				if(err) return ep.emit('error', err);
+				ep.emit('topMarks', true);
+			});
+		});
 	});
 
 	Tag.findAll(function (err, status, msg, docs){

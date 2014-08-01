@@ -82,9 +82,9 @@ exports.findById = function(id, cb){
  * @params {Function} cb
  * @return
  */
-exports.findTopmarks = function(cb) {
+exports.findTopmarks = function(cb){
 	Article.find({
-		TopMark: 1
+		Topmark: 1
 	}, null, {
 		sort: {
 			PostTime: -1
