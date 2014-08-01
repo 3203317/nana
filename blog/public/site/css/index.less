@@ -1,8 +1,11 @@
 .artIntro {
+	position: relative;
+	box-shadow: 0 0 5px #c2c2c2;
+
 	>.glyphicon-bookmark {
 		color: #D9534F;
 		font-size: 40px;
-		position: relative;
+		position: absolute;
 		right: 5%;
 		top: -10px;
 	}
@@ -13,11 +16,11 @@
 		border-radius: 100px;
 		color: #FFFFFF;
 		height: 70px;
-		left: -30px;
+		left: -20px;
 		padding-top: 10px;
-		top: -30px;
+		top: -20px;
 		width: 70px;
-		position: relative;
+		position: absolute;
 
 		.month {
 			display: block;
@@ -34,6 +37,7 @@
 	}
 
 	.title {
+		margin: 20px 0;
 		>h3 {
 			margin: 0 auto;
 			text-align: center;
@@ -48,6 +52,11 @@
 			}
 		}
 	}
+
+	.tag-title {
+		margin-bottom: 10px
+	}
+
 	>.thumbnail {
 		padding: 0;
 		img {
