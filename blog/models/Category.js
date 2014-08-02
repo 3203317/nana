@@ -29,11 +29,4 @@ CategorySchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-CategorySchema.pre('save', function (next, done){
-	next();
-});
-
-CategorySchema.post('save', function(){
-});
-
 mongoose.model('Category', CategorySchema);
