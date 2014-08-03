@@ -53,8 +53,8 @@ exports.install = function(cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				CateName: '杂文',
-				CateIntro: '杂文',
-				CateCount: 1,
+				Intro: '杂文',
+				Count: 1,
 				Sort: 1
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
@@ -64,8 +64,8 @@ exports.install = function(cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				CateName: '设计模式',
-				CateIntro: '设计模式',
-				CateCount: 2,
+				Intro: '设计模式',
+				Count: 2,
 				Sort: 2
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
@@ -75,8 +75,8 @@ exports.install = function(cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				CateName: '插件',
-				CateIntro: '插件',
-				CateCount: 3,
+				Intro: '插件',
+				Count: 3,
 				Sort: 3
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
@@ -86,8 +86,8 @@ exports.install = function(cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				CateName: 'Java',
-				CateIntro: 'Java',
-				CateCount: 3,
+				Intro: 'Java',
+				Count: 3,
 				Sort: 5
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);
@@ -97,8 +97,8 @@ exports.install = function(cb){
 			that.saveNew({
 				User_Id: ObjectId(),
 				CateName: 'ASP.NET',
-				CateIntro: 'ASP.NET',
-				CateCount: 3,
+				Intro: 'ASP.NET',
+				Count: 3,
 				Sort: 4
 			}, function (err, status, msg, doc){
 				if(err) return cb(err);

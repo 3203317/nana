@@ -27,11 +27,4 @@ LinkSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-LinkSchema.pre('save', function (next, done){
-	next();
-});
-
-LinkSchema.post('save', function(){
-});
-
 mongoose.model('Link', LinkSchema);

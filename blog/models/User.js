@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 var util = require('../lib/util');
 
 var UserSchema = new Schema({
-	UserName: {			// 用户名
+	UserName: {				// 用户名
 		// required: true,
 		// match: /[a-z]/,
 		unique: true,
@@ -77,13 +77,6 @@ UserSchema.virtual('RegTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-UserSchema.pre('save', function (next, done){
-	next();
-});
-
-UserSchema.post('save', function(){
-});
-
 /**
  * 通过用户名查找用户
  *
@@ -92,8 +85,9 @@ UserSchema.post('save', function(){
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByName = function(userName, cb) {
+	userName = userName.toLowerCase();
 	this.findOne({
-		UserName: new RegExp(userName, 'i')
+		UserName: userName,					//new RegExp(userName, 'i')
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);

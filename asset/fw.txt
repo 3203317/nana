@@ -18,7 +18,7 @@ var cursor = db.tags.find();
 cursor.forEach(function(x){
 	db.tags.update(x, {
 		$set:{
-			TagCount:parseInt(x.TagCount)
+			Count:parseInt(x.Count)
 		}
 	});
 });

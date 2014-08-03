@@ -10,7 +10,7 @@ var TagSchema = new Schema({
 		required: true,
 		unique: true,
 		index: true
-	}, TagCount: {
+	}, Count: {
 		type: Number
 	}, User_Id: {		// 用户Id
 		type: ObjectId

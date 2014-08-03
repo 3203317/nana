@@ -7,9 +7,9 @@ var util = require('../lib/util');
 var CategorySchema = new Schema({
 	CateName: {
 		type: String
-	}, CateIntro: {
+	}, Intro: {
 		type: String
-	}, CateCount: {
+	}, Count: {
 		type: Number
 	}, Sort: {
 		type: Number

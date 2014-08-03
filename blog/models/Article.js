@@ -66,11 +66,4 @@ ArticleSchema.virtual('ViewCount2Money').get(function(){
 	return util.threeSeparator(this.ViewCount);
 });
 
-ArticleSchema.pre('save', function (next, done){
-	next();
-});
-
-ArticleSchema.post('save', function(){
-});
-
 mongoose.model('Article', ArticleSchema);

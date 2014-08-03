@@ -13,8 +13,8 @@ var CommentSchema = new Schema({
 		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
-	}, Article_Id: {
-		type: ObjectId	// 文章Id
+	}, Article_Id: {	// 文章Id
+		type: ObjectId
 	}, PostTime: {
 		type: Date
 	}
@@ -29,13 +29,6 @@ var CommentSchema = new Schema({
 
 CommentSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
-});
-
-CommentSchema.pre('save', function (next, done){
-	next();
-});
-
-CommentSchema.post('save', function(){
 });
 
 mongoose.model('Comment', CommentSchema);
