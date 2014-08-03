@@ -1,5 +1,3 @@
-var ObjectId = require('mongodb').ObjectID;
-
 var models = require('../models'),
 	Tag = models.Tag;
 
@@ -20,10 +18,11 @@ exports.saveNew = function(newInfo, cb){
 /**
  * 查询
  *
+ * @params {String}
  * @params {Function} cb
  * @return
  */
-exports.findAll = function(cb){
+exports.findAll = function(user_id, cb){
 	var option = {
 		sort: {
 			TagName: 1

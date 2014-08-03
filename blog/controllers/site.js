@@ -52,7 +52,7 @@ exports.installUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.findArticles([1, 10], function (err, status, msg, docs){
+	Article.findAll([1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'ArticleIntros.vm.html'), 'utf8', function (err, template){
@@ -70,7 +70,7 @@ exports.installUI = function(req, res, next){
 		});
 	});
 
-	Article.findTopmarks(function (err, status, msg, docs){
+	Article.findTopmarks(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'TopMarks.vm.html'), 'utf8', function (err, template){
@@ -88,13 +88,13 @@ exports.installUI = function(req, res, next){
 		});
 	});
 
-	Tag.findAll(function (err, status, msg, docs){
+	Tag.findAll(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		/* 获取全部的标签 */
 		var tags = docs;
 
-		Article.findAll(null, function (err, status, msg, docs){
+		Article.findAll(null, null, function (err, status, msg, docs){
 			if(err) return ep.emit('error', err);
 
 			var articles = docs;
@@ -153,7 +153,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 档案馆 */
-	Article.findAll(null, function (err, status, msg, docs){
+	Article.findAll(null, null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		/* 生成档案馆对象 */
@@ -237,7 +237,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 热门文章前10 */
-	Article.findByViewCount([1, 10], function (err, status, msg, docs){
+	Article.findByViewCount([1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Top10ViewNums.vm.html'), 'utf8', function (err, template){
@@ -256,7 +256,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 生成TOP分类 */
-	Category.findCategorys(function (err, status, msg, docs){
+	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'TopNavCategory.vm.html'), 'utf8', function (err, template){
@@ -275,7 +275,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 常用链接 */
-	Link.findLinks(function (err, status, msg, docs){
+	Link.findAll(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'UsefulLinks.vm.html'), 'utf8', function (err, template){
@@ -294,7 +294,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 生成评论 */
-	Comment.findComments([1, 10], function (err, status, msg, docs){
+	Comment.findAll([1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Top10Comments.vm.html'), 'utf8', function (err, template){

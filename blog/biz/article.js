@@ -18,32 +18,39 @@ exports.saveNew = function(newInfo, cb){
 /**
  * 查询所有文章
  *
- * @params {ObjectId}
+ * @params {Array} page
+ * @params {String} user_id
  * @params {Function} cb
  * @return
  */
-exports.findAll = function(user_id, cb){
-	Article.find(null, null, {
+exports.findAll = function(page, user_id, cb){
+	var option = {
 		sort: {
 			PostTime: -1
 		}
-	}, function (err, docs){
+	};
+
+	if(page){
+		option.limit = page[1];
+		option.skip = ((page[0] - 1) * option.limit);
+	}
+
+	Article.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 1, null, docs);
 	});
 };
 
 /**
- * 分页查询
+ * 按访问量统计
  *
  * @params {Array} page
+ * @params {String} user_id
  * @params {Function} cb
  * @return
  */
-exports.findByViewCount = function(page, cb){
+exports.findByViewCount = function(page, user_id, cb){
 	var option = {
-		skip: 0,
-		limit: 10,
 		sort: {
 			ViewCount: -1
 		}
@@ -63,7 +70,7 @@ exports.findByViewCount = function(page, cb){
 /**
  * 通过id查询
  *
- * @params {String}
+ * @params {String} id
  * @params {Function} cb
  * @return
  */
@@ -79,10 +86,11 @@ exports.findById = function(id, cb){
 /**
  * 查询
  *
+ * @params {String} user_id
  * @params {Function} cb
  * @return
  */
-exports.findTopmarks = function(cb){
+exports.findTopmarks = function(user_id, cb){
 	Article.find({
 		Topmark: 1
 	}, null, {
@@ -90,26 +98,6 @@ exports.findTopmarks = function(cb){
 			PostTime: -1
 		}
 	}, function (err, docs){
-		if(err) return cb(err);
-		cb(null, 1, null, docs);
-	});
-};
-
-exports.findArticles = function(page, cb){
-	var option = {
-		skip: 0,
-		limit: 10,
-		sort: {
-			PostTime: -1
-		}
-	};
-
-	if(page){
-		option.limit = page[1];
-		option.skip = ((page[0] - 1) * option.limit);
-	}
-
-	Article.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 1, null, docs);
 	});
