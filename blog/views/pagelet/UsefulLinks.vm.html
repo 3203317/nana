@@ -7,7 +7,7 @@
 	</div>
 	<div class='panel-body'>
 		<div class='list-group'>
-			#foreach($usefulLink in $usefulLinks)<a class='list-group-item' target='_blank' href='$usefulLink.LinkUrl' title='$usefulLink.LinkName'>$usefulLink.LinkName</a>
+			#foreach($link in $links)<a class='list-group-item' target='_blank' href='$link.LinkUrl' title='$link.LinkName'>$link.LinkName</a>
 			#end</div>
 	</div>
 </div>

@@ -283,7 +283,7 @@ exports.installUI = function(req, res, next){
 
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
-				usefulLinks: docs
+				links: docs
 			});
 
 			fs.writeFile(path.join(vmPath, 'html', 'usefulLinks.html'), html, 'utf8', function (err){
