@@ -39,8 +39,8 @@ exports.index = function(req, res, next){
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tags', 'topMarks', 'hp_artIntro_top10',
-		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tags, topMarks, hp_artIntro_top10){
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archives', 'tags', 'topMarks', 'hp_artIntro_top10',
+		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archives, tags, topMarks, hp_artIntro_top10){
 			res.send({
 				success: true,
 				data: arguments
@@ -221,17 +221,17 @@ exports.installUI = function(req, res, next){
 			}
 		}
 
-		fs.readFile(path.join(vmPath, 'ArchiveList.vm.html'), 'utf8', function (err, template){
+		fs.readFile(path.join(vmPath, 'Archives.vm.html'), 'utf8', function (err, template){
 			if(err) return ep.emit('error', err);
 
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
-				archiveList: archives
+				archives: archives
 			});
 
-			fs.writeFile(path.join(vmPath, 'html', 'archiveList.html'), html, 'utf8', function (err){
+			fs.writeFile(path.join(vmPath, 'html', 'archives.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
-				ep.emit('archiveList', true);
+				ep.emit('archives', true);
 			});
 		});
 	});
