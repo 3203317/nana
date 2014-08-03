@@ -39,8 +39,8 @@ exports.index = function(req, res, next){
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tagList', 'topMarks', 'top10',
-		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tagList, topMarks, top10){
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'top10ViewNums', 'archiveList', 'tags', 'topMarks', 'hp_artIntro_top10',
+		function (topNavCategory, usefulLinks, top10Comments, top10ViewNums, archiveList, tags, topMarks, hp_artIntro_top10){
 			res.send({
 				success: true,
 				data: arguments
@@ -63,9 +63,9 @@ exports.installUI = function(req, res, next){
 				articles: docs
 			});
 
-			fs.writeFile(path.join(vmPath, 'html', 'articleIntros.top10.html'), html, 'utf8', function (err){
+			fs.writeFile(path.join(vmPath, 'html', 'hp.artIntro.top10.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
-				ep.emit('top10', true);
+				ep.emit('hp_artIntro_top10', true);
 			});
 		});
 	});
@@ -78,7 +78,7 @@ exports.installUI = function(req, res, next){
 
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
-				topMarks: docs
+				articles: docs
 			});
 
 			fs.writeFile(path.join(vmPath, 'html', 'topMarks.html'), html, 'utf8', function (err){
@@ -136,17 +136,17 @@ exports.installUI = function(req, res, next){
 				}
 			}
 
-			fs.readFile(path.join(vmPath, 'TagList.vm.html'), 'utf8', function (err, template){
+			fs.readFile(path.join(vmPath, 'Tags.vm.html'), 'utf8', function (err, template){
 				if(err) return ep.emit('error', err);
 
 				var html = velocity.render(template, {
 					virtualPath: virtualPath,
-					tagList: tagList
+					tags: tagList
 				});
 
-				fs.writeFile(path.join(vmPath, 'html', 'tagList.html'), html, 'utf8', function (err){
+				fs.writeFile(path.join(vmPath, 'html', 'tags.html'), html, 'utf8', function (err){
 					if(err) return ep.emit('error', err);
-					ep.emit('tagList', true);
+					ep.emit('tags', true);
 				});
 			});
 		});

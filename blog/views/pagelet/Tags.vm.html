@@ -1,4 +1,4 @@
-#foreach($tag in $tagList)<div class='panel panel-default'>
+#foreach($tag in $tags)<div class='panel panel-default'>
 	<div class='panel-heading'>
 		<h4 class='panel-title'>
 			<a id='${tag.TagName}' href='#collapse${tag.TagName}' data-parent='#accordion' data-toggle='collapse'>${tag.TagName} (${tag.Articles.length}篇文章)</a>
