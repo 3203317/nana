@@ -39,8 +39,8 @@ exports.index = function(req, res, next){
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
-	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'top10Comments', 'side_art_view_top10', 'archives', 'tags', 'topMarks', 'hp_artIntro_top10',
-		function (topNavCategory, usefulLinks, top10Comments, side_art_view_top10, archives, tags, topMarks, hp_artIntro_top10){
+	var ep = EventProxy.create('topNavCategory', 'usefulLinks', 'side_comment_top10', 'side_art_view_top10', 'archives', 'tags', 'topMarks', 'hp_artIntro_top10',
+		function (topNavCategory, usefulLinks, side_comment_top10, side_art_view_top10, archives, tags, topMarks, hp_artIntro_top10){
 			res.send({
 				success: true,
 				data: arguments
@@ -297,17 +297,17 @@ exports.installUI = function(req, res, next){
 	Comment.findAll([1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
-		fs.readFile(path.join(vmPath, 'Top10Comments.vm.html'), 'utf8', function (err, template){
+		fs.readFile(path.join(vmPath, 'Side.Comment.vm.html'), 'utf8', function (err, template){
 			if(err) return ep.emit('error', err);
 
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
-				top10Comments: docs
+				comments: docs
 			});
 
-			fs.writeFile(path.join(vmPath, 'html', 'top10Comments.html'), html, 'utf8', function (err){
+			fs.writeFile(path.join(vmPath, 'html', 'side.comment.top10.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
-				ep.emit('top10Comments', true);
+				ep.emit('side_comment_top10', true);
 			});
 		});
 	});
