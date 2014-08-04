@@ -66,4 +66,20 @@ ArticleSchema.virtual('ViewCount2Money').get(function(){
 	return util.threeSeparator(this.ViewCount);
 });
 
+ArticleSchema.virtual('aTags').get(function(){
+	if(0 === this.Tags.length) return;
+
+	var strs = this.Tags.split(',');
+	var result = [];
+
+	for(var s in strs){
+		if('' !== strs[s]){
+			result.push({
+				'TagName': strs[s]
+			});
+		}
+	}
+	return result;
+});
+
 mongoose.model('Article', ArticleSchema);
