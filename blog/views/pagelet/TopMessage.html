@@ -1,4 +1,22 @@
-<div class='alert alert-info'>
-	<button type='button' class='close' data-dismiss='alert'>&times;</button>
+<style type='text/css'>
+#topMessage .close:hover {
+	color: #d2322d;
+}
+#topMessage .close {
+	color: #3d4450;
+	float: right;
+	font-size: 14px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #ffffff;
+}
+#topMessage {
+	font-size: 12px;
+	background-color: #FFFFFF;
+	background-image: none;
+	box-shadow: 0 0 5px #c2c2c2
+}
+</style>
+<div id='topMessage' class='well fade in'>
+	<button class='close' data-dismiss='alert' type='button'>×</button>
 	<strong>[置顶]</strong> $topMessage
 </div>
