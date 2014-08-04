@@ -50,10 +50,6 @@ ArticleSchema.virtual('sPostTime').get(function(){
 	return this.PostTime.format();
 });
 
-ArticleSchema.virtual('sPostTimeShort').get(function(){
-	return this.PostTime.format('yyyy-MM-dd');
-});
-
 ArticleSchema.virtual('PostTime2Month').get(function(){
 	return util.pdate(this.PostTime.getMonth()+1);
 });
