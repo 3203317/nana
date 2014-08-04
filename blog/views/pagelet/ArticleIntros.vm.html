@@ -1,6 +1,6 @@
 #foreach($article in $articles)<div class='panel panel-default artIntro'>
 	<div class='panel-body'>
-		<div class='glyphicon glyphicon-bookmark'></div>
+		#if(1 == $article.Bookmark)<div class='glyphicon glyphicon-bookmark'></div>#end
 		<div class='date' title='创建于 $article.sPostTime'>
 			<span class='month'>07月</span>
 			<span class='day'>08</span>
@@ -11,7 +11,7 @@
 		<div class='tag ta nav'>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-user'></span>
-				<a title='查看 我哪知道 的全部文章' href='/u/foreworld/'>我哪知道</a>
+				<a title='查看 我哪知道 的全部文章' href='${virtualPath}u/foreworld/'>我哪知道</a>
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-home'></span>
@@ -22,10 +22,12 @@
 				<a>$article.ViewCount2Money人</a>
 			</span>
 		</div>
+		#if(${article.Photo})
 		<figure class='thumbnail clearfix'>
-			<a href='/archive/${article._id}.html'>
-				<img src='/public/udata/foreworld/20140122/110203.jpg' alt='${virtualPath}public/udata/foreworld/20140122/110203.jpg'></a>
+			<a href='${virtualPath}archive/${article._id}.html'>
+				<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'></a>
 		</figure>
+		#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
 			#if($article.aTags)<div class='tag fl clearfix'>
@@ -35,7 +37,7 @@
 					#end
 				</span>
 			</div>#end
-			<a class='btn btn-danger pull-right' href='/archive/${article._id}.html'
+			<a class='btn btn-danger pull-right' href='${virtualPath}archive/${article._id}.html'
 				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>$article.ViewCount2Money</span></a>
 		</div>
 	</div>
