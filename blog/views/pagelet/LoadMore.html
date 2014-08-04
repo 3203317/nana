@@ -1,3 +1,29 @@
 <div class='col-sm-12 col-md-8'>
-	<a id='loadMore' href='javascript:;' data-current-page='1' class='btn btn-block' data-url='${virtualPath}index/more'>加载更多...</a>
+	<a id='loadMore' href='javascript:loadMore()' data-current-page='1' class='btn btn-block' data-url='${virtualPath}index/more'>加载更多...</a>
 </div>
+<script type='text/javascript'>
+function loadMore(){
+	var widget = $('#loadMore');
+	var text = widget.text();
+	widget.text('努力加载中...');
+	var currPage = widget.data('current-page') + 1;
+	var data = {
+		data: JSON.stringify({
+			Current: currPage
+		})
+	};
+	$.ajax({
+		url: $().olxUtilRandomUrl(widget.data('url')),
+		type: 'GET',
+		dataType: 'html',
+		data: data
+	}).done(function (data){
+		if('' !== $.trim(data)){
+			widget.data('current-page', currPage);
+			$('.artIntro').parent().append(data);
+		}
+	}).complete(function(){
+		widget.text(text);
+	});
+}
+</script>

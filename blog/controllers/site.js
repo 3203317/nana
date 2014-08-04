@@ -36,6 +36,19 @@ exports.index = function(req, res, next){
 	});
 };
 
+exports.index_more = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	Article.findAll([data.Current, 10], null, function (err, status, msg, docs){
+		if(err) return next(err);
+		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
+			virtualPath: virtualPath,
+			articles: docs
+		});
+	});
+};
+
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 

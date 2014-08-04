@@ -39,8 +39,31 @@ function valiPostData(req, res, next){
 	}
 }
 
+/**
+ * get数据校验
+ *
+ * @params {Object} 
+ * @params {Object} 
+ * @return {Object} 
+ */
+function valiGetData(req, res, next){
+	var data = req.query.data;
+	if(!data) return next(new Error(str1));
+	try{
+		data = JSON.parse(data);
+		if('object' === typeof data){
+			req._data = data;
+			return next();
+		}
+		next(new Error(str1));
+	}catch(ex){
+		next(new Error(ex.message));
+	}
+}
+
 module.exports = function(app){
 	app.get('/index.html', site.index);
+	app.get('/index/more', valiGetData, site.index_more);
 	app.get('/', site.index);
 	app.get('/install', site.installUI);
 
