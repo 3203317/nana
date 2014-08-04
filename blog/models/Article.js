@@ -54,10 +54,6 @@ ArticleSchema.virtual('PostTime2Month').get(function(){
 	return util.pdate(this.PostTime.getMonth()+1);
 });
 
-ArticleSchema.virtual('PostTime2Day').get(function(){
-	return util.pdate(this.PostTime.getDate());
-});
-
 ArticleSchema.virtual('ViewCount2Money').get(function(){
 	return util.threeSeparator(this.ViewCount);
 });
