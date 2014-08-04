@@ -28,16 +28,13 @@
 		</figure>
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
-			#if(${article.aTags})
-			<div class='tag fl clearfix'>
+			#if($article.aTags)<div class='tag fl clearfix'>
 				<span class='label label-default'>
 					<span class='glyphicon glyphicon-tag'></span>
-					#foreach($tag in $article.aTags)
-					<a rel='tag' title='查看 $tag.TagName 标签' href='${virtualPath}archive/tag/$tag.TagName/'>$tag.TagName</a>
+					#foreach($tag in $article.aTags)<a rel='tag' title='查看 $tag.TagName 标签' href='${virtualPath}archive/tag/$tag.TagName/'>$tag.TagName</a>
 					#end
 				</span>
-			</div>
-			#end
+			</div>#end
 			<a class='btn btn-danger pull-right' href='/archive/c8a092e9920e11e3a195b888e3351e26.html'
 				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>$article.ViewCount2Money</span></a>
 		</div>
