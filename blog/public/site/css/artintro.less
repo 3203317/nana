@@ -3,102 +3,104 @@
 	box-shadow: 0 0 5px #c2c2c2;
 	margin-bottom: 35px;
 
-	>div {
-		>.glyphicon-bookmark {
-			color: #D9534F;
-			font-size: 40px;
-			position: absolute;
-			right: 5%;
-			top: -10px;
+	.glyphicon-bookmark {
+		color: #D9534F;
+		font-size: 40px;
+		position: absolute;
+		right: 5%;
+		top: -10px;
+	}
+
+	.date {
+		background-color: #D9534F;
+		border-color: #D43F3A;
+		border-radius: 100px;
+		color: #FFFFFF;
+		height: 70px;
+		left: -20px;
+		padding-top: 10px;
+		top: -20px;
+		width: 70px;
+		position: absolute;
+
+		.month {
+			display: block;
+			text-align: center;
 		}
 
-		.date {
-			background-color: #D9534F;
-			border-color: #D43F3A;
-			border-radius: 100px;
-			color: #FFFFFF;
-			height: 70px;
-			left: -20px;
-			padding-top: 10px;
-			top: -20px;
-			width: 70px;
-			position: absolute;
-
-			.month {
-				display: block;
-				text-align: center;
-			}
-
-			.day {
-				display: block;
-				text-align: center;
-				font-size: 30px;
-				font-weight: bold;
-				margin-top: -5px;
-			}
+		.day {
+			display: block;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+			margin-top: -5px;
 		}
+	}
 
-		.title {
-			margin: 20px 0;
-			>h2 {
-				margin: 0 auto;
-				text-align: center;
-
-				>a {
-					color: #555555;
-
-					&:hover {
-						color: #D9534F;
-						transition: all 0.25s ease-in-out 0s;
-					}
-				}
-			}
-		}
-
-		.tag-title {
-			margin-bottom: 10px
-		}
-
-		>.thumbnail {
-			padding: 0;
-			margin-bottom: 10px;
-			img {
-				max-width: 100%;
-				height: auto;
-				border: 5px solid #E3E3E3;
-				border-radius: 3px;
-				margin-left: auto;
-				margin-right: auto;
-				transition: all 0.2s ease-in-out 0s;
-
+	.title {
+		margin: 20px 0;
+		>h2 {
+			margin: 0 auto;
+			text-align: center;
+			>a {
+				color: #555555;
 				&:hover {
-					opacity: 0.8;
-					border: 5px solid #D9534F;
-				}
-			}
-		}
-		.well {
-			font-size: 12px;
-		}
-		.footer {
-			overflow: hidden;
-		}
-		.tag {
-			font-size: 12px;
-			line-height: 31px;
-
-			>span {
-				background-color: #3D4450;
-				margin-right: 5px;
-
-				a {
-					color: #FFFFFF
-				}
-
-				&:hover {
-					background-color: #d9534f;
+					color: #D9534F;
 					transition: all 0.25s ease-in-out 0s;
 				}
+			}
+		}
+	}
+
+	.nav {
+		margin-bottom: 10px
+	}
+
+	.well {
+		font-size: 12px;
+	}
+
+	.tag {
+		font-size: 12px;
+		line-height: 31px;
+		>span {
+			background-color: #3D4450;
+			margin-right: 5px;
+			a {
+				color: #FFFFFF
+			}
+			&:hover {
+				background-color: #d9534f;
+				transition: all 0.25s ease-in-out 0s;
+			}
+		}
+	}
+
+	.footer {
+		overflow: hidden;
+		.fl {
+			a {
+				&:hover {
+					text-decoration: underline
+				}
+			}
+		}
+	}
+
+	figure {
+		padding: 0;
+		margin-bottom: 10px;
+		img {
+			max-width: 100%;
+			height: auto;
+			border: 5px solid #E3E3E3;
+			border-radius: 3px;
+			margin-left: auto;
+			margin-right: auto;
+			transition: all 0.2s ease-in-out 0s;
+			&:hover {
+				opacity: 0.8;
+				border: 5px solid #D9534F;
 			}
 		}
 	}

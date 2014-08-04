@@ -6,16 +6,16 @@
 			<span class='day'>08</span>
 		</div>
 		<div class='title'>
-			<h2><a href='/archive/c8a092e9920e11e3a195b888e3351e26.html'>$article.Title</a></h2>
+			<h2><a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></h2>
 		</div>
-		<div class='tag tag-title ta'>
+		<div class='tag ta nav'>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-user'></span>
-				<a rel='category tag' title='查看 我哪知道 的全部文章' href='/u/foreworld/'>我哪知道</a>
+				<a title='查看 我哪知道 的全部文章' href='/u/foreworld/'>我哪知道</a>
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-home'></span>
-				<a rel='category tag' title='由 洪荒世界 发布' href='http://www.foreworld.net/'>洪荒世界</a>
+				<a title='由 洪荒世界 发布' href='http://www.foreworld.net/'>洪荒世界</a>
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-eye-open'></span>
@@ -23,8 +23,8 @@
 			</span>
 		</div>
 		<figure class='thumbnail clearfix'>
-			<a href='/archive/c8a092e9920e11e3a195b888e3351e26.html'>
-				<img src='/public/udata/foreworld/20140122/110203.jpg' alt='/public/udata/foreworld/20140122/110203.jpg'></a>
+			<a href='/archive/${article._id}.html'>
+				<img src='/public/udata/foreworld/20140122/110203.jpg' alt='${virtualPath}public/udata/foreworld/20140122/110203.jpg'></a>
 		</figure>
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
@@ -35,7 +35,7 @@
 					#end
 				</span>
 			</div>#end
-			<a class='btn btn-danger pull-right' href='/archive/c8a092e9920e11e3a195b888e3351e26.html'
+			<a class='btn btn-danger pull-right' href='/archive/${article._id}.html'
 				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>$article.ViewCount2Money</span></a>
 		</div>
 	</div>
