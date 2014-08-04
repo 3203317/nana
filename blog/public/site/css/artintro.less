@@ -39,6 +39,7 @@
 
 	.title {
 		margin: 20px 0;
+		padding: 0 30px;
 		>h2 {
 			margin: 0 auto;
 			text-align: center;
@@ -101,6 +102,49 @@
 			&:hover {
 				opacity: 0.8;
 				border: 5px solid #D9534F;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 640px){
+	.artIntro {
+		margin-bottom: 20px;
+		.glyphicon-bookmark {
+			font-size: 24px;
+			right: 5%;
+			top: -6px;
+		}
+		.date {
+			height: 50px;
+			width: 50px;
+			left: -15px;
+			top: -10px;
+			padding-top: 20px;
+			.month {
+				font-size: 11px;
+				margin-top: -12px;
+			}
+			.day {
+				font-size: 18px;
+				margin-top: -5px;
+			}
+		}
+		.title {
+			margin: 10px 0;
+			>h2 {
+				font-size: 22px;
+			}
+		}
+		.nav {
+			margin-bottom: 5px
+		}
+		.footer {
+			.fl {
+				display: none;
+			}
+			a {
+				width: 100%
 			}
 		}
 	}
