@@ -4,6 +4,8 @@ var conf = require('../settings'),
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+var Article = require('../biz/article');
+
 function getTopMessage(){
 	var t = new Date();
 	var y = t.getFullYear();
@@ -21,5 +23,26 @@ exports.index = function(req, res, next){
 		virtualPath: virtualPath,
 		topMessage: getTopMessage(),
 		cdn: conf.cdn
+	});
+};
+
+exports.name = function(req, res, next){
+	var name = req.params.name.trim();
+
+	Article.findAllByTag(name, {
+		Bookmark: -1,
+		PostTime: -1
+	}, [1, 10], null, function (err, status, msg, docs){
+		if(err) return next(err);
+		res.render('Tag', {
+			moduleName: 'tag',
+			title: title +' - '+ name,
+			description: name,
+			keywords: ','+ name +',Bootstrap3',
+			virtualPath: virtualPath,
+			topMessage: getTopMessage(),
+			cdn: conf.cdn,
+			articles: docs
+		});
 	});
 };

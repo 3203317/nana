@@ -40,6 +40,24 @@ exports.findAll = function(sort, page, user_id, cb){
 	});
 };
 
+exports.findAllByTag = function(name, sort, page, user_id, cb){
+	var option = {
+		sort: sort
+	};
+
+	if(page){
+		option.limit = page[1];
+		option.skip = ((page[0] - 1) * option.limit);
+	}
+
+	Article.find({
+		Tags: new RegExp(','+ name +',', 'i')
+	}, null, option, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 1, null, docs);
+	});
+};
+
 /**
  * 通过id查询
  *
