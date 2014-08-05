@@ -1,6 +1,9 @@
 var conf = require('../settings'),
 	util = require('../lib/util');
 
+var path = require('path'),
+	cwd = process.cwd();
+
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
@@ -42,6 +45,33 @@ exports.name = function(req, res, next){
 			virtualPath: virtualPath,
 			topMessage: getTopMessage(),
 			cdn: conf.cdn,
+			loadMore: 'archive/tag/'+ name,
+			articles: docs
+		});
+	});
+};
+
+exports.name_more = function(req, res, next){
+	var name = req.params.name.trim();
+
+	var data = req.query.data;
+	if(!data) return res.send('');
+
+	try{
+		data = JSON.parse(data);
+	}catch(ex){
+		return res.send('');
+	}
+
+	if(!data.Current) return res.send('');
+
+	Article.findAllByTag(name, {
+		Bookmark: -1,
+		PostTime: -1
+	}, [data.Current, 10], null, function (err, status, msg, docs){
+		if(err) return next(err);
+		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
+			virtualPath: virtualPath,
 			articles: docs
 		});
 	});

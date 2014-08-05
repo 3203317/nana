@@ -83,4 +83,5 @@ module.exports = function(app){
 	app.get('/archive/', archive.index);
 	app.get('/archive/tag/', tag.index);
 	app.get('/archive/tag/:name/', tag.name);
+	app.get('/archive/tag/:name/more', tag.name_more);
 };

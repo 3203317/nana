@@ -32,6 +32,7 @@ exports.index = function(req, res, next){
 		keywords: ',个人博客,Bootstrap3',
 		virtualPath: virtualPath,
 		topMessage: getTopMessage(),
+		loadMore: 'index',
 		cdn: conf.cdn
 	});
 };
