@@ -1,6 +1,7 @@
 var user = require('../controllers/user'),
 	site = require('../controllers/site'),
 	tag = require('../controllers/tag'),
+	category = require('../controllers/category'),
 	archive = require('../controllers/archive');
 
 var virtualPath = '',
@@ -84,4 +85,7 @@ module.exports = function(app){
 	app.get('/archive/tag/', tag.index);
 	app.get('/archive/tag/:name/', tag.name);
 	app.get('/archive/tag/:name/more', tag.name_more);
+
+	app.get('/archive/category/:name/', category.name);
+	app.get('/archive/category/:name/more', category.name_more);
 };

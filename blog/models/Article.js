@@ -12,6 +12,10 @@ var ArticleSchema = new Schema({
 		type: String
 	}, Content: {		// 文章内容
 		type: String
+	}, Cate: {
+		type: String,
+		required: true,
+		index: true
 	}, Tags: {
 		type: String
 	}, Keys: {			// 关键字
