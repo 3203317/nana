@@ -40,7 +40,10 @@ exports.index_more = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
 
-	Article.findAll([data.Current, 10], null, function (err, status, msg, docs){
+	Article.findAll({
+		Bookmark: -1,
+		PostTime: -1
+	}, [data.Current, 10], null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
 			virtualPath: virtualPath,
@@ -65,7 +68,10 @@ exports.installUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.findAll([1, 10], null, function (err, status, msg, docs){
+	Article.findAll({
+		Bookmark: -1,
+		PostTime: -1
+	}, [1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'ArticleIntros.vm.html'), 'utf8', function (err, template){
@@ -107,7 +113,9 @@ exports.installUI = function(req, res, next){
 		/* 获取全部的标签 */
 		var tags = docs;
 
-		Article.findAll(null, null, function (err, status, msg, docs){
+		Article.findAll({
+			PostTime: -1
+		}, null, null, function (err, status, msg, docs){
 			if(err) return ep.emit('error', err);
 
 			var articles = docs;
@@ -166,7 +174,9 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 档案馆 */
-	Article.findAll(null, null, function (err, status, msg, docs){
+	Article.findAll({
+		PostTime: -1
+	}, null, null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		/* 生成档案馆对象 */
@@ -250,7 +260,9 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 热门文章前10 */
-	Article.findByViewCount([1, 10], null, function (err, status, msg, docs){
+	Article.findAll({
+		ViewCount: -1
+	}, [1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Side.Art.View.vm.html'), 'utf8', function (err, template){
