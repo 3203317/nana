@@ -36,10 +36,7 @@
 					#include('pagelet/html/side.art.view.top10.html')
 					#include('pagelet/html/side.comment.top10.html')
 					#include('pagelet/html/usefulLinks.html')
-					<div id='qrCode'>
-						<figure>
-							<img src='${virtualPath}public/assets/images/archive.png' alt='二维码' title='档案馆'></figure>
-					</div>
+					#parse('pagelet/qrCode.html')
 				</div>
 			</div>
 		</section>
