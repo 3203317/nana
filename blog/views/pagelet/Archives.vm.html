@@ -1,5 +1,3 @@
-#macro(pdate $num)#if(10 > $num)0$num#else$num#end#end
-#macro(toDay $time)#pdate($time.getDate())#end
 <div id='archives'>
 	#foreach($archive in $archives)<h3>${archive.Y4}年<a id='${archive.Y4}'></a></h3>
 	<div class='panel-group'>

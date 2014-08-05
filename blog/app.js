@@ -6,6 +6,8 @@ var express = require('express'),
 var cwd = process.cwd(),
 	fs = require('fs');
 
+var util = require('./lib/util');
+
 var routes = require('./routes'),
 	velocity = require('velocityjs');
 
@@ -54,6 +56,10 @@ app.set('port', process.env.PORT || 3000)
 				}, include: function(file){
 					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
 					return template;
+				}, toMon: function(t){
+					return util.pdate(t.getMonth() + 1);
+				}, toDay: function(t){
+					return util.pdate(t.getDate());
 				}
 			}
 			try{ fn(null, velocity.render(data, options, macros)); }

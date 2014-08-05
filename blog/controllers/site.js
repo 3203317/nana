@@ -60,6 +60,19 @@ exports.index_more = function(req, res, next){
 	});
 };
 
+var macros = {
+	toMon: function(t){
+		return util.pdate(t.getMonth() + 1);
+	}, toDay: function(t){
+		return util.pdate(t.getDate());
+	}, toSDate: function(t){
+		var y = t.getFullYear();
+		var m = util.pdate(t.getMonth() + 1);
+		var d = util.pdate(t.getDate());
+		return y +'-'+ m +'-'+ d;
+	}
+};
+
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 
@@ -88,7 +101,7 @@ exports.installUI = function(req, res, next){
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
 				articles: docs
-			});
+			}, macros);
 
 			fs.writeFile(path.join(vmPath, 'html', 'hp.artIntro.top10.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
@@ -171,7 +184,7 @@ exports.installUI = function(req, res, next){
 				var html = velocity.render(template, {
 					virtualPath: virtualPath,
 					tags: tagList
-				});
+				}, macros);
 
 				fs.writeFile(path.join(vmPath, 'html', 'tags.html'), html, 'utf8', function (err){
 					if(err) return ep.emit('error', err);
@@ -258,7 +271,7 @@ exports.installUI = function(req, res, next){
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
 				archives: archives
-			});
+			}, macros);
 
 			fs.writeFile(path.join(vmPath, 'html', 'archives.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);

@@ -1,7 +1,3 @@
-#macro(pdate $num)#if(10 > $num)0$num#else$num#end#end
-#macro(toDay $time)#pdate($time.getDate())#end
-#macro(toMon $time)#set($num = $time.getMonth()+1)#pdate($num)#end
-#macro(toSDate $time)$time.getFullYear()-#toMon($time)-#toDay($time)#end
 #foreach($tag in $tags)<div class='panel panel-default'>
 	<div class='panel-heading'>
 		<h4 class='panel-title'>
