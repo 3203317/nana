@@ -13,13 +13,13 @@
 			<div class='row'>
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
-					#parse('pagelet/html/topMarks.html')
-					#parse('pagelet/html/hp.artIntro.top10.html')
+					#include('pagelet/html/topMarks.html')
+					#include('pagelet/html/hp.artIntro.top10.html')
 				</div>
 				<div class='col-sm-12 col-md-4'>
-					#parse('pagelet/html/side.art.view.top10.html')
-					#parse('pagelet/html/side.comment.top10.html')
-					#parse('pagelet/html/usefulLinks.html')
+					#include('pagelet/html/side.art.view.top10.html')
+					#include('pagelet/html/side.comment.top10.html')
+					#include('pagelet/html/usefulLinks.html')
 					<div id='qrCode'>
 						<figure>
 							<img src='${virtualPath}public/assets/images/foreworld.png' alt='二维码' title='洪荒世界'></figure>

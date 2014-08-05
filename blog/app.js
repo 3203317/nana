@@ -51,6 +51,9 @@ app.set('port', process.env.PORT || 3000)
 				parse: function(file){
 					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
 					return this.eval(template);
+				}, include: function(file){
+					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
+					return template;
 				}
 			}
 			try{ fn(null, velocity.render(data, options, macros)); }
