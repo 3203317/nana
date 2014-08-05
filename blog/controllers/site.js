@@ -37,8 +37,16 @@ exports.index = function(req, res, next){
 };
 
 exports.index_more = function(req, res, next){
-	var result = { success: false },
-		data = req._data;
+	var data = req.query.data;
+	if(!data) return res.send('');
+
+	try{
+		data = JSON.parse(data);
+	}catch(ex){
+		return res.send('');
+	}
+
+	if(!data.Current) return res.send('');
 
 	Article.findAll({
 		Bookmark: -1,

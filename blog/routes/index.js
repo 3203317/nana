@@ -63,9 +63,9 @@ function valiGetData(req, res, next){
 
 module.exports = function(app){
 	app.get('/index.html', site.index);
-	app.get('/index/more', valiGetData, site.index_more);
+	app.get('/index/more', site.index_more);
 	app.get('/', site.index);
-	app.get('/install', site.installUI);
+	app.get('/install', user.validate, site.installUI);
 
 	app.post('/user/login', valiPostData, user.login);
 	app.get('/user/login', user.loginUI);
