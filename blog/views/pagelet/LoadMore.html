@@ -4,8 +4,9 @@
 <script type='text/javascript'>
 function loadMore(){
 	var widget = $('#loadMore');
+	widget.attr('disabled', true);
 	var text = widget.text();
-	widget.text('努力加载中...');
+	widget.text('费劲儿加载中...');
 	var currPage = widget.data('current-page') + 1;
 	var data = {
 		data: JSON.stringify({
@@ -24,6 +25,7 @@ function loadMore(){
 		}
 	}).complete(function(){
 		widget.text(text);
+		widget.attr('disabled', false);
 	});
 }
 </script>
