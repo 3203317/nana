@@ -73,6 +73,8 @@ var macros = {
 		var m = util.pdate(t.getMonth() + 1);
 		var d = util.pdate(t.getDate());
 		return y +'-'+ m +'-'+ d;
+	}, num2Money: function(n){
+		return util.threeSeparator(n);
 	}
 };
 

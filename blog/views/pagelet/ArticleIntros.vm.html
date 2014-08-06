@@ -19,7 +19,7 @@
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-eye-open'></span>
-				<a>$article.ViewCount2Money人</a>
+				<a>#num2Money($article.ViewCount)人</a>
 			</span>
 		</div>
 		#if(${article.Photo})
@@ -38,7 +38,7 @@
 				</span>
 			</div>#end
 			<a class='btn btn-danger pull-right' href='${virtualPath}archive/${article._id}.html'
-				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>$article.ViewCount2Money</span></a>
+				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>#num2Money($article.ViewCount)</span></a>
 		</div>
 	</div>
 </div>#end

@@ -9,7 +9,7 @@
 			#foreach($article in $tag.Articles)<p>
 				#toSDate(${article.PostTime}):
 				<a title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>${article.Title}</a>
-				<span class='badge'>${article.ViewCount2Money}</span>
+				<span class='badge'>#num2Money($article.ViewCount)</span>
 			</p>#end
 		</div>
 	</div>
