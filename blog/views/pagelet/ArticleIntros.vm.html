@@ -22,12 +22,10 @@
 				<a>#num2Money($article.ViewCount)人</a>
 			</span>
 		</div>
-		#if(${article.Photo})
-		<figure class='thumbnail clearfix'>
+		#if(${article.Photo})<figure class='thumbnail clearfix'>
 			<a href='${virtualPath}archive/${article._id}.html'>
 				<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'></a>
-		</figure>
-		#end
+		</figure>#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
 			#if($article.aTags)<div class='tag fl clearfix'>

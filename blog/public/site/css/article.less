@@ -12,6 +12,10 @@
 		}
 	}
 
+	.nav {
+		margin-bottom: 10px
+	}
+
 	.tag {
 		font-size: 12px;
 		line-height: 31px;
@@ -34,9 +38,33 @@
 			}
 		}
 	}
+
+	figure {
+		padding: 0;
+		margin-bottom: 10px;
+		img {
+			max-width: 100%;
+			height: auto;
+			border: 5px solid #E3E3E3;
+			border-radius: 3px;
+			margin-left: auto;
+			margin-right: auto;
+			transition: all 0.2s ease-in-out 0s;
+			&:hover {
+				opacity: 0.8;
+				border: 5px solid #D9534F;
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 640px){
 	.article {
+		.title {
+			margin: 10px 0;
+			>h2 {
+				font-size: 18px;
+			}
+		}
 	}
 }

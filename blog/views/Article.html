@@ -23,9 +23,9 @@
 									<a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></li>
 							</ol>
 							<div class='title'>
-								<h3><a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></h2>
+								<h2><a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></h2>
 							</div>
-							<div class='tag ta'>
+							<div class='tag ta nav'>
 								<span class='label label-default'>
 									<span class='glyphicon glyphicon-calendar'></span>
 									<a title='创建于 #formatDate($article.PostTime)'>#toSDate($article.PostTime)</a>
@@ -44,6 +44,10 @@
 									<a>#num2Money($article.ViewCount)人</a>
 								</span>
 							</div>
+							#if(${article.Photo})<figure class='thumbnail clearfix'>
+								<a href='${virtualPath}archive/${article._id}.html'>
+									<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'></a>
+							</figure>#end
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
