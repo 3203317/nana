@@ -2,8 +2,6 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var util = require('../lib/util');
-
 var UserSchema = new Schema({
 	UserName: {				// 用户名
 		// required: true,
@@ -69,14 +67,6 @@ UserSchema.virtual('sSex').get(function(){
 	}
 });
 
-UserSchema.virtual('sBirthday').get(function(){
-	return this.Birthday ? this.Birthday.format('yyyy-MM-dd') : null;
-});
-
-UserSchema.virtual('RegTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
-});
-
 /**
  * 通过用户名查找用户
  *
@@ -84,7 +74,7 @@ UserSchema.virtual('RegTime').get(function(){
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByName = function(userName, cb) {
+UserSchema.statics.findUserByName = function(userName, cb){
 	userName = userName.toLowerCase();
 	this.findOne({
 		UserName: userName,					//new RegExp(userName, 'i')
@@ -102,7 +92,7 @@ UserSchema.statics.findUserByName = function(userName, cb) {
  * @params {Function} cb 回调函数 *
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
+UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
 	this.findOne({
 		'$or': [{
 			UserName: new RegExp(userName, 'i')
@@ -122,7 +112,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb) {
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByEmail = function(email, cb) {
+UserSchema.statics.findUserByEmail = function(email, cb){
 	email = email.toLowerCase();
 	this.findOne({
 		Email: email

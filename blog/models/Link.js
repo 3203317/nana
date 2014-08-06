@@ -2,8 +2,6 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var util = require('../lib/util');
-
 var LinkSchema = new Schema({
 	LinkName: {
 		type: String
@@ -21,10 +19,6 @@ var LinkSchema = new Schema({
 	}, toJSON: {
 		virtuals: true
 	}
-});
-
-LinkSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
 });
 
 mongoose.model('Link', LinkSchema);

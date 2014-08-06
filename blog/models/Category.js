@@ -2,8 +2,6 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var util = require('../lib/util');
-
 var CategorySchema = new Schema({
 	CateName: {
 		type: String
@@ -23,10 +21,6 @@ var CategorySchema = new Schema({
 	}, toJSON: {
 		virtuals: true
 	}
-});
-
-CategorySchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
 });
 
 mongoose.model('Category', CategorySchema);

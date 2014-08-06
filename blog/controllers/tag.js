@@ -39,7 +39,7 @@ exports.name = function(req, res, next){
 		if(err) return next(err);
 		res.render('Tag', {
 			moduleName: 'tag',
-			title: title +' - '+ name,
+			title: name +' - 标签 - '+ title,
 			description: name,
 			keywords: ','+ name +',Bootstrap3',
 			virtualPath: virtualPath,

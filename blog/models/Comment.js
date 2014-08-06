@@ -2,8 +2,6 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
 
-var util = require('../lib/util');
-
 var CommentSchema = new Schema({
 	Content: {			// 内容
 		type: String
@@ -25,10 +23,6 @@ var CommentSchema = new Schema({
 	}, toJSON: {
 		virtuals: true
 	}
-});
-
-CommentSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
 });
 
 mongoose.model('Comment', CommentSchema);
