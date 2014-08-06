@@ -6,8 +6,16 @@ body {
 	background: url('images/bg.jpg') repeat scroll 0 0 rgba(0, 0, 0, 0);
 
 	#backTop {
+		&:hover {
+			opacity: 1;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg); /* IE 9 */
+			-moz-transform: rotate(180deg); /* Firefox */
+			-webkit-transform: rotate(180deg); /* Safari and Chrome */
+			-o-transform: rotate(180deg); /* Opera */
+		}
 		&:before {
-			content: '\e113';
+			content: '\e114';
 		}
 		display: inline-block;
 		font-family: 'Glyphicons Halflings';
