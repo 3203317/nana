@@ -60,6 +60,8 @@ app.set('port', process.env.PORT || 3000)
 					return util.pdate(t.getMonth() + 1);
 				}, toDay: function(t){
 					return util.pdate(t.getDate());
+				}, formatDate: function(t){
+					return t.format();
 				}
 			}
 			try{ fn(null, velocity.render(data, options, macros)); }

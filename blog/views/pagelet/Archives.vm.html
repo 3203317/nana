@@ -11,7 +11,7 @@
 				<div class='panel-body'>
 					#foreach($article in $archiveChild.Articles)<p>
 						#toDay(${article.PostTime})日:
-						<a title='创建于 $article.sPostTime' href='${virtualPath}archive/${article._id}.html'>${article.Title}</a>
+						<a title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>${article.Title}</a>
 						<span class='badge'>${article.ViewCount2Money}</span>
 					</p>#end
 				</div>

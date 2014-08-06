@@ -50,10 +50,6 @@ ArticleSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
-ArticleSchema.virtual('sPostTime').get(function(){
-	return this.PostTime.format();
-});
-
 ArticleSchema.virtual('PostTime2Month').get(function(){
 	return util.pdate(this.PostTime.getMonth()+1);
 });

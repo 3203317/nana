@@ -1,7 +1,7 @@
 #foreach($article in $articles)<div class='panel panel-default artIntro'>
 	<div class='panel-body'>
 		#if(1 == $article.Bookmark)<div class='glyphicon glyphicon-bookmark'></div>#end
-		<div class='date' title='创建于 $article.sPostTime'>
+		<div class='date' title='创建于 #formatDate($article.PostTime)'>
 			<span class='month'>#toMon($article.PostTime)月</span>
 			<span class='day'>#toDay($article.PostTime)</span>
 		</div>

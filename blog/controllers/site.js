@@ -62,7 +62,9 @@ exports.index_more = function(req, res, next){
 };
 
 var macros = {
-	toMon: function(t){
+	formatDate: function(t){
+		return t.format();
+	}, toMon: function(t){
 		return util.pdate(t.getMonth() + 1);
 	}, toDay: function(t){
 		return util.pdate(t.getDate());
@@ -293,7 +295,7 @@ exports.installUI = function(req, res, next){
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
 				articles: docs
-			});
+			}, macros);
 
 			fs.writeFile(path.join(vmPath, 'html', 'side.art.view.top10.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
