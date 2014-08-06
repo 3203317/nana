@@ -18,7 +18,7 @@ function getTopMessage(){
 exports.id = function(req, res, next){
 	var id = req.params.id.trim();
 
-	var ep = EventProxy.create('article', function (article){
+	var ep = EventProxy.create('article', 'prev', 'next', function (article, prev, next){
 		res.render('Article', {
 			moduleName: 'archive',
 			title: article.Title +' - 档案馆 - '+ title,
@@ -27,6 +27,8 @@ exports.id = function(req, res, next){
 			virtualPath: virtualPath,
 			topMessage: getTopMessage(),
 			article: article,
+			prev: prev,
+			next: next,
 			cdn: conf.cdn
 		});
 	});
@@ -39,5 +41,15 @@ exports.id = function(req, res, next){
 		if(err) return ep.emit('error', err);
 		if(!doc) return ep.emit('error', new Error('Not Found.'));
 		ep.emit('article', doc);
+
+		Article.findNext(doc, function (err, status, msg, doc){
+			if(err) return ep.emit('error', err);
+			ep.emit('next', doc);
+		});
+
+		Article.findPrev(doc, function (err, status, msg, doc){
+			if(err) return ep.emit('error', err);
+			ep.emit('prev', doc);
+		});
 	});
 };

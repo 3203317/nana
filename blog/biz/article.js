@@ -111,3 +111,33 @@ exports.findTopmarks = function(user_id, cb){
 		cb(null, 1, null, docs);
 	});
 };
+
+exports.findPrev = function(article, cb){
+	Article.findOne({
+		PostTime: {
+			$gt: article.PostTime
+		}
+	}, null, {
+		sort: {
+			PostTime: 1
+		}
+	}, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 1, null, doc);
+	});
+};
+
+exports.findNext = function(article, cb){
+	Article.findOne({
+		PostTime: {
+			$lt: article.PostTime
+		}
+	}, null, {
+		sort: {
+			PostTime: -1
+		}
+	}, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 1, null, doc);
+	});
+};

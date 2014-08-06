@@ -53,6 +53,10 @@
 								<p>原文地址：<a href='${virtualPath}archive/${article._id}.html' title='$article.Title'>http://www.foreworld.net/archive/${article._id}.html</a></p>
 								<p>转载时必须以链接形式注明原始出处及本声明。</p>
 							</div>
+							<div class='alert alert-success page'>
+								#if($!next)<p>上篇：<a href='${virtualPath}archive/${next._id}.html' title='创建于 #formatDate($next.PostTime)'>${next.Title}</a></p>#end
+								#if($!prev)<p>下篇：<a href='${virtualPath}archive/${prev._id}.html' title='创建于 #formatDate($prev.PostTime)'>${prev.Title}</a></p>#end
+							</div>
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
