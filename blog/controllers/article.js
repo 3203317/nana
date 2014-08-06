@@ -21,7 +21,7 @@ exports.id = function(req, res, next){
 	var ep = EventProxy.create('article', function (article){
 		res.render('Article', {
 			moduleName: 'archive',
-			title: article.Title +' - '+ title,
+			title: article.Title +' - 档案馆 - '+ title,
 			description: article.Title,
 			keywords: ','+ article.Title +',Bootstrap3',
 			virtualPath: virtualPath,
