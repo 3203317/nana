@@ -2,6 +2,7 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
+		<link rel='stylesheet' type='text/css' href='${virtualPath}public/site/css/article.css?v3' media='screen' />
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -11,7 +12,7 @@
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
 					<div class='panel panel-default' style='box-shadow: 0 0 5px #c2c2c2;'>
-						<div class='panel-body'>
+						<div class='panel-body article'>
 							<ol class='breadcrumb'>
 								<li>
 									<div class='glyphicon glyphicon-home'></div>
@@ -21,6 +22,28 @@
 								<li class='active'>
 									<a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></li>
 							</ol>
+							<div class='title'>
+								<h3><a href='${virtualPath}archive/${article._id}.html'>$article.Title</a></h2>
+							</div>
+							<div class='tag ta'>
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-calendar'></span>
+									<a title='创建于 #formatDate($article.PostTime)'>#toSDate($article.PostTime)</a>
+								</span>
+								#if($article.aTags)<span class='label label-default'>
+									<span class='glyphicon glyphicon-tag'></span>
+									#foreach($tag in $article.aTags)<a rel='tag' title='查看 $tag.TagName 标签' href='${virtualPath}archive/tag/$tag.TagName/'>$tag.TagName</a>#if($foreach.hasNext),#end
+									#end
+								</span>#end
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-user'></span>
+									<a title='查看 我哪知道 的全部文章' href='${virtualPath}u/foreworld/'>我哪知道</a>
+								</span>
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-eye-open'></span>
+									<a>#num2Money($article.ViewCount)人</a>
+								</span>
+							</div>
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>

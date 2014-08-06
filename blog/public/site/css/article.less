@@ -1,0 +1,42 @@
+.article {
+	.title {
+		padding: 0 30px;
+		margin: 0 auto;
+		text-align: center;
+		a {
+			color: #555555;
+			&:hover {
+				color: #D9534F;
+				transition: all 0.25s ease-in-out 0s;
+			}
+		}
+	}
+
+	.tag {
+		font-size: 12px;
+		line-height: 31px;
+		>span {
+			background-color: #3D4450;
+			margin-right: 5px;
+			a {
+				color: #FFFFFF
+			}
+			&:hover {
+				background-color: #d9534f;
+				transition: all 0.25s ease-in-out 0s;
+			}
+			&:nth-child(2) {
+				a {
+					&:hover {
+						text-decoration: underline
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 640px){
+	.article {
+	}
+}

@@ -62,6 +62,13 @@ app.set('port', process.env.PORT || 3000)
 					return util.pdate(t.getDate());
 				}, formatDate: function(t){
 					return t.format();
+				}, num2Money: function(n){
+					return util.threeSeparator(n);
+				}, toSDate: function(t){
+					var y = t.getFullYear();
+					var m = util.pdate(t.getMonth() + 1);
+					var d = util.pdate(t.getDate());
+					return y +'-'+ m +'-'+ d;
 				}
 			}
 			try{ fn(null, velocity.render(data, options, macros)); }
