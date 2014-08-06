@@ -45,9 +45,14 @@
 								</span>
 							</div>
 							#if(${article.Photo})<figure class='thumbnail clearfix'>
-								<a href='${virtualPath}archive/${article._id}.html'>
-									<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'></a>
+								<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'>
 							</figure>#end
+							<div class='content'>$article.Content</div>
+							<div class='alert alert-success copyright'>
+								<p>版权所属：<a href='http://www.foreworld.net/'>洪荒世界</a></p>
+								<p>原文地址：<a href='${virtualPath}archive/${article._id}.html' title='$article.Title'>http://www.foreworld.net/archive/${article._id}.html</a></p>
+								<p>转载时必须以链接形式注明原始出处及本声明。</p>
+							</div>
 							<div>
 								<a href='javascript:;'>
 									<img src='${virtualPath}public/assets/images/share/16x16/twitter.png'></a>
