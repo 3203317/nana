@@ -86,21 +86,37 @@
 .fav3 {
 	min-height: 200px;
 	font-size: 12px;
-	h5 {
-		margin-top: 0;
-		a {
-			font-size: 12px;
-			color: #D2322D;
-			&:hover, &:focus {
-				text-decoration: underline;
+	p {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-all;
+		&:nth-child(2) {
+			height: 105px;
+		}
+	}
+	.caption {
+		padding: 5px 5px 0 5px;
+		>div {
+			height: 33px;
+			margin-bottom: 5px;
+			a {
+				div {
+					overflow: hidden;
+					word-break: break-all;
+					height: 100%;
+					color: #D2322D;
+					&:hover, &:focus {
+						text-decoration: underline;
+					}
+				}
+			}
+			&:last-child {
+				margin-bottom: 0;
 			}
 		}
 	}
-	p {
-		&:nth-child(2) {
-			margin-top: 20px;
-			height: 100px;
-		}
+	.btn {
+		font-size: 12px;
 	}
 }
 
@@ -114,6 +130,31 @@
 		}
 		.nav, .footer {
 			margin-bottom: 5px
+		}
+	}
+	.fav3 {
+		min-height: 150px;
+		p {
+			&:first-child {
+				height: 15px;
+			}
+			&:nth-child(2) {
+				height: 70px;
+			}
+		}
+		.btn {
+			width: 100%;
+		}
+		.caption {
+			>div {
+				height: 20px;
+				a {
+					div {
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+			}
 		}
 	}
 }
