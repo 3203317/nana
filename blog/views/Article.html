@@ -76,9 +76,18 @@
 							</div>
 						</div>
 					</div>
-					<div class='alert alert-danger favorite ta'>
+					<div class='alert alert-danger fav ta'>
 						<div class='glyphicon glyphicon-heart'></div> 您可能也喜欢
 					</div>
+					#foreach($article in $favs)<div class='col-sm-6 col-md-4'>
+						<div class='thumbnail fav3'>
+							<div class='caption'>
+								<h5><a href='${virtualPath}archive/${article._id}.html' title='创建于 #formatDate($article.PostTime)'>$article.Title</a></h5>
+								<p>HI，赞友们，Zanblog在2个月之后终于又迎来了更新，此前因为我们自身工作比较忙的缘故，迟迟未推出新版本，非常抱歉。 让我们一起看看 2.0.7 稳定版所做的变...</p>
+								<div><a class='btn btn-danger pull-right' role='button' href='${virtualPath}archive/${article._id}.html' title='详细阅读 $article.Title'>阅读全文</a></div>
+							</div>
+						</div>
+					</div>#end
 				</div>
 				<div class='col-sm-12 col-md-4'>
 					#include('pagelet/html/side.art.view.top10.html')

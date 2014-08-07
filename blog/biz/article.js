@@ -141,3 +141,20 @@ exports.findNext = function(article, cb){
 		cb(null, 1, null, doc);
 	});
 };
+
+/**
+ * 查询喜欢的文章
+ *
+ * @params {Object} article
+ * @params {Number} count
+ * @params {Function} cb
+ * @return
+ */
+exports.findFav = function(article, count, cb){
+	Article.find(null, null, {
+		limit: count
+	}, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 1, null, docs);
+	});
+};

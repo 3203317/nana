@@ -1,5 +1,7 @@
 <div class='col-sm-12 col-md-8'>
-	<a id='loadMore' href='javascript:;' data-current-page='1' class='btn btn-block' data-url='${virtualPath}${loadMore}/more'>加载更多...</a>
+	<a id='loadMore' href='javascript:;' data-current-page='1' class='btn btn-block' data-url='${virtualPath}${loadMore}/more'>
+		<i class='fa fa-spin'></i>
+		<span>加载更多...</span></a>
 </div>
 <script type='text/javascript'>
 $(function(){
@@ -7,7 +9,8 @@ $(function(){
 		var widget = $(this);
 		widget.attr('disabled', true);
 		var text = widget.text();
-		widget.text('费劲儿加载中...');
+		widget.find('i').addClass('fa-spinner');
+		widget.find('span').text('费劲儿加载中...');
 		var currPage = widget.data('current-page') + 1;
 		var data = {
 			data: JSON.stringify({
@@ -25,7 +28,8 @@ $(function(){
 				$('.artIntro').parent().append(data);
 			}
 		}).complete(function(){
-			widget.text(text);
+			widget.find('i').removeClass('fa-spinner');
+			widget.find('span').text(text);
 			widget.attr('disabled', false);
 		});
 	});
