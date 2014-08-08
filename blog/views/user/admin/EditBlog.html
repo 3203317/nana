@@ -26,47 +26,12 @@
 						<div class='panel-body'>
 							<ol class='breadcrumb'>
 								<li>
-									<div class='glyphicon glyphicon-home'></div>
+									<i class='fa fa-home fa-fw'></i>
 									<a href='../../../'>空间</a></li>
-								<li class='active'>
-									<a href='javascript:;'>博客</a></li>
-								<li class='active'>
-									<a href='javascript:;'>修改博文</a></li>
+								<li class='active'><a href='javascript:;'>博客</a></li>
+								<li class='active'><a href='../new/blog'>修改博文</a></li>
 							</ol>
-							<form id='blogFrm' role='form' onsubmit='return false;' data-url='new-blog'>
-								<div class='form-group'>
-									<label for='blogFrm_Title'>
-										<b>博客标题</b></label>
-									<input type='text' class='form-control' name='Title' id='blogFrm_Title' placeholder='博客标题'
-										value='${article.Title}'>
-								</div>
-								<div class='form-group'>
-									<label for='blogFrm_Intro'>
-										<b>博客摘要</b></label>
-									<textarea class='form-control' rows='3' name='Intro' id='blogFrm_Intro'
-										placeholder='我们倡议为您的博客添加摘要，一段好的摘要能为你的博客添分加彩，同时也是对阅读者的一个非常好的引导。'>${article.Intro}</textarea>
-								</div>
-								<div class='form-group'>
-									<label for='container'>
-										<b>博客正文</b></label>
-									<!-- 加载编辑器的容器 -->
-									<script id='container' name='Content' type='text/plain'>${article.Content}</script>
-								</div>
-								<div class='form-group'>
-									<label for='blogFrm_Tags'>
-										<b>标签</b></label>
-									<input type='text' class='form-control' name='Tags' id='blogFrm_Tags' placeholder='为你的博客设置标签，用逗号隔开，最多5个哦'
-										value='${article.Tags}'>
-								</div>
-								<div class='form-group'>
-									<label for='blogFrm_Keys'>
-										<b>关键字</b></label>
-									<input type='text' class='form-control' name='Keys' id='blogFrm_Keys' placeholder='为你的博客设置关键字，用逗号隔开，最多5个哦'
-										value='${article.Keys}'>
-								</div>
-								<button type='button' class='btn btn-primary' id='btn_sub'>提交</button>
-								<button type='button' class='btn btn-success'>保存草稿</button>
-							</form>
+							#parse('user/admin/blogFrm.html')
 						</div>
 					</div>
 				</div>
@@ -75,17 +40,6 @@
 		#parse('pagelet/IndexFooter.html')
 		#parse('pagelet/backTop.html')
 		#parse('pagelet/IndexJs.html')
-		<!-- 配置文件 -->
-		<script type='text/javascript' src='${cdn}ueditor/1.4.3/ueditor.config.js'></script>
-		<!-- 编辑器源码文件 -->
-		<script type='text/javascript' src='${cdn}ueditor/1.4.3/ueditor.all.js'></script>
-		<!-- 实例化编辑器 -->
-		<script type='text/javascript'>
-			var ue = UE.getEditor('container', {
-				autoHeightEnabled: false,
-				initialFrameHeight: 300
-			});
-		</script>
 		<!-- Own -->
 		<script type='text/javascript'>
 			function showVali(valiResu){ }
@@ -98,7 +52,7 @@
 					if(!data.success) return showVali(data.msg);
 				}]);
 			}
-			$('#btn_sub').click(subFrm);
+			$('#blogFrm_btn_sub').click(subFrm);
 		</script>
 	</body>
 </html>

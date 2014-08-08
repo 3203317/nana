@@ -1,4 +1,5 @@
-var conf = require('../settings');
+var conf = require('../settings'),
+	EventProxy = require('eventproxy');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
@@ -94,14 +95,14 @@ exports.newBlogUI = function(req, res, next){
 		user = req.session.user,
 		_title = '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
-	Category.findAll(null, function (err, status, msg, doc){
+	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/admin/NewBlog', {
 			title: _title,
 			description: _title,
 			keywords: ','+ _title +',Bootstrap3',
 			virtualPath: virtualPath,
-			categorys: doc,
+			categorys: docs,
 			cdn: conf.cdn
 		});
 	});
@@ -114,18 +115,32 @@ exports.editBlogUI = function(req, res, next){
 		user = req.session.user,
 		_title = '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
-	Article.findById(aid, function (err, status, msg, doc){
-		if(err) return next(err);
-		if(!doc) return next(new Error('Not Found.'));
-
+	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
 		res.render('user/admin/EditBlog', {
 			title: _title,
 			description: _title,
 			keywords: ','+ _title +',Bootstrap3',
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
-			article: doc
+			article: article,
+			categorys: categorys
 		});
+	});
+
+	ep.fail(function (err){
+		next(err);
+	});
+
+	Article.findById(aid, function (err, status, msg, doc){
+		if(err) return next(err);
+		if(!doc) return ep.emit('error', new Error('Not Found.'));
+		ep.emit('article', doc);
+	});
+
+	Category.findAll(null, function (err, status, msg, docs){
+		if(err) return next(err);
+		if(!docs) return ep.emit('error', new Error('Not Found.'));
+		ep.emit('categorys', docs);
 	});
 };
 

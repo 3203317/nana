@@ -101,7 +101,7 @@ exports.findById = function(id, cb){
  */
 exports.findTopmarks = function(user_id, cb){
 	Article.find({
-		Topmark: 1
+		Bookmark: 1
 	}, null, {
 		sort: {
 			PostTime: -1

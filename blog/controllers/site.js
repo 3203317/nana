@@ -95,7 +95,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	Article.findAll({
-		Bookmark: -1,
+		Topmark: -1,
 		PostTime: -1
 	}, [1, 10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
