@@ -18,8 +18,6 @@ var ArticleSchema = new Schema({
 		index: true
 	}, Tags: {
 		type: String
-	}, Keys: {			// 关键字
-		type: String
 	}, ViewCount: {
 		type: Number,
 		default: 0
