@@ -12,10 +12,10 @@
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='container'><b>博客正文</b></label>
+		<label class='col-sm-12' for='blogFrm_container'><b>博客正文</b></label>
 		<div class='col-sm-12'>
 			<!-- 加载编辑器的容器 -->
-			<script id='container' name='Content' type='text/plain'></script>
+			<script id='blogFrm_container' name='Content' type='text/plain'></script>
 		</div>
 	</div>
 	<div class='form-group'>
@@ -25,45 +25,46 @@
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>系统博客分类？</b></label>
+		<label class='col-sm-12' for='blogFrm_Cate'><b>系统博客分类？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<select class='form-control'>
-				<option value=''>未选择</option>
+			<select class='form-control' id='blogFrm_Cate' name='Cate'>
+				#foreach($category in $categorys)<option value='$category.CateName'>$category.CateName</option>
+				#end
 			</select>
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>文章类型？</b></label>
+		<label class='col-sm-12'><b>文章类型？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' checked> 原创&nbsp;
-			<input type='radio' name='inlineRadioOptions' id='inlineRadio2' value='option2'> 转帖
+			<input type='radio' name='ArtType' checked> 原创
+			<input type='radio' name='ArtType'> 转帖
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>是否对所有人可见？</b></label>
+		<label class='col-sm-12' for='blogFrm_IsPrivacy'><b>是否对所有人可见？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='inlineRadioOptions' id='inlineRadio1' value='option1' checked> 可见
+			<input type='checkbox' name='IsPrivacy' id='blogFrm_IsPrivacy' checked> 可见
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>是否允许评论？</b></label>
+		<label class='col-sm-12' for='blogFrm_IsComment'><b>是否允许评论？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='inlineRadioOptions' id='inlineRadio1' value='option1' checked> 允许评论
+			<input type='checkbox' name='IsComment' id='blogFrm_IsComment' checked> 允许评论
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>是否自动生成目录？</b></label>
+		<label class='col-sm-12'><b>是否自动生成目录？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='inlineRadioOptions' id='inlineRadio1' value='option1'> 生成目录
+			<input type='checkbox'> 生成目录
 		</div>
 	</div>
 	<div class='form-group'>
-		<label class='col-sm-12' for='blogFrm_Keys'><b>是否在博客列表置顶？</b></label>
+		<label class='col-sm-12' for='blogFrm_Topmark'><b>是否在博客列表置顶？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='inlineRadioOptions' id='inlineRadio1' value='option1'> 置顶
+			<input type='checkbox' name='Topmark' id='blogFrm_Topmark' value='option1'> 置顶
 		</div>
 	</div>
-	<button type='button' class='btn btn-primary' id='btn_sub'>提交</button>
+	<button type='button' class='btn btn-primary' id='blogFrm_btn_sub'>提交</button>
 	<button type='button' class='btn btn-success'>保存草稿</button>
 </form>
 <style type='text/css'>
@@ -77,7 +78,7 @@
 <script type='text/javascript' src='${cdn}ueditor/1.4.3/ueditor.all.js'></script>
 <!-- 实例化编辑器 -->
 <script type='text/javascript'>
-	var ue = UE.getEditor('container', {
+	var ue = UE.getEditor('blogFrm_container', {
 		autoHeightEnabled: false,
 		initialFrameHeight: 300
 	});

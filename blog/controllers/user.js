@@ -4,6 +4,7 @@ var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
 var User = require('../biz/user'),
+	Category = require('../biz/category'),
 	Article = require('../biz/article');
 
 exports.loginUI = function(req, res, next){
@@ -93,12 +94,16 @@ exports.newBlogUI = function(req, res, next){
 		user = req.session.user,
 		_title = '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
-	res.render('user/admin/NewBlog', {
-		title: _title,
-		description: _title,
-		keywords: ','+ _title +',Bootstrap3',
-		virtualPath: virtualPath,
-		cdn: conf.cdn
+	Category.findAll(null, function (err, status, msg, doc){
+		if(err) return next(err);
+		res.render('user/admin/NewBlog', {
+			title: _title,
+			description: _title,
+			keywords: ','+ _title +',Bootstrap3',
+			virtualPath: virtualPath,
+			categorys: doc,
+			cdn: conf.cdn
+		});
 	});
 };
 
