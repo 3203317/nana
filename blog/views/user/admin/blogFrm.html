@@ -34,7 +34,7 @@
 		<label class='col-sm-12' for='blogFrm_Cate'><b>系统博客分类？</b></label>
 		<div class='col-sm-12 fontSize'>
 			<select class='form-control' id='blogFrm_Cate' name='Cate'>
-				#foreach($category in $categorys)<option value='$category.CateName'>$category.CateName</option>
+				#foreach($category in $categorys)<option value='$category.CateName'#if(!!$article && $article.Cate==$category.CateName) selected#end>$category.CateName</option>
 				#end
 			</select>
 		</div>
@@ -67,13 +67,13 @@
 	<div class='form-group'>
 		<label class='col-sm-12' for='blogFrm_Topmark'><b>是否在博客列表置顶？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='Topmark' id='blogFrm_Topmark' value='1'> 置顶
+			<input type='checkbox' name='Topmark' id='blogFrm_Topmark' value='1'#if(!!$article && 1 == $article.Topmark) checked#end> 置顶
 		</div>
 	</div>
 	<div class='form-group'>
 		<label class='col-sm-12' for='blogFrm_Bookmark'><b>是否设置滚动书签？</b></label>
 		<div class='col-sm-12 fontSize'>
-			<input type='checkbox' name='Bookmark' id='blogFrm_Bookmark' value='1'> 滚动
+			<input type='checkbox' name='Bookmark' id='blogFrm_Bookmark' value='1'#if(!!$article && 1 == $article.Bookmark) checked#end> 滚动
 		</div>
 	</div>
 	<button type='button' class='btn btn-primary' id='blogFrm_btn_sub'>提交</button>
