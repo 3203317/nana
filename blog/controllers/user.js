@@ -39,8 +39,8 @@ exports.login = function(req, res, next){
 };
 
 exports.login_success = function(req, res, next){
-	var name = req.params.name.trim();
-	res.redirect('/u/'+ name +'/');
+	var _user = req.flash('user')[0]
+	res.redirect('/u/'+ _user.UserName +'/');
 };
 
 exports.regUI = function(req, res, next){
@@ -144,6 +144,10 @@ exports.editBlogUI = function(req, res, next){
 	});
 };
 
+exports.editBlog = function(req, res, next){
+
+};
+
 exports.saveNewBlog = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -169,14 +173,8 @@ exports.validate = function(req, res, next){
 	res.redirect('/user/login');
 };
 
-exports.validate2 = function(req, res, next){
-	if('user' === req.session.role) return next();
-	var name = req.params.name.trim();
-	res.redirect('/u/'+ name +'/');
-};
-
 exports.valiUserName = function(req, res, next){
-	var name = req.params.name.trim();
+	var name = req.params.name;
 
 	User.findByName(name, function (err, status, msg, doc){
 		if(err) return next(err);

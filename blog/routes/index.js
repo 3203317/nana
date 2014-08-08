@@ -71,16 +71,17 @@ module.exports = function(app){
 
 	app.post('/user/login', valiPostData, user.login);
 	app.get('/user/login', user.loginUI);
-	app.get('/user/:name/login/success', user.login_success);
+	app.get('/user/:name/login/success', user.valiUserName, user.login_success);
 
 	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);
 
-	app.get('/u/:name/', user.valiUserName, user.myUI);
-	app.get('/u/:name/admin/new/blog', user.validate2, user.valiUserName, user.newBlogUI);
+	app.get('/u/:name/', user.validate, user.valiUserName, user.myUI);
+	app.get('/u/:name/admin/new/blog', user.validate, user.valiUserName, user.newBlogUI);
 	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.saveNewBlog);
 
-	app.get('/u/:name/admin/edit/blog/:aid', user.validate2, user.valiUserName, user.editBlogUI);
+	app.get('/u/:name/admin/edit/blog/:aid', user.validate, user.valiUserName, user.editBlogUI);
+	app.post('/u/:name/admin/edit/blog/:aid', user.validate, user.valiUserName, user.editBlog);
 
 	app.get('/archive/', archive.index);
 	app.get('/archive/tag/', tag.index);
