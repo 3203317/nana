@@ -9,9 +9,27 @@ var models = require('../models'),
  * @return
  */
 exports.saveNew = function(newInfo, cb){
+	newInfo.Bookmark = newInfo.Bookmark || 0;
+	newInfo.Topmark = newInfo.Topmark || 0;
+
 	Article.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 1, null, doc);
+	});
+};
+
+exports.editInfo = function(newInfo, cb){
+	newInfo.Bookmark = newInfo.Bookmark || 0;
+	newInfo.Topmark = newInfo.Topmark || 0;
+
+	var id = newInfo.id;
+	delete newInfo.id;
+
+	Article.update({
+		_id: id
+	}, newInfo, function (err, count){
+		if(err) return cb(err);
+		cb(null, 1, null, count);
 	});
 };
 

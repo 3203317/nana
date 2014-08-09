@@ -123,7 +123,8 @@ exports.editBlogUI = function(req, res, next){
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
 			article: article,
-			categorys: categorys
+			categorys: categorys,
+			frmUrl: aid
 		});
 	});
 
@@ -145,7 +146,17 @@ exports.editBlogUI = function(req, res, next){
 };
 
 exports.editBlog = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
 
+	data.User_Id = req.session.userId;
+	data.id = req.params.aid;
+
+	Article.editInfo(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = true;
+		res.send(result);
+	});
 };
 
 exports.saveNewBlog = function(req, res, next){
