@@ -39,7 +39,7 @@ exports.login = function(req, res, next){
 };
 
 exports.login_success = function(req, res, next){
-	var _user = req.flash('user')[0]
+	var _user = req.flash('user')[0];
 	res.redirect('/u/'+ _user.UserName +'/');
 };
 

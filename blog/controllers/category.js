@@ -18,13 +18,14 @@ function getTopMessage(){
 };
 
 exports.name = function(req, res, next){
-	var name = req.params.name.trim();
+	var name = req.params.name;
 
 	Article.findAllByCate(name, {
 		Bookmark: -1,
 		PostTime: -1
 	}, [1, 10], null, function (err, status, msg, docs){
 		if(err) return next(err);
+		if(!docs || !docs.length) return res.redirect('/archive/');
 		res.render('Category', {
 			moduleName: 'category',
 			title: name +' - 分类 - '+ title,
@@ -40,8 +41,6 @@ exports.name = function(req, res, next){
 };
 
 exports.name_more = function(req, res, next){
-	var name = req.params.name.trim();
-
 	var data = req.query.data;
 	if(!data) return res.send('');
 
@@ -53,7 +52,7 @@ exports.name_more = function(req, res, next){
 
 	if(!data.Current) return res.send('');
 
-	Article.findAllByCate(name, {
+	Article.findAllByCate(req.params.name, {
 		Bookmark: -1,
 		PostTime: -1
 	}, [data.Current, 10], null, function (err, status, msg, docs){

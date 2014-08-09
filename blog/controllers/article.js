@@ -16,44 +16,42 @@ function getTopMessage(){
 };
 
 exports.id = function(req, res, next){
-	var id = req.params.id.trim();
+	Article.findById(req.params.id, function (err, status, msg, doc){
+		if(err) return next(err);
+		if(!doc) return res.redirect('/');
 
-	var ep = EventProxy.create('article', 'prev', 'next', 'favs', function (article, prev, next, favs){
-		res.render('Article', {
-			moduleName: 'archive',
-			title: article.Title +' - 档案馆 - '+ title,
-			description: article.Title,
-			keywords: ','+ article.Title +',Bootstrap3',
-			virtualPath: virtualPath,
-			topMessage: getTopMessage(),
-			article: article,
-			prev: prev,
-			next: next,
-			favs: favs,
-			cdn: conf.cdn
+		var article = doc;
+		var ep = EventProxy.create('prev', 'next', 'favs', function (prev, next, favs){
+			res.render('Article', {
+				moduleName: 'archive',
+				title: article.Title +' - 档案馆 - '+ title,
+				description: article.Title,
+				keywords: ','+ article.Title +',Bootstrap3',
+				virtualPath: virtualPath,
+				topMessage: getTopMessage(),
+				article: article,
+				prev: prev,
+				next: next,
+				favs: favs,
+				cdn: conf.cdn
+			});
 		});
-	});
 
-	ep.fail(function (err){
-		next(err);
-	});
+		ep.fail(function (err){
+			next(err);
+		});
 
-	Article.findById(id, function (err, status, msg, doc){
-		if(err) return ep.emit('error', err);
-		if(!doc) return ep.emit('error', new Error('Not Found.'));
-		ep.emit('article', doc);
-
-		Article.findNext(doc, function (err, status, msg, doc){
+		Article.findNext(article, function (err, status, msg, doc){
 			if(err) return ep.emit('error', err);
 			ep.emit('next', doc);
 		});
 
-		Article.findPrev(doc, function (err, status, msg, doc){
+		Article.findPrev(article, function (err, status, msg, doc){
 			if(err) return ep.emit('error', err);
 			ep.emit('prev', doc);
 		});
 
-		Article.findFav(doc, 3, function (err, status, msg, docs){
+		Article.findFav(article, 3, function (err, status, msg, docs){
 			if(err) return ep.emit('error', err);
 			ep.emit('favs', docs);
 		});
