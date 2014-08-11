@@ -69,6 +69,8 @@ app.set('port', process.env.PORT || 3000)
 					var m = util.pdate(t.getMonth() + 1);
 					var d = util.pdate(t.getDate());
 					return y +'-'+ m +'-'+ d;
+				}, toHtml: function(s){
+					return velocity.Parser.parse(s);
 				}
 			}
 			try{ fn(null, velocity.render(data, options, macros)); }

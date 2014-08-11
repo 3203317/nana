@@ -45,7 +45,7 @@
 							#if(${article.Photo})<figure class='thumbnail clearfix'>
 								<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'>
 							</figure>#end
-							<div class='content'>$article.Content</div>
+							<div class='content'>#toHtml($article.Content)</div>
 							<div class='footer tag'>
 								#if($article.aTags)<span class='label label-default'>
 									<span class='glyphicon glyphicon-tag'></span>
