@@ -3,6 +3,7 @@
 	<head>
 		#parse('pagelet/IndexHeader.html')
 		<link rel='stylesheet' type='text/css' href='${virtualPath}public/site/css/article.css?v3' media='screen' />
+		<link rel='stylesheet' type='text/css' href='${cdn}bootstrap/3.2.0/docs/assets/css/docs.min.css?v3.2.0' media='screen' />
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -125,5 +126,9 @@
 		#parse('pagelet/backTop.html')
 		#parse('pagelet/IndexJs.html')
 		<!-- Own -->
+		<script type='text/javascript'>
+		var ZeroClipboard_PATH = '${cdn}bootstrap/3.2.0/docs/assets/flash/ZeroClipboard.swf';
+		</script>
+		<script type='text/javascript' src='${cdn}bootstrap/3.2.0/docs/assets/js/docs.min.js?v3.2.0'></script>
 	</body>
 </html>
