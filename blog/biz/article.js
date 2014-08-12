@@ -169,7 +169,12 @@ exports.findNext = function(article, cb){
  * @return
  */
 exports.findFav = function(article, count, cb){
-	Article.find(null, null, {
+	Article.find({
+		_id: {
+			'$ne': article._id
+		},
+		Cate: article.Cate
+	}, null, {
 		limit: count
 	}, function (err, docs){
 		if(err) return cb(err);
