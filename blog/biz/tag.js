@@ -11,7 +11,7 @@ var models = require('../models'),
 exports.saveNew = function(newInfo, cb){
 	Tag.create(newInfo, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -31,6 +31,6 @@ exports.findAll = function(user_id, cb){
 
 	Tag.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };

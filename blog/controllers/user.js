@@ -25,7 +25,7 @@ exports.login = function(req, res, next){
 
 	User.login(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		if(1 !== status){
+		if(!!status){
 			result.msg = msg;
 			return res.send(result);
 		}
@@ -59,7 +59,7 @@ exports.reg = function(req, res, next){
 
 	User.register(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = 1 === status;
+		result.success = !status;
 		result.msg = msg;
 		res.send(result);
 	});
@@ -75,7 +75,6 @@ exports.myUI = function(req, res, next){
 		PostTime: -1
 	}, null, _user._id, function (err, status, msg, docs){
 		if(err) return next(err);
-
 		res.render('user/My', {
 			title: _title,
 			description: _title,
@@ -154,7 +153,8 @@ exports.editBlog = function(req, res, next){
 
 	Article.editInfo(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = true;
+		result.success = !status;
+		result.msg = msg;
 		res.send(result);
 	});
 };
@@ -167,7 +167,8 @@ exports.saveNewBlog = function(req, res, next){
 
 	Article.saveNew(data, function (err, status, msg, doc){
 		if(err) return next(err);
-		result.success = true;
+		result.success = !status;
+		result.msg = msg;
 		res.send(result);
 	});
 };

@@ -70,6 +70,7 @@ exports.name_more = function(req, res, next){
 		PostTime: -1
 	}, [data.Current, 10], null, function (err, status, msg, docs){
 		if(err) return next(err);
+		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
 			virtualPath: virtualPath,
 			articles: docs

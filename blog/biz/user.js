@@ -17,7 +17,7 @@ exports.login = function(logInfo, cb){
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
 			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
 
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -39,7 +39,7 @@ exports.register = function(newInfo, cb){
 		/* 开始创建新用户 */
 		User.create(newInfo, function (err, doc){
 			if(err) return cb(err);
-			cb(null, 1, null, doc);
+			cb(null, 0, null, doc);
 		});
 	});
 };
@@ -47,6 +47,6 @@ exports.register = function(newInfo, cb){
 exports.findByName = function(userName, cb){
 	User.findUserByName(userName, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };

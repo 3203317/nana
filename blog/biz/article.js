@@ -14,7 +14,7 @@ exports.saveNew = function(newInfo, cb){
 
 	Article.create(newInfo, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -29,7 +29,7 @@ exports.editInfo = function(newInfo, cb){
 		_id: id
 	}, newInfo, function (err, count){
 		if(err) return cb(err);
-		cb(null, 1, null, count);
+		cb(null, 0, null, count);
 	});
 };
 
@@ -54,7 +54,7 @@ exports.findAll = function(sort, page, user_id, cb){
 
 	Article.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };
 
@@ -72,7 +72,7 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
 		Tags: new RegExp(','+ name +',', 'i')
 	}, null, option, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };
 
@@ -90,7 +90,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 		Cate: new RegExp(name, 'i')
 	}, null, option, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };
 
@@ -106,7 +106,7 @@ exports.findById = function(id, cb){
 		_id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -126,7 +126,7 @@ exports.findTopmarks = function(user_id, cb){
 		}
 	}, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };
 
@@ -141,7 +141,7 @@ exports.findPrev = function(article, cb){
 		}
 	}, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -156,7 +156,7 @@ exports.findNext = function(article, cb){
 		}
 	}, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 1, null, doc);
+		cb(null, 0, null, doc);
 	});
 };
 
@@ -173,6 +173,6 @@ exports.findFav = function(article, count, cb){
 		limit: count
 	}, function (err, docs){
 		if(err) return cb(err);
-		cb(null, 1, null, docs);
+		cb(null, 0, null, docs);
 	});
 };
