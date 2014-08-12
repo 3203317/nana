@@ -26,3 +26,51 @@ cursor.forEach(function(x){
 db.users.update({"IsDel":0}, {'$set':{ Email:'huangxin@foreworld.net' }})
 db.users.update({"IsDel":0}, {'$set':{ UserName:'foreworld' }})
 db.users.update({"IsDel":0}, {'$set':{ Nickname:'我哪知道' }})
+
+
+SELECT Cate, Title, Intro, Content, PostTime, ViewCount, Tags, Bookmark, Topmark, Photo FROM f_article ORDER BY PostTime ;
+
+win7 安装 mysql
+20140122/110203.jpg
+其实大部分的win系统应该都可以这么安装的。
+
+<h6>以管理员身份运行，可以做成bat文件放到桌面方便运行。</h6>
+<div class="bs-callout bs-callout-warning">
+<h4>安装：</h4>
+<p>D:\software\mysql\mysql-5.5.11-win32\bin>mysqld --install</p>
+<p>Service successfully installed.</p>
+</div>
+<div class="bs-callout bs-callout-info">
+<h4>启动：</h4>
+<p>D:\software\mysql\mysql-5.5.11-win32\bin>net start mysql</p>
+<p>MySQL 服务正在启动 ....</p>
+<p>MySQL 服务已经启动成功。</p>
+</div>
+<div class="bs-callout bs-callout-danger">
+<h4>停止：</h4>
+<p>D:\software\mysql\mysql-5.5.11-win32\bin>net stop mysql</p>
+<p>MySQL 服务正在停止.</p>
+<p>MySQL 服务已成功停止。</p>
+</div>
+
+国产动漫和日本动漫开战
+看看吧
+<embed src="http://player.ku6.com/refer/-HjgUtVRieG2wTKoJSzwXQ../v.swf" width="100%" height="400px"></embed>
+
+RCP 添加全局快捷键
+20140207/134411.jpg
+Eclilpse RCP 学过木有？
+
+<h6>以net.foreworld.rss2为例，添加一个Ctrl+N打开新窗口功能。</h6>
+
+<h6>1. 在plugin.xml中添加org.eclipse.ui.commands扩展点。</h6>
+
+<div class="highlight">
+  <pre>
+    <code class="html"><span class="nt">&lt;extension</span> <span class="na">point=</span><span class="s">"org.eclipse.ui.commands"</span><span class="nt">&gt;&lt;/extension&gt;</span>
+</code></pre></div>
+
+<div class="highlight">
+  <pre>
+    <code class="html"><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-search"</span><span class="nt">&gt;&lt;/span&gt;</span>
+</code></pre></div>

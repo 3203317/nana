@@ -49,7 +49,7 @@ exports.index_more = function(req, res, next){
 
 	if(!data.Current) return res.send('');
 
-	Article.findAll({
+	Article.findAll2({
 		Bookmark: -1,
 		PostTime: -1
 	}, [data.Current, 10], null, function (err, status, msg, docs){

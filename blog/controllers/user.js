@@ -72,7 +72,7 @@ exports.myUI = function(req, res, next){
 		_title = _user.Nickname +'的个人空间 - '+ title;
 
 	Article.findAll({
-		PostTime: -1
+		_id: -1
 	}, null, _user._id, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/My', {

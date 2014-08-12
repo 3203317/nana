@@ -58,19 +58,53 @@ exports.findAll = function(sort, page, user_id, cb){
 	});
 };
 
-exports.findAllByTag = function(name, sort, page, user_id, cb){
+/**
+ * 分页优化
+ *
+ * @params {Object} sort
+ * @params {Array} page
+ * @params {String} user_id
+ * @params {Function} cb
+ * @return
+ */
+exports.findAll2 = function(sort, page, user_id, cb){
 	var option = {
 		sort: sort
 	};
 
 	if(page){
 		option.limit = page[1];
-		option.skip = ((page[0] - 1) * option.limit);
 	}
 
 	Article.find({
-		Tags: new RegExp(','+ name +',', 'i')
+		_id: {
+			'$lt': page[0]
+		}
 	}, null, option, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 0, null, docs);
+	});
+};
+
+exports.findAllByTag = function(name, sort, page, user_id, cb){
+	var option = {
+		sort: sort
+	};
+
+	var params = {
+		Tags: new RegExp(','+ name +',', 'i')
+	};
+
+	if(page){
+		option.limit = page[0];
+		if(!!page[1]){
+			params._id = {
+				'$lt': page[1]
+			};
+		}
+	}
+
+	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
 	});
@@ -81,14 +115,21 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 		sort: sort
 	};
 
+	var params = {
+		Cate: new RegExp(name, 'i')
+	};
+
 	if(page){
-		option.limit = page[1];
-		option.skip = ((page[0] - 1) * option.limit);
+		option.limit = page[0];
+		// option.skip = ((page[0] - 1) * option.limit);
+		if(!!page[1]){
+			params._id = {
+				'$lt': page[1]
+			};
+		}
 	}
 
-	Article.find({
-		Cate: new RegExp(name, 'i')
-	}, null, option, function (err, docs){
+	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
 	});
