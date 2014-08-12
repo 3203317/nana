@@ -32,7 +32,6 @@ exports.findAll = function(page, user_id, cb){
 
 	if(page){
 		option.limit = page[1];
-		option.skip = ((page[0] - 1) * option.limit);
 	}
 
 	Comment.find(null, null, option, function (err, docs){

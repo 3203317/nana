@@ -49,10 +49,10 @@ exports.index_more = function(req, res, next){
 
 	if(!data.Current) return res.send('');
 
-	Article.findAll2({
+	Article.findAll({
 		Bookmark: -1,
 		PostTime: -1
-	}, [data.Current, 10], null, function (err, status, msg, docs){
+	}, [10, data.Current], null, function (err, status, msg, docs){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
@@ -98,7 +98,7 @@ exports.installUI = function(req, res, next){
 	Article.findAll({
 		Topmark: -1,
 		PostTime: -1
-	}, [1, 10], null, function (err, status, msg, docs){
+	}, [10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'ArticleIntros.vm.html'), 'utf8', function (err, template){
@@ -289,7 +289,7 @@ exports.installUI = function(req, res, next){
 	/* 热门文章前10 */
 	Article.findAll({
 		ViewCount: -1
-	}, [1, 10], null, function (err, status, msg, docs){
+	}, [10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Side.Art.View.vm.html'), 'utf8', function (err, template){
