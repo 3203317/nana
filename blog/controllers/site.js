@@ -51,7 +51,7 @@ exports.index_more = function(req, res, next){
 
 	Article.findAll({
 		Bookmark: -1,
-		PostTime: -1
+		_id: -1
 	}, [10, data.Current], null, function (err, status, msg, docs){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.send('');
@@ -97,7 +97,7 @@ exports.installUI = function(req, res, next){
 
 	Article.findAll({
 		Topmark: -1,
-		PostTime: -1
+		_id: -1
 	}, [10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
@@ -141,7 +141,7 @@ exports.installUI = function(req, res, next){
 		var tags = docs;
 
 		Article.findAll({
-			PostTime: -1
+			_id: -1
 		}, null, null, function (err, status, msg, docs){
 			if(err) return ep.emit('error', err);
 
@@ -202,7 +202,7 @@ exports.installUI = function(req, res, next){
 
 	/* 档案馆 */
 	Article.findAll({
-		PostTime: -1
+		_id: -1
 	}, null, null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 

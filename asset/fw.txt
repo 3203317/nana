@@ -74,3 +74,39 @@ Eclilpse RCP 学过木有？
   <pre>
     <code class="html"><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"glyphicon glyphicon-search"</span><span class="nt">&gt;&lt;/span&gt;</span>
 </code></pre></div>
+
+
+
+		for(var i in docs){
+			var doc = docs[i]
+			// console.log(doc.Title)
+			// console.log(require('mongodb').ObjectID(util.genObjectId(doc.PostTime)))
+
+			// console.log(doc.PostTime1)
+			// console.log(require('mongodb').ObjectID(util.genObjectId(doc.PostTime1)))
+
+			// var newDoc = {
+			// 	_id: require('mongodb').ObjectID(util.genObjectId(doc.PostTime1)),
+
+			// 	Cate: doc.Cate,
+			// 	Title: doc.Title,
+			// 	Intro: doc.Intro, 
+			// 	Content: doc.Content,
+
+			// 	ViewCount: doc.ViewCount, 
+			// 	Tags: doc.Tags, 
+			// 	Bookmark: doc.Bookmark, 
+			// 	Topmark: doc.Topmark, 
+			// 	Photo: doc.Photo
+			// }
+
+			// that.saveNew(newDoc, function(){
+
+			// });
+
+			// Article.remove({
+			// 	'_id': doc._id
+			// }, function(){
+			// 	console.log(arguments)
+			// })
+		}
