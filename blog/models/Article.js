@@ -31,9 +31,6 @@ var ArticleSchema = new Schema({
 		type: String
 	}, User_Id: {		// 用户Id
 		type: ObjectId
-	}, PostTime: {
-		type: Date,
-		default: Date.now
 	}
 }, {
 	versionKey: false,
@@ -44,8 +41,8 @@ var ArticleSchema = new Schema({
 	}
 });
 
-ArticleSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
+ArticleSchema.virtual('PostTime').get(function(){
+	return new Date(this._id.getTimestamp());
 });
 
 ArticleSchema.virtual('PostTime2Month').get(function(){

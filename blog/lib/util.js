@@ -104,3 +104,27 @@ exports.threeSeparator = function(num){
 	}
 	return num;
 };
+
+var hexTable = [];
+for (var i=0; i<256; i++) {
+	hexTable[i] = (i <= 15 ? '0' : '') + i.toString(16);
+}
+
+var ObjectID = require('mongodb').ObjectID;
+
+/**
+ * 根据指定的时间，生成自定义ObjectId
+ *
+ * @params {Date} time
+ * @return
+ */
+exports.genObjectId = function(time){
+	var obj = new ObjectID();
+	var id = obj.generate(parseInt(time/1000,10));
+
+	var hexString = '';
+	for (var i=0; i<id.length; i++) {
+		hexString += hexTable[id.charCodeAt(i)];
+	}
+	return hexString;
+};
