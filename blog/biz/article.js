@@ -142,7 +142,7 @@ exports.findTopmarks = function(user_id, cb){
 		Bookmark: 1
 	}, null, {
 		sort: {
-			PostTime: -1
+			_id: -1
 		}
 	}, function (err, docs){
 		if(err) return cb(err);
@@ -152,12 +152,12 @@ exports.findTopmarks = function(user_id, cb){
 
 exports.findPrev = function(article, cb){
 	Article.findOne({
-		PostTime: {
-			$gt: article.PostTime
+		_id: {
+			$gt: article._id
 		}
 	}, null, {
 		sort: {
-			PostTime: 1
+			_id: 1
 		}
 	}, function (err, doc){
 		if(err) return cb(err);
@@ -167,12 +167,12 @@ exports.findPrev = function(article, cb){
 
 exports.findNext = function(article, cb){
 	Article.findOne({
-		PostTime: {
-			$lt: article.PostTime
+		_id: {
+			$lt: article._id
 		}
 	}, null, {
 		sort: {
-			PostTime: -1
+			_id: -1
 		}
 	}, function (err, doc){
 		if(err) return cb(err);

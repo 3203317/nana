@@ -35,7 +35,7 @@ exports.name = function(req, res, next){
 
 	Article.findAllByTag(name, {
 		Bookmark: -1,
-		PostTime: -1
+		_id: -1
 	}, [10], null, function (err, status, msg, docs){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.redirect('/archive/tag/');
@@ -67,7 +67,7 @@ exports.name_more = function(req, res, next){
 
 	Article.findAllByTag(req.params.name, {
 		Bookmark: -1,
-		PostTime: -1
+		_id: -1
 	}, [10, data.Current], null, function (err, status, msg, docs){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.send('');
