@@ -346,7 +346,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 生成评论 */
-	Comment.findAll([1, 10], null, function (err, status, msg, docs){
+	Comment.findAll([10], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Side.Comment.vm.html'), 'utf8', function (err, template){

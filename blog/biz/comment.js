@@ -26,15 +26,23 @@ exports.saveNew = function(newInfo, cb){
 exports.findAll = function(page, user_id, cb){
 	var option = {
 		sort: {
-			PostTime: -1
+			_id: -1
 		}
 	};
 
+	var params = null;
+
 	if(page){
-		option.limit = page[1];
+		option.limit = page[0];
+		if(!!page[1]){
+			params = {};
+			params._id = {
+				'$lt': page[1]
+			};
+		}
 	}
 
-	Comment.find(null, null, option, function (err, docs){
+	Comment.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
 	});
