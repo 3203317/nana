@@ -6,7 +6,7 @@ var express = require('express'),
 var cwd = process.cwd(),
 	fs = require('fs');
 
-var util = require('./lib/util');
+var macros = require('./lib/macro');
 
 var routes = require('./routes'),
 	velocity = require('velocityjs');
@@ -49,30 +49,6 @@ app.set('port', process.env.PORT || 3000)
 	.engine('.html', function (path, options, fn){
 		fs.readFile(path, 'utf8', function (err, data){
 			if(err) return fn(err);
-			var macros = {
-				parse: function(file){
-					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
-					return this.eval(template);
-				}, include: function(file){
-					var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
-					return template;
-				}, toMon: function(t){
-					return util.pdate(t.getMonth() + 1);
-				}, toDay: function(t){
-					return util.pdate(t.getDate());
-				}, formatDate: function(t){
-					return t.format();
-				}, num2Money: function(n){
-					return util.threeSeparator(n);
-				}, toSDate: function(t){
-					var y = t.getFullYear();
-					var m = util.pdate(t.getMonth() + 1);
-					var d = util.pdate(t.getDate());
-					return y +'-'+ m +'-'+ d;
-				}, toHtml: function(s){
-					return velocity.Parser.parse(s);
-				}
-			}
 			try{ fn(null, velocity.render(data, options, macros)); }
 			catch(e){ fn(e); }
 		});

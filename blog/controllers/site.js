@@ -16,6 +16,8 @@ var Comment = require('../biz/comment'),
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+var macros = require('../lib/macro');
+
 function getTopMessage(){
 	var t = new Date();
 	var y = t.getFullYear();
@@ -60,23 +62,6 @@ exports.index_more = function(req, res, next){
 			articles: docs
 		});
 	});
-};
-
-var macros = {
-	formatDate: function(t){
-		return t.format();
-	}, toMon: function(t){
-		return util.pdate(t.getMonth() + 1);
-	}, toDay: function(t){
-		return util.pdate(t.getDate());
-	}, toSDate: function(t){
-		var y = t.getFullYear();
-		var m = util.pdate(t.getMonth() + 1);
-		var d = util.pdate(t.getDate());
-		return y +'-'+ m +'-'+ d;
-	}, num2Money: function(n){
-		return util.threeSeparator(n);
-	}
 };
 
 exports.installUI = function(req, res, next){
