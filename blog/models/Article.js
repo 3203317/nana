@@ -17,7 +17,7 @@ var ArticleSchema = new Schema({
 		required: true,
 		index: true
 	}, Tags: {
-		type: String
+		type: Array
 	}, ViewCount: {
 		type: Number,
 		default: 0
@@ -43,22 +43,6 @@ var ArticleSchema = new Schema({
 
 ArticleSchema.virtual('PostTime').get(function(){
 	return this._id.getTimestamp();
-});
-
-ArticleSchema.virtual('aTags').get(function(){
-	if(0 === this.Tags.length) return;
-
-	var strs = this.Tags.split(',');
-	var result = [];
-
-	for(var s in strs){
-		if('' !== strs[s]){
-			result.push({
-				'TagName': strs[s]
-			});
-		}
-	}
-	return result;
 });
 
 mongoose.model('Article', ArticleSchema);

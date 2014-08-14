@@ -28,10 +28,10 @@
 		</figure>#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
-			#if($article.aTags)<div class='tag fl clearfix'>
+			#if(0<$article.Tags.length)<div class='tag fl clearfix'>
 				<span class='label label-default'>
 					<span class='glyphicon glyphicon-tag'></span>
-					#foreach($tag in $article.aTags)<a rel='tag' title='查看 $tag.TagName 标签' href='${virtualPath}archive/tag/$tag.TagName/'>$tag.TagName</a>#if($foreach.hasNext),#end
+					#foreach($tag in $article.Tags)<a rel='tag' title='查看 $tag 标签' href='${virtualPath}archive/tag/$tag/'>$tag</a>#if($foreach.hasNext),#end
 					#end
 				</span>
 			</div>#end

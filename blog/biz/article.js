@@ -22,6 +22,13 @@ exports.editInfo = function(newInfo, cb){
 	newInfo.Bookmark = newInfo.Bookmark || 0;
 	newInfo.Topmark = newInfo.Topmark || 0;
 
+	/* 标签转换 */
+	var tags = newInfo.Tags.split(',');
+	newInfo.Tags = [];
+	for(var s in tags){
+		if('' !== tags[s]) newInfo.Tags.push(tags[s]);
+	}
+
 	var id = newInfo.id;
 	delete newInfo.id;
 
@@ -71,7 +78,7 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
 	};
 
 	var params = {
-		Tags: new RegExp(','+ name +',', 'i')
+		Tags: new RegExp('^'+ name +'$', 'i')
 	};
 
 	if(page){
@@ -95,7 +102,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 	};
 
 	var params = {
-		Cate: new RegExp(name, 'i')
+		Cate: new RegExp('^'+ name +'$', 'i')
 	};
 
 	if(page){
