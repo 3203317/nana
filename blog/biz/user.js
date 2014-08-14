@@ -51,3 +51,12 @@ exports.findByName = function(userName, cb){
 		cb(null, 0, null, doc);
 	});
 };
+
+exports.findById = function(id, cb){
+	User.findOne({
+		_id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 0, null, doc);
+	});
+};

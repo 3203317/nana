@@ -5,7 +5,8 @@ var conf = require('../settings'),
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
-var Article = require('../biz/article');
+var Article = require('../biz/article'),
+	User = require('../biz/user');
 
 function getTopMessage(){
 	var t = new Date();
@@ -21,7 +22,8 @@ exports.id = function(req, res, next){
 		if(!doc) return res.redirect('/');
 
 		var article = doc;
-		var ep = EventProxy.create('prev', 'next', 'favs', function (prev, next, favs){
+		var ep = EventProxy.create('prev', 'next', 'favs', 'author', function (prev, next, favs, author){
+			article.author = author;
 			res.render('Article', {
 				moduleName: 'archive',
 				title: article.Title +' - 档案馆 - '+ title,
@@ -39,6 +41,11 @@ exports.id = function(req, res, next){
 
 		ep.fail(function (err){
 			next(err);
+		});
+
+		User.findById(article.User_Id, function (err, status, msg, doc){
+			if(err) return ep.emit('error', err);
+			ep.emit('author', doc);
 		});
 
 		Article.findNext(article, function (err, status, msg, doc){

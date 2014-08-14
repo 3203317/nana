@@ -36,7 +36,7 @@
 								</span>#end*#
 								<span class='label label-default'>
 									<span class='glyphicon glyphicon-user'></span>
-									<a title='查看 我哪知道 的全部文章' href='${virtualPath}u/foreworld/'>我哪知道</a>
+									<a title='查看 $article.author.Nickname 的全部文章' href='${virtualPath}u/$article.author.UserName/'>$article.author.Nickname</a>
 								</span>
 								<span class='label label-default'>
 									<span class='glyphicon glyphicon-eye-open'></span>
@@ -44,7 +44,7 @@
 								</span>
 							</div>
 							#if(${article.Photo})<figure class='thumbnail clearfix'>
-								<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'>
+								<img src='${virtualPath}public/udata/$article.author.UserName/${article.Photo}' alt='${virtualPath}public/udata/$article.author.UserName/${article.Photo}'>
 							</figure>#end
 							<div class='content'>#toHtml($article.Content)</div>
 							<div class='footer tag'>
