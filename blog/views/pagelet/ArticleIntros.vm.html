@@ -11,7 +11,7 @@
 		<div class='tag ta nav'>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-user'></span>
-				<a title='查看 我哪知道 的全部文章' href='${virtualPath}u/foreworld/'>我哪知道</a>
+				<a title='查看 $article.author.Nickname 的全部文章' href='${virtualPath}u/$article.author.UserName/'>$article.author.Nickname</a>
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-home'></span>
@@ -24,7 +24,7 @@
 		</div>
 		#if(${article.Photo})<figure class='thumbnail clearfix'>
 			<a href='${virtualPath}archive/${article._id}.html'>
-				<img src='${virtualPath}public/udata/foreworld/${article.Photo}' alt='${virtualPath}public/udata/foreworld/${article.Photo}'></a>
+				<img src='${virtualPath}public/udata/$article.author.UserName/${article.Photo}' alt='${virtualPath}public/udata/$article.author.UserName/${article.Photo}'></a>
 		</figure>#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
