@@ -101,6 +101,7 @@ exports.newBlogUI = function(req, res, next){
 			keywords: ','+ _title +',Bootstrap3',
 			virtualPath: virtualPath,
 			categorys: docs,
+			frmUrl: 'blog',
 			cdn: conf.cdn
 		});
 	});
