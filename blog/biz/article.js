@@ -59,11 +59,16 @@ exports.findAll = function(sort, page, user_id, cb){
 	if(page){
 		option.limit = page[0];
 		if(!!page[1]){
-			params = {};
+			params = params || {};
 			params._id = {
 				'$lt': page[1]
 			};
 		}
+	}
+
+	if(!!user_id){
+		params = params || {};
+		params.User_Id = user_id;
 	}
 
 	Article.find(params, null, option, function (err, docs){

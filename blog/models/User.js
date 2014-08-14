@@ -61,8 +61,7 @@ UserSchema.statics.findUserByName = function(userName, cb){
 	this.findOne({
 		UserName: new RegExp('^'+ userName +'$', 'i')
 	}, null, null, function (err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+		cb(err, doc);
 	});
 };
 
@@ -82,8 +81,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
 			Email: new RegExp(email, 'i')
 		}]
 	}, null, null, function (err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+		cb(err, doc);
 	});
 };
 
@@ -98,8 +96,7 @@ UserSchema.statics.findUserByEmail = function(email, cb){
 	this.findOne({
 		Email: new RegExp('^'+ email +'$', 'i')
 	}, null, null, function (err, doc){
-		if(err) return cb(err);
-		cb(null, doc);
+		cb(err, doc);
 	});
 };
 
