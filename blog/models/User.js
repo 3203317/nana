@@ -58,9 +58,8 @@ var UserSchema = new Schema({
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByName = function(userName, cb){
-	userName = userName.toLowerCase();
 	this.findOne({
-		UserName: userName,					//new RegExp(userName, 'i')
+		UserName: new RegExp('^'+ userName +'$', 'i')
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
@@ -96,9 +95,8 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByEmail = function(email, cb){
-	email = email.toLowerCase();
 	this.findOne({
-		Email: email
+		Email: new RegExp('^'+ email +'$', 'i')
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, doc);
