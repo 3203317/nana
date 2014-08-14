@@ -42,11 +42,7 @@ var ArticleSchema = new Schema({
 });
 
 ArticleSchema.virtual('PostTime').get(function(){
-	return new Date(this._id.getTimestamp());
-});
-
-ArticleSchema.virtual('PostTime2Month').get(function(){
-	return util.pdate(this.PostTime.getMonth()+1);
+	return this._id.getTimestamp();
 });
 
 ArticleSchema.virtual('aTags').get(function(){

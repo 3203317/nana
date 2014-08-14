@@ -208,11 +208,11 @@ exports.installUI = function(req, res, next){
 				if(article.PostTime.getFullYear() == archive.Y4){
 					/* 获取最后一条记录月 */
 					archiveChild = archive.ArchiveChildren[archive.ArchiveChildren.length - 1];
-					if(article.PostTime2Month == archiveChild.M2){
+					if(macros.toMon(article.PostTime) == archiveChild.M2){
 						archiveChild.Articles.push(article);
 					}else{
 						archiveChild = {
-							'M2': article.PostTime2Month,
+							'M2': macros.toMon(article.PostTime),
 							'Articles': []
 						};
 
@@ -229,7 +229,7 @@ exports.installUI = function(req, res, next){
 
 					/* 添加月 */
 					archiveChild = {
-						'M2': article.PostTime2Month,
+						'M2': macros.toMon(article.PostTime),
 						'Articles': []
 					}
 
@@ -246,7 +246,7 @@ exports.installUI = function(req, res, next){
 
 				/* 添加月 */
 				archiveChild = {
-					'M2': article.PostTime2Month,
+					'M2': macros.toMon(article.PostTime),
 					'Articles': []
 				}
 
