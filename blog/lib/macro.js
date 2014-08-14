@@ -25,5 +25,18 @@ module.exports = {
 		return y +'-'+ m +'-'+ d;
 	}, toHtml: function(s){
 		return velocity.Parser.parse(s);
+	}, toSex: function(n){
+		switch(n){
+			case 1: return '男';
+			case 2: return '女';
+			default: return '未知';
+		}
+	}, userState: function(n){
+		switch(n){
+			case 0: return '未激活';
+			case 1: return '邮箱';
+			case 2: return '短信';
+			default: return '未知';
+		}
 	}
 };

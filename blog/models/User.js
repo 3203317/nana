@@ -50,23 +50,6 @@ var UserSchema = new Schema({
 	}
 });
 
-UserSchema.virtual('sStatus').get(function(){
-	switch(this.Status){
-		case 0: return '未激活';
-		case 1: return '邮箱';
-		case 2: return '短信';
-		default: return '未知';
-	}
-});
-
-UserSchema.virtual('sSex').get(function(){
-	switch(this.Sex){
-		case 1: return '男';
-		case 2: return '女';
-		default: return '未知';
-	}
-});
-
 /**
  * 通过用户名查找用户
  *
