@@ -1,3 +1,20 @@
+.md-preview {
+	word-wrap: break-word;
+	word-break: normal;
+	font-size: 12px;
+	margin-bottom: 20px;
+
+	.bs-callout {
+		padding: 10px;
+		>h4 {
+			font-size: 14px
+		}
+		>p {
+			margin: 0 0 5px;
+		}
+	}
+}
+
 .article {
 	.title {
 		padding: 0 30px;
@@ -33,20 +50,7 @@
 	}
 
 	.content {
-		word-wrap: break-word;
-		word-break: normal;
-		font-size: 12px;
-		margin-bottom: 20px;
-
-		.bs-callout {
-			padding: 10px;
-			>h4 {
-				font-size: 14px
-			}
-			>p {
-				margin: 0 0 5px;
-			}
-		}
+		.md-preview;
 	}
 
 	.copyright, .page {
