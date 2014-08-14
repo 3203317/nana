@@ -23,7 +23,7 @@
 		<div class='col-sm-12'>
 			<!-- 加载编辑器的容器 -->
 			#*<script id='blogFrm_Content' name='Content' type='text/plain'>#if(!!$article)$article.Content#end</script>*#
-			<textarea id='blogFrm_Content' name='Content' data-provide='markdown' rows='15'>#if(!!$article)$article.Content#end</textarea>
+			<textarea id='blogFrm_Content' name='Content' style='height:350px'>#if(!!$article)$article.Content#end</textarea>
 		</div>
 	</div>
 	<div class='form-group'>
@@ -99,7 +99,7 @@ $(function(){
 		wordCount:false,
 		// elementPathEnabled:false,
 		initialFrameHeight: 300
-	});
-	$('#blogFrm_Content').markdown();*#
+	});*#
+	$('#blogFrm_Content').markdown();
 });
 </script>

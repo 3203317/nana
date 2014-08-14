@@ -29,6 +29,7 @@ exports.register = function(newInfo, cb){
 		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
 
 		/* 用户对象入库之前的其他数据初始化工作 */
+		newInfo.Email = newInfo.Email.toLowerCase();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
 
