@@ -52,11 +52,9 @@ exports.editInfo = function(newInfo, cb){
  * 获取文章集合中的作者主键，过滤重复内容
  *
  * @params {Object} articles
- * @params {Function} cb
  * @return {Array}
  */
-function findUsersByArts(articles, cb){
-	if(!articles) return cb(null, articles);
+function getUsersByArticles(articles){
 	var article,
 		user_ids = [],
 		user_id;
@@ -67,21 +65,34 @@ function findUsersByArts(articles, cb){
 			user_ids.push(user_id);
 		}
 	}
+	return user_ids;
+}
+
+/**
+ * 为数据集附加字段
+ *
+ * @params {Object} articles
+ * @params {Function} cb
+ * @return {Array}
+ */
+function attachData(articles, cb){
+	if(!articles || !articles.length) return cb(null, articles);
+	var user_ids = getUsersByArticles(articles);
 
 	User.find({
 		_id: {
 			'$in': user_ids
 		}
-	}, null, null, function(err, docs){
+	}, null, null, function (err, docs){
 		if(err) return cb(err);
-		var user;
+		var user,
+			article;
 		for(var i in docs){
 			user = docs[i];
-			user_id = user._id;
 
 			for(var j in articles){
 				article = articles[j];
-				if(user_id == article.User_Id.toString()){
+				if(user._id.toString() === article.User_Id.toString()){
 					article.author = user;
 				}
 			}
@@ -123,7 +134,7 @@ exports.findAll = function(sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		findUsersByArts(docs, function(err, docs){
+		attachData(docs, function(err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});
@@ -150,7 +161,7 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		findUsersByArts(docs, function(err, docs){
+		attachData(docs, function(err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});
@@ -178,7 +189,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		findUsersByArts(docs, function(err, docs){
+		attachData(docs, function(err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});
