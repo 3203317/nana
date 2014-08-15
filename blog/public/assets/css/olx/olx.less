@@ -196,6 +196,33 @@ a {
 	}
 }
 
+.olx-panel-comment {
+	.list-group-item {
+		.comment-left {
+			float: left;
+			>div {
+				img {
+					border: 1px solid #ccc;
+					padding: 2px;
+					&:hover {
+						transform: scale(1.25);
+						transition: all 0.25s ease-in-out 0s;
+					}
+				}
+			}
+		}
+		.comment-right {
+			line-height: 54px;
+			margin-left: 60px;
+			div {
+				padding-left: 5px;
+				/*background-color: #f1f1f1;
+				border-radius: 4px;*/
+			}
+		}
+	}
+}
+
 @font-face {
 	font-family: Spinnaker;
 	font-style:  normal;

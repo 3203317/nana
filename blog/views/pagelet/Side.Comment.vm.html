@@ -1,10 +1,21 @@
-<div class='panel panel-default olx-panel'>
+<div class='panel panel-default olx-panel olx-panel-comment'>
 	<div class='panel-heading'>
 		<h3 class='panel-title glyphicon glyphicon-comment'>&#8201;最新评论</h3>
 	</div>
 	<div class='panel-body'>
-		<div class='list-group'>
-			#foreach($comment in $comments)<a class='list-group-item olx-text-ellipsis' href='${virtualPath}archive/${comment.Article_Id}.html#$comment.id'>$comment.Content</a>
-			#end</div>
+		<ul class='list-group'>
+			#foreach($comment in $comments)<li class='list-group-item clearfix'>
+				<div class='comment-left'>
+					<div>
+						<img src='${virtualPath}public/assets/images/face/48x48/08_avatar_small.jpg?0'>
+					</div>
+				</div>
+				<div class='comment-right'>
+					<a href='${virtualPath}archive/${comment.Article_Id}.html#$comment.id'>
+						<div>$comment.Content</div>
+					</a>
+				</div>
+			</li>#end
+		</ul>
 	</div>
 </div>
