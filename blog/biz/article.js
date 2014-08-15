@@ -208,6 +208,7 @@ exports.findById = function(id, cb){
 		_id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
+		if(!doc) return cb(new Error('Not Found.'));
 		doc.ViewCount += 1;
 		doc.save();
 		cb(null, 0, null, doc);
