@@ -68,6 +68,7 @@ module.exports = function(app){
 	app.get('/index/more', site.index_more);
 	app.get('/', site.index);
 	app.get('/install', user.validate, site.installUI);
+	app.get('/install/comment', user.validate, site.commentUI);
 
 	app.post('/user/login', valiPostData, user.login);
 	app.get('/user/login', user.loginUI);

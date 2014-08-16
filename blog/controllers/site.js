@@ -64,6 +64,57 @@ exports.index_more = function(req, res, next){
 	});
 };
 
+var http = require('http');
+
+exports.commentUI = function(req, res, next){
+	var ress = res;
+	http.get('http://api.duoshuo.com/log/list.json?limit=10&order=desc&short_name=foreworld&secret=1d94719567add608482440a9c7a2e856', function (res){
+		var size = 0;
+		var chunks = [];
+		res.on('data', function (chunk){
+			size += chunk.length;
+			chunks.push(chunk);
+		});
+		res.on('end', function(){
+			var data = JSON.parse((Buffer.concat(chunks, size)).toString());
+
+			if(data.code){
+				return ress.send({
+					success: false
+				})
+			}
+
+			/* delete all records. */
+			Comment.removeAll(function(){
+				var responses = data.response,
+					response;
+
+				for(var i in responses){
+					response = responses[i];
+
+					if('create' === response.action){
+						Comment.saveNew({
+							Content: response.meta.message,
+							PostIP: response.meta.ip,
+							Author: response.meta.author_name,
+							Article_Id: response.meta.thread_key,
+							PostTime: response.meta.created_at
+						}, function (err, status, msg, docs){
+							console.log(err);
+						});
+					}
+				}
+
+				ress.send({
+					success: true
+				})
+			});
+		});
+	}).on('error', function (err){
+		console.log(err)
+	});
+};
+
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 

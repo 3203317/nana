@@ -47,3 +47,10 @@ exports.findAll = function(page, user_id, cb){
 		cb(null, 0, null, docs);
 	});
 };
+
+exports.removeAll = function(cb){
+	Comment.remove(null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 0, null, doc);
+	});
+};

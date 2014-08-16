@@ -13,6 +13,8 @@ var CommentSchema = new Schema({
 		type: ObjectId
 	}, Article_Id: {	// 文章Id
 		type: ObjectId
+	}, PostTime: {
+		type: Date
 	}
 }, {
 	versionKey: false,
