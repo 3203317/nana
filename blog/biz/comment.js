@@ -26,7 +26,7 @@ exports.saveNew = function(newInfo, cb){
 exports.findAll = function(page, user_id, cb){
 	var option = {
 		sort: {
-			_id: -1
+			PostTime: -1
 		}
 	};
 

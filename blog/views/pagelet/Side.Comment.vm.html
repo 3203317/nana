@@ -11,9 +11,15 @@
 					</div>
 				</div>
 				<div class='comment-right'>
-					<a href='${virtualPath}archive/${comment.Article_Id}.html#$comment.id'>
-						<div>$comment.Content</div>
-					</a>
+					<div class='content'>
+						<a href='${virtualPath}archive/${comment.Article_Id}.html#comment' title='发布于 #formatDate($comment.PostTime)'>
+							<div>$comment.Content</div>
+						</a>
+					</div>
+					<div class='opt'>
+						<span><a href='$comment.Author_Url' target='_blank'>$comment.Author</a></span>
+						<span>发布于 #toSDate($comment.PostTime)</span>
+					</div>
 				</div>
 			</li>#end
 		</ul>

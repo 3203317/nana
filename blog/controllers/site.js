@@ -98,7 +98,8 @@ exports.commentUI = function(req, res, next){
 							PostIP: response.meta.ip,
 							Author: response.meta.author_name,
 							Article_Id: response.meta.thread_key,
-							PostTime: response.meta.created_at
+							PostTime: response.meta.created_at,
+							Author_Url: response.meta.author_url
 						}, function (err, status, msg, docs){
 							console.log(err);
 						});
@@ -391,7 +392,7 @@ exports.installUI = function(req, res, next){
 			var html = velocity.render(template, {
 				virtualPath: virtualPath,
 				comments: docs
-			});
+			}, macros);
 
 			fs.writeFile(path.join(vmPath, 'html', 'side.comment.top10.html'), html, 'utf8', function (err){
 				if(err) return ep.emit('error', err);
