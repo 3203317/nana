@@ -99,7 +99,8 @@ exports.commentUI = function(req, res, next){
 							Author: response.meta.author_name,
 							Article_Id: response.meta.thread_key,
 							PostTime: response.meta.created_at,
-							Author_Url: response.meta.author_url
+							Author_Url: response.meta.author_url,
+							Author_Id: response.meta.author_id
 						}, function (err, status, msg, docs){
 							console.log(err);
 						});

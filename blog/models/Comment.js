@@ -9,6 +9,8 @@ var CommentSchema = new Schema({
 		type: String
 	}, Author: {		// 作者
 		type: String
+	}, Author_Id: {
+		type: String
 	}, Author_Url: {
 		type: String
 	}, User_Id: {		// 用户Id
