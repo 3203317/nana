@@ -56,7 +56,7 @@ exports.index_more = function(req, res, next){
 		Bookmark: -1,
 		_id: -1
 	}, [10, data.Current], null, function (err, status, msg, docs){
-		if(err) return next(err);
+		if(err) return res.send('');
 		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
 			virtualPath: virtualPath,
@@ -85,6 +85,7 @@ exports.commentUI = function(req, res, next){
 			size += chunk.length;
 			chunks.push(chunk);
 		}).on('end', function(){
+			if(!size) return next(new Error('size: 0.'));
 			var data = JSON.parse((Buffer.concat(chunks, size)).toString());
 			if(data.code) return next(new Error(data.errorMessage));
 

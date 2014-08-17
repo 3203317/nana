@@ -70,10 +70,7 @@ exports.myUI = function(req, res, next){
 		user = req.session.user,
 		_title = _user.Nickname +'的个人空间 - '+ title;
 
-	Article.findAll({
-		_id: -1
-	}, null, _user._id, function (err, status, msg, docs){
-		if(err) return next(err);
+	var ep = EventProxy.create('articles', function (articles){
 		res.render('user/My', {
 			title: _title,
 			description: _title,
@@ -82,8 +79,19 @@ exports.myUI = function(req, res, next){
 			cdn: conf.cdn,
 			_user: _user,
 			user: user,
-			articles: docs
+			articles: articles
 		});
+	});
+
+	ep.fail(function (err){
+		next(err);
+	});
+
+	Article.findAll({
+		_id: -1
+	}, null, _user._id, function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('articles', docs);
 	});
 };
 
@@ -132,13 +140,13 @@ exports.editBlogUI = function(req, res, next){
 	});
 
 	Article.findById(aid, function (err, status, msg, doc){
-		if(err) return next(err);
+		if(err) return ep.emit('error', err);
 		if(!doc) return ep.emit('error', new Error('Not Found.'));
 		ep.emit('article', doc);
 	});
 
 	Category.findAll(null, function (err, status, msg, docs){
-		if(err) return next(err);
+		if(err) return ep.emit('error', err);
 		if(!docs) return ep.emit('error', new Error('Not Found.'));
 		ep.emit('categorys', docs);
 	});
