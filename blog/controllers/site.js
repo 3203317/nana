@@ -5,6 +5,7 @@ var conf = require('../settings'),
 var fs = require('fs'),
 	path = require('path'),
 	cwd = process.cwd(),
+	qs = require('querystring'),
 	velocity = require('velocityjs');
 
 var Comment = require('../biz/comment'),
@@ -67,22 +68,25 @@ exports.index_more = function(req, res, next){
 var http = require('http');
 
 exports.commentUI = function(req, res, next){
-	var ress = res;
-	http.get('http://api.duoshuo.com/log/list.json?limit=10&order=desc&short_name=foreworld&secret=1d94719567add608482440a9c7a2e856', function (res){
+	var params = {
+		limit: 10,
+		order: 'desc',
+		short_name: 'foreworld',
+		secret: '1d94719567add608482440a9c7a2e856'
+	}, ress = res;
+	http.get({
+		host: 'api.duoshuo.com',
+		port: 80,
+		path: '/log/list.json?'+ qs.stringify(params)
+	}, function (res){
 		var size = 0;
 		var chunks = [];
 		res.on('data', function (chunk){
 			size += chunk.length;
 			chunks.push(chunk);
-		});
-		res.on('end', function(){
+		}).on('end', function(){
 			var data = JSON.parse((Buffer.concat(chunks, size)).toString());
-
-			if(data.code){
-				return ress.send({
-					success: false
-				})
-			}
+			if(data.code) return next(new Error(data.errorMessage));
 
 			/* delete all records. */
 			Comment.removeAll(function(){
@@ -113,7 +117,7 @@ exports.commentUI = function(req, res, next){
 			});
 		});
 	}).on('error', function (err){
-		console.log(err)
+		next(err);
 	});
 };
 
@@ -384,7 +388,7 @@ exports.installUI = function(req, res, next){
 	});
 
 	/* 生成评论 */
-	Comment.findAll([10], null, function (err, status, msg, docs){
+	Comment.findAll([5], null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'Side.Comment.vm.html'), 'utf8', function (err, template){
