@@ -6,7 +6,7 @@
 		<ul class='list-group'>
 			#foreach($article in $articles)<li class='list-group-item'>
 				<span class='badge'>#num2Money($article.ViewCount)</span>
-				<a href='${virtualPath}archive/${article._id}.html' title='$article.author.Nickname 创建于 #formatDate($article.PostTime)'>
+				<a href='${virtualPath}archive/${article._id}.html' title='$article.author.Nickname #formatDate($article.PostTime)'>
 					<div>$article.Title</div>
 				</a>
 			</li>#end
