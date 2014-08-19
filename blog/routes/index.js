@@ -77,7 +77,7 @@ module.exports = function(app){
 	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);
 
-	app.get('/u/:name/', user.validate, user.valiUserName, user.myUI);
+	app.get('/u/:name/', user.valiUserName, user.myUI);
 	app.get('/u/:name/admin/new/blog', user.validate, user.valiUserName, user.newBlogUI);
 	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.valiUserName, user.saveNewBlog);
 
