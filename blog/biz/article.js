@@ -134,7 +134,7 @@ exports.findAll = function(sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		attachData(docs, function(err, docs){
+		attachData(docs, function (err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});
@@ -161,7 +161,7 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		attachData(docs, function(err, docs){
+		attachData(docs, function (err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});
@@ -189,7 +189,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 
 	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
-		attachData(docs, function(err, docs){
+		attachData(docs, function (err, docs){
 			if(err) return cb(err);
 			cb(null, 0, null, docs);
 		});

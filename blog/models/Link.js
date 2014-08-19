@@ -21,4 +21,8 @@ var LinkSchema = new Schema({
 	}
 });
 
+LinkSchema.virtual('PostTime').get(function(){
+	return this._id.getTimestamp();
+});
+
 mongoose.model('Link', LinkSchema);
