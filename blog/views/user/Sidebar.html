@@ -66,6 +66,11 @@
 		</div>
 		<div class='panel-body'>
 			<ul class='list-group'>
+				#foreach($article in $hot10)<li class='list-group-item'>
+					<span class='badge'>#num2Money($article.ViewCount)</span>
+					<a target='_blank' title='$article.Title' href='${virtualPath}archive/${article._id}.html'>
+						<div>$article.Title</div></a>
+				</li>#end
 			</ul>
 		</div>
 	</div>

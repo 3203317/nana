@@ -70,7 +70,7 @@ exports.myUI = function(req, res, next){
 		user = req.session.user,
 		_title = _user.Nickname +'的个人空间 - '+ title;
 
-	var ep = EventProxy.create('articles', function (articles){
+	var ep = EventProxy.create('articles', 'hot10', function (articles, hot10){
 		res.render('user/My', {
 			title: _title,
 			description: _title,
@@ -79,6 +79,7 @@ exports.myUI = function(req, res, next){
 			cdn: conf.cdn,
 			_user: _user,
 			user: user,
+			hot10: hot10,
 			articles: articles
 		});
 	});
@@ -92,6 +93,13 @@ exports.myUI = function(req, res, next){
 	}, null, _user._id, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articles', docs);
+	});
+
+	Article.findAll({
+		ViewCount: -1
+	}, [10], null, function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('hot10', docs);
 	});
 };
 
