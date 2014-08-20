@@ -38,10 +38,13 @@ exports.editInfo = function(newInfo, cb){
 	}
 
 	var id = newInfo.id;
+	var user_id = newInfo.User_Id;
 	delete newInfo.id;
+	delete newInfo.user_id;
 
 	Article.update({
-		_id: id
+		_id: id,
+		User_Id: user_id
 	}, newInfo, function (err, count){
 		if(err) return cb(err);
 		cb(null, 0, null, count);

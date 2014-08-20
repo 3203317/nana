@@ -219,5 +219,12 @@ exports.safeSkip = function(req, res, next){
 	var name = req.params.name,
 		user = req.session.user;
 	if(name === user.UserName) return next();
+	if(req.xhr){
+		return res.send({
+			success: false,
+			code: 300,
+			msg: '无权访问'
+		});
+	}
 	res.redirect('/u/'+ user.UserName +'/');
 };
