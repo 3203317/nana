@@ -217,3 +217,10 @@ exports.valiUserName = function(req, res, next){
 		next();
 	});
 };
+
+exports.safeSkip = function(req, res, next){
+	var name = req.params.name,
+		user = req.session.user;
+	if(name === user.UserName) return next();
+	res.redirect('/u/'+ user.UserName +'/');
+};

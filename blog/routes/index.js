@@ -78,10 +78,10 @@ module.exports = function(app){
 	app.get('/user/register', user.regUI);
 
 	app.get('/u/:name/', user.valiUserName, user.myUI);
-	app.get('/u/:name/admin/new/blog', user.validate, user.valiUserName, user.newBlogUI);
+	app.get('/u/:name/admin/new/blog', user.validate, user.safeSkip, user.valiUserName, user.newBlogUI);
 	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.valiUserName, user.saveNewBlog);
 
-	app.get('/u/:name/admin/edit/blog/:aid', user.validate, user.valiUserName, user.editBlogUI);
+	app.get('/u/:name/admin/edit/blog/:aid', user.validate, user.safeSkip, user.valiUserName, user.editBlogUI);
 	app.post('/u/:name/admin/edit/blog/:aid', valiPostData, user.validate, user.valiUserName, user.editBlog);
 
 	app.get('/archive/', archive.index);
