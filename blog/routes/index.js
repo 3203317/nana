@@ -84,6 +84,9 @@ module.exports = function(app){
 	app.get('/u/:name/admin/edit/blog/:aid', user.validate, user.safeSkip, user.valiUserName, user.editBlogUI);
 	app.post('/u/:name/admin/edit/blog/:aid', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.editBlog);
 
+	app.get('/u/:name/admin/edit/pw', user.validate, user.safeSkip, user.valiUserName, user.changePWUI);
+	app.post('/u/:name/admin/edit/pw', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.changePW);
+
 	app.get('/archive/', archive.index);
 	app.get('/archive/tag/', tag.index);
 	app.get('/archive/tag/:name/', tag.name);

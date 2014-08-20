@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		#parse('pagelet/IndexHeader.html')
+		<style type='text/css'>
+		#chpwdFrm label {
+			font-weight: normal;
+		}
+		</style>
+	</head>
+	<body>
+		#parse('pagelet/TopBanner.html')
+		<header id='header'></header>
+		<div class='container'>
+			<div class='row'>
+				#parse('user/admin/Sidebar.html')
+				<div class='col-sm-12 col-md-9'>
+					<div class='panel panel-default'>
+						<div class='panel-body'>
+							<ol class='breadcrumb'>
+								<li>
+									<i class='fa fa-home fa-fw'></i>
+									<a href='../../'>空间</a></li>
+								<li class='active'><a href='javascript:;'>管理</a></li>
+								<li class='active'><a href='javascript:;'>修改登录密码</a></li>
+							</ol>
+							<form class='form-horizontal' id='chpwdFrm' role='form' onsubmit='return false;' data-url='$frmUrl'>
+								<div class='form-group'>
+									<label class='col-sm-2 control-label' for='chpwdFrm_OPwd'>旧的登录密码</label>
+									<div class='col-sm-10'>
+										<input type='password' class='form-control' name='OPwd' id='chpwdFrm_OPwd' placeholder='旧的登录密码'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-2 control-label' for='chpwdFrm_Pwd'>新密码</label>
+									<div class='col-sm-10'>
+										<input type='password' class='form-control' name='Pwd' id='chpwdFrm_Pwd' placeholder='新密码'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-2 control-label' for='chpwdFrm_Pwd2'>再次输入新密码</label>
+									<div class='col-sm-10'>
+										<input type='password' class='form-control' name='Pwd2' id='chpwdFrm_Pwd2' placeholder='再次输入新密码'>
+									</div>
+								</div>
+								<div class='form-group'>
+									<div class='col-sm-offset-2 col-sm-10'>
+										<button id='chpwdFrm_btn_sub' type='button' class='btn btn-primary'>修改密码</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		#parse('pagelet/IndexFooter.html')
+		#parse('pagelet/backTop.html')
+		#parse('pagelet/IndexJs.html')
+		<!-- Own -->
+		<script type='text/javascript'>
+			function showVali(valiResu){ }
+
+			function subFrm(){
+				$('#chpwdFrm').olxForm('submit', [function(){
+				}, function (valiResu){
+					showVali(valiResu);
+				}, function (data){
+					if(!data.success) return showVali(data.msg);
+				}]);
+			}
+			$('#chpwdFrm_btn_sub').click(subFrm);
+		</script>
+		#parse('pagelet/LastJs.html')
+	</body>
+</html>

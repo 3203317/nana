@@ -235,3 +235,19 @@ exports.safeSkip = function(req, res, next){
 	}
 	res.redirect('/u/'+ user.UserName +'/');
 };
+
+exports.changePWUI = function(req, res, next){
+	var _user = req.flash('user')[0],
+		_title = '修改登录密码 - '+ _user.Nickname +'的个人空间 - '+ title;
+
+	res.render('user/admin/ChangePW', {
+		title: _title,
+		description: _title,
+		keywords: ','+ _title +',Bootstrap3',
+		virtualPath: virtualPath,
+		frmUrl: 'pw',
+		cdn: conf.cdn
+	});
+};
+
+exports.changePW = function(req, res, next){};
