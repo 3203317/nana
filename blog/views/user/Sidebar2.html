@@ -5,6 +5,10 @@
 		</div>
 		<div class='panel-body'>
 			<ul class='list-group'>
+				#foreach($link in $links)<li class='list-group-item'>
+					<a target='_blank'  title='$link.author.Nickname #formatDate($link.PostTime)' href='$link.LinkUrl'>
+						<div>$link.LinkName</div></a>
+				</li>#end
 			</ul>
 		</div>
 	</div>

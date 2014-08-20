@@ -24,7 +24,14 @@ exports.saveNew = function(newInfo, cb){
  * @return
  */
 exports.findAll = function(user_id, cb){
-	Link.find(null, null, {
+	var params = null;
+
+	if(!!user_id){
+		params = params || {};
+		params.User_Id = user_id;
+	}
+
+	Link.find(params, null, {
 		sort: {
 			Sort: 1
 		}
