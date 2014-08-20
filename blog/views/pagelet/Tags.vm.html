@@ -8,7 +8,7 @@
 		<div class='panel-body'>
 			#foreach($article in $tag.Articles)<p>
 				#toSDate(${article.PostTime}):
-				<a title='$article.author.Nickname #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>${article.Title}</a>
+				<a title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>${article.Title}</a>
 				<span class='badge'>#num2Money($article.ViewCount)</span>
 			</p>#end
 		</div>

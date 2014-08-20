@@ -110,9 +110,7 @@ exports.myUI = function(req, res, next){
 };
 
 exports.newBlogUI = function(req, res, next){
-	var name = req.params.name.trim(),
-		_user = req.flash('user')[0],
-		user = req.session.user,
+	var _user = req.flash('user')[0],
 		_title = '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
 	Category.findAll(null, function (err, status, msg, docs){
@@ -131,9 +129,7 @@ exports.newBlogUI = function(req, res, next){
 
 exports.editBlogUI = function(req, res, next){
 	var aid = req.params.aid.trim(),
-		name = req.params.name.trim(),
 		_user = req.flash('user')[0],
-		user = req.session.user,
 		_title = '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title;
 
 	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
@@ -156,6 +152,7 @@ exports.editBlogUI = function(req, res, next){
 	Article.findById(aid, function (err, status, msg, doc){
 		if(err) return ep.emit('error', err);
 		if(!doc) return ep.emit('error', new Error('Not Found.'));
+		if(doc.User_Id.toString() !== _user._id.toString()) return ep.emit('error', new Error('Not Permit.'));
 		ep.emit('article', doc);
 	});
 
