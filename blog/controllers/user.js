@@ -7,6 +7,7 @@ var title = 'FOREWORLD 洪荒',
 var User = require('../biz/user'),
 	Link = require('../biz/link'),
 	Category = require('../biz/category'),
+	Comment = require('../biz/comment'),
 	Article = require('../biz/article');
 
 exports.loginUI = function(req, res, next){
@@ -70,7 +71,7 @@ exports.myUI = function(req, res, next){
 		user = req.session.user,
 		_title = _user.Nickname +'的个人空间 - '+ title;
 
-	var ep = EventProxy.create('articles', 'hot10', 'links', function (articles, hot10, links){
+	var ep = EventProxy.create('articles', 'hot10', 'links', 'newCmt', function (articles, hot10, links, newCmt){
 		res.render('user/My', {
 			title: _title,
 			description: _title,
@@ -81,12 +82,18 @@ exports.myUI = function(req, res, next){
 			user: user,
 			links: links,
 			hot10: hot10,
+			newCmt: newCmt,
 			articles: articles
 		});
 	});
 
 	ep.fail(function (err){
 		next(err);
+	});
+
+	Comment.findAll([5], null, function (err, status, msg, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('newCmt', docs);
 	});
 
 	Link.findAll(_user._id, function (err, status, msg, docs){
