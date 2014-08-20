@@ -66,8 +66,7 @@ exports.reg = function(req, res, next){
 };
 
 exports.myUI = function(req, res, next){
-	var name = req.params.name.trim(),
-		_user = req.flash('user')[0],
+	var _user = req.flash('user')[0],
 		user = req.session.user,
 		_title = _user.Nickname +'的个人空间 - '+ title;
 

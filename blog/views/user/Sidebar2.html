@@ -6,7 +6,7 @@
 		<div class='panel-body'>
 			<ul class='list-group'>
 				#foreach($link in $links)<li class='list-group-item'>
-					<a target='_blank'  title='$link.author.Nickname #formatDate($link.PostTime)' href='$link.LinkUrl'>
+					<a target='_blank'  title='创建于 #formatDate($link.PostTime)' href='$link.LinkUrl'>
 						<div>$link.LinkName</div></a>
 				</li>#end
 			</ul>
