@@ -23,10 +23,18 @@ module.exports = function(grunt){
 					removeComments: true, // 去注析
 					collapseWhitespace: true // 去换行
 				}, files: [{
-					cwd: 'src', //js目录下
-					src: '**/*.html', //所有js文件
-					dest: 'build/' //输出到此目录下
+					expand: true,
+					cwd: 'src/',
+					src: '**/*.html',
+					dest: 'build/'
 				}]
+			}
+		},	cssmin: {
+			build: {
+				expand: true,
+				cwd: 'src/',
+				src: '**/*.css',
+				dest: 'build/'
 			}
 		}
 	});
@@ -34,8 +42,9 @@ module.exports = function(grunt){
 	// Load the plugin that provides the "uglify" task.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['uglify:buildall']);
+	grunt.registerTask('default', ['uglify:buildall', 'cssmin', 'htmlmin']);
 };
