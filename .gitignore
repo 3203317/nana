@@ -230,3 +230,5 @@ blog/public/user/css/*.css
 blog/public/site/css/*.css
 blog/views/pagelet/html/*.html
 grunt-blog/node_modules/
+grunt-blog/src/
+grunt-blog/build/
