@@ -7,7 +7,7 @@ module.exports = function(grunt){
 			options: {
 				force: true
 			},
-			target: 'dest'
+			target: 'build/'
 		},
 		uglify: {
 			options: {
@@ -53,6 +53,11 @@ module.exports = function(grunt){
 					dest: 'build/'
 				}]
 			}
+		}, copy: {
+			build: {
+				src: 'src/package.json',
+				dest: 'build/package.json'
+			}
 		}
 	});
 	
@@ -61,9 +66,11 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['uglify:buildall', 'cssmin', 'imagemin']);
+	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy']);
 	grunt.registerTask('html', ['htmlmin']);
 };
