@@ -2,11 +2,6 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<style type='text/css'>
-		#chpwdFrm label {
-			font-weight: normal;
-		}
-		</style>
 	</head>
 	<body>
 		#parse('pagelet/TopBanner.html')
@@ -26,25 +21,25 @@
 							</ol>
 							<form class='form-horizontal' id='chpwdFrm' role='form' onsubmit='return false;' data-url='$frmUrl'>
 								<div class='form-group'>
-									<label class='col-sm-2 control-label' for='chpwdFrm_OPwd'>旧的登录密码</label>
-									<div class='col-sm-10'>
+									<label class='col-sm-4 control-label' for='chpwdFrm_OPwd'>旧的登录密码</label>
+									<div class='col-sm-4'>
 										<input type='password' class='form-control' name='OPwd' id='chpwdFrm_OPwd' placeholder='旧的登录密码'>
 									</div>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-2 control-label' for='chpwdFrm_Pwd'>新密码</label>
-									<div class='col-sm-10'>
+									<label class='col-sm-4 control-label' for='chpwdFrm_Pwd'>新密码</label>
+									<div class='col-sm-4'>
 										<input type='password' class='form-control' name='Pwd' id='chpwdFrm_Pwd' placeholder='新密码'>
 									</div>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-2 control-label' for='chpwdFrm_Pwd2'>再次输入新密码</label>
-									<div class='col-sm-10'>
+									<label class='col-sm-4 control-label' for='chpwdFrm_Pwd2'>再次输入新密码</label>
+									<div class='col-sm-4'>
 										<input type='password' class='form-control' name='Pwd2' id='chpwdFrm_Pwd2' placeholder='再次输入新密码'>
 									</div>
 								</div>
 								<div class='form-group'>
-									<div class='col-sm-offset-2 col-sm-10'>
+									<div class='col-sm-offset-4 col-sm-4'>
 										<button id='chpwdFrm_btn_sub' type='button' class='btn btn-primary'>修改密码</button>
 									</div>
 								</div>
