@@ -229,3 +229,4 @@ blog/public/assets/css/olx/olx.css
 blog/public/user/css/*.css
 blog/public/site/css/*.css
 blog/views/pagelet/html/*.html
+grunt-blog/node_modules/
