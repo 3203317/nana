@@ -57,6 +57,20 @@ module.exports = function(grunt){
 			build: {
 				src: 'src/package.json',
 				dest: 'build/package.json'
+			}, html: {
+				files: [{
+					expand: !0,
+					cwd: 'src',
+					src: '**/*.html',
+					dest: 'build/'
+				}]
+			}, ttf: {
+				files: [{
+					expand: !0,
+					cwd: 'src',
+					src: '**/*.ttf',
+					dest: 'build/'
+				}]
 			}
 		}
 	});
@@ -71,6 +85,6 @@ module.exports = function(grunt){
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy']);
+	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy', 'copy:html', 'copy:ttf']);
 	grunt.registerTask('html', ['htmlmin']);
 };
