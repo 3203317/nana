@@ -15,14 +15,14 @@ module.exports = function(grunt){
 			options: {
 				banner: '/*!\n * <%= pkg.name %>\n * <%= pkg.author.email %>\n * <%= grunt.template.today("yyyy-mm-dd") %>\n */\n'
 			}, build: {
-				src: 'src/package.json',
+				src: '../blog/package.json',
 				dest: 'build/package.json'
 			}, buildall: { // 任务三：按原文件结构压缩js文件夹内所有JS文件
 				files: [{
 					mangle: !0, // 不混淆变量名
 					expand: !0,
-					cwd: 'src', // js目录下
-					src: ['**/*.js', '!node_modules/*.js'], // 所有js文件
+					cwd: '../blog', // js目录下
+					src: ['**/*.js', '!node_modules/**/*'], // 所有js文件
 					dest: 'build/' // 输出到此目录下
 				}]
 			}
@@ -33,7 +33,7 @@ module.exports = function(grunt){
 					collapseWhitespace: true // 去换行
 				}, files: [{
 					expand: true,
-					cwd: 'src/',
+					cwd: '../blog/',
 					src: '**/*.html',
 					dest: 'build/'
 				}]
@@ -41,8 +41,8 @@ module.exports = function(grunt){
 		}, cssmin: {
 			build: {
 				expand: true,
-				cwd: 'src/',
-				src: '**/*.css',
+				cwd: '../blog/',
+				src: ['**/*.css', '!node_modules/**/*'],
 				dest: 'build/'
 			}
 		}, imagemin: {
@@ -50,27 +50,27 @@ module.exports = function(grunt){
 			dynamic: {
 				files: [{
 					expand: true,
-					cwd: 'src/',
-					src: ['**/*.{jpg,png,gif}'],
+					cwd: '../blog/',
+					src: ['**/*.{jpg,png,gif}', '!node_modules/**/*'],
 					dest: 'build/'
 				}]
 			}
 		}, copy: {
 			build: {
-				src: 'src/package.json',
+				src: '../blog/package.json',
 				dest: 'build/package.json'
 			}, html: {
 				files: [{
 					expand: !0,
-					cwd: 'src',
-					src: '**/*.html',
+					cwd: '../blog',
+					src: ['**/*.html', '!node_modules/**/*'],
 					dest: 'build/'
 				}]
 			}, ttf: {
 				files: [{
 					expand: !0,
-					cwd: 'src',
-					src: '**/*.ttf',
+					cwd: '../blog',
+					src: ['**/*.ttf', '!node_modules/**/*'],
 					dest: 'build/'
 				}]
 			}
