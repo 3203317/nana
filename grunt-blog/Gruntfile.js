@@ -20,7 +20,7 @@ module.exports = function(grunt){
 					mangle: !0, // 不混淆变量名
 					expand: !0,
 					cwd: 'src', // js目录下
-					src: '**/*.js', // 所有js文件
+					src: ['**/*.js', '!node_modules/*.js'], // 所有js文件
 					dest: 'build/' // 输出到此目录下
 				}]
 			}
