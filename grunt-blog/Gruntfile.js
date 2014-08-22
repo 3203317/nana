@@ -4,12 +4,14 @@ module.exports = function(grunt){
 		pkg: grunt.file.readJSON('package.json'),
 		/* 清理目录 */
 		clean: {
-			options: {
-				force: true
-			},
-			target: 'build/'
-		},
-		uglify: {
+			foo: {
+				src: ['build/**/*'],
+				filter: function(fp){
+					var sb = fp.split('/');
+					return 'node_modules' !== sb[1];
+				}
+			}
+		}, uglify: {
 			options: {
 				banner: '/*!\n * <%= pkg.name %>\n * <%= pkg.author.email %>\n * <%= grunt.template.today("yyyy-mm-dd") %>\n */\n'
 			}, build: {
