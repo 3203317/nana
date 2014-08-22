@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
 	settings = require('../settings');
 
 var db = mongoose.connection;
-var url = 'mongodb://'+ settings.host +':'+ settings.port +'/'+ settings.db;
+var url = 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db;
 
 db.on('error', console.error);
 db.once('open', function(){

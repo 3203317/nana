@@ -40,7 +40,8 @@ app.set('port', process.env.PORT || 3000)
 			maxAge: 1000 * 60 * 60 * 24 * 30 //30 days
 		},
 		store: new MongoStore({
-			db: settings.db
+			// db: settings.db
+			url: 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db
 		})
 	}))
 	.use('/public', express.static(path.join(__dirname, 'public')))

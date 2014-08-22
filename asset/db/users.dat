@@ -1,0 +1,2 @@
+{ "_id" : { "$oid" : "53d99f9cbf3063384388c4ea" }, "Email" : "huangxin@foreworld.net", "IsDel" : 0, "Nickname" : "我哪知道", "SecPass" : "1", "Sex" : 1, "Status" : 0, "UserName" : "foreworld", "UserPass" : "c4ca4238a0b923820dcc509a6f75849b" }
+{ "_id" : { "$oid" : "53ec60b0899ae9d02ff7874b" }, "Email" : "test@foreworld.net", "IsDel" : 0, "Nickname" : "测试用户", "SecPass" : "2", "Sex" : 3, "Status" : 0, "UserName" : "test", "UserPass" : "c81e728d9d4c2f636f067f89cc14862c" }

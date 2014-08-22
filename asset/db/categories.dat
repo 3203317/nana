@@ -1,0 +1,5 @@
+{ "_id" : { "$oid" : "53d636dc3194bb740d797d98" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006bd" }, "CateName" : "杂文", "CateIntro" : "杂文", "CateCount" : 1, "Sort" : 1 }
+{ "_id" : { "$oid" : "53d636dc3194bb740d797d9a" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006bf" }, "CateName" : "设计模式", "CateIntro" : "设计模式", "CateCount" : 2, "Sort" : 2 }
+{ "_id" : { "$oid" : "53d636dc3194bb740d797d9c" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c1" }, "CateName" : "插件", "CateIntro" : "插件", "CateCount" : 3, "Sort" : 3 }
+{ "_id" : { "$oid" : "53d636dc3194bb740d797d9e" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c3" }, "CateName" : "Java", "CateIntro" : "Java", "CateCount" : 3, "Sort" : 5 }
+{ "_id" : { "$oid" : "53d636dc3194bb740d797d9f" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c4" }, "CateName" : "ASP.NET", "CateIntro" : "ASP.NET", "CateCount" : 3, "Sort" : 4 }
