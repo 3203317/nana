@@ -251,6 +251,11 @@ exports.changePW = function(req, res, next){
 		data = req._data;
 	var user = req.session.user;
 
+	if(!data.NewPass || !data.NewPass.trim().length){
+		result.msg = ['新密码不能为空。', 'NewPass'];
+		return res.send(result);
+	}
+
 	User.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
 		if(err) return next(err);
 		result.success = !status;
