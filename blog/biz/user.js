@@ -60,3 +60,19 @@ exports.findById = function(id, cb){
 		cb(null, 0, null, doc);
 	});
 };
+
+exports.changePwd = function(user_id, oldPass, newPass, cb){
+	this.findById(user_id, function (err, status, msg, doc){
+		if(err) return cb(err);
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
+		if(md5.hex(oldPass) !== doc.UserPass)
+			return cb(null, 6, ['密码输入错误。', 'UserPass'], doc);
+
+		doc.update({
+			UserPass: md5.hex(newPass)
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, 0, null, count);
+		});
+	});
+};

@@ -212,9 +212,14 @@ exports.findById = function(id, cb){
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, 'Not Found.');
-		doc.ViewCount += 1;
-		doc.save();
-		cb(null, 0, null, doc);
+		// doc.ViewCount += 1;
+		// doc.save();
+		doc.update({
+			ViewCount: doc.ViewCount + 1
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, 0, null, doc);
+		});
 	});
 };
 

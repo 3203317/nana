@@ -246,4 +246,15 @@ exports.changePWUI = function(req, res, next){
 	});
 };
 
-exports.changePW = function(req, res, next){};
+exports.changePW = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	var user = req.session.user;
+
+	User.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
+	});
+};
