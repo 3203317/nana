@@ -32,7 +32,7 @@ exports.index = function(req, res, next){
 		moduleName: 'index',
 		title: title,
 		description: '',
-		keywords: ',个人博客,Blog,Bootstrap3,css,javascript,java,asp,xhtml,html5',
+		keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,asp,xhtml,html5',
 		virtualPath: virtualPath,
 		topMessage: getTopMessage(),
 		loadMore: 'index',

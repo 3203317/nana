@@ -12,9 +12,9 @@ var User = require('../biz/user'),
 
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
-		title: title +' - 用户登陆',
-		description: '用户登陆',
-		keywords: ',用户登陆,Bootstrap3',
+		title: '用户登陆 - '+ title,
+		description: '',
+		keywords: ',用户登陆,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
 		refererUrl: escape('http://'+ req.headers.host + req.url),
 		cdn: conf.cdn
@@ -46,9 +46,9 @@ exports.login_success = function(req, res, next){
 
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
-		title: title +' - 新用户注册',
-		description: '新用户注册',
-		keywords: ',新用户注册,Bootstrap3',
+		title: '新用户注册 - '+ title,
+		description: '',
+		keywords: ',新用户注册,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
 		cdn: conf.cdn
 	});
@@ -68,14 +68,13 @@ exports.reg = function(req, res, next){
 
 exports.myUI = function(req, res, next){
 	var _user = req.flash('user')[0],
-		user = req.session.user,
-		_title = _user.Nickname +'的个人空间 - '+ title;
+		user = req.session.user;
 
 	var ep = EventProxy.create('articles', 'hot10', 'links', 'newCmt', function (articles, hot10, links, newCmt){
 		res.render('user/My', {
-			title: _title,
-			description: _title,
-			keywords: ','+ _title +',Bootstrap3',
+			title: _user.Nickname +'的个人空间 - '+ title,
+			description: '',
+			keywords: ',Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
 			_user: _user,
@@ -117,15 +116,14 @@ exports.myUI = function(req, res, next){
 };
 
 exports.newBlogUI = function(req, res, next){
-	var _user = req.flash('user')[0],
-		_title = '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title;
+	var _user = req.flash('user')[0];
 
 	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/admin/NewBlog', {
-			title: _title,
-			description: _title,
-			keywords: ','+ _title +',Bootstrap3',
+			title: '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title,
+			description: '',
+			keywords: ',发表博文,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
 			categorys: docs,
 			frmUrl: 'blog',
@@ -136,14 +134,13 @@ exports.newBlogUI = function(req, res, next){
 
 exports.editBlogUI = function(req, res, next){
 	var aid = req.params.aid.trim(),
-		_user = req.flash('user')[0],
-		_title = '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title;
+		_user = req.flash('user')[0];
 
 	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
 		res.render('user/admin/EditBlog', {
-			title: _title,
-			description: _title,
-			keywords: ','+ _title +',Bootstrap3',
+			title: '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title,
+			description: '',
+			keywords: ',修改博文,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
 			article: article,
@@ -237,13 +234,12 @@ exports.safeSkip = function(req, res, next){
 };
 
 exports.changePWUI = function(req, res, next){
-	var _user = req.flash('user')[0],
-		_title = '修改登录密码 - '+ _user.Nickname +'的个人空间 - '+ title;
+	var _user = req.flash('user')[0];
 
 	res.render('user/admin/ChangePW', {
-		title: _title,
-		description: _title,
-		keywords: ','+ _title +',Bootstrap3',
+		title: '修改登录密码 - '+ _user.Nickname +'的个人空间 - '+ title,
+		description: '',
+		keywords: ',修改登录密码,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
 		virtualPath: virtualPath,
 		frmUrl: 'pw',
 		cdn: conf.cdn

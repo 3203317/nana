@@ -29,8 +29,8 @@ exports.name = function(req, res, next){
 		res.render('Category', {
 			moduleName: 'category',
 			title: name +' - 分类 - '+ title,
-			description: name,
-			keywords: ','+ name +',Bootstrap3',
+			description: ','+ name,
+			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,'+ name,
 			virtualPath: virtualPath,
 			topMessage: getTopMessage(),
 			cdn: conf.cdn,

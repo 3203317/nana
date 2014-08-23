@@ -21,9 +21,9 @@ function getTopMessage(){
 exports.index = function(req, res, next){
 	res.render('Tags', {
 		moduleName: 'tag',
-		title: title +' - 标签',
-		description: '标签',
-		keywords: ',标签,Bootstrap3',
+		title: '标签 - '+ title,
+		description: '',
+		keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
 		topMessage: getTopMessage(),
 		cdn: conf.cdn
@@ -42,8 +42,8 @@ exports.name = function(req, res, next){
 		res.render('Tag', {
 			moduleName: 'tag',
 			title: name +' - 标签 - '+ title,
-			description: name,
-			keywords: ','+ name +',Bootstrap3',
+			description: '',
+			keywords: ',标签,个人博客,Blog,'+ name,
 			virtualPath: virtualPath,
 			topMessage: getTopMessage(),
 			cdn: conf.cdn,
