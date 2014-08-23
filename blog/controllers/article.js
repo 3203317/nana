@@ -27,8 +27,8 @@ exports.id = function(req, res, next){
 			res.render('Article', {
 				moduleName: 'archive',
 				title: article.Title +' - 档案馆 - '+ title,
-				description: article.Title,
-				keywords: ','+ article.Title +',Bootstrap3',
+				description: ','+ article.Title,
+				keywords: ',个人博客,Blog'+ (article.Tags.length ? ','+ article.Tags : ''),
 				virtualPath: virtualPath,
 				topMessage: getTopMessage(),
 				article: article,

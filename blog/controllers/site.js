@@ -31,8 +31,8 @@ exports.index = function(req, res, next){
 	res.render('Index', {
 		moduleName: 'index',
 		title: title,
-		description: '个人博客',
-		keywords: ',个人博客,Bootstrap3',
+		description: '',
+		keywords: ',个人博客,Blog,Bootstrap3,css,javascript,java,asp,xhtml,html5',
 		virtualPath: virtualPath,
 		topMessage: getTopMessage(),
 		loadMore: 'index',
