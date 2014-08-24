@@ -87,7 +87,7 @@ module.exports = function(grunt){
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy', 'copy:html', 'copy:ttf']);
+	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy']);
 	grunt.registerTask('html', ['htmlmin']);
 	grunt.registerTask('cc', ['clean']);
 };

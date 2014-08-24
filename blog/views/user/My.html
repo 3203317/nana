@@ -46,7 +46,7 @@
 												<a role='menuitem' tabindex='-1' href='admin/edit/blog/${article._id}'>
 													<span class='glyphicon glyphicon-edit'></span> 编辑</a></li>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='admin/del/blog/${article._id}'>
+												<a role='menuitem' tabindex='-1' href='javascript:del("${article._id}")'>
 													<span class='glyphicon glyphicon-remove-sign'></span> 删除</a></li>
 										</ul>
 									</div>
@@ -63,5 +63,11 @@
 		#parse('pagelet/IndexJs.html')
 		<!-- Own -->
 		#parse('pagelet/LastJs.html')
+		<script type='text/javascript'>
+		function del(url){
+			url = 'admin/del/blog/'+ url;
+			console.log(url)
+		}
+		</script>
 	</body>
 </html>
