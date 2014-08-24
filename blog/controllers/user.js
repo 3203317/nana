@@ -196,6 +196,18 @@ exports.saveNewBlog = function(req, res, next){
 	});
 };
 
+exports.delBlog = function(req, res, next){
+	var result = { success: false },
+		user = req.session.user,
+		aid = req.params.aid.trim();
+
+	Article.remove(aid, user._id, function (err, status, msg, count){
+		if(err) return next(err);
+		result.success = !!count;
+		res.send(result);
+	});
+};
+
 exports.validate = function(req, res, next){
 	if('user' === req.session.role) return next();
 	if(req.xhr){

@@ -58,16 +58,45 @@
 				#parse('user/Sidebar2.html')
 			</div>
 		</div>
+		<div class='modal fade' id='delConfirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>警告</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>你确认执行该删除操作吗？</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+						<button type='button' class='btn btn-primary' id='delConfirmModal_btn_submit'>确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		#parse('pagelet/IndexFooter.html')
 		#parse('pagelet/backTop.html')
 		#parse('pagelet/IndexJs.html')
 		<!-- Own -->
 		#parse('pagelet/LastJs.html')
 		<script type='text/javascript'>
-		function del(url){
-			url = 'admin/del/blog/'+ url;
-			console.log(url)
+		var del_id = null;
+		function del(id){
+			del_id = id;
+			$('#delConfirmModal').modal();
 		}
+		$(function(){
+			$('#delConfirmModal_btn_submit').click(function(){
+				$.ajax({
+					url: 'admin/del/blog/'+ del_id,
+					type: 'POST',
+					dataType: 'json'
+				}).done(function (data){
+					location.reload();
+				});
+			});
+		});
 		</script>
 	</body>
 </html>

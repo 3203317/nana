@@ -294,3 +294,13 @@ exports.findFav = function(article, count, cb){
 		cb(null, 0, null, docs);
 	});
 };
+
+exports.remove = function(id, user_id, cb){
+	Article.remove({
+		_id: id,
+		User_Id: user_id
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, 0, null, count);
+	})
+};
