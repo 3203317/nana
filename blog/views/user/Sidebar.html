@@ -68,7 +68,7 @@
 			<ul class='list-group'>
 				#foreach($article in $hot10)<li class='list-group-item'>
 					<span class='badge'>#num2Money($article.ViewCount)</span>
-					<a target='_blank' title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>
+					<a title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>
 						<div>$article.Title</div></a>
 				</li>#end
 			</ul>
@@ -88,12 +88,12 @@
 					</div>
 					<div class='comment-right'>
 						<div class='content'>
-							<a target='_blank' href='${virtualPath}archive/${comment.Article_Id}.html#comment' title='发布于 #formatDate($comment.PostTime)'>
+							<a href='${virtualPath}archive/${comment.Article_Id}.html#comment' title='发布于 #formatDate($comment.PostTime)'>
 								<div>$comment.Content</div>
 							</a>
 						</div>
 						<div class='opt'>
-							<span><a href='http://duoshuo.com/profile/$comment.Author_Id/' target='_blank'>$comment.Author</a></span>
+							<span><a href='http://duoshuo.com/profile/$comment.Author_Id/'>$comment.Author</a></span>
 							<span>发布于 #toSDate($comment.PostTime)</span>
 						</div>
 					</div>

@@ -3,6 +3,7 @@ var user = require('../controllers/user'),
 	tag = require('../controllers/tag'),
 	category = require('../controllers/category'),
 	article = require('../controllers/article'),
+	manager = require('../controllers/manager'),
 	archive = require('../controllers/archive');
 
 var virtualPath = '',
@@ -98,4 +99,7 @@ module.exports = function(app){
 	app.get('/archive/category/:name/more', category.name_more);
 
 	app.get('/archive/:id.html', article.id);
+
+	// manage
+	app.get('/manager/login', manager.loginUI);
 };
