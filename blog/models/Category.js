@@ -23,4 +23,8 @@ var CategorySchema = new Schema({
 	}
 });
 
+CategorySchema.virtual('PostTime').get(function(){
+	return this._id.getTimestamp();
+});
+
 mongoose.model('Category', CategorySchema);
