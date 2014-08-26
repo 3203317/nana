@@ -105,4 +105,5 @@ module.exports = function(app){
 	app.get('/manager/login', manager.loginUI);
 	app.get('/manage/', manage.indexUI);
 	app.get('/manage/article/category/', manage.article_category_indexUI);
+	app.post('/manage/article/category/add', valiPostData, manage.article_category_add);
 };

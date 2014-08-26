@@ -34,3 +34,11 @@ exports.findAll = function(user_id, cb){
 		cb(null, 0, null, docs);
 	});
 };
+
+exports.saveNew = function(newInfo, cb){
+	newInfo.Count = newInfo.Count || 0;
+	Category.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 0, null, doc);
+	});
+};
