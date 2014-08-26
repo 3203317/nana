@@ -228,6 +228,7 @@ blog/node_modules/
 blog/public/assets/css/olx/olx.css
 blog/public/user/css/*.css
 blog/public/site/css/*.css
+blog/public/**/*.css
 blog/views/pagelet/html/*.html
 grunt-blog/node_modules/
 grunt-blog/src/
