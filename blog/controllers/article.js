@@ -16,7 +16,7 @@ function getTopMessage(){
 	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
-exports.id = function(req, res, next){
+exports.idUI = function(req, res, next){
 	Article.findById(req.params.id, function (err, status, msg, doc){
 		if(err) return next(err);
 		if(!doc) return res.redirect('/');

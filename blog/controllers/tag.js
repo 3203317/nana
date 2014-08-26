@@ -18,7 +18,7 @@ function getTopMessage(){
 	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
-exports.index = function(req, res, next){
+exports.indexUI = function(req, res, next){
 	res.render('Tags', {
 		moduleName: 'tag',
 		title: '标签 - '+ title,
@@ -30,7 +30,7 @@ exports.index = function(req, res, next){
 	});
 };
 
-exports.name = function(req, res, next){
+exports.nameUI = function(req, res, next){
 	var name = req.params.name;
 
 	Article.findAllByTag(name, {
@@ -53,7 +53,7 @@ exports.name = function(req, res, next){
 	});
 };
 
-exports.name_more = function(req, res, next){
+exports.nameUI_more = function(req, res, next){
 	var data = req.query.data;
 	if(!data) return res.send('');
 

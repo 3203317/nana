@@ -12,7 +12,7 @@ function getTopMessage(){
 	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
-exports.index = function(req, res, next){
+exports.indexUI = function(req, res, next){
 	res.render('Archive', {
 		moduleName: 'archive',
 		title: '档案馆 - '+ title,

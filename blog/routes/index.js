@@ -4,6 +4,7 @@ var user = require('../controllers/user'),
 	category = require('../controllers/category'),
 	article = require('../controllers/article'),
 	manager = require('../controllers/manager'),
+	manage = require('../controllers/manage'),
 	archive = require('../controllers/archive');
 
 var virtualPath = '',
@@ -65,9 +66,9 @@ function valiGetData(req, res, next){
 }
 
 module.exports = function(app){
-	app.get('/index.html', site.index);
-	app.get('/index/more', site.index_more);
-	app.get('/', site.index);
+	app.get('/index.html', site.indexUI);
+	app.get('/index/more', site.indexUI_more);
+	app.get('/', site.indexUI);
 	app.get('/install', user.validate, site.installUI);
 	app.get('/install/comment', user.validate, site.commentUI);
 
@@ -90,16 +91,17 @@ module.exports = function(app){
 	app.get('/u/:name/admin/edit/pw', user.validate, user.safeSkip, user.valiUserName, user.changePWUI);
 	app.post('/u/:name/admin/edit/pw', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.changePW);
 
-	app.get('/archive/', archive.index);
-	app.get('/archive/tag/', tag.index);
-	app.get('/archive/tag/:name/', tag.name);
-	app.get('/archive/tag/:name/more', tag.name_more);
+	app.get('/archive/', archive.indexUI);
+	app.get('/archive/tag/', tag.indexUI);
+	app.get('/archive/tag/:name/', tag.nameUI);
+	app.get('/archive/tag/:name/more', tag.nameUI_more);
 
-	app.get('/archive/category/:name/', category.name);
-	app.get('/archive/category/:name/more', category.name_more);
+	app.get('/archive/category/:name/', category.nameUI);
+	app.get('/archive/category/:name/more', category.nameUI_more);
 
-	app.get('/archive/:id.html', article.id);
+	app.get('/archive/:id.html', article.idUI);
 
 	// manage
 	app.get('/manager/login', manager.loginUI);
+	app.get('/manage/', manage.indexUI);
 };
