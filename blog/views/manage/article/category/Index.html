@@ -35,7 +35,7 @@
 						<div class='panel-heading'>
 							<div class='btn-group'>
 								<button class='btn btn-primary glyphicon glyphicon-plus-sign' data-toggle='modal' data-target='#addModal'>新增</button>
-								<button id='btn_edit' class='btn btn-default glyphicon glyphicon-edit'>编辑</button>
+								<button id='btn_edit' class='btn btn-default glyphicon glyphicon-edit' data-toggle='modal' data-target='#editModal'>编辑</button>
 								<button id='btn_del' class='btn btn-danger glyphicon glyphicon-remove-sign'>删除</button>
 							</div>
 						</div>
@@ -44,6 +44,22 @@
 				</div>
 			</div>
 		</div>
+		<div class='modal fade' id='alertModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>提示</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>请选择需要操作的记录！</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		<div id='addModal' class='modal fade' aria-hidden='true' aria-labelledby='addModalLabel' role='dialog' tabindex='-1'>
 			<div class='modal-dialog'>
 				<div class='modal-content'>
@@ -92,6 +108,71 @@
 				</div>
 			</div>
 		</div>
+		<div class='modal fade' id='delConfirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>警告</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>你确认执行该删除操作吗？</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+						<button type='button' class='btn btn-primary' id='delConfirmModal_btn_submit'>确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id='editModal' class='modal fade' aria-hidden='true' aria-labelledby='editModalLabel' role='dialog' tabindex='-1'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button class='close' aria-hidden='true' data-dismiss='modal' type='button'>×</button>
+						<h4 id='editModalLabel' class='modal-title'><b>编辑</b></h4>
+					</div>
+					<form id='editFrm' data-olx-type='olx.form' class='form-horizontal' role='form' data-url='edit'>
+						<div class='modal-body'>
+							<div class='form-group'>
+								<label for='editFrm_CateName' class='col-sm-3 control-label'><span class='olx-form-required'>*</span>分类名称</label>
+								<div class='col-sm-7'>
+									<input type='text' data-olx-type='olx.form.input' data-required='true' class='form-control' id='editFrm_CateName' name='CateName' placeholder='分类名称' data-placement='bottom' data-original-title='请输入正确的格式。' autofocus>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for='editFrm_Intro' class='col-sm-3 control-label'>分类描述</label>
+								<div class='col-sm-7'>
+									<input type='text' data-olx-type='olx.form.input' class='form-control' id='editFrm_Intro' name='Intro' placeholder='分类描述'>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for='editFrm_Sort' class='col-sm-3 control-label'>排序</label>
+								<div class='col-sm-7'>
+									<input type='text' data-olx-type='olx.form.input' class='form-control' id='editFrm_Sort' name='Sort' placeholder='排序' value='1'>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for='editFrm_shadow_PostTime' class='col-sm-3 control-label'>创建时间</label>
+								<div class='col-sm-7'>
+									<div class='input-group date form_date col-md-12' data-date='' data-date-format='yyyy/mm/dd' data-link-field='editFrm_PostTime' data-link-format='yyyy/mm/dd'>
+										<input class='form-control' id='editFrm_shadow_PostTime' type='text' value='' readonly placeholder='创建时间'>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-remove'></span></span>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+									</div>
+									<input type='hidden' data-olx-type='olx.form.input' class='form-control' id='editFrm_PostTime' name='CreateTime' placeholder='创建时间'>
+								</div>
+							</div>
+						</div>
+						<div class='modal-footer'>
+							<button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
+							<button class='btn btn-warning' type='reset'>重置</button>
+							<button id='editFrm_btn_submit' class='btn btn-primary' type='button'>保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 		#parse('pagelet/IndexJs.html')
 		<script type='text/javascript' src='${cdn}bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js' charset='UTF-8'></script>
 		<script type='text/javascript' src='${cdn}bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js' charset='UTF-8'></script>
@@ -106,6 +187,23 @@
 			startView: 2,
 			minView: 2,
 			forceParse: 0
+		});
+		$('#delConfirmModal').on('show.bs.modal', function (e){
+			var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			if(!vals.length){
+				$('#alertModal').modal();
+				return e.preventDefault();
+			}
+		});
+		$('#editModal').on('show.bs.modal', function (e){
+			var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			if(1 !== vals.length){
+				$('#alertModal').modal();
+				return e.preventDefault();
+			}
+		});
+		$('#btn_del').click(function(){
+			$('#delConfirmModal').modal();
 		});
 		</script>
 	</body>
