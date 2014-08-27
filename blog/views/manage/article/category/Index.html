@@ -2,7 +2,7 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-	    <link rel='stylesheet' type='text/css' href='${cdn}bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css' media='screen'>
+		<link rel='stylesheet' type='text/css' href='${cdn}bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css' media='screen'>
 		<link rel='stylesheet' type='text/css' href='${virtualPath}public/manage/css/index.css?v3' media='screen' />
 	</head>
 	<body>
@@ -210,6 +210,22 @@
 				if(300 === data.code) return top.location.href = '/manager/login';
 				console.log(arguments)
 			}]);
+		});
+		$('#delConfirmModal_btn_submit').click(function(){
+			var selIds = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			var data = {
+				data: JSON.stringify({
+					Ids: selIds
+				})
+			};
+			$.ajax({
+				url: 'del',
+				type: 'POST',
+				dataType: 'json',
+				data: data
+			}).done(function (data) {
+				location.reload();
+			});
 		});
 		</script>
 	</body>

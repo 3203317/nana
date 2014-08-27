@@ -42,3 +42,14 @@ exports.article_category_add = function(req, res, next){
 		res.send(result);
 	});
 };
+
+exports.article_category_del = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	Category.remove(data.Ids, function (err, status, msg, count){
+		if(err) return next(err);
+		result.success = count === data.Ids.length;
+		result.msg = msg;
+		res.send(result);
+	});
+};

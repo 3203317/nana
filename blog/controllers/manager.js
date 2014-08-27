@@ -13,3 +13,32 @@ exports.loginUI = function(req, res, next){
 		cdn: conf.cdn
 	});
 };
+
+exports.changePWUI = function(req, res, next){
+	res.render('manager/ChangePw', {
+		title: '修改登录密码 - 后台管理 - '+ title,
+		description: '',
+		keywords: ',修改登录密码,Bootstrap3,nodejs,express',
+		virtualPath: virtualPath,
+		frmUrl: 'pw',
+		cdn: conf.cdn
+	});
+};
+
+exports.changePW = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	var user = req.session.user;
+
+	if(!data.NewPass || !data.NewPass.trim().length){
+		result.msg = ['新密码不能为空。', 'NewPass'];
+		return res.send(result);
+	}
+
+	User.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
+	});
+};

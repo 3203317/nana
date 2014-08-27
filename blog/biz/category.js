@@ -42,3 +42,14 @@ exports.saveNew = function(newInfo, cb){
 		cb(null, 0, null, doc);
 	});
 };
+
+exports.remove = function(Ids, cb){
+	Category.remove({
+		_id: {
+			'$in': Ids
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, 1, '删除成功', count);
+	});
+};
