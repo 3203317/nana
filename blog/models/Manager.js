@@ -45,6 +45,7 @@ ManagerSchema.statics.findUserByName = function(userName, cb){
 	this.findOne({
 		UserName: new RegExp('^'+ userName +'$', 'i')
 	}, null, null, function (err, doc){
+		if(err) return cb(err);
 		cb(err, doc);
 	});
 };

@@ -16,7 +16,6 @@ exports.login = function(logInfo, cb){
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
 			return cb(null, 6, ['电子邮箱或密码输入错误。', 'UserPass'], doc);
-
 		cb(null, 0, null, doc);
 	});
 };
@@ -27,16 +26,12 @@ exports.register = function(newInfo, cb){
 		if(err) return cb(err);
 		/* 如果用户对象存在，则说明电子邮箱存在，返回提示信息 */
 		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
-
 		/* 用户对象入库之前的其他数据初始化工作 */
-		newInfo.Email = newInfo.Email.toLowerCase();
 		newInfo.Status = 0;
 		newInfo.IsDel = 0;
-
 		newInfo.SecPass = newInfo.UserPass;
 		/* 密码加密 */
 		newInfo.UserPass = md5.hex(newInfo.SecPass);
-
 		/* 开始创建新用户 */
 		User.create(newInfo, function (err, doc){
 			if(err) return cb(err);
@@ -67,7 +62,6 @@ exports.changePwd = function(user_id, oldPass, newPass, cb){
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
 		if(md5.hex(oldPass) !== doc.UserPass)
 			return cb(null, 6, ['密码输入错误。', 'UserPass'], doc);
-
 		doc.update({
 			UserPass: md5.hex(newPass)
 		}, function (err, count){

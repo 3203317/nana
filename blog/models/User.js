@@ -61,7 +61,8 @@ UserSchema.statics.findUserByName = function(userName, cb){
 	this.findOne({
 		UserName: new RegExp('^'+ userName +'$', 'i')
 	}, null, null, function (err, doc){
-		cb(err, doc);
+		if(err) return cb(err);
+		cb(null, doc);
 	});
 };
 
@@ -70,18 +71,19 @@ UserSchema.statics.findUserByName = function(userName, cb){
  *
  * @params {String} userName 用户名（忽略大小写）
  * @params {String} email 电子邮箱（忽略大小写）
- * @params {Function} cb 回调函数 *
+ * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
 UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
 	this.findOne({
 		'$or': [{
-			UserName: new RegExp(userName, 'i')
+			UserName: new RegExp('^'+ userName +'$', 'i')
 		}, {
-			Email: new RegExp(email, 'i')
+			Email: new RegExp('^'+ email +'$', 'i')
 		}]
 	}, null, null, function (err, doc){
-		cb(err, doc);
+		if(err) return cb(err);
+		cb(null, doc);
 	});
 };
 
@@ -96,7 +98,8 @@ UserSchema.statics.findUserByEmail = function(email, cb){
 	this.findOne({
 		Email: new RegExp('^'+ email +'$', 'i')
 	}, null, null, function (err, doc){
-		cb(err, doc);
+		if(err) return cb(err);
+		cb(null, doc);
 	});
 };
 
