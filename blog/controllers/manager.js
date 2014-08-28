@@ -14,8 +14,8 @@ exports.loginUI = function(req, res, next){
 	});
 };
 
-exports.changePWUI = function(req, res, next){
-	res.render('manager/ChangePw', {
+exports.changePwdUI = function(req, res, next){
+	res.render('manager/ChangePwd', {
 		title: '修改登录密码 - 后台管理 - '+ title,
 		description: '',
 		keywords: ',修改登录密码,Bootstrap3,nodejs,express',
@@ -25,7 +25,7 @@ exports.changePWUI = function(req, res, next){
 	});
 };
 
-exports.changePW = function(req, res, next){
+exports.changePwd = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
 	var user = req.session.user;

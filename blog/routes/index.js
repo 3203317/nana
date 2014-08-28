@@ -103,7 +103,9 @@ module.exports = function(app){
 
 	// manage
 	app.get('/manager/login', manager.loginUI);
-	app.get('/manager/changePw', manager.changePWUI);
+	app.get('/manager/changePwd', manager.changePwdUI);
+	app.post('/manager/changePwd', valiPostData, manager.changePwd);
+
 	app.get('/manage/', manage.indexUI);
 	app.get('/manage/article/category/', manage.article_category_indexUI);
 	app.post('/manage/article/category/add', valiPostData, manage.article_category_add);
