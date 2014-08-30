@@ -50,6 +50,6 @@ exports.remove = function(Ids, cb){
 		}
 	}, function (err, count){
 		if(err) return cb(err);
-		cb(null, 1, '删除成功', count);
+		cb(null, 0, '删除成功', count);
 	});
 };

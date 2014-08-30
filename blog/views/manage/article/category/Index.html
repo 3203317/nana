@@ -208,7 +208,7 @@
 		$('#addFrm_btn_submit').click(function(){
 			$('#addFrm').olxForm('submit', [function(){}, null, function (data){
 				if(300 === data.code) return top.location.href = '/manager/login';
-				console.log(arguments)
+				location.reload();
 			}]);
 		});
 		$('#delConfirmModal_btn_submit').click(function(){

@@ -109,7 +109,7 @@ module.exports = function(app){
 	app.post('/manager/changePwd$', valiPostData, manager.validate, manager.changePwd);
 
 	app.get('/manage/', manager.validate, manage.indexUI);
-	app.get('/manage/article/category/', manage.article_category_indexUI);
-	app.post('/manage/article/category/add', valiPostData, manage.article_category_add);
-	app.post('/manage/article/category/del', valiPostData, manage.article_category_del);
+	app.get('/manage/article/category/', manager.validate, manage.article_category_indexUI);
+	app.post('/manage/article/category/add$', valiPostData, manager.validate, manage.article_category_add);
+	app.post('/manage/article/category/del$', valiPostData, manager.validate, manage.article_category_del);
 };
