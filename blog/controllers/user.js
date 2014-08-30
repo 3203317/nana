@@ -61,12 +61,16 @@ exports.reg = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
 
-	User.register(data, function (err, status, msg, doc){
-		if(err) return next(err);
-		result.success = !status;
-		result.msg = msg;
-		res.send(result);
-	});
+	result.success = !1;
+	result.msg = ['暂停用户注册', 'Email'];
+	res.send(result);
+
+	// User.register(data, function (err, status, msg, doc){
+	// 	if(err) return next(err);
+	// 	result.success = !status;
+	// 	result.msg = msg;
+	// 	res.send(result);
+	// });
 };
 
 exports.myUI = function(req, res, next){
