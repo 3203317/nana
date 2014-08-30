@@ -2,6 +2,8 @@ var models = require('../models'),
 	User = models.User,
 	Article = models.Article;
 
+var tag  = require('./tag');
+
 /**
  * 保存新文章
  *
@@ -10,46 +12,63 @@ var models = require('../models'),
  * @return
  */
 exports.saveNew = function(newInfo, cb){
-	newInfo.Bookmark = newInfo.Bookmark || 0;
-	newInfo.Topmark = newInfo.Topmark || 0;
-
 	/* 标签转换 */
-	var tags = newInfo.Tags.split(',');
-	newInfo.Tags = [];
-	for(var s in tags){
-		if('' !== tags[s]) newInfo.Tags.push(tags[s]);
-	}
+	procTags(newInfo);
 
-	Article.create(newInfo, function (err, doc){
+	saveTags(newInfo.Tags, function (err){
 		if(err) return cb(err);
-		cb(null, 0, null, doc);
+		/* start save */
+		newInfo.Bookmark = newInfo.Bookmark || 0;
+		newInfo.Topmark = newInfo.Topmark || 0;
+		/* last */
+		Article.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, 0, null, doc);
+		});
 	});
 };
 
 exports.editInfo = function(newInfo, cb){
-	newInfo.Bookmark = newInfo.Bookmark || 0;
-	newInfo.Topmark = newInfo.Topmark || 0;
-
 	/* 标签转换 */
-	var tags = newInfo.Tags.split(',');
-	newInfo.Tags = [];
-	for(var s in tags){
-		if('' !== tags[s]) newInfo.Tags.push(tags[s]);
-	}
+	procTags(newInfo);
 
-	var id = newInfo.id;
-	var user_id = newInfo.User_Id;
-	delete newInfo.id;
-	delete newInfo.User_Id;
-
-	Article.update({
-		_id: id,
-		User_Id: user_id
-	}, newInfo, function (err, count){
+	saveTags(newInfo.Tags, function (err){
 		if(err) return cb(err);
-		cb(null, 0, null, count);
+		/* start save */
+		newInfo.Bookmark = newInfo.Bookmark || 0;
+		newInfo.Topmark = newInfo.Topmark || 0;
+		/* first */
+		var id = newInfo.id;
+		var user_id = newInfo.User_Id;
+		delete newInfo.id;
+		delete newInfo.User_Id;
+		/* second */
+		Article.update({
+			_id: id,
+			User_Id: user_id
+		}, newInfo, function (err, count){
+			if(err) return cb(err);
+			cb(null, 0, null, count);
+		});
 	});
 };
+
+function saveTags(tags, cb){
+	if(!tags.length) return cb();
+	tag.findByNames(tags, function (err, status, msg, docs){
+		if(err) return cb(err);
+		console.log(docs);
+		cb();
+	});
+}
+
+function procTags(info){
+	var tags = info.Tags.split(',');
+	info.Tags = [];
+	for(var s in tags){
+		if('' !== tags[s]) info.Tags.push(tags[s]);
+	}
+}
 
 /**
  * 获取文章集合中的作者主键，过滤重复内容

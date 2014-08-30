@@ -66,7 +66,7 @@ function valiGetData(req, res, next){
 }
 
 module.exports = function(app){
-	app.get('/index.html', site.indexUI);
+	app.get('/index.html$', site.indexUI);
 	app.get('/index/more$', site.indexUI_more);
 	app.get('/', site.indexUI);
 	app.get('/install$', user.validate, site.installUI);
@@ -99,7 +99,7 @@ module.exports = function(app){
 	app.get('/archive/category/:name/', category.nameUI);
 	app.get('/archive/category/:name/more$', category.nameUI_more);
 
-	app.get('/archive/:id.html', article.idUI);
+	app.get('/archive/:id.html$', article.idUI);
 
 	// manage
 	app.get('/manager/logout$', manager.validate, manager.logout);

@@ -34,3 +34,20 @@ exports.findAll = function(user_id, cb){
 		cb(null, 0, null, docs);
 	});
 };
+
+exports.findByNames = function(names, cb){
+	var arr = [];
+
+	for(var s in names){
+		arr.push(new RegExp('^'+ names[s] +'$', 'i'));
+	}
+
+	Tag.find({
+		TagName: {
+			'$in': arr
+		}
+	}, null, null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, 0, null, docs);
+	});
+};
