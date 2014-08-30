@@ -102,12 +102,12 @@ module.exports = function(app){
 	app.get('/archive/:id.html', article.idUI);
 
 	// manage
-	app.get('/manager/login', manager.loginUI);
-	app.post('/manager/login', valiPostData, manager.login);
+	app.get('/manager/login$', manager.loginUI);
+	app.post('/manager/login$', valiPostData, manager.login);
 	app.get('/manager/changePwd', manager.changePwdUI);
 	app.post('/manager/changePwd', valiPostData, manager.changePwd);
 
-	app.get('/manage/', manage.indexUI);
+	app.get('/manage/', manager.validate, manage.indexUI);
 	app.get('/manage/article/category/', manage.article_category_indexUI);
 	app.post('/manage/article/category/add', valiPostData, manage.article_category_add);
 	app.post('/manage/article/category/del', valiPostData, manage.article_category_del);

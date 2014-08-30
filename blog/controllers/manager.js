@@ -28,11 +28,10 @@ exports.login = function(req, res, next){
 		/* session */
 		req.session.lv = 1;
 		req.session.userId = doc._id;
-		req.session.role = 'user';
+		req.session.role = 'admin';
 		req.session.user = doc;
 		/* result */
 		result.success = true;
-		result.data = { UserName: doc.UserName };
 		res.send(result);
 	});
 };
@@ -63,4 +62,16 @@ exports.changePwd = function(req, res, next){
 		result.msg = msg;
 		res.send(result);
 	});
+};
+
+exports.validate = function(req, res, next){
+	if(1 === req.session.lv) return next();
+	if(req.xhr){
+		return res.send({
+			success: false,
+			code: 300,
+			msg: '无权访问'
+		});
+	}
+	res.redirect('/manager/login');
 };
