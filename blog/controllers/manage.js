@@ -10,7 +10,7 @@ exports.indexUI = function(req, res, next){
 	res.render('manage/Index', {
 		title: '后台管理 - '+ title,
 		description: '',
-		keywords: ',后台管理,Bootstrap3,nodejs,express',
+		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
 		cdn: conf.cdn
 	});

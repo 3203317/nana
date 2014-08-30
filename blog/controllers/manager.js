@@ -38,7 +38,7 @@ exports.login = function(req, res, next){
 
 exports.changePwdUI = function(req, res, next){
 	res.render('manager/ChangePwd', {
-		title: '修改登录密码 - 后台管理 - '+ title,
+		title: '修改密码 - 后台管理 - '+ title,
 		description: '',
 		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
@@ -48,15 +48,15 @@ exports.changePwdUI = function(req, res, next){
 
 exports.changePwd = function(req, res, next){
 	var result = { success: false },
-		data = req._data;
-	var user = req.session.user;
+		data = req._data,
+		user = req.session.user;
 
 	if(!data.NewPass || !data.NewPass.trim().length){
 		result.msg = ['新密码不能为空。', 'NewPass'];
 		return res.send(result);
 	}
 
-	User.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
+	Manager.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
 		if(err) return next(err);
 		result.success = !status;
 		result.msg = msg;
@@ -73,5 +73,10 @@ exports.validate = function(req, res, next){
 			msg: '无权访问'
 		});
 	}
+	res.redirect('/manager/login');
+};
+
+exports.logout = function(req, res, next) {
+	req.session.destroy();
 	res.redirect('/manager/login');
 };

@@ -30,7 +30,9 @@ exports.findById = function(id, cb){
 };
 
 exports.changePwd = function(user_id, oldPass, newPass, cb){
-	this.findById(user_id, function (err, status, msg, doc){
+	Manager.findOne({
+		_id: user_id
+	}, null, null, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
 		if(md5.hex(oldPass) !== doc.UserPass)

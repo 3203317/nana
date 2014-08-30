@@ -18,11 +18,11 @@
 							<ol class='breadcrumb'>
 								<li>
 									<i class='fa fa-home fa-fw'></i>
-									<a href='javascript:;'>系统管理</a></li>
+									<a href='javascript:;'>后台管理</a></li>
 								<li class='active'>配置</li>
 								<li class='active'>修改密码</li>
 							</ol>
-							<form class='form-horizontal' id='chpwdFrm' role='form' onsubmit='return false;' data-url='pw'>
+							<form class='form-horizontal' id='chpwdFrm' role='form' onsubmit='return false;' data-url='changePwd'>
 								<div class='form-group'>
 									<label class='col-sm-4 hidden-xs control-label' for='chpwdFrm_OldPass'>旧的登录密码</label>
 									<div class='col-sm-4'>
@@ -53,5 +53,17 @@
 			</div>
 		</div>
 		#parse('pagelet/IndexJs.html')
+		<script type='text/javascript'>
+			function showVali(valiResu){ }
+
+			$('#chpwdFrm_btn_sub').click(function(){
+				$('#chpwdFrm').olxForm('submit', [function(){
+				}, function (valiResu){
+					showVali(valiResu);
+				}, function (data){
+					if(!data.success) return showVali(data.msg);
+				}]);
+			});
+		</script>
 	</body>
 </html>
