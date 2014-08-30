@@ -112,4 +112,8 @@ module.exports = function(app){
 	app.get('/manage/article/category/', manager.validate, manage.article_category_indexUI);
 	app.post('/manage/article/category/add$', valiPostData, manager.validate, manage.article_category_add);
 	app.post('/manage/article/category/del$', valiPostData, manager.validate, manage.article_category_del);
+
+	app.get('/manage/article/tag/', manager.validate, manage.article_tag_indexUI);
+	app.post('/manage/article/tag/add$', valiPostData, manager.validate, manage.article_tag_add);
+	app.post('/manage/article/tag/del$', valiPostData, manager.validate, manage.article_tag_del);
 };

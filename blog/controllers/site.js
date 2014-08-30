@@ -205,7 +205,7 @@ exports.installUI = function(req, res, next){
 				for(var j in articles){
 					var article = articles[j];
 
-					if(article.Tags && article.Tags.length && -1 < ((','+ article.Tags +',').toLowerCase()).indexOf(tag.TagName.toLowerCase())){
+					if(article.Tags && article.Tags.length && -1 < ((','+ article.Tags +',').toLowerCase()).indexOf(','+ tag.TagName.toLowerCase() +',')){
 						tag_2.Articles.push(article);
 					}
 				}

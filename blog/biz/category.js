@@ -9,6 +9,7 @@ var models = require('../models'),
  * @return
  */
 exports.saveNew = function(newInfo, cb){
+	newInfo.Count = newInfo.Count || 0;
 	Category.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 0, null, doc);
@@ -32,14 +33,6 @@ exports.findAll = function(user_id, cb){
 	Category.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
-	});
-};
-
-exports.saveNew = function(newInfo, cb){
-	newInfo.Count = newInfo.Count || 0;
-	Category.create(newInfo, function (err, doc){
-		if(err) return cb(err);
-		cb(null, 0, null, doc);
 	});
 };
 

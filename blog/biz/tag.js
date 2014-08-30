@@ -9,6 +9,7 @@ var models = require('../models'),
  * @return
  */
 exports.saveNew = function(newInfo, cb){
+	newInfo.Count = newInfo.Count || 0;
 	Tag.create(newInfo, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 0, null, doc);
@@ -49,5 +50,16 @@ exports.findByNames = function(names, cb){
 	}, null, null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, 0, null, docs);
+	});
+};
+
+exports.remove = function(Ids, cb){
+	Tag.remove({
+		_id: {
+			'$in': Ids
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, 0, '删除成功', count);
 	});
 };

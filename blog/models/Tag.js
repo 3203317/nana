@@ -28,6 +28,10 @@ TagSchema.virtual('CreateTime').get(function(){
 	return (new Date(this._id.getTimestamp())).format();
 });
 
+TagSchema.virtual('PostTime').get(function(){
+	return this._id.getTimestamp();
+});
+
 TagSchema.pre('save', function (next, done){
 	next();
 });

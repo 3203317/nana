@@ -54,12 +54,16 @@ exports.editInfo = function(newInfo, cb){
 };
 
 function saveTags(tags, cb){
-	if(!tags.length) return cb();
-	tag.findByNames(tags, function (err, status, msg, docs){
-		if(err) return cb(err);
-		console.log(docs);
-		cb();
-	});
+	cb(null);
+	// if(!tags.length) return cb();
+	// tag.findByNames(tags, function (err, status, msg, docs){
+	// 	if(err) return cb(err);
+	// 	/* start save */
+	// 	var newArr = [];
+	// 	for(var s in docs){ }
+	// 	console.log(docs);
+	// 	cb();
+	// });
 }
 
 function procTags(info){

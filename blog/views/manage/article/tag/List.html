@@ -1,0 +1,20 @@
+<table id='table1' data-olx-type='olx.grid' class='table table-bordered table-hover table-condensed table-striped' data-url='/manage/article/tag/list' data-current='1' data-pagesize='20' data-count='561'>
+	<thead>
+		<tr>
+			<th class='ta'><input type='checkbox' title='全选/取消'></th>
+			<th>标签名称</th>
+			<th>文章总数</th>
+			<th>创建人</th>
+			<th>创建时间</th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($tag in $tags)<tr>
+			<td class='ta'><input type='checkbox' value='$tag._id'></td>
+			<td>$tag.TagName</td>
+			<td>$tag.Count</td>
+			<td>admin</td>
+			<td>#formatDate($tag.PostTime)</td>
+		</tr>#end
+	</tbody>
+</table>
