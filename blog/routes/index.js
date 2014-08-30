@@ -67,37 +67,37 @@ function valiGetData(req, res, next){
 
 module.exports = function(app){
 	app.get('/index.html', site.indexUI);
-	app.get('/index/more', site.indexUI_more);
+	app.get('/index/more$', site.indexUI_more);
 	app.get('/', site.indexUI);
-	app.get('/install', user.validate, site.installUI);
-	app.get('/install/comment', user.validate, site.commentUI);
+	app.get('/install$', user.validate, site.installUI);
+	app.get('/install/comment$', user.validate, site.commentUI);
 
 	app.post('/user/login$', valiPostData, user.login);
 	app.get('/user/login$', user.loginUI);
 	app.get('/user/login/success$', user.validate, user.login_success);
 
-	app.post('/user/register', valiPostData, user.reg);
-	app.get('/user/register', user.regUI);
+	app.post('/user/register$', valiPostData, user.reg);
+	app.get('/user/register$', user.regUI);
 
 	app.get('/u/:name/', user.valiUserName, user.myUI);
-	app.get('/u/:name/admin/new/blog', user.validate, user.safeSkip, user.valiUserName, user.newBlogUI);
-	app.post('/u/:name/admin/new/blog', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.saveNewBlog);
+	app.get('/u/:name/admin/new/blog$', user.validate, user.safeSkip, user.valiUserName, user.newBlogUI);
+	app.post('/u/:name/admin/new/blog$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.saveNewBlog);
 
-	app.get('/u/:name/admin/edit/blog/:aid', user.validate, user.safeSkip, user.valiUserName, user.editBlogUI);
-	app.post('/u/:name/admin/edit/blog/:aid', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.editBlog);
+	app.get('/u/:name/admin/edit/blog/:aid$', user.validate, user.safeSkip, user.valiUserName, user.editBlogUI);
+	app.post('/u/:name/admin/edit/blog/:aid$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.editBlog);
 
-	app.post('/u/:name/admin/del/blog/:aid', user.validate, user.safeSkip, user.valiUserName, user.delBlog);
+	app.post('/u/:name/admin/del/blog/:aid$', user.validate, user.safeSkip, user.valiUserName, user.delBlog);
 
-	app.get('/u/:name/admin/edit/pw', user.validate, user.safeSkip, user.valiUserName, user.changePWUI);
-	app.post('/u/:name/admin/edit/pw', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.changePW);
+	app.get('/u/:name/admin/edit/pw$', user.validate, user.safeSkip, user.valiUserName, user.changePwdUI);
+	app.post('/u/:name/admin/edit/pw$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.changePwd);
 
 	app.get('/archive/', archive.indexUI);
 	app.get('/archive/tag/', tag.indexUI);
 	app.get('/archive/tag/:name/', tag.nameUI);
-	app.get('/archive/tag/:name/more', tag.nameUI_more);
+	app.get('/archive/tag/:name/more$', tag.nameUI_more);
 
 	app.get('/archive/category/:name/', category.nameUI);
-	app.get('/archive/category/:name/more', category.nameUI_more);
+	app.get('/archive/category/:name/more$', category.nameUI_more);
 
 	app.get('/archive/:id.html', article.idUI);
 

@@ -119,14 +119,14 @@ exports.myUI = function(req, res, next){
 };
 
 exports.newBlogUI = function(req, res, next){
-	var _user = req.flash('user')[0];
+	var user = req.session.user;
 
 	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/admin/NewBlog', {
-			title: '发表博文 - '+ _user.Nickname +'的个人空间 - '+ title,
+			title: '发表博文 - '+ user.Nickname +'的个人空间 - '+ title,
 			description: '',
-			keywords: ',发表博文,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
+			keywords: ',发表博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
 			categorys: docs,
 			frmUrl: 'blog',
@@ -136,14 +136,14 @@ exports.newBlogUI = function(req, res, next){
 };
 
 exports.editBlogUI = function(req, res, next){
-	var aid = req.params.aid.trim(),
-		_user = req.flash('user')[0];
+	var aid = req.params.aid,
+		user = req.session.user;
 
 	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
 		res.render('user/admin/EditBlog', {
-			title: '修改博文 - '+ _user.Nickname +'的个人空间 - '+ title,
+			title: '修改博文 - '+ user.Nickname +'的个人空间 - '+ title,
 			description: '',
-			keywords: ',修改博文,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
+			keywords: ',修改博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
 			cdn: conf.cdn,
 			article: article,
@@ -159,13 +159,13 @@ exports.editBlogUI = function(req, res, next){
 	Article.findById(aid, function (err, status, msg, doc){
 		if(err) return ep.emit('error', err);
 		if(!doc) return ep.emit('error', new Error('Not Found.'));
-		if(doc.User_Id.toString() !== _user._id.toString()) return ep.emit('error', new Error('Not Permit.'));
+		if(doc.User_Id.toString() !== user._id.toString())
+			return ep.emit('error', new Error('Not Permit.'));
 		ep.emit('article', doc);
 	});
 
 	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
-		if(!docs) return ep.emit('error', new Error('Not Found.'));
 		ep.emit('categorys', docs);
 	});
 };
@@ -202,7 +202,7 @@ exports.saveNewBlog = function(req, res, next){
 exports.delBlog = function(req, res, next){
 	var result = { success: false },
 		user = req.session.user,
-		aid = req.params.aid.trim();
+		aid = req.params.aid;
 
 	Article.remove(aid, user._id, function (err, status, msg, count){
 		if(err) return next(err);
@@ -254,20 +254,20 @@ exports.safeSkip = function(req, res, next){
 	res.redirect('/u/'+ user.UserName +'/');
 };
 
-exports.changePWUI = function(req, res, next){
-	var _user = req.flash('user')[0];
+exports.changePwdUI = function(req, res, next){
+	var user = req.session.user;
 
-	res.render('user/admin/ChangePW', {
-		title: '修改登录密码 - '+ _user.Nickname +'的个人空间 - '+ title,
+	res.render('user/admin/ChangePwd', {
+		title: '修改登录密码 - '+ user.Nickname +'的个人空间 - '+ title,
 		description: '',
-		keywords: ',修改登录密码,Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
+		keywords: ',修改登录密码,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 		virtualPath: virtualPath,
 		frmUrl: 'pw',
 		cdn: conf.cdn
 	});
 };
 
-exports.changePW = function(req, res, next){
+exports.changePwd = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
 	var user = req.session.user;
