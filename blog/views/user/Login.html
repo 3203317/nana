@@ -108,7 +108,7 @@
 				alert(valiResu.message);
 			}
 
-			function subFrm(){
+			$('#btn_log').click(function(){
 				$('#logFrm').olxForm('submit', [function(){
 					if(!$('#logFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
 					if(!$('#logFrm_UserPass').val().trim().length) return ['登陆密码不能为空。', 'UserPass'];
@@ -117,11 +117,9 @@
 					showVali(valiResu);
 				}, function (data){
 					if(!data.success) return showVali(data.msg);
-					location.href = data.data.UserName +'/login/success';
+					location.href = 'login/success';
 				}]);
-			}
-
-			$('#btn_log').click(subFrm);
+			});
 		</script>
 		#parse('pagelet/LastJs.html')
 	</body>

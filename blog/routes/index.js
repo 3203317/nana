@@ -72,9 +72,9 @@ module.exports = function(app){
 	app.get('/install', user.validate, site.installUI);
 	app.get('/install/comment', user.validate, site.commentUI);
 
-	app.post('/user/login', valiPostData, user.login);
-	app.get('/user/login', user.loginUI);
-	app.get('/user/:name/login/success', user.login_success);
+	app.post('/user/login$', valiPostData, user.login);
+	app.get('/user/login$', user.loginUI);
+	app.get('/user/login/success$', user.validate, user.login_success);
 
 	app.post('/user/register', valiPostData, user.reg);
 	app.get('/user/register', user.regUI);

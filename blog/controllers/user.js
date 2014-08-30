@@ -31,17 +31,20 @@ exports.login = function(req, res, next){
 			result.msg = msg;
 			return res.send(result);
 		}
+		/* session */
+		req.session.lv = 2;
 		req.session.userId = doc._id;
 		req.session.role = 'user';
 		req.session.user = doc;
+		/* result */
 		result.success = true;
-		result.data = { UserName: doc.UserName };
 		res.send(result);
 	});
 };
 
 exports.login_success = function(req, res, next){
-	res.redirect('/u/'+ req.params.name +'/');
+	var user = req.session.user;
+	res.redirect('/u/'+ user.UserName +'/');
 };
 
 exports.regUI = function(req, res, next){
@@ -209,7 +212,7 @@ exports.delBlog = function(req, res, next){
 };
 
 exports.validate = function(req, res, next){
-	if('user' === req.session.role) return next();
+	if(2 === req.session.lv) return next();
 	if(req.xhr){
 		return res.send({
 			success: false,
@@ -221,7 +224,13 @@ exports.validate = function(req, res, next){
 };
 
 exports.valiUserName = function(req, res, next){
-	var name = req.params.name;
+	var name = req.params.name,
+		user = req.session.user;
+
+	if(!!user && name === user.UserName){
+		req.flash('user', user);
+		return next();
+	}
 
 	User.findByName(name, function (err, status, msg, doc){
 		if(err) return next(err);
