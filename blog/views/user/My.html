@@ -33,7 +33,7 @@
 							#foreach($article in $articles)<tr>
 								<td>$i#set($i=$i+1)</td>
 								<td>
-									<a title='创建于 #formatDate($article.PostTime)' target='_blank'
+									<a title='创建于 #formatDate($article.PostTime)'
 										href='${virtualPath}archive/${article._id}.html'>${article.Title}</a></td>
 								<td>
 									<div class='dropdown'>
