@@ -64,3 +64,44 @@ exports.idUI = function(req, res, next){
 		});
 	});
 };
+
+exports.add = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	data.User_Id = req.session.userId;
+
+	Article.saveNew(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
+	});
+};
+
+exports.edit = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	data.User_Id = req.session.userId;
+	data.id = req.params.aid;
+
+	Article.editInfo(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
+	});
+};
+
+exports.remove = function(req, res, next){
+	var result = { success: false },
+		user = req.session.user,
+		aid = req.params.aid;
+
+	Article.remove(aid, user._id, function (err, status, msg, count){
+		if(err) return next(err);
+		result.success = !!count;
+		res.send(result);
+	});
+};

@@ -7,7 +7,8 @@ var path = require('path'),
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
-var Article = require('../biz/article');
+var Article = require('../biz/article'),
+	Category = require('../biz/category');
 
 function getTopMessage(){
 	var t = new Date();
@@ -62,5 +63,29 @@ exports.nameUI_more = function(req, res, next){
 			virtualPath: virtualPath,
 			articles: docs
 		});
+	});
+};
+
+exports.removes = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	Category.remove(data.Ids, function (err, status, msg, count){
+		if(err) return next(err);
+		result.success = count === data.Ids.length;
+		result.msg = msg;
+		res.send(result);
+	});
+};
+
+exports.add = function(req, res, next){
+	var result = { success: false },
+		data = req._data,
+		user = req.session.user;
+	data.User_Id = user._id;
+	Category.saveNew(data, function (err, status, msg, docs){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
 	});
 };

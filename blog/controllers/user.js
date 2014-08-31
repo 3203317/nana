@@ -174,47 +174,6 @@ exports.editBlogUI = function(req, res, next){
 	});
 };
 
-exports.editBlog = function(req, res, next){
-	var result = { success: false },
-		data = req._data;
-
-	data.User_Id = req.session.userId;
-	data.id = req.params.aid;
-
-	Article.editInfo(data, function (err, status, msg, doc){
-		if(err) return next(err);
-		result.success = !status;
-		result.msg = msg;
-		res.send(result);
-	});
-};
-
-exports.saveNewBlog = function(req, res, next){
-	var result = { success: false },
-		data = req._data;
-
-	data.User_Id = req.session.userId;
-
-	Article.saveNew(data, function (err, status, msg, doc){
-		if(err) return next(err);
-		result.success = !status;
-		result.msg = msg;
-		res.send(result);
-	});
-};
-
-exports.delBlog = function(req, res, next){
-	var result = { success: false },
-		user = req.session.user,
-		aid = req.params.aid;
-
-	Article.remove(aid, user._id, function (err, status, msg, count){
-		if(err) return next(err);
-		result.success = !!count;
-		res.send(result);
-	});
-};
-
 exports.validate = function(req, res, next){
 	if(2 === req.session.lv) return next();
 	if(req.xhr){

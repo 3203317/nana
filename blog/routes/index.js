@@ -81,12 +81,12 @@ module.exports = function(app){
 
 	app.get('/u/:name/', user.valiUserName, user.myUI);
 	app.get('/u/:name/admin/new/blog$', user.validate, user.safeSkip, user.valiUserName, user.newBlogUI);
-	app.post('/u/:name/admin/new/blog$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.saveNewBlog);
+	app.post('/u/:name/admin/new/blog$', valiPostData, user.validate, user.safeSkip, user.valiUserName, article.add);
 
 	app.get('/u/:name/admin/edit/blog/:aid$', user.validate, user.safeSkip, user.valiUserName, user.editBlogUI);
-	app.post('/u/:name/admin/edit/blog/:aid$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.editBlog);
+	app.post('/u/:name/admin/edit/blog/:aid$', valiPostData, user.validate, user.safeSkip, user.valiUserName, article.edit);
 
-	app.post('/u/:name/admin/del/blog/:aid$', user.validate, user.safeSkip, user.valiUserName, user.delBlog);
+	app.post('/u/:name/admin/del/blog/:aid$', user.validate, user.safeSkip, user.valiUserName, article.remove);
 
 	app.get('/u/:name/admin/edit/pw$', user.validate, user.safeSkip, user.valiUserName, user.changePwdUI);
 	app.post('/u/:name/admin/edit/pw$', valiPostData, user.validate, user.safeSkip, user.valiUserName, user.changePwd);
@@ -110,8 +110,8 @@ module.exports = function(app){
 
 	app.get('/manage/', manager.validate, manage.indexUI);
 	app.get('/manage/article/category/', manager.validate, manage.article_category_indexUI);
-	app.post('/manage/article/category/add$', valiPostData, manager.validate, manage.article_category_add);
-	app.post('/manage/article/category/del$', valiPostData, manager.validate, manage.article_category_del);
+	app.post('/manage/article/category/add$', valiPostData, manager.validate, category.add);
+	app.post('/manage/article/category/del$', valiPostData, manager.validate, category.removes);
 
 	app.get('/manage/article/tag/', manager.validate, manage.article_tag_indexUI);
 	app.get('/manage/article/tag/:id$', manager.validate, tag.id);
