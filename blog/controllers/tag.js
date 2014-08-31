@@ -82,7 +82,6 @@ exports.nameUI_more = function(req, res, next){
 exports.id = function(req, res, next){
 	var result = { success: false },
 		id = req.params.id;
-
 	Tag.findById(id, function (err, status, msg, doc){
 		if(err) return next(err);
 		/* result */
@@ -98,6 +97,30 @@ exports.edit = function(req, res, next){
 	Tag.editInfo(data, function (err, status, msg, count){
 		if(err) return next(err);
 		result.success = !status
+		result.msg = msg;
+		res.send(result);
+	});
+};
+
+exports.removes = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	Tag.remove(data.Ids, function (err, status, msg, count){
+		if(err) return next(err);
+		result.success = count === data.Ids.length;
+		result.msg = msg;
+		res.send(result);
+	});
+};
+
+exports.add = function(req, res, next){
+	var result = { success: false },
+		data = req._data,
+		user = req.session.user;
+	data.User_Id = user._id;
+	Tag.saveNew(data, function (err, status, msg, docs){
+		if(err) return next(err);
+		result.success = !status;
 		result.msg = msg;
 		res.send(result);
 	});

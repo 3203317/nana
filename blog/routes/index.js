@@ -115,7 +115,7 @@ module.exports = function(app){
 
 	app.get('/manage/article/tag/', manager.validate, manage.article_tag_indexUI);
 	app.get('/manage/article/tag/:id$', manager.validate, tag.id);
-	app.post('/manage/article/tag/add$', valiPostData, manager.validate, manage.article_tag_add);
-	app.post('/manage/article/tag/del$', valiPostData, manager.validate, manage.article_tag_del);
+	app.post('/manage/article/tag/add$', valiPostData, manager.validate, tag.add);
+	app.post('/manage/article/tag/del$', valiPostData, manager.validate, tag.removes);
 	app.post('/manage/article/tag/edit$', valiPostData, manager.validate, tag.edit);
 };
