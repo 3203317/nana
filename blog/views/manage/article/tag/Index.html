@@ -121,6 +121,7 @@
 						<h4 id='editModalLabel' class='modal-title'><b>编辑</b></h4>
 					</div>
 					<form id='editFrm' data-olx-type='olx.form' class='form-horizontal' role='form' data-url='edit'>
+						<input type='hidden' id='editFrm_id' name='id'>
 						<div class='modal-body'>
 							<div class='form-group'>
 								<label for='editFrm_TagName' class='col-sm-3 control-label'><span class='olx-form-required'>*</span>标签名称</label>
@@ -177,12 +178,27 @@
 				$('#alertModal').modal();
 				return e.preventDefault();
 			}
+			$.ajax({
+				url: vals[0],
+				type: 'GET',
+				dataType: 'json'
+			}).done(function (data) {
+				if(!data.success) alert(data.msg);
+				$('#editFrm_TagName').val(data.data.TagName);
+				$('#editFrm_id').val(data.data._id);
+			});
 		});
 		$('#btn_del').click(function(){
 			$('#delConfirmModal').modal();
 		});
 		$('#addFrm_btn_submit').click(function(){
 			$('#addFrm').olxForm('submit', [function(){}, null, function (data){
+				if(300 === data.code) return top.location.href = '/manager/login';
+				location.reload();
+			}]);
+		});
+		$('#editFrm_btn_submit').click(function(){
+			$('#editFrm').olxForm('submit', [function(){}, null, function (data){
 				if(300 === data.code) return top.location.href = '/manager/login';
 				location.reload();
 			}]);

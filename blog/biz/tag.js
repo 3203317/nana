@@ -63,3 +63,23 @@ exports.remove = function(Ids, cb){
 		cb(null, 0, '删除成功', count);
 	});
 };
+
+exports.findById = function(id, cb){
+	Tag.findOne({
+		_id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		cb(null, 0, null, doc);
+	});
+};
+
+exports.editInfo = function(newInfo, cb){
+	Tag.update({
+		_id: newInfo.id
+	}, {
+		TagName: newInfo.TagName
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, 0, null, count);
+	});
+};
