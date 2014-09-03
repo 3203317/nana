@@ -13,6 +13,7 @@
 		"grunt-contrib-imagemin": "*",
 		"grunt-contrib-clean": "*",
 		"grunt-contrib-copy": "*",
+		"grunt-contrib-less": "*",
 		"grunt-contrib-cssmin": "*"
 	}
 }

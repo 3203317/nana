@@ -74,6 +74,22 @@ module.exports = function(grunt){
 					dest: 'build/'
 				}]
 			}
+		}, less: {
+			compress: {
+				files: {
+					'./build/public/assets/css/olx/olx.css': '../blog/public/assets/css/olx/olx.less',
+					'./build/public/manage/css/index.css': '../blog/public/manage/css/index.less',
+					'./build/public/site/css/article.css': '../blog/public/site/css/article.less',
+					'./build/public/site/css/artintro.css': '../blog/public/site/css/artintro.less',
+					'./build/public/site/css/index.css': '../blog/public/site/css/index.less',
+					'./build/public/site/css/loadmore.css': '../blog/public/site/css/loadmore.less',
+					'./build/public/user/css/login.css': '../blog/public/user/css/login.less',
+					'./build/public/user/css/my.css': '../blog/public/user/css/my.less',
+					'./build/public/user/css/register.css': '../blog/public/user/css/register.less'
+				}, options: {
+					compress: true
+				}
+			}
 		}
 	});
 	
@@ -84,10 +100,11 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-less');
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['clean', 'uglify:buildall', 'cssmin', 'imagemin', 'copy']);
+	grunt.registerTask('default', ['clean', 'uglify:buildall', 'imagemin', 'copy', 'less']);
 	grunt.registerTask('html', ['htmlmin']);
 	grunt.registerTask('cc', ['clean']);
 };
