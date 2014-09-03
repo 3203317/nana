@@ -25,6 +25,9 @@ module.exports = function(grunt){
 					src: ['**/*.js', '!node_modules/**/*'], // 所有js文件
 					dest: 'build/' // 输出到此目录下
 				}]
+			}, buildjs: {
+				src: '../../js/js/olxjs/1.0.0/js/olx.js',
+				dest: '../../js/js/olxjs/1.0.0/js/olx.min.js'
 			}
 		}, htmlmin: {
 			dist: {
@@ -104,7 +107,7 @@ module.exports = function(grunt){
 
 	// Default task(s).
 	// grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('default', ['clean', 'uglify:buildall', 'imagemin', 'copy', 'less']);
+	grunt.registerTask('default', ['clean', 'uglify:buildall', 'uglify:buildjs', 'imagemin', 'copy', 'less']);
 	grunt.registerTask('html', ['htmlmin']);
 	grunt.registerTask('cc', ['clean']);
 };
