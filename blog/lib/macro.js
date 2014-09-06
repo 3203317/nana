@@ -24,7 +24,7 @@ module.exports = {
 		var d = util.pdate(t.getDate());
 		return y +'-'+ m +'-'+ d;
 	}, toHtml: function(s){
-		return velocity.Parser.parse(s);
+		return velocity.render(s);
 	}, toSex: function(n){
 		switch(n){
 			case 1: return '男';
