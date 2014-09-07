@@ -5,5 +5,5 @@ module.exports = {
 	port: 27017,
 	user: 'sa',
 	pass: '123',
-	cdn: 'http://localhost:8082/js/'
+	cdn: 'http://114.215.156.101:8082/js/'
 };
