@@ -56,7 +56,7 @@ app.set('port', process.env.PORT || 3000)
 	});
 
 // development only
-if ('development' == app.get('env')) {
+if('development' == app.get('env')){
 	app.use(express.errorHandler());
 }
 
