@@ -7,17 +7,17 @@
   },
   "dependencies": {
     "express": "3.5.0",
-    "ejs": "*",
-    "mysql": "*",
-    "mongodb": "*",
-    "mongoose": "*",
-    "velocityjs": "*",
-    "connect-mongo": "*",
-    "connect-flash": "*",
-    "nodemailer": "*",
-    "node-uuid": "*",
-    "async": "*",
-    "log4js": "*",
-    "eventproxy": "*"
+    "ejs": "1.0.0",
+    "mysql": "2.5.3",
+    "mongodb": "1.4.20",
+    "mongoose": "3.8.19",
+    "velocityjs": "0.4.6",
+    "connect-mongo": "0.4.1",
+    "connect-flash": "0.1.1",
+    "nodemailer": "1.3.0",
+    "node-uuid": "1.4.1",
+    "async": "0.9.0",
+    "log4js": "0.6.21",
+    "eventproxy": "0.3.1"
   }
 }
