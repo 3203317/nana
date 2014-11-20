@@ -11,7 +11,7 @@ db.once('open', function(){
 
 mongoose.connect(url, function (err){
 	if(err){
-		console.log('Connect to %s Error: ', url, err.message);
+		console.error('Connect to %s Error: %s.', url, err.message);
 		process.exit(1);
 	}
 });
