@@ -8,7 +8,7 @@ var Manager = require('../biz/manager');
 
 exports.loginUI = function(req, res, next){
 	res.render('manager/Login', {
-		title: '后台登陆 - '+ title,
+		title: '后台登陆 | '+ title,
 		description: '',
 		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
@@ -38,7 +38,7 @@ exports.login = function(req, res, next){
 
 exports.changePwdUI = function(req, res, next){
 	res.render('manager/ChangePwd', {
-		title: '修改密码 - 后台管理 - '+ title,
+		title: '修改密码 | 后台管理 | '+ title,
 		description: '',
 		keywords: ',Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,

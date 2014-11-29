@@ -12,7 +12,7 @@ var User = require('../biz/user'),
 
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
-		title: '用户登陆 - '+ title,
+		title: '用户登陆 | '+ title,
 		description: '',
 		keywords: ',用户登陆,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
@@ -49,7 +49,7 @@ exports.login_success = function(req, res, next){
 
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
-		title: '新用户注册 - '+ title,
+		title: '新用户注册 | '+ title,
 		description: '',
 		keywords: ',新用户注册,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
@@ -79,7 +79,7 @@ exports.myUI = function(req, res, next){
 
 	var ep = EventProxy.create('articles', 'hot10', 'links', 'newCmt', function (articles, hot10, links, newCmt){
 		res.render('user/My', {
-			title: _user.Nickname +'的个人空间 - '+ title,
+			title: _user.Nickname +'的个人空间 | '+ title,
 			description: '',
 			keywords: ',Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
@@ -128,7 +128,7 @@ exports.newBlogUI = function(req, res, next){
 	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/admin/NewBlog', {
-			title: '发表博文 - '+ user.Nickname +'的个人空间 - '+ title,
+			title: '发表博文 | '+ user.Nickname +'的个人空间 | '+ title,
 			description: '',
 			keywords: ',发表博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
@@ -145,7 +145,7 @@ exports.editBlogUI = function(req, res, next){
 
 	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
 		res.render('user/admin/EditBlog', {
-			title: '修改博文 - '+ user.Nickname +'的个人空间 - '+ title,
+			title: '修改博文 | '+ user.Nickname +'的个人空间 | '+ title,
 			description: '',
 			keywords: ',修改博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 			virtualPath: virtualPath,
@@ -221,7 +221,7 @@ exports.changePwdUI = function(req, res, next){
 	var user = req.session.user;
 
 	res.render('user/admin/ChangePwd', {
-		title: '修改登录密码 - '+ user.Nickname +'的个人空间 - '+ title,
+		title: '修改登录密码 | '+ user.Nickname +'的个人空间 | '+ title,
 		description: '',
 		keywords: ',修改登录密码,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
 		virtualPath: virtualPath,

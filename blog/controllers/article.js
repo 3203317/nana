@@ -26,7 +26,7 @@ exports.idUI = function(req, res, next){
 			article.author = author;
 			res.render('Article', {
 				moduleName: 'archive',
-				title: article.Title +' - 档案馆 - '+ title,
+				title: article.Title +' | 档案馆 | '+ title,
 				description: ','+ article.Title,
 				keywords: ',个人博客,Blog'+ (article.Tags.length ? ','+ article.Tags : ''),
 				virtualPath: virtualPath,

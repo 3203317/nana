@@ -22,7 +22,7 @@ function getTopMessage(){
 exports.indexUI = function(req, res, next){
 	res.render('Tags', {
 		moduleName: 'tag',
-		title: '标签 - '+ title,
+		title: '标签 | '+ title,
 		description: '',
 		keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
@@ -42,7 +42,7 @@ exports.nameUI = function(req, res, next){
 		if(!docs || !docs.length) return res.redirect('/archive/tag/');
 		res.render('Tag', {
 			moduleName: 'tag',
-			title: name +' - 标签 - '+ title,
+			title: name +' | 标签 | '+ title,
 			description: '',
 			keywords: ',标签,个人博客,Blog,'+ name,
 			virtualPath: virtualPath,

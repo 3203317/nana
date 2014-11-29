@@ -15,7 +15,7 @@ function getTopMessage(){
 exports.indexUI = function(req, res, next){
 	res.render('Archive', {
 		moduleName: 'archive',
-		title: '档案馆 - '+ title,
+		title: '档案馆 | '+ title,
 		description: '',
 		keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,asp,xhtml,html5',
 		virtualPath: virtualPath,

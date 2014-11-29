@@ -29,7 +29,7 @@ exports.nameUI = function(req, res, next){
 		if(!docs || !docs.length) return res.redirect('/archive/');
 		res.render('Category', {
 			moduleName: 'category',
-			title: name +' - 分类 - '+ title,
+			title: name +' | 分类 | '+ title,
 			description: ','+ name,
 			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,'+ name,
 			virtualPath: virtualPath,
