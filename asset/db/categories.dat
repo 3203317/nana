@@ -3,3 +3,4 @@
 { "_id" : { "$oid" : "53d636dc3194bb740d797d9c" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c1" }, "CateName" : "插件", "Intro" : "插件", "Count" : 3, "Sort" : 3 }
 { "_id" : { "$oid" : "53d636dc3194bb740d797d9e" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c3" }, "CateName" : "Java", "Intro" : "Java", "Count" : 3, "Sort" : 5 }
 { "_id" : { "$oid" : "53d636dc3194bb740d797d9f" }, "User_Id" : { "$oid" : "53d636dcff62e3740dd006c4" }, "CateName" : "ASP.NET", "Intro" : "ASP.NET", "Count" : 3, "Sort" : 4 }
+{ "_id" : { "$oid" : "5412f6e2ea7f3d7c6e533e5a" }, "CateName" : "Golang", "Intro" : "", "Sort" : 6, "User_Id" : { "$oid" : "53fee1f35520ad4ef7b2f756" }, "Count" : 0 }
