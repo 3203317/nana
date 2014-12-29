@@ -26,8 +26,8 @@ module.exports = function(grunt){
 					dest: 'build/' // 输出到此目录下
 				}]
 			}, buildjs: {
-				src: '../../js/js/olxjs/1.0.0/js/olx.js',
-				dest: '../../js/js/olxjs/1.0.0/js/olx.min.js'
+				src: '../../new-js/olx/1.0.0/js/olx.js',
+				dest: '../../new-js/olx/1.0.0/js/olx.min.js'
 			}
 		}, htmlmin: {
 			dist: {
