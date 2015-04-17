@@ -16,7 +16,8 @@ exports.loginUI = function(req, res, next){
 		description: '',
 		keywords: ',用户登陆,Bootstrap3,nodejs,express',
 		virtualPath: virtualPath,
-		refererUrl: escape('http://'+ req.headers.host + req.url),
+		refererUrl: escape(req.url),
+		//refererUrl: escape('http://'+ req.headers.host + req.url),
 		cdn: conf.cdn
 	});
 };
