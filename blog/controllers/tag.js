@@ -1,24 +1,41 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
 'use strict';
-var conf = require('../settings'),
-	util = require('../lib/util');
 
-var path = require('path'),
+var util = require('speedt-utils'),
+	path = require('path'),
 	cwd = process.cwd();
+
+var conf = require('../settings');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+/* biz */
 var Article = require('../biz/article'),
 	Tag = require('../biz/tag');
 
+/**
+ * 
+ * @params
+ * @return
+ */
 function getTopMessage(){
 	var t = new Date();
 	var y = t.getFullYear();
-	var m = util.pdate(t.getMonth() + 1);
-	var d = util.pdate(t.getDate());
+	var m = util.padLeft(t.getMonth() + 1, '0', 2);
+	var d = util.padLeft(t.getDate(), '0', 2);
 	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.indexUI = function(req, res, next){
 	res.render('Tags', {
 		moduleName: 'tag',
@@ -31,6 +48,11 @@ exports.indexUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.nameUI = function(req, res, next){
 	var name = req.params.name;
 
@@ -54,6 +76,11 @@ exports.nameUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.nameUI_more = function(req, res, next){
 	var data = req.query.data;
 	if(!data) return res.send('');
@@ -79,6 +106,11 @@ exports.nameUI_more = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.id = function(req, res, next){
 	var result = { success: false },
 		id = req.params.id;
@@ -91,6 +123,11 @@ exports.id = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.edit = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -102,6 +139,11 @@ exports.edit = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.removes = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -113,6 +155,11 @@ exports.removes = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.add = function(req, res, next){
 	var result = { success: false },
 		data = req._data,

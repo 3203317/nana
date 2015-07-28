@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var user = require('../controllers/user'),
 	site = require('../controllers/site'),
 	tag = require('../controllers/tag'),
@@ -7,9 +14,7 @@ var user = require('../controllers/user'),
 	manage = require('../controllers/manage'),
 	archive = require('../controllers/archive');
 
-var virtualPath = '',
-	title = 'FOREWORLD 洪荒',
-	str1 = '参数异常';
+var str1 = '参数异常';
 
 module.exports = function(app){
 	app.get('/index.html$', site.indexUI);

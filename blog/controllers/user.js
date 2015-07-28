@@ -1,15 +1,29 @@
-var conf = require('../settings'),
-	EventProxy = require('eventproxy');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
+var EventProxy = require('eventproxy');
+
+var conf = require('../settings');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+// biz
 var User = require('../biz/user'),
 	Link = require('../biz/link'),
 	Category = require('../biz/category'),
 	Comment = require('../biz/comment'),
 	Article = require('../biz/article');
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
 		title: '用户登陆 | '+ title,
@@ -22,6 +36,11 @@ exports.loginUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.login = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -43,11 +62,21 @@ exports.login = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.login_success = function(req, res, next){
 	var user = req.session.user;
 	res.redirect('/u/'+ user.UserName +'/');
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
 		title: '新用户注册 | '+ title,
@@ -58,6 +87,11 @@ exports.regUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.reg = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -74,6 +108,11 @@ exports.reg = function(req, res, next){
 	// });
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.myUI = function(req, res, next){
 	var _user = req.flash('user')[0],
 		user = req.session.user;
@@ -123,6 +162,11 @@ exports.myUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.newBlogUI = function(req, res, next){
 	var user = req.session.user;
 
@@ -140,6 +184,11 @@ exports.newBlogUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.editBlogUI = function(req, res, next){
 	var aid = req.params.aid,
 		user = req.session.user;
@@ -175,6 +224,11 @@ exports.editBlogUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.validate = function(req, res, next){
 	if(2 === req.session.lv) return next();
 	if(req.xhr){
@@ -187,6 +241,11 @@ exports.validate = function(req, res, next){
 	res.redirect('/user/login');
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.valiUserName = function(req, res, next){
 	var name = req.params.name,
 		user = req.session.user;
@@ -204,6 +263,11 @@ exports.valiUserName = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.safeSkip = function(req, res, next){
 	var name = req.params.name,
 		user = req.session.user;
@@ -218,6 +282,11 @@ exports.safeSkip = function(req, res, next){
 	res.redirect('/u/'+ user.UserName +'/');
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwdUI = function(req, res, next){
 	var user = req.session.user;
 
@@ -231,6 +300,11 @@ exports.changePwdUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwd = function(req, res, next){
 	var result = { success: false },
 		data = req._data;

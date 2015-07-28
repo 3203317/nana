@@ -1,27 +1,34 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var cwd = process.cwd(),
 	fs = require('fs'),
 	velocity = require('velocityjs'),
-	util = require('./util');
+	util = require('speedt-utils');
 
 module.exports = {
 	parse: function(file){
-		var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
-		return this.eval(template);
+		var tpl = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
+		return this.eval(tpl);
 	}, include: function(file){
-		var template = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
-		return template;
+		var tpl = fs.readFileSync(require('path').join(cwd, 'views', file)).toString();
+		return tpl;
 	}, toMon: function(t){
-		return util.pdate(t.getMonth() + 1);
+		return util.padLeft(t.getMonth() + 1, '0', 2);
 	}, toDay: function(t){
-		return util.pdate(t.getDate());
+		return util.padLeft(t.getDate(), '0', 2);
 	}, formatDate: function(t){
-		return t.format();
+		return util.format(t, 'YY-MM-dd hh:mm:ss.S');
 	}, num2Money: function(n){
-		return util.threeSeparator(n);
+		return util.currencyformat(n);
 	}, toSDate: function(t){
 		var y = t.getFullYear();
-		var m = util.pdate(t.getMonth() + 1);
-		var d = util.pdate(t.getDate());
+		var m = util.padLeft(t.getMonth() + 1, '0', 2);
+		var d = util.padLeft(t.getDate(), '0', 2);
 		return y +'-'+ m +'-'+ d;
 	}, toHtml: function(s){
 		return velocity.render(s);

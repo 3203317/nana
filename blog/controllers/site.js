@@ -1,32 +1,49 @@
-var conf = require('../settings'),
-	EventProxy = require('eventproxy'),
-	util = require('../lib/util');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
 
-var fs = require('fs'),
+var util = require('speedt-utils'),
+	EventProxy = require('eventproxy'),
+	fs = require('fs'),
 	path = require('path'),
 	cwd = process.cwd(),
 	qs = require('querystring'),
 	velocity = require('velocityjs');
 
-var Comment = require('../biz/comment'),
-	Link = require('../biz/link'),
-	Article = require('../biz/article'),
+var conf = require('../settings'),
+	macros = require('../lib/macro');
+
+// biz
+var Link = require('../biz/link'),
 	Tag = require('../biz/tag'),
+	Comment = require('../biz/comment'),
+	Article = require('../biz/article'),
 	Category = require('../biz/category');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
-var macros = require('../lib/macro');
-
+/**
+ * 
+ * @params
+ * @return
+ */
 function getTopMessage(){
 	var t = new Date();
 	var y = t.getFullYear();
-	var m = util.pdate(t.getMonth() + 1);
-	var d = util.pdate(t.getDate());
+	var m = util.padLeft(t.getMonth() + 1, '0', 2);
+	var d = util.padLeft(t.getDate(), '0', 2);
 	return '欢迎您。今天是'+ y +'年'+ m +'月'+ d +'日。';
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.indexUI = function(req, res, next){
 	res.render('Index', {
 		moduleName: 'index',
@@ -40,6 +57,11 @@ exports.indexUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.indexUI_more = function(req, res, next){
 	var data = req.query.data;
 	if(!data) return res.send('');
@@ -67,6 +89,11 @@ exports.indexUI_more = function(req, res, next){
 
 var http = require('http');
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.commentUI = function(req, res, next){
 	var params = {
 		limit: 10,
@@ -122,6 +149,11 @@ exports.commentUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.installUI = function(req, res, next){
 	var vmPath = path.join(cwd, 'views', 'pagelet');
 

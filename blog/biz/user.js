@@ -1,4 +1,11 @@
-var md5 = require('../lib/md5');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
+var md5 = require('speedt-utils').md5;
 
 var models = require('../models'),
 	User = models.User;
@@ -11,7 +18,7 @@ var models = require('../models'),
  * @return
  */
 exports.login = function(logInfo, cb){
-	User.findUserByEmail(logInfo.Email, function (err, doc){
+	User.findByEmail(logInfo.Email, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'Email']);
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
@@ -20,9 +27,14 @@ exports.login = function(logInfo, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.register = function(newInfo, cb){
 	/* 查询邮箱是否存在 */
-	User.findUserByEmail(newInfo.Email, function (err, doc){
+	User.findByEmail(newInfo.Email, function (err, doc){
 		if(err) return cb(err);
 		/* 如果用户对象存在，则说明电子邮箱存在，返回提示信息 */
 		if(doc) return cb(null, 3, ['电子邮箱已经存在。', 'Email'], doc);
@@ -40,13 +52,23 @@ exports.register = function(newInfo, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findByName = function(userName, cb){
-	User.findUserByName(userName, function (err, doc){
+	User.findByName(userName, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 0, null, doc);
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findById = function(id, cb){
 	User.findOne({
 		_id: id
@@ -56,6 +78,11 @@ exports.findById = function(id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwd = function(user_id, oldPass, newPass, cb){
 	User.findOne({
 		_id: user_id

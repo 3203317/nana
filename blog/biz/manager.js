@@ -1,4 +1,11 @@
-var md5 = require('../lib/md5');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
+var md5 = require('speedt-utils').md5;
 
 var models = require('../models'),
 	Manager = models.Manager;
@@ -11,7 +18,7 @@ var models = require('../models'),
  * @return
  */
 exports.login = function(logInfo, cb){
-	Manager.findUserByName(logInfo.UserName, function (err, doc){
+	Manager.findByName(logInfo.UserName, function (err, doc){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
@@ -20,6 +27,11 @@ exports.login = function(logInfo, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findById = function(id, cb){
 	Manager.findOne({
 		_id: id
@@ -29,6 +41,11 @@ exports.findById = function(id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwd = function(user_id, oldPass, newPass, cb){
 	Manager.findOne({
 		_id: user_id

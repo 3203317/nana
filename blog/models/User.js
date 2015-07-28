@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
@@ -57,7 +64,7 @@ var UserSchema = new Schema({
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByName = function(userName, cb){
+UserSchema.statics.findByName = function(userName, cb){
 	this.findOne({
 		UserName: new RegExp('^'+ userName +'$', 'i')
 	}, null, null, function (err, doc){
@@ -74,7 +81,7 @@ UserSchema.statics.findUserByName = function(userName, cb){
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
+UserSchema.statics.findByNameEmail = function(userName, email, cb){
 	this.findOne({
 		'$or': [{
 			UserName: new RegExp('^'+ userName +'$', 'i')
@@ -94,7 +101,7 @@ UserSchema.statics.findUserByNameEmail = function(userName, email, cb){
  * @params {Function} cb 回调函数
  * @return {Object} 用户对象
  */
-UserSchema.statics.findUserByEmail = function(email, cb){
+UserSchema.statics.findByEmail = function(email, cb){
 	this.findOne({
 		Email: new RegExp('^'+ email +'$', 'i')
 	}, null, null, function (err, doc){

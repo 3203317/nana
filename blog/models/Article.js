@@ -1,8 +1,13 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
-
-var util = require('../lib/util');
 
 var ArticleSchema = new Schema({
 	Title: {

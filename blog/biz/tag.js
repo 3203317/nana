@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var models = require('../models'),
 	Tag = models.Tag;
 
@@ -36,6 +43,11 @@ exports.findAll = function(user_id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findByNames = function(names, cb){
 	var arr = [];
 
@@ -53,6 +65,11 @@ exports.findByNames = function(names, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.remove = function(Ids, cb){
 	Tag.remove({
 		_id: {
@@ -64,6 +81,11 @@ exports.remove = function(Ids, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findById = function(id, cb){
 	Tag.findOne({
 		_id: id
@@ -73,6 +95,11 @@ exports.findById = function(id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.editInfo = function(newInfo, cb){
 	Tag.update({
 		_id: newInfo.id

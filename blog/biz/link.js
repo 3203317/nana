@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var models = require('../models'),
 	User = models.User,
 	Link = models.Link;

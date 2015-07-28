@@ -23,6 +23,21 @@ var settings = require('./settings'),
 
 var app = express();
 
+// production
+app.configure('production', function(){
+	app.use('/public', express.static(path.join(__dirname, 'public'), { maxAge: 101000 }))
+		.use(express.errorHandler());
+});
+
+// development
+app.configure('development', function(){
+	app.use('/public', express.static(path.join(__dirname, 'public')))
+		.use(express.errorHandler({
+			dumpExceptions: true,
+			showStack: true
+		}));
+});
+
 // all environments
 app.set('port', process.env.PORT || 3000)
 	.set('views', path.join(__dirname, 'views'))
@@ -30,7 +45,6 @@ app.set('port', process.env.PORT || 3000)
 	/* use */
 	.use(flash())
 	.use(express.favicon())
-	.use('/public', express.static(path.join(__dirname, 'public')))
 	.use(express.logger('dev'))
 	.use(express.json())
 	.use(express.urlencoded())
@@ -41,8 +55,7 @@ app.set('port', process.env.PORT || 3000)
 		key: settings.db,
 		cookie: {
 			maxAge: 1000 * 60 * 60 * 24 * 30 //30 days
-		},
-		store: new MongoStore({
+		}, store: new MongoStore({
 			// db: settings.db
 			url: 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db
 		})
@@ -58,19 +71,6 @@ app.set('port', process.env.PORT || 3000)
 	});
 
 errorHandler.appErrorProcess(app);
-
-// production
-app.configure('production', function(){
-	app.use(express.errorHandler());
-});
-
-// development
-app.configure('development', function(){
-	app.use(express.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
-});
 
 var server = http.createServer(app);
 // server.setTimeout(5000);

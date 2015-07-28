@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var models = require('../models'),
 	User = models.User,
 	Article = models.Article;
@@ -28,6 +35,11 @@ exports.saveNew = function(newInfo, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.editInfo = function(newInfo, cb){
 	/* 标签转换 */
 	procTags(newInfo);
@@ -53,6 +65,11 @@ exports.editInfo = function(newInfo, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 function saveTags(tags, cb){
 	cb(null);
 	// if(!tags.length) return cb();
@@ -66,6 +83,11 @@ function saveTags(tags, cb){
 	// });
 }
 
+/**
+ * 
+ * @params
+ * @return
+ */
 function procTags(info){
 	var tags = info.Tags.split(',');
 	info.Tags = [];
@@ -167,6 +189,11 @@ exports.findAll = function(sort, page, user_id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findAllByTag = function(name, sort, page, user_id, cb){
 	var option = {
 		sort: sort
@@ -194,6 +221,11 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findAllByCate = function(name, sort, page, user_id, cb){
 	var option = {
 		sort: sort
@@ -266,6 +298,11 @@ exports.findTopmarks = function(user_id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findPrev = function(article, cb){
 	Article.findOne({
 		_id: {
@@ -281,6 +318,11 @@ exports.findPrev = function(article, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.findNext = function(article, cb){
 	Article.findOne({
 		_id: {
@@ -318,6 +360,11 @@ exports.findFav = function(article, count, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.remove = function(id, user_id, cb){
 	Article.remove({
 		_id: id,

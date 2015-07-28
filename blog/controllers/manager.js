@@ -1,11 +1,25 @@
-var conf = require('../settings'),
-	EventProxy = require('eventproxy');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
+var EventProxy = require('eventproxy');
+
+var conf = require('../settings');
 
 var title = 'FOREWORLD 洪荒',
 	virtualPath = '/';
 
+// biz
 var Manager = require('../biz/manager');
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.loginUI = function(req, res, next){
 	res.render('manager/Login', {
 		title: '后台登陆 | '+ title,
@@ -16,6 +30,11 @@ exports.loginUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.login = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
@@ -36,6 +55,11 @@ exports.login = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwdUI = function(req, res, next){
 	res.render('manager/ChangePwd', {
 		title: '修改密码 | 后台管理 | '+ title,
@@ -46,6 +70,11 @@ exports.changePwdUI = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.changePwd = function(req, res, next){
 	var result = { success: false },
 		data = req._data,
@@ -64,6 +93,11 @@ exports.changePwd = function(req, res, next){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.validate = function(req, res, next){
 	if(1 === req.session.lv) return next();
 	if(req.xhr){
@@ -76,6 +110,11 @@ exports.validate = function(req, res, next){
 	res.redirect('/manager/login');
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.logout = function(req, res, next) {
 	req.session.destroy();
 	res.redirect('/manager/login');

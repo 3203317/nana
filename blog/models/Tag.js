@@ -1,8 +1,14 @@
-var mongoose = require('mongoose'),
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
+var util = require('speedt-utils'),
+	mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.Types.ObjectId;
-
-var util = require('../lib/util');
 
 var TagSchema = new Schema({
 	TagName: {
@@ -25,7 +31,7 @@ var TagSchema = new Schema({
 });
 
 TagSchema.virtual('CreateTime').get(function(){
-	return (new Date(this._id.getTimestamp())).format();
+	return util.format(new Date(this._id.getTimestamp()));
 });
 
 TagSchema.virtual('PostTime').get(function(){
@@ -37,6 +43,7 @@ TagSchema.pre('save', function (next, done){
 });
 
 TagSchema.post('save', function(){
+	// TODO
 });
 
 mongoose.model('Tag', TagSchema);

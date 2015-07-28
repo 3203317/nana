@@ -1,7 +1,15 @@
-var mongoose = require('mongoose'),
-	settings = require('../settings');
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
 
-var db = mongoose.connection;
+var mongoose = require('mongoose'),
+	db = mongoose.connection;
+
+var settings = require('../settings');
+
 var url = 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db;
 
 db.on('error', console.error);

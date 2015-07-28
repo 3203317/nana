@@ -1,3 +1,10 @@
+/*!
+ * blog
+ * Copyright(c) 2015 foreworld.net <3203317@qq.com>
+ * MIT Licensed
+ */
+'use strict';
+
 var models = require('../models'),
 	Category = models.Category;
 
@@ -36,6 +43,11 @@ exports.findAll = function(user_id, cb){
 	});
 };
 
+/**
+ * 
+ * @params
+ * @return
+ */
 exports.remove = function(Ids, cb){
 	Category.remove({
 		_id: {
