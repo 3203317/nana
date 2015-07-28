@@ -213,23 +213,12 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-web/public/asset/css/default.css
-web/public/asset/css/olx/olx.css
+
+
+node_modules
+*.pdb
+
 android/hyx/target/
 android/hyx/gen/
-web/public/user/register.css
-web/public/user/regFrm.min.js
-web/public/user/register.min.js
-web/public/user/login.css
-web/public/user/sendEmail_success.css
-web/public/cdn/
-web/node_modules/
-blog/node_modules/
-blog/public/assets/css/olx/olx.css
-blog/public/user/css/*.css
-blog/public/site/css/*.css
-blog/public/**/*.css
-#blog/views/pagelet/html/*.html
-grunt-blog/node_modules/
-grunt-blog/src/
-grunt-blog/build/
+
+blog/views/pagelet/html/
