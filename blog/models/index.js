@@ -6,14 +6,14 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-	db = mongoose.connection;
+	dbconn = mongoose.connection;
 
-var settings = require('../settings');
+var dbconf = require('../settings').db;
 
-var url = 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db;
+var url = 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database;
 
-db.on('error', console.error);
-db.once('open', function(){
+dbconn.on('error', console.error);
+dbconn.once('open', function(){
 	console.log(url);
 });
 

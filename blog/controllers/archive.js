@@ -9,9 +9,6 @@ var util = require('speedt-utils');
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
 /**
  * 
  * @params
@@ -32,12 +29,11 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 	res.render('Archive', {
+		conf: conf,
+		title: '档案馆 | '+ conf.corp.name,
 		moduleName: 'archive',
-		title: '档案馆 | '+ title,
 		description: '',
-		keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,asp,xhtml,html5',
-		virtualPath: virtualPath,
-		topMessage: getTopMessage(),
-		cdn: conf.cdn
+		keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+		topMessage: getTopMessage()
 	});
 };

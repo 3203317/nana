@@ -5,12 +5,21 @@
  */
 'use strict';
 
-module.exports = { 
-	cookieSecret: 'foreworld',
-	db: 'foreworld',
-	host: '127.0.0.1',
-	port: 27017,
-	user: 'sa',
-	pass: 'xiang123',
-	cdn: 'http://www.foreworld.net/js/'
+module.exports = {
+	cookie: {
+		secret: 'foreworld'
+	}, cdn: {
+		url: 'http://www.foreworld.net/js/'
+	}, corp: {
+		name: 'FOREWORLD 洪荒',
+		website: 'http://www.foreworld.net/'
+	}, db: {
+		database: 'foreworld',
+		host: 'www.foreworld.net',
+		port: 27017,
+		user: 'sa',
+		pass: 'xiang123'
+	}, static_res: {
+		virtualPath: '/public/'
+	}
 };

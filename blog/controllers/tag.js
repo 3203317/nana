@@ -11,10 +11,7 @@ var util = require('speedt-utils'),
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
-/* biz */
+// biz
 var Article = require('../biz/article'),
 	Tag = require('../biz/tag');
 
@@ -38,13 +35,12 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 	res.render('Tags', {
+		conf: conf,
+		title: '标签 | '+ conf.corp.name,
 		moduleName: 'tag',
-		title: '标签 | '+ title,
 		description: '',
-		keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express',
-		virtualPath: virtualPath,
-		topMessage: getTopMessage(),
-		cdn: conf.cdn
+		keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+		topMessage: getTopMessage()
 	});
 };
 
@@ -63,15 +59,16 @@ exports.nameUI = function(req, res, next){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.redirect('/archive/tag/');
 		res.render('Tag', {
+			conf: conf,
+			title: name +' | 标签 | '+ conf.corp.name,
 			moduleName: 'tag',
-			title: name +' | 标签 | '+ title,
 			description: '',
-			keywords: ',标签,个人博客,Blog,'+ name,
-			virtualPath: virtualPath,
-			topMessage: getTopMessage(),
-			cdn: conf.cdn,
+			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
 			loadMore: 'archive/tag/'+ name,
-			articles: docs
+			topMessage: getTopMessage(),
+			data: {
+				articles: docs
+			}
 		});
 	});
 };
@@ -100,8 +97,10 @@ exports.nameUI_more = function(req, res, next){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
-			virtualPath: virtualPath,
-			articles: docs
+			conf: conf,
+			data: {
+				articles: docs
+			}
 		});
 	});
 };

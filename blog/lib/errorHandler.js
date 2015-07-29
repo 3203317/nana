@@ -20,6 +20,7 @@ exports.appErrorProcess = function(app){
 		});
 
 		app.use(function (err, req, res, next){
+			if(!err) return next();
 			if(req.xhr){
 				return res.send({
 					success: false,
@@ -30,7 +31,8 @@ exports.appErrorProcess = function(app){
 		});
 
 		process.on('uncaughtException', function (err){
-			console.log(err)
+			// TODO: send email
+			console.log(err);
 		});
 	});
 };

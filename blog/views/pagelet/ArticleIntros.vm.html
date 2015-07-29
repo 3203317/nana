@@ -1,4 +1,4 @@
-#foreach($article in $articles)<div class='panel panel-default artIntro'>
+#foreach($article in $data.articles)<div class='panel panel-default artIntro'>
 	<div class='panel-body'>
 		#if(1 == $article.Bookmark)<div class='glyphicon glyphicon-bookmark'></div>#end
 		<div class='date' title='创建于 #formatDate($article.PostTime)'>
@@ -6,12 +6,12 @@
 			<span class='day'>#toDay($article.PostTime)</span>
 		</div>
 		<div class='title'>
-			<h2><a id='${article._id}' href='${virtualPath}archive/${article._id}.html'>$article.Title</a></h2>
+			<h2><a id='${article._id}' href='/archive/${article._id}.html'>$article.Title</a></h2>
 		</div>
 		<div class='tag ta nav'>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-user'></span>
-				<a title='查看 $article.author.Nickname 的全部文章' href='${virtualPath}u/$article.author.UserName/'>$article.author.Nickname</a>
+				<a title='查看 $article.author.Nickname 的全部文章' href='/u/$article.author.UserName/'>$article.author.Nickname</a>
 			</span>
 			<span class='label label-default'>
 				<span class='glyphicon glyphicon-home'></span>
@@ -23,19 +23,19 @@
 			</span>
 		</div>
 		#if(${article.Photo})<figure class='thumbnail clearfix'>
-			<a href='${virtualPath}archive/${article._id}.html'>
-				<img src='${virtualPath}public/udata/$article.author.UserName/${article.Photo}' alt='${virtualPath}public/udata/$article.author.UserName/${article.Photo}'></a>
+			<a href='/archive/${article._id}.html'>
+				<img src='$!{conf.static_res.virtualPath}udata/$article.author.UserName/${article.Photo}' alt='$!{conf.static_res.virtualPath}udata/$article.author.UserName/${article.Photo}'></a>
 		</figure>#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
 			#if(0<$article.Tags.length)<div class='tag fl clearfix'>
 				<span class='label label-default'>
 					<span class='glyphicon glyphicon-tag'></span>
-					#foreach($tag in $article.Tags)<a rel='tag' title='查看 $tag 标签' href='${virtualPath}archive/tag/$tag/'>$tag</a>#if($foreach.hasNext),#end
+					#foreach($tag in $article.Tags)<a rel='tag' title='查看 $tag 标签' href='/archive/tag/$tag/'>$tag</a>#if($foreach.hasNext),#end
 					#end
 				</span>
 			</div>#end
-			<a class='btn btn-danger pull-right' href='${virtualPath}archive/${article._id}.html'
+			<a class='btn btn-danger pull-right' href='/archive/${article._id}.html'
 				title='详细阅读 $article.Title'>阅读全文 <span class='badge'>#num2Money($article.ViewCount)</span></a>
 		</div>
 	</div>

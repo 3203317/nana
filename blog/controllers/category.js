@@ -11,10 +11,7 @@ var util = require('speedt-utils'),
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
-/* biz */
+// biz
 var Article = require('../biz/article'),
 	Category = require('../biz/category');
 
@@ -46,15 +43,16 @@ exports.nameUI = function(req, res, next){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.redirect('/archive/');
 		res.render('Category', {
+			conf: conf,
+			title: name +' | 分类 | '+ conf.corp.name,
 			moduleName: 'category',
-			title: name +' | 分类 | '+ title,
-			description: ','+ name,
-			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,'+ name,
-			virtualPath: virtualPath,
+			description: '',
+			keywords: ',分类,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
 			topMessage: getTopMessage(),
-			cdn: conf.cdn,
 			loadMore: 'archive/category/'+ name,
-			articles: docs
+			data: {
+				articles: docs
+			}
 		});
 	});
 };
@@ -83,8 +81,10 @@ exports.nameUI_more = function(req, res, next){
 		if(err) return next(err);
 		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
-			virtualPath: virtualPath,
-			articles: docs
+			conf: conf,
+			data: {
+				articles: docs
+			}
 		});
 	});
 };

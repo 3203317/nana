@@ -6,20 +6,18 @@
 'use strict';
 
 var express = require('express'),
-	velocity = require('velocityjs');
-
-var cwd = process.cwd(),
+	MongoStore = require('connect-mongo')(express),
+	flash = require('connect-flash'),
+	velocity = require('velocityjs'),
+	cwd = process.cwd(),
 	fs = require('fs'),
 	http = require('http'),
 	path = require('path');
 
 var macros = require('./lib/macro'),
-	errorHandler = require("./lib/errorHandler");
-
-/* session config */
-var settings = require('./settings'),
-	MongoStore = require('connect-mongo')(express),
-	flash = require('connect-flash');
+	errorHandler = require("./lib/errorHandler"),
+	conf = require('./settings'),  // session config
+	dbconf = conf.db;
 
 var app = express();
 
@@ -45,22 +43,12 @@ app.set('port', process.env.PORT || 3000)
 	/* use */
 	.use(flash())
 	.use(express.favicon())
-	.use(express.logger('dev'))
 	.use(express.json())
 	.use(express.urlencoded())
 	.use(express.methodOverride())
 	.use(express.cookieParser())
-	.use(express.session({
-		secret: settings.cookieSecret,
-		key: settings.db,
-		cookie: {
-			maxAge: 1000 * 60 * 60 * 24 * 30 //30 days
-		}, store: new MongoStore({
-			// db: settings.db
-			url: 'mongodb://'+ settings.user +':'+ settings.pass +'@'+ settings.host +':'+ settings.port +'/'+ settings.db
-		})
-	}))
 	.use(app.router)
+	.use(express.logger('dev'))
 	/* velocity */
 	.engine('.html', function (path, options, fn){
 		fs.readFile(path, 'utf8', function (err, data){
@@ -71,6 +59,17 @@ app.set('port', process.env.PORT || 3000)
 	});
 
 errorHandler.appErrorProcess(app);
+
+app.use(express.session({
+	secret: conf.cookie.secret,
+	key: dbconf.database,
+	cookie: {
+		maxAge: 1000 * 60 * 60 * 24 * 30  //30 days
+	}, store: new MongoStore({
+		// db: dbconf.database
+		url: 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ conf.port +'/'+ dbconf.database
+	})
+}));
 
 var server = http.createServer(app);
 // server.setTimeout(5000);

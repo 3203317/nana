@@ -9,9 +9,6 @@ var EventProxy = require('eventproxy');
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
 // biz
 var User = require('../biz/user'),
 	Link = require('../biz/link'),
@@ -26,13 +23,12 @@ var User = require('../biz/user'),
  */
 exports.loginUI = function(req, res, next){
 	res.render('user/Login', {
-		title: '用户登陆 | '+ title,
+		conf: conf,
+		title: '用户登陆 | '+ conf.corp.name,
 		description: '',
-		keywords: ',用户登陆,Bootstrap3,nodejs,express',
-		virtualPath: virtualPath,
-		refererUrl: escape(req.url),
+		keywords: ',用户登陆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
 		//refererUrl: escape('http://'+ req.headers.host + req.url),
-		cdn: conf.cdn
+		refererUrl: escape(req.url)
 	});
 };
 
@@ -79,11 +75,10 @@ exports.login_success = function(req, res, next){
  */
 exports.regUI = function(req, res, next){
 	res.render('user/Register', {
-		title: '新用户注册 | '+ title,
+		conf: conf,
+		title: '新用户注册 | '+ conf.corp.name,
 		description: '',
-		keywords: ',新用户注册,Bootstrap3,nodejs,express',
-		virtualPath: virtualPath,
-		cdn: conf.cdn
+		keywords: ',新用户注册,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'
 	});
 };
 

@@ -5,6 +5,7 @@
  */
 'use strict';
 
+// controller
 var user = require('../controllers/user'),
 	site = require('../controllers/site'),
 	tag = require('../controllers/tag'),
