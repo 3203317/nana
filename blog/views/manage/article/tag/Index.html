@@ -2,8 +2,8 @@
 <html lang='zh-CN'>
 	<head>
 		#parse('pagelet/IndexHeader.html')
-		<link rel='stylesheet' type='text/css' href='${cdn}bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css' media='screen'>
-		<link rel='stylesheet' type='text/css' href='${virtualPath}public/manage/css/index.css?v3' media='screen' />
+		<link rel='stylesheet' type='text/css' href='$!{conf.cdn.url}bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css' media='screen'>
+		<link rel='stylesheet' type='text/css' href='http://www.foreworld.net/public/manage/css/index.css?v3' media='screen' />
 	</head>
 	<body>
 		#parse('manage/pagelet/TopBanner.html')
@@ -151,8 +151,8 @@
 			</div>
 		</div>
 		#parse('pagelet/IndexJs.html')
-		<script type='text/javascript' src='${cdn}bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js' charset='UTF-8'></script>
-		<script type='text/javascript' src='${cdn}bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='$!{conf.cdn.url}bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='$!{conf.cdn.url}bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js' charset='UTF-8'></script>
 		<script type='text/javascript'>
 		$('.form_date').datetimepicker({
 			format: 'yyyy-mm-dd hh:ii:ss',

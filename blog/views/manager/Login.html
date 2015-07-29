@@ -51,7 +51,7 @@
 			$('#loginFrm').olxForm('submit', [function(){
 			}, function (valiResu){
 			}, function (data){
-				if(data.success) location.href = '${virtualPath}manage/';
+				if(data.success) location.href = '/manage/';
 				alert(data.msg[0]);
 			}]);
 		});

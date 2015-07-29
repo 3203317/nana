@@ -9,9 +9,6 @@ var EventProxy = require('eventproxy');
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
 // biz
 var Manager = require('../biz/manager');
 
@@ -22,11 +19,10 @@ var Manager = require('../biz/manager');
  */
 exports.loginUI = function(req, res, next){
 	res.render('manager/Login', {
-		title: '后台登陆 | '+ title,
+		conf: conf,
+		title: '后台登陆 | '+ conf.corp.name,
 		description: '',
-		keywords: ',Bootstrap3,nodejs,express',
-		virtualPath: virtualPath,
-		cdn: conf.cdn
+		keywords: ',Bootstrap3,nodejs,express'
 	});
 };
 
@@ -62,11 +58,10 @@ exports.login = function(req, res, next){
  */
 exports.changePwdUI = function(req, res, next){
 	res.render('manager/ChangePwd', {
-		title: '修改密码 | 后台管理 | '+ title,
+		conf: conf,
+		title: '修改密码 | 后台管理 | '+ conf.corp.name,
 		description: '',
-		keywords: ',Bootstrap3,nodejs,express',
-		virtualPath: virtualPath,
-		cdn: conf.cdn
+		keywords: ',Bootstrap3,nodejs,express'
 	});
 };
 
