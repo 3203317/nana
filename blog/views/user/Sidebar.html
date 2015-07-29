@@ -6,7 +6,7 @@
 					<div class='face'>
 						<a href='javascript:;'>
 							<img title='$_user.Nickname'
-								src='${virtualPath}public/assets/images/face/48x48/08_avatar_small.jpg?0'></a>
+								src='/public/assets/images/face/48x48/08_avatar_small.jpg?0'></a>
 					</div>
 				</div>
 				<div class='owner-right'>
@@ -14,7 +14,7 @@
 						<a title='#toSex($_user.Sex)' href='javascript:;'>$_user.Nickname</a></div>
 					<div class='opt'>
 						<img title='#toSex($_user.Sex)'
-							src='${virtualPath}public/assets/images/share/16x16/men.png'>
+							src='/public/assets/images/share/16x16/men.png'>
 						<a href='javascript:;'>修改资料</a>
 						<a href='javascript:;'>更换头像</a>
 					</div>
@@ -68,7 +68,7 @@
 			<ul class='list-group'>
 				#foreach($article in $hot10)<li class='list-group-item'>
 					<span class='badge'>#num2Money($article.ViewCount)</span>
-					<a title='创建于 #formatDate($article.PostTime)' href='${virtualPath}archive/${article._id}.html'>
+					<a title='创建于 #formatDate($article.PostTime)' href='/archive/${article._id}.html'>
 						<div>$article.Title</div></a>
 				</li>#end
 			</ul>
@@ -83,12 +83,12 @@
 				#foreach($comment in $newCmt)<li class='list-group-item clearfix'>
 					<div class='comment-left'>
 						<div>
-							<img src='${virtualPath}public/assets/images/face/48x48/08_avatar_small.jpg?0'>
+							<img src='/public/assets/images/face/48x48/08_avatar_small.jpg?0'>
 						</div>
 					</div>
 					<div class='comment-right'>
 						<div class='content'>
-							<a href='${virtualPath}archive/${comment.Article_Id}.html#comment' title='发布于 #formatDate($comment.PostTime)'>
+							<a href='/archive/${comment.Article_Id}.html#comment' title='发布于 #formatDate($comment.PostTime)'>
 								<div>$comment.Content</div>
 							</a>
 						</div>

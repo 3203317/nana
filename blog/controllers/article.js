@@ -10,9 +10,6 @@ var util = require('speedt-utils'),
 
 var conf = require('../settings');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
 // biz
 var Article = require('../biz/article'),
 	User = require('../biz/user');
@@ -44,17 +41,18 @@ exports.idUI = function(req, res, next){
 		var ep = EventProxy.create('prev', 'next', 'favs', 'author', function (prev, next, favs, author){
 			article.author = author;
 			res.render('Article', {
+				conf: conf,
+				title: article.Title +' | 档案馆 | '+ conf.corp.name,
 				moduleName: 'archive',
-				title: article.Title +' | 档案馆 | '+ title,
 				description: ','+ article.Title,
 				keywords: ',个人博客,Blog'+ (article.Tags.length ? ','+ article.Tags : ''),
-				virtualPath: virtualPath,
 				topMessage: getTopMessage(),
-				article: article,
-				prev: prev,
-				next: next,
-				favs: favs,
-				cdn: conf.cdn
+				data: {
+					article: article,
+					prev: prev,
+					next: next,
+					favs: favs
+				}
 			});
 		});
 

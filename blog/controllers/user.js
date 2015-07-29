@@ -114,11 +114,10 @@ exports.myUI = function(req, res, next){
 
 	var ep = EventProxy.create('articles', 'hot10', 'links', 'newCmt', function (articles, hot10, links, newCmt){
 		res.render('user/My', {
-			title: _user.Nickname +'的个人空间 | '+ title,
+			conf: conf,
+			title: _user.Nickname +'的个人空间 | '+ conf.corp.name,
 			description: '',
-			keywords: ',Bootstrap3,nodejs,express,'+ _user.Nickname +'的个人空间',
-			virtualPath: virtualPath,
-			cdn: conf.cdn,
+			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ _user.Nickname +'的个人空间',
 			_user: _user,
 			user: user,
 			links: links,
@@ -168,13 +167,12 @@ exports.newBlogUI = function(req, res, next){
 	Category.findAll(null, function (err, status, msg, docs){
 		if(err) return next(err);
 		res.render('user/admin/NewBlog', {
-			title: '发表博文 | '+ user.Nickname +'的个人空间 | '+ title,
+			conf: conf,
+			title: '发表博文 | '+ user.Nickname +'的个人空间 | '+ conf.corp.name,
 			description: '',
-			keywords: ',发表博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
-			virtualPath: virtualPath,
+			keywords: ',发表博文,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ user.Nickname +'的个人空间',
 			categorys: docs,
-			frmUrl: 'blog',
-			cdn: conf.cdn
+			frmUrl: 'blog'
 		});
 	});
 };
@@ -190,11 +188,10 @@ exports.editBlogUI = function(req, res, next){
 
 	var ep = EventProxy.create('article', 'categorys', function (article, categorys){
 		res.render('user/admin/EditBlog', {
-			title: '修改博文 | '+ user.Nickname +'的个人空间 | '+ title,
+			conf: conf,
+			title: '修改博文 | '+ user.Nickname +'的个人空间 | '+ conf.corp.name,
 			description: '',
-			keywords: ',修改博文,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
-			virtualPath: virtualPath,
-			cdn: conf.cdn,
+			keywords: ',修改博文,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ user.Nickname +'的个人空间',
 			article: article,
 			categorys: categorys,
 			frmUrl: aid
@@ -286,12 +283,11 @@ exports.changePwdUI = function(req, res, next){
 	var user = req.session.user;
 
 	res.render('user/admin/ChangePwd', {
-		title: '修改登录密码 | '+ user.Nickname +'的个人空间 | '+ title,
+		conf: conf,
+		title: '修改登录密码 | '+ user.Nickname +'的个人空间 | '+ conf.corp.name,
 		description: '',
-		keywords: ',修改登录密码,Bootstrap3,nodejs,express,'+ user.Nickname +'的个人空间',
-		virtualPath: virtualPath,
-		frmUrl: 'pw',
-		cdn: conf.cdn
+		keywords: ',修改登录密码,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ user.Nickname +'的个人空间',
+		frmUrl: 'pw'
 	});
 };
 

@@ -23,9 +23,6 @@ var Link = require('../biz/link'),
 	Article = require('../biz/article'),
 	Category = require('../biz/category');
 
-var title = 'FOREWORLD 洪荒',
-	virtualPath = '/';
-
 /**
  * 
  * @params
@@ -46,14 +43,13 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 	res.render('Index', {
+		conf: conf,
+		title: conf.corp.name,
 		moduleName: 'index',
-		title: title,
 		description: '',
-		keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,asp,xhtml,html5',
-		virtualPath: virtualPath,
+		keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
 		topMessage: getTopMessage(),
-		loadMore: 'index',
-		cdn: conf.cdn
+		loadMore: 'index'
 	});
 };
 
@@ -81,8 +77,10 @@ exports.indexUI_more = function(req, res, next){
 		if(err) return res.send('');
 		if(!docs || !docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
-			virtualPath: virtualPath,
-			articles: docs
+			conf: conf,
+			data: {
+				articles: docs
+			}
 		});
 	});
 };

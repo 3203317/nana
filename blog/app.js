@@ -21,21 +21,6 @@ var macros = require('./lib/macro'),
 
 var app = express();
 
-// production
-app.configure('production', function(){
-	app.use('/public', express.static(path.join(__dirname, 'public'), { maxAge: 101000 }))
-		.use(express.errorHandler());
-});
-
-// development
-app.configure('development', function(){
-	app.use('/public', express.static(path.join(__dirname, 'public')))
-		.use(express.errorHandler({
-			dumpExceptions: true,
-			showStack: true
-		}));
-});
-
 // all environments
 app.set('port', process.env.PORT || 3000)
 	.set('views', path.join(__dirname, 'views'))
@@ -46,19 +31,24 @@ app.set('port', process.env.PORT || 3000)
 	.use(express.json())
 	.use(express.urlencoded())
 	.use(express.methodOverride())
-	.use(express.cookieParser())
-	.use(app.router)
-	.use(express.logger('dev'))
-	/* velocity */
-	.engine('.html', function (path, options, fn){
-		fs.readFile(path, 'utf8', function (err, data){
-			if(err) return fn(err);
-			try{ fn(null, velocity.render(data, options, macros)); }
-			catch(e){ fn(e); }
-		});
-	});
+	.use(express.cookieParser());
 
-errorHandler.appErrorProcess(app);
+// production
+app.configure('production', function(){
+	app.use('/public', express.static(path.join(__dirname, 'public'), { maxAge: 101000 }))
+		.use(express.errorHandler())
+		.use(express.logger('dev'));
+});
+
+// development
+app.configure('development', function(){
+	app.use(express.logger('dev'))
+		.use('/public', express.static(path.join(__dirname, 'public')))
+		.use(express.errorHandler({
+			dumpExceptions: true,
+			showStack: true
+		}));
+});
 
 app.use(express.session({
 	secret: conf.cookie.secret,
@@ -67,9 +57,21 @@ app.use(express.session({
 		maxAge: 1000 * 60 * 60 * 24 * 30  //30 days
 	}, store: new MongoStore({
 		// db: dbconf.database
-		url: 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ conf.port +'/'+ dbconf.database
+		url: 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database
 	})
 }));
+
+app.use(app.router)
+	/* velocity */
+	.engine('.html', function (path, options, fn){
+		fs.readFile(path, 'utf8', function (err, data){
+			if(err) return fn(err);
+			try{ fn(null, velocity.render(data, options, macros)); }
+			catch(ex){ fn(ex); }
+		});
+	});
+
+errorHandler.appErrorProcess(app);
 
 var server = http.createServer(app);
 // server.setTimeout(5000);
