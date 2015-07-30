@@ -12,6 +12,20 @@ var models = require('../models'),
 var tag  = require('./tag');
 
 /**
+ * 热门文章前十
+ *
+ * @params
+ * @return
+ */
+exports.hotArticleTop10 = function(cb){
+	var num = 10;  // 10
+	this.findAll({ ViewCount: -1 }, [num], null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
  * 保存新文章
  *
  * @params {Object} newInfo
@@ -99,16 +113,14 @@ function procTags(info){
 /**
  * 获取文章集合中的作者主键，过滤重复内容
  *
- * @params {Object} articles
+ * @params {Object} docs
  * @return {Array}
  */
-function getUsersByArticles(articles){
-	var article,
-		user_ids = [],
-		user_id;
-	for(var i in articles){
-		article = articles[i];
-		user_id = article.User_Id.toString();
+function getUsersByArticles(docs){
+	var user_ids = [];
+	for(var i in docs){
+		var article = docs[i];
+		var user_id = article.User_Id.toString();
 		if(0 > user_ids.indexOf(user_id)){
 			user_ids.push(user_id);
 		}
@@ -124,22 +136,18 @@ function getUsersByArticles(articles){
  * @return {Array}
  */
 function attachData(articles, cb){
-	if(!articles || !articles.length) return cb(null, articles);
+	if(!articles || 0 === articles.length) return cb(null, articles);
 	var user_ids = getUsersByArticles(articles);
 
 	User.find({
-		_id: {
-			'$in': user_ids
-		}
+		_id: { '$in': user_ids }
 	}, null, null, function (err, docs){
 		if(err) return cb(err);
-		var user,
-			article;
 		for(var i in docs){
-			user = docs[i];
+			var user = docs[i];
 
 			for(var j in articles){
-				article = articles[j];
+				var article = articles[j];
 				if(user._id.toString() === article.User_Id.toString()){
 					article.author = user;
 				}
@@ -159,9 +167,7 @@ function attachData(articles, cb){
  * @return
  */
 exports.findAll = function(sort, page, user_id, cb){
-	var option = {
-		sort: sort
-	};
+	var option = { sort: sort };
 
 	var params = null;
 
@@ -184,7 +190,7 @@ exports.findAll = function(sort, page, user_id, cb){
 		if(err) return cb(err);
 		attachData(docs, function (err, docs){
 			if(err) return cb(err);
-			cb(null, 0, null, docs);
+			cb(null, docs);
 		});
 	});
 };

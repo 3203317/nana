@@ -4,10 +4,10 @@
 	</div>
 	<div class='panel-body'>
 		<ul class='list-group'>
-			#foreach($article in $articles)<li class='list-group-item'>
-				<span class='badge'>#num2Money($article.ViewCount)</span>
-				<a href='${virtualPath}archive/${article._id}.html' title='创建于 #formatDate($article.PostTime)'>
-					<div>$article.Title</div>
+			#foreach($doc in $!{data.hotArticleTop10})<li class='list-group-item'>
+				<span class='badge'>#num2Money($!{doc.ViewCount})</span>
+				<a href='/archive/$!{doc._id}.html' title='创建于 #formatDate($!{doc.PostTime})'>
+					<div>$!{doc.Title}</div>
 				</a>
 			</li>#end
 		</ul>

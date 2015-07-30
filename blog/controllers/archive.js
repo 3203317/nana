@@ -5,9 +5,15 @@
  */
 'use strict';
 
-var util = require('speedt-utils');
+var EventProxy = require('eventproxy'),
+	util = require('speedt-utils');
 
 var conf = require('../settings');
+
+// biz
+var Article = require('../biz/article'),
+	Common = require('../biz/common'),
+	Link = require('../biz/link');
 
 /**
  * 
@@ -28,12 +34,40 @@ function getTopMessage(){
  * @return
  */
 exports.indexUI = function(req, res, next){
-	res.render('Archive', {
-		conf: conf,
-		title: '档案馆 | '+ conf.corp.name,
-		moduleName: 'archive',
-		description: '',
-		keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
-		topMessage: getTopMessage()
+
+	var ep = EventProxy.create('archives', 'usefulLinks', 'hotArticleTop10', function (archives, usefulLinks, hotArticleTop10){
+
+		res.render('Archive', {
+			conf: conf,
+			title: '档案馆 | '+ conf.corp.name,
+			moduleName: 'archive',
+			description: '',
+			keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			topMessage: getTopMessage(),
+			data: {
+				hotArticleTop10: hotArticleTop10,
+				archives: archives,
+				usefulLinks: usefulLinks
+			}
+		});
+	});
+
+	ep.fail(function (err){
+		next(err);
+	});
+
+	Article.hotArticleTop10(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('hotArticleTop10', docs);
+	});
+
+	Link.usefulLinks(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('usefulLinks', docs);
+	});
+
+	Common.archives(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('archives', docs);
 	});
 };

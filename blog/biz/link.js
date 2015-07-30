@@ -10,6 +10,19 @@ var models = require('../models'),
 	Link = models.Link;
 
 /**
+ * 常用链接
+ *
+ * @params
+ * @return
+ */
+exports.usefulLinks = function(cb){
+	this.findAll(null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
  * 保存新文章
  *
  * @params {Object} newInfo
@@ -38,15 +51,11 @@ exports.findAll = function(user_id, cb){
 		params.User_Id = user_id;
 	}
 
-	Link.find(params, null, {
-		sort: {
-			Sort: 1
-		}
-	}, function (err, docs){
+	Link.find(params, null, { sort: { Sort: 1 } }, function (err, docs){
 		if(err) return cb(err);
 		attachData(docs, function (err, docs){
 			if(err) return cb(err);
-			cb(null, 0, null, docs);
+			cb(null, docs);
 		});
 	});
 };
@@ -63,18 +72,14 @@ function attachData(links, cb){
 	var user_ids = getUsersByLinks(links);
 
 	User.find({
-		_id: {
-			'$in': user_ids
-		}
+		_id: { '$in': user_ids }
 	}, null, null, function (err, docs){
 		if(err) return cb(err);
-		var user,
-			link;
 		for(var i in docs){
-			user = docs[i];
+			var user = docs[i];
 
 			for(var j in links){
-				link = links[j];
+				var link = links[j];
 				if(user._id.toString() === link.User_Id.toString()){
 					link.author = user;
 				}
@@ -91,12 +96,10 @@ function attachData(links, cb){
  * @return {Array}
  */
 function getUsersByLinks(links){
-	var link,
-		user_ids = [],
-		user_id;
+	var user_ids = [];
 	for(var i in links){
-		link = links[i];
-		user_id = link.User_Id.toString();
+		var link = links[i];
+		var user_id = link.User_Id.toString();
 		if(0 > user_ids.indexOf(user_id)){
 			user_ids.push(user_id);
 		}

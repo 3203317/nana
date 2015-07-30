@@ -18,7 +18,7 @@
 									<a href='/index.html'>首页</a></li>
 								<li class='active'><a href='/archive/'>档案馆</a></li>
 							</ol>
-							#include('pagelet/html/archives.html')
+							#parse('pagelet/Archives.vm.html')
 							<div>
 								<a href='javascript:;'>
 									<img src='$!{conf.static_res.virtualPath}assets/images/share/16x16/twitter.png'></a>
@@ -33,9 +33,9 @@
 					</div>
 				</div>
 				<div class='col-sm-12 col-md-4'>
-					#include('pagelet/html/side.art.view.top10.html')
+					#parse('pagelet/Side.Art.View.vm.html')
 					#include('pagelet/html/side.comment.top10.html')
-					#include('pagelet/html/usefulLinks.html')
+					#parse('pagelet/UsefulLinks.vm.html')
 					#parse('pagelet/qrCode.html')
 				</div>
 			</div>
