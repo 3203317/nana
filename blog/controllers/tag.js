@@ -5,7 +5,8 @@
  */
 'use strict';
 
-var util = require('speedt-utils'),
+var EventProxy = require('eventproxy'),
+	util = require('speedt-utils'),
 	path = require('path'),
 	cwd = process.cwd();
 
@@ -13,7 +14,10 @@ var conf = require('../settings');
 
 // biz
 var Article = require('../biz/article'),
-	Tag = require('../biz/tag');
+	Tag = require('../biz/tag'),
+	Common = require('../biz/common'),
+	Comment = require('../biz/comment'),
+	Link = require('../biz/link');
 
 /**
  * 
@@ -34,13 +38,48 @@ function getTopMessage(){
  * @return
  */
 exports.indexUI = function(req, res, next){
-	res.render('Tags', {
-		conf: conf,
-		title: '标签 | '+ conf.corp.name,
-		moduleName: 'tag',
-		description: '',
-		keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
-		topMessage: getTopMessage()
+
+	var ep = EventProxy.create('tags', 'newCommentTop5', 'usefulLinks', 'hotArticleTop10',
+		function (tags, newCommentTop5, usefulLinks, hotArticleTop10){
+
+		res.render('Tags', {
+			conf: conf,
+			title: '标签 | '+ conf.corp.name,
+			moduleName: 'tag',
+			description: '',
+			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			topMessage: getTopMessage(),
+			data: {
+				hotArticleTop10: hotArticleTop10,
+				newCommentTop5: newCommentTop5,
+				tags: tags,
+				usefulLinks: usefulLinks
+			}
+		});
+	});
+
+	ep.fail(function (err){
+		next(err);
+	});
+
+	Article.hotArticleTop10(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('hotArticleTop10', docs);
+	});
+
+	Link.usefulLinks(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('usefulLinks', docs);
+	});
+
+	Comment.newCommentTop5(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('newCommentTop5', docs);
+	});
+
+	Common.tags(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('tags', docs);
 	});
 };
 

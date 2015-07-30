@@ -9,6 +9,19 @@ var models = require('../models'),
 	Comment = models.Comment;
 
 /**
+ * 最新的5条评论
+ *
+ * @params
+ * @return
+ */
+exports.newCommentTop5 = function(cb){
+	this.findAll([5], null, function (err, status, msg, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
  * 保存新评论
  *
  * @params {Object} newInfo

@@ -13,6 +13,7 @@ var conf = require('../settings');
 // biz
 var Article = require('../biz/article'),
 	Common = require('../biz/common'),
+	Comment = require('../biz/comment'),
 	Link = require('../biz/link');
 
 /**
@@ -35,8 +36,8 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 
-	var ep = EventProxy.create('archives', 'usefulLinks', 'hotArticleTop10', function (archives, usefulLinks, hotArticleTop10){
-
+	var ep = EventProxy.create('newCommentTop5', 'archives', 'usefulLinks', 'hotArticleTop10',
+		function (newCommentTop5, archives, usefulLinks, hotArticleTop10){
 		res.render('Archive', {
 			conf: conf,
 			title: '档案馆 | '+ conf.corp.name,
@@ -47,6 +48,7 @@ exports.indexUI = function(req, res, next){
 			data: {
 				hotArticleTop10: hotArticleTop10,
 				archives: archives,
+				newCommentTop5: newCommentTop5,
 				usefulLinks: usefulLinks
 			}
 		});
@@ -69,5 +71,10 @@ exports.indexUI = function(req, res, next){
 	Common.archives(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('archives', docs);
+	});
+
+	Comment.newCommentTop5(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('newCommentTop5', docs);
 	});
 };

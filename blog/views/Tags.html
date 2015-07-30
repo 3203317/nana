@@ -15,12 +15,12 @@
 							<ol class='breadcrumb'>
 								<li>
 									<i class='fa fa-home fa-fw'></i>
-									<a href='${virtualPath}index.html'>首页</a></li>
-								<li class='active'><a href='${virtualPath}archive/tag/'>标签</a></li>
+									<a href='/index.html'>首页</a></li>
+								<li class='active'><a href='/archive/tag/'>标签</a></li>
 							</ol>
 							<div id='tags'>
 								<div class='panel-group olx-accordion'>
-									#include('pagelet/html/tags.html')
+									#parse('pagelet/Tags.vm.html')
 								</div>
 							</div>
 							<div>
@@ -37,9 +37,9 @@
 					</div>
 				</div>
 				<div class='col-sm-12 col-md-4'>
-					#include('pagelet/html/side.art.view.top10.html')
-					#include('pagelet/html/side.comment.top10.html')
-					#include('pagelet/html/usefulLinks.html')
+					#parse('pagelet/Side.Art.View.vm.html')
+					#parse('pagelet/Side.Comment.vm.html')
+					#parse('pagelet/UsefulLinks.vm.html')
 					#parse('pagelet/qrCode.html')
 				</div>
 			</div>
