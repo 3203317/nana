@@ -1,9 +1,9 @@
 <section class='flexslider'>
 	<ul class='slides'>
-		#foreach($article in $articles)<li>
-			<a href='${virtualPath}archive/${article._id}.html'>
-				<img src='${virtualPath}public/udata/foreworld/${article.Photo}'
-					title='${article.Title}' alt='${article.Title}' /></a>
+		#foreach($article in $!{data.topmarks})<li>
+			<a href='/archive/$!{article._id}.html'>
+				<img src='/public/udata/foreworld/$!{article.Photo}'
+					title='$!{article.Title}' alt='$!{article.Title}' /></a>
 		</li>#end
 	</ul>
 </section>

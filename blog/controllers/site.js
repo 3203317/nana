@@ -42,14 +42,55 @@ function getTopMessage(){
  * @return
  */
 exports.indexUI = function(req, res, next){
-	res.render('Index', {
-		conf: conf,
-		title: conf.corp.name,
-		moduleName: 'index',
-		description: '',
-		keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
-		topMessage: getTopMessage(),
-		loadMore: 'index'
+
+	var ep = EventProxy.create('articleIntros', 'topmarks', 'newCommentTop5', 'usefulLinks', 'hotArticleTop10',
+		function (articleIntros, topmarks, newCommentTop5, usefulLinks, hotArticleTop10){
+
+		res.render('Index', {
+			conf: conf,
+			title: conf.corp.name,
+			moduleName: 'index',
+			description: '',
+			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			topMessage: getTopMessage(),
+			loadMore: 'index',
+			data: {
+				hotArticleTop10: hotArticleTop10,
+				newCommentTop5: newCommentTop5,
+				topmarks: topmarks,
+				articleIntros: articleIntros,
+				usefulLinks: usefulLinks
+			}
+		});
+	});
+
+	ep.fail(function (err){
+		next(err);
+	});
+
+	Article.hotArticleTop10(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('hotArticleTop10', docs);
+	});
+
+	Link.usefulLinks(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('usefulLinks', docs);
+	});
+
+	Comment.newCommentTop5(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('newCommentTop5', docs);
+	});
+
+	Article.topmarks(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('topmarks', docs);
+	});
+
+	Article.articleIntros(null, function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('articleIntros', docs);
 	});
 };
 
@@ -70,16 +111,13 @@ exports.indexUI_more = function(req, res, next){
 
 	if(!data.Current) return res.send('');
 
-	Article.findAll({
-		Bookmark: -1,
-		_id: -1
-	}, [10, data.Current], null, function (err, status, msg, docs){
+	Article.articleIntros(data.Current, function (err, docs){
 		if(err) return res.send('');
-		if(!docs || !docs.length) return res.send('');
+		if(!docs || 0 === docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'pagelet', 'ArticleIntros.vm.html'), {
 			conf: conf,
 			data: {
-				articles: docs
+				articleIntros: docs
 			}
 		});
 	});
@@ -189,7 +227,7 @@ exports.installUI = function(req, res, next){
 		});
 	});
 
-	Article.findTopmarks(null, function (err, status, msg, docs){
+	Article.topmarks(null, function (err, status, msg, docs){
 		if(err) return ep.emit('error', err);
 
 		fs.readFile(path.join(vmPath, 'TopMarks.vm.html'), 'utf8', function (err, template){

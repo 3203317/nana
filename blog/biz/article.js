@@ -11,6 +11,38 @@ var models = require('../models'),
 
 var tag  = require('./tag');
 
+
+/**
+ * 文章简介
+ *
+ * @params
+ * @return
+ */
+exports.articleIntros = function(current, cb){
+	this.findAll({
+		Topmark: -1,
+		_id: -1
+	}, [10, current], null, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
+ * topmarks
+ *
+ * @params
+ * @return
+ */
+exports.topmarks = function(cb){
+	Article.find({ Bookmark: 1 }, null, {
+		sort: { _id: -1 }
+	}, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
 /**
  * 热门文章前十
  *
@@ -281,26 +313,6 @@ exports.findById = function(id, cb){
 			if(err) return cb(err);
 			cb(null, 0, null, doc);
 		});
-	});
-};
-
-/**
- * 查询
- *
- * @params {String} user_id
- * @params {Function} cb
- * @return
- */
-exports.findTopmarks = function(user_id, cb){
-	Article.find({
-		Bookmark: 1
-	}, null, {
-		sort: {
-			_id: -1
-		}
-	}, function (err, docs){
-		if(err) return cb(err);
-		cb(null, 0, null, docs);
 	});
 };
 

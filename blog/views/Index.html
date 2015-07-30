@@ -12,13 +12,13 @@
 			<div class='row'>
 				<div class='col-sm-12 col-md-8'>
 					#parse('pagelet/TopMessage.html')
-					#include('pagelet/html/topMarks.html')
-					#include('pagelet/html/hp.artIntro.top10.html')
+					#parse('pagelet/TopMarks.vm.html')
+					#parse('pagelet/ArticleIntros.vm.html')
 				</div>
 				<div class='col-sm-12 col-md-4'>
-					#include('pagelet/html/side.art.view.top10.html')
-					#include('pagelet/html/side.comment.top10.html')
-					#include('pagelet/html/usefulLinks.html')
+					#parse('pagelet/Side.Art.View.vm.html')
+					#parse('pagelet/Side.Comment.vm.html')
+					#parse('pagelet/UsefulLinks.vm.html')
 					#parse('pagelet/qrCode.html')
 				</div>
 				#parse('pagelet/LoadMore.html')

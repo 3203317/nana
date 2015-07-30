@@ -1,4 +1,4 @@
-#foreach($article in $data.articles)<div class='panel panel-default artIntro'>
+#foreach($article in $data.articleIntros)<div class='panel panel-default artIntro'>
 	<div class='panel-body'>
 		#if(1 == $article.Bookmark)<div class='glyphicon glyphicon-bookmark'></div>#end
 		<div class='date' title='创建于 #formatDate($article.PostTime)'>
