@@ -14,7 +14,6 @@ var conf = require('../../settings');
 
 // biz
 var Article = require('../../biz/Article'),
-	Common = require('../../biz/common'),
 	Comment = require('../../biz/comment'),
 	Link = require('../../biz/link');
 

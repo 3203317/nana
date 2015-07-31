@@ -411,10 +411,8 @@ exports.findAllByTag = function(name, sort, page, user_id, cb){
  * @params
  * @return
  */
-exports.findAllByCate = function(name, sort, page, user_id, cb){
-	var option = {
-		sort: sort
-	};
+exports.findListByCate = function(name, sort, page, user_id, cb){
+	var option = { sort: sort };
 
 	var params = {
 		Cate: new RegExp('^'+ name +'$', 'i')
@@ -424,9 +422,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 		option.limit = page[0];
 		// option.skip = ((page[0] - 1) * option.limit);
 		if(!!page[1]){
-			params._id = {
-				'$lt': page[1]
-			};
+			params._id = { '$lt': page[1] };
 		}
 	}
 
@@ -434,7 +430,7 @@ exports.findAllByCate = function(name, sort, page, user_id, cb){
 		if(err) return cb(err);
 		attachData(docs, function (err, docs){
 			if(err) return cb(err);
-			cb(null, 0, null, docs);
+			cb(null, docs);
 		});
 	});
 };
