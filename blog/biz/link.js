@@ -15,7 +15,7 @@ var models = require('../models'),
  * @params
  * @return
  */
-exports.getUsefulLinks = function(cb){
+exports.getAll = function(cb){
 	this.findAll(null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);

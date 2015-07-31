@@ -29,7 +29,7 @@ exports.saveNew = function(newInfo, cb){
  * @params
  * @return
  */
-exports.findAllCategorys = function(cb){
+exports.getAll = function(cb){
 	var option = {
 		sort: { Sort: 1 }
 	};
@@ -37,26 +37,6 @@ exports.findAllCategorys = function(cb){
 	Category.find(null, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
-	});
-};
-
-/**
- * 查询
- *
- * @params {String}
- * @params {Function} cb
- * @return
- */
-exports.findAll = function(user_id, cb){
-	var option = {
-		sort: {
-			Sort: 1
-		}
-	};
-
-	Category.find(null, null, option, function (err, docs){
-		if(err) return cb(err);
-		cb(null, 0, null, docs);
 	});
 };
 

@@ -18,11 +18,12 @@ var tag  = require('./tag');
  * @params
  * @return
  */
-exports.getArticleIntros = function(current, cb){
+exports.getList = function(current, cb){
+	var num = 10;  // 每页10
 	this.findAll({
 		Topmark: -1,
 		_id: -1
-	}, [10, current], null, function (err, docs){
+	}, [num, current], null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -34,7 +35,7 @@ exports.getArticleIntros = function(current, cb){
  * @params
  * @return
  */
-exports.getTopmarksTopN = function(num, cb){
+exports.getListByBookmark = function(num, cb){
 	num = num || 5;
 	Article.find({ Bookmark: 1 }, null, {
 		sort: { _id: -1 }
@@ -50,7 +51,7 @@ exports.getTopmarksTopN = function(num, cb){
  * @params
  * @return
  */
-exports.getHotArticlesTopN = function(num, cb){
+exports.getListByViewCount = function(num, cb){
 	num = num || 10;  // 10
 	this.findAll({ ViewCount: -1 }, [num], null, function (err, docs){
 		if(err) return cb(err);

@@ -38,8 +38,8 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 
-	var ep = EventProxy.create('allCategorys', 'articleIntros', 'topmarksTopN', 'newCommentsTopN', 'usefulLinks', 'hotArticlesTopN',
-		function (allCategorys, articleIntros, topmarksTopN, newCommentsTopN, usefulLinks, hotArticlesTopN){
+	var ep = EventProxy.create('allCategorys', 'articleIntros', 'topMarksTopN', 'newCommentsTopN', 'usefulLinks', 'hotArticlesTopN',
+		function (allCategorys, articleIntros, topMarksTopN, newCommentsTopN, usefulLinks, hotArticlesTopN){
 
 		res.render('front/Index', {
 			conf: conf,
@@ -53,7 +53,7 @@ exports.indexUI = function(req, res, next){
 				hotArticlesTopN: hotArticlesTopN,
 				usefulLinks: usefulLinks,
 				newCommentsTopN: newCommentsTopN,
-				topmarksTopN: topmarksTopN,
+				topMarksTopN: topMarksTopN,
 				allCategorys: allCategorys,
 				articleIntros: articleIntros
 			}
@@ -64,32 +64,32 @@ exports.indexUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.getHotArticlesTopN(10, function (err, docs){
+	Article.getListByViewCount(10, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('hotArticlesTopN', docs);
 	});
 
-	Link.getUsefulLinks(function (err, docs){
+	Link.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('usefulLinks', docs);
 	});
 
-	Comment.getNewCommentsTopN(5, function (err, docs){
+	Comment.getList(5, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('newCommentsTopN', docs);
 	});
 
-	Article.getTopmarksTopN(5, function (err, docs){
+	Article.getListByBookmark(5, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('topmarksTopN', docs);
+		ep.emit('topMarksTopN', docs);
 	});
 
-	Article.getArticleIntros(null, function (err, docs){
+	Article.getList(null, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articleIntros', docs);
 	});
 
-	Category.findAllCategorys(function (err, docs){
+	Category.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('allCategorys', docs);
 	});
@@ -112,7 +112,7 @@ exports.indexUI_more = function(req, res, next){
 
 	if(!data.Current) return res.send('');
 
-	Article.getArticleIntros(data.Current, function (err, docs){
+	Article.getList(data.Current, function (err, docs){
 		if(err) return res.send('');
 		if(!docs || 0 === docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), {

@@ -14,7 +14,7 @@ var models = require('../models'),
  * @params
  * @return
  */
-exports.getNewCommentsTopN = function(num, cb){
+exports.getList = function(num, cb){
 	num = num || 5;
 	this.findAll([num], null, function (err, status, msg, docs){
 		if(err) return cb(err);
