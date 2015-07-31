@@ -6,17 +6,15 @@
 'use strict';
 
 var EventProxy = require('eventproxy'),
-	util = require('speedt-utils'),
-	path = require('path'),
-	cwd = process.cwd();
+	util = require('speedt-utils');
 
 var conf = require('../../settings');
 
 // biz
-var Article = require('../../biz/Article'),
-	Common = require('../../biz/common'),
+var Link = require('../../biz/link'),
 	Comment = require('../../biz/comment'),
-	Link = require('../../biz/link');
+	Category = require('../../biz/category'),
+	Article = require('../../biz/article');
 
 /**
  * 
@@ -38,8 +36,8 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 
-	var ep = EventProxy.create('tag', 'newCommentTop5', 'usefulLinks', 'hotArticleTop10',
-		function (tag, newCommentTop5, usefulLinks, hotArticleTop10){
+	var ep = EventProxy.create('tag', 'allCategorys', 'newCommentsTopN', 'usefulLinks', 'hotArticlesTopN',
+		function (tag, allCategorys, newCommentsTopN, usefulLinks, hotArticlesTopN){
 
 		res.render('front/tag/Index', {
 			conf: conf,
@@ -49,9 +47,10 @@ exports.indexUI = function(req, res, next){
 			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
 			topMessage: getTopMessage(),
 			data: {
-				hotArticleTop10: hotArticleTop10,
+				allCategorys: allCategorys,
+				newCommentsTopN: newCommentsTopN,
 				usefulLinks: usefulLinks,
-				newCommentTop5: newCommentTop5,
+				hotArticlesTopN: hotArticlesTopN,
 				tag: tag
 			}
 		});
@@ -61,22 +60,27 @@ exports.indexUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.hotArticleTop10(function (err, docs){
+	Article.getListByViewCount(10, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('hotArticleTop10', docs);
+		ep.emit('hotArticlesTopN', docs);
 	});
 
-	Link.usefulLinks(function (err, docs){
+	Link.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('usefulLinks', docs);
 	});
 
-	Comment.newCommentTop5(function (err, docs){
+	Comment.getList(5, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('newCommentTop5', docs);
+		ep.emit('newCommentsTopN', docs);
 	});
 
-	Common.tags(function (err, docs){
+	Category.getAll(function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('allCategorys', docs);
+	});
+
+	Article.procTag(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('tag', docs);
 	});
