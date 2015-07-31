@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang='zh-CN'>
 	<head>
-		#parse('pagelet/IndexHeader.html')
+		#parse('front/pagelet/Common.IndexHeader.html')
 	</head>
 	<body>
-		#parse('pagelet/TopBanner.html')
+		#parse('front/pagelet/Side.TopBanner.html')
 		<header id='header'></header>
 		<section class='container'>
 			<div class='row'>
 				<div class='col-sm-12 col-md-8'>
-					#parse('pagelet/TopMessage.html')
+					#parse('front/pagelet/Side.TopMessage.html')
 					<div class='panel panel-default' style='box-shadow: 0 0 5px #c2c2c2;'>
 						<div class='panel-body'>
 							<ol class='breadcrumb'>
@@ -18,7 +18,7 @@
 									<a href='/index.html'>首页</a></li>
 								<li class='active'><a href='/archive/'>档案馆</a></li>
 							</ol>
-							#parse('front/archive/Archive.vm.html')
+							#parse('front/archive/Side.Archive.vm.html')
 							<div>
 								<a href='javascript:;'>
 									<img src='$!{conf.static_res.virtualPath}assets/images/share/16x16/twitter.png'></a>
@@ -33,17 +33,17 @@
 					</div>
 				</div>
 				<div class='col-sm-12 col-md-4'>
-					#parse('pagelet/Side.Art.View.vm.html')
-					#parse('pagelet/Side.Comment.vm.html')
-					#parse('pagelet/UsefulLinks.vm.html')
-					#parse('pagelet/qrCode.html')
+					#parse('front/pagelet/Side.HotArticlesTopN.vm.html')
+					#parse('front/pagelet/Side.NewCommentsTopN.vm.html')
+					#parse('front/pagelet/Side.UsefulLinks.vm.html')
+					#parse('front/pagelet/Side.QrCode.html')
 				</div>
 			</div>
 		</section>
-		#parse('pagelet/IndexFooter.html')
-		#parse('pagelet/backTop.html')
-		#parse('pagelet/IndexJs.html')
+		#parse('front/pagelet/Side.IndexFooter.html')
+		#parse('front/pagelet/Side.BackTop.html')
+		#parse('front/pagelet/Common.IndexJs.html')
 		<!-- Own -->
-		#parse('pagelet/LastJs.html')
+		#parse('front/pagelet/Common.LastJs.html')
 	</body>
 </html>
