@@ -14,8 +14,9 @@ var models = require('../models'),
  * @params
  * @return
  */
-exports.newCommentTop5 = function(cb){
-	this.findAll([5], null, function (err, status, msg, docs){
+exports.getNewCommentsTopN = function(num, cb){
+	num = num || 5;
+	this.findAll([num], null, function (err, status, msg, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});
@@ -77,5 +78,18 @@ exports.removeAll = function(cb){
 	Comment.remove(null, function (err, doc){
 		if(err) return cb(err);
 		cb(null, 0, null, doc);
+	});
+};
+
+/**
+ * 查找并过滤重复用户
+ *
+ * @params
+ * @return
+ */
+exports.findAuthorByAuthorId = function(cb){
+	Comment.distinct('Author_Id', function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
 	});
 };

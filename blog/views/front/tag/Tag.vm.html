@@ -1,0 +1,16 @@
+#foreach($tag in $!{data.tag})#if(0 < $!{tag.Articles.length})<div class='panel panel-default'>
+	<div class='panel-heading'>
+		<h4 class='panel-title'>
+			<a id='$!{tag.TagName}' href='#collapse$!{tag.TagName}' data-parent='#accordion' data-toggle='collapse'>$!{tag.TagName} ($!{tag.Articles.length}篇文章)</a>
+		</h4>
+	</div>
+	<div id='collapse$!{tag.TagName}' class='panel-collapse collapse in'>
+		<div class='panel-body'>
+			#foreach($article in $!{tag.Articles})<p>
+				#toSDate($!{article.PostTime}):
+				<a title='创建于 #formatDate($!{article.PostTime})' href='/archive/$!{article._id}.html'>$!{article.Title}</a>
+				<span class='badge'>#num2Money($!{article.ViewCount})</span>
+			</p>#end
+		</div>
+	</div>
+</div>#end#end

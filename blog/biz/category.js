@@ -24,6 +24,23 @@ exports.saveNew = function(newInfo, cb){
 };
 
 /**
+ * 获取所有分类
+ *
+ * @params
+ * @return
+ */
+exports.findAllCategorys = function(cb){
+	var option = {
+		sort: { Sort: 1 }
+	};
+
+	Category.find(null, null, option, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
  * 查询
  *
  * @params {String}

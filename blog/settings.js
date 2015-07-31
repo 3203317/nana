@@ -18,7 +18,7 @@ module.exports = {
 		host: 'www.foreworld.net',
 		port: 27017,
 		user: 'sa',
-		pass: 'xiang123'
+		pass: 'caixiang123'
 	}, static_res: {
 		virtualPath: '/public/'
 	}

@@ -18,7 +18,7 @@ var tag  = require('./tag');
  * @params
  * @return
  */
-exports.articleIntros = function(current, cb){
+exports.getArticleIntros = function(current, cb){
 	this.findAll({
 		Topmark: -1,
 		_id: -1
@@ -34,7 +34,8 @@ exports.articleIntros = function(current, cb){
  * @params
  * @return
  */
-exports.topmarks = function(cb){
+exports.getTopmarksTopN = function(num, cb){
+	num = num || 5;
 	Article.find({ Bookmark: 1 }, null, {
 		sort: { _id: -1 }
 	}, function (err, docs){
@@ -44,13 +45,13 @@ exports.topmarks = function(cb){
 };
 
 /**
- * 热门文章前十
+ * 获取热门文章前N
  *
  * @params
  * @return
  */
-exports.hotArticleTop10 = function(cb){
-	var num = 10;  // 10
+exports.getHotArticlesTopN = function(num, cb){
+	num = num || 10;  // 10
 	this.findAll({ ViewCount: -1 }, [num], null, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);

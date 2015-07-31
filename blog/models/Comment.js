@@ -24,6 +24,8 @@ var CommentSchema = new Schema({
 		type: ObjectId
 	}, Article_Id: {	// 文章Id
 		type: ObjectId
+	}, Avatar_Url: {
+		type: String
 	}, PostTime: {
 		type: Date
 	}

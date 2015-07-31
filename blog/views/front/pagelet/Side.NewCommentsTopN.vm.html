@@ -1,0 +1,27 @@
+<div class='panel panel-default olx-panel olx-panel-comment'>
+	<div class='panel-heading'>
+		<h3 class='panel-title glyphicon glyphicon-comment'>&#8201;最新评论</h3>
+	</div>
+	<div class='panel-body'>
+		<ul class='list-group'>
+			#foreach($doc in $!{data.newCommentsTopN})<li class='list-group-item clearfix'>
+				<div class='comment-left'>
+					<div>
+						<img style='width:48px;height:48px' src='http://app.qlogo.cn/mbloghead/218f8e14426c8fbb3340/50'>
+					</div>
+				</div>
+				<div class='comment-right'>
+					<div class='content'>
+						<a href='/archive/$!{doc.Article_Id}.html#comment' title='发布于 #formatDate($!{doc.PostTime})'>
+							<div>$!{doc.Content}</div>
+						</a>
+					</div>
+					<div class='opt'>
+						<span><a href='http://duoshuo.com/profile/$!{doc.Author_Id}/' target='_blank'>$!{doc.Author}</a></span>
+						<span>发布于 #toSDate($!{doc.PostTime})</span>
+					</div>
+				</div>
+			</li>#end
+		</ul>
+	</div>
+</div>

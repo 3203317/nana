@@ -1,0 +1,16 @@
+<section class='flexslider'>
+	<ul class='slides'>
+		#foreach($article in $!{data.topmarksTopN})<li>
+			<a href='/archive/$!{article._id}.html'>
+				<img src='/public/udata/foreworld/$!{article.Photo}'
+					title='$!{article.Title}' alt='$!{article.Title}' /></a>
+		</li>#end
+	</ul>
+</section>
+<script type='text/javascript'>
+$(function(){
+	$('.flexslider').flexslider({
+		animation: 'slide'
+	});
+});
+</script>
