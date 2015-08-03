@@ -222,3 +222,4 @@ android/hyx/target/
 android/hyx/gen/
 
 blog/views/pagelet/html/
+blog/public/assets/css/**/*.css
