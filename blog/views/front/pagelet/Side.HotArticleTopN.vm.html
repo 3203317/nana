@@ -4,7 +4,7 @@
 	</div>
 	<div class='panel-body'>
 		<ul class='list-group'>
-			#foreach($doc in $!{data.hotArticlesTopN})<li class='list-group-item'>
+			#foreach($doc in $!{data.hotArticleTopN})<li class='list-group-item'>
 				<span class='badge'>#num2Money($!{doc.ViewCount})</span>
 				<a href='/archive/$!{doc._id}.html' title='创建于 #formatDate($!{doc.PostTime})'>
 					<div>$!{doc.Title}</div>

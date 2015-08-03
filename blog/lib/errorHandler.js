@@ -11,10 +11,7 @@ exports.appErrorProcess = function(app){
 		// error hanlder
 		app.use(function (req, res, next){
 			if(req.xhr){
-				return res.send({
-					success: false,
-					msg: 'Not found'
-				});
+				return res.send({ success: false, msg: 'Not found' });
 			}
 			res.send(404, 'Not found');
 		});
@@ -22,10 +19,7 @@ exports.appErrorProcess = function(app){
 		app.use(function (err, req, res, next){
 			if(!err) return next();
 			if(req.xhr){
-				return res.send({
-					success: false,
-					msg: err
-				});
+				return res.send({ success: false, msg: err });
 			}
 			res.send(500, err.message);
 		});

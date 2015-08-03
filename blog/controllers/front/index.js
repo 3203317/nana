@@ -38,8 +38,8 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 
-	var ep = EventProxy.create('allCategorys', 'articleIntros', 'topMarksTopN', 'newCommentsTopN', 'usefulLinks', 'hotArticlesTopN',
-		function (allCategorys, articleIntros, topMarksTopN, newCommentsTopN, usefulLinks, hotArticlesTopN){
+	var ep = EventProxy.create('allCategorys', 'articleIntros', 'bookmarkTopN', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
+		function (allCategorys, articleIntros, bookmarkTopN, newCommentTopN, usefulLink, hotArticleTopN){
 
 		res.render('front/Index', {
 			conf: conf,
@@ -50,10 +50,10 @@ exports.indexUI = function(req, res, next){
 			topMessage: getTopMessage(),
 			loadMore: 'index',
 			data: {
-				hotArticlesTopN: hotArticlesTopN,
-				usefulLinks: usefulLinks,
-				newCommentsTopN: newCommentsTopN,
-				topMarksTopN: topMarksTopN,
+				hotArticleTopN: hotArticleTopN,
+				usefulLink: usefulLink,
+				newCommentTopN: newCommentTopN,
+				bookmarkTopN: bookmarkTopN,
 				allCategorys: allCategorys,
 				articleIntros: articleIntros
 			}
@@ -64,27 +64,27 @@ exports.indexUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.getListByViewCount(10, function (err, docs){
+	Article.findHotTopN(10, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('hotArticlesTopN', docs);
+		ep.emit('hotArticleTopN', docs);
 	});
 
 	Link.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('usefulLinks', docs);
+		ep.emit('usefulLink', docs);
 	});
 
-	Comment.getList(5, function (err, docs){
+	Comment.findNewTopN(5, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('newCommentsTopN', docs);
+		ep.emit('newCommentTopN', docs);
 	});
 
-	Article.getListByBookmark(5, function (err, docs){
+	Article.findBookmarkTopN(5, function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('topMarksTopN', docs);
+		ep.emit('bookmarkTopN', docs);
 	});
 
-	Article.getList(null, function (err, docs){
+	Article.findList(1, null, null, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articleIntros', docs);
 	});
@@ -110,9 +110,9 @@ exports.indexUI_more = function(req, res, next){
 		return res.send('');
 	}
 
-	if(!data.Current) return res.send('');
+	if(!data.curPage) return res.send('');
 
-	Article.getList(data.Current, function (err, docs){
+	Article.findList(data.curPage, null, null, function (err, docs){
 		if(err) return res.send('');
 		if(!docs || 0 === docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), {

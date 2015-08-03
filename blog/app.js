@@ -9,10 +9,10 @@ var express = require('express'),
 	MongoStore = require('connect-mongo')(express),
 	flash = require('connect-flash'),
 	velocity = require('velocityjs'),
-	cwd = process.cwd(),
 	fs = require('fs'),
 	http = require('http'),
-	path = require('path');
+	path = require('path'),
+	cwd = process.cwd();
 
 var macros = require('./lib/macro'),
 	errorHandler = require("./lib/errorHandler"),

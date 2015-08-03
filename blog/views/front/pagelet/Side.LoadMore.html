@@ -11,11 +11,10 @@ $(function(){
 		var text = widget.text();
 		widget.find('i').addClass('fa-spinner');
 		widget.find('span').text('费劲儿加载中...');
-		// var currPage = widget.data('current-page') + 1;
-		var currPage = $('.artIntro .title a:last').attr('id');
+		var curPage = $('.artIntro').length / 10 + 1;
 		var data = {
 			data: JSON.stringify({
-				Current: currPage
+				curPage: curPage
 			})
 		};
 		$.ajax({
@@ -25,7 +24,7 @@ $(function(){
 			data: data
 		}).done(function (data){
 			if('' !== $.trim(data)){
-				// widget.data('current-page', currPage);
+				// widget.data('current-page', curPage);
 				$('.artIntro').parent().append(data);
 			}
 		}).complete(function(){

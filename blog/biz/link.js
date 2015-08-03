@@ -10,49 +10,15 @@ var models = require('../models'),
 	Link = models.Link;
 
 /**
- * 常用链接
+ * 获取全部常用链接
  *
  * @params
  * @return
  */
 exports.getAll = function(cb){
-	this.findAll(null, function (err, docs){
+	Link.find(null, null, { sort: { Sort: 1 } }, function (err, docs){
 		if(err) return cb(err);
-		cb(null, docs);
-	});
-};
 
-/**
- * 保存新文章
- *
- * @params {Object} newInfo
- * @params {Function} cb
- * @return
- */
-exports.saveNew = function(newInfo, cb){
-	Link.create(newInfo, function (err, doc){
-		if(err) return cb(err);
-		cb(null, 0, null, doc);
-	});
-};
-
-/**
- * 查询
- *
- * @params {String}
- * @params {Function} cb
- * @return
- */
-exports.findAll = function(user_id, cb){
-	var params = null;
-
-	if(!!user_id){
-		params = params || {};
-		params.User_Id = user_id;
-	}
-
-	Link.find(params, null, { sort: { Sort: 1 } }, function (err, docs){
-		if(err) return cb(err);
 		attachData(docs, function (err, docs){
 			if(err) return cb(err);
 			cb(null, docs);
@@ -63,12 +29,11 @@ exports.findAll = function(user_id, cb){
 /**
  * 为数据集附加字段
  *
- * @params {Object} links
- * @params {Function} cb
- * @return {Array}
+ * @params
+ * @return
  */
 function attachData(links, cb){
-	if(!links || !links.length) return cb(null, links);
+	if(!links || 0 === links.length) return cb(null, links);
 	var user_ids = getUsersByLinks(links);
 
 	User.find({
@@ -80,6 +45,7 @@ function attachData(links, cb){
 
 			for(var j in links){
 				var link = links[j];
+
 				if(user._id.toString() === link.User_Id.toString()){
 					link.author = user;
 				}
@@ -92,14 +58,15 @@ function attachData(links, cb){
 /**
  * 获取link集合中的作者主键，过滤重复内容
  *
- * @params {Object} links
- * @return {Array}
+ * @params
+ * @return
  */
 function getUsersByLinks(links){
 	var user_ids = [];
 	for(var i in links){
 		var link = links[i];
 		var user_id = link.User_Id.toString();
+
 		if(0 > user_ids.indexOf(user_id)){
 			user_ids.push(user_id);
 		}

@@ -7,7 +7,7 @@
 	</div>
 	<div class='panel-body'>
 		<div class='list-group'>
-			#foreach($doc in $!{data.usefulLinks})<a class='list-group-item' target='_blank' href='$!{doc.LinkUrl}' title='创建于 #formatDate($!{doc.PostTime})'>$!{doc.LinkName}</a>
+			#foreach($doc in $!{data.usefulLink})<a class='list-group-item' target='_blank' href='$!{doc.LinkUrl}' title='创建于 #formatDate($!{doc.PostTime})'>$!{doc.LinkName}</a>
 			#end</div>
 	</div>
 </div>

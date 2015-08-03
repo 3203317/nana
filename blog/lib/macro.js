@@ -5,10 +5,10 @@
  */
 'use strict';
 
-var cwd = process.cwd(),
-	fs = require('fs'),
+var fs = require('fs'),
 	velocity = require('velocityjs'),
-	util = require('speedt-utils');
+	util = require('speedt-utils'),
+	cwd = process.cwd();
 
 module.exports = {
 	parse: function(file){
