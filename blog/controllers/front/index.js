@@ -12,11 +12,17 @@ var util = require('speedt-utils'),
 
 var conf = require('../../settings');
 
+var proxy = {
+	link: require('../../proxy/LINK'),
+	comment: require('../../proxy/COMMENT'),
+	category: require('../../proxy/CATEGORY'),
+	article: require('../../proxy/ARTICLE')
+};
+
 // biz
-var Link = require('../../biz/link'),
-	Comment = require('../../biz/comment'),
-	Category = require('../../biz/category'),
-	Article = require('../../biz/article');
+var biz = {
+	article: require('../../biz/article')
+};
 
 /**
  * 
@@ -64,32 +70,32 @@ exports.indexUI = function(req, res, next){
 		next(err);
 	});
 
-	Article.findHotTopN(10, function (err, docs){
+	proxy.article.findHotTopN(10, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('hotArticleTopN', docs);
 	});
 
-	Link.getAll(function (err, docs){
+	proxy.link.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('usefulLink', docs);
 	});
 
-	Comment.findNewTopN(5, function (err, docs){
+	proxy.comment.findNewTopN(5, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('newCommentTopN', docs);
 	});
 
-	Article.findBookmarkTopN(5, function (err, docs){
+	proxy.article.findBookmarkTopN(5, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('bookmarkTopN', docs);
 	});
 
-	Article.findList(1, null, null, function (err, docs){
+	biz.article.findList(1, null, null, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articleIntros', docs);
 	});
 
-	Category.getAll(function (err, docs){
+	proxy.category.getAll(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('allCategorys', docs);
 	});
@@ -112,7 +118,7 @@ exports.indexUI_more = function(req, res, next){
 
 	if(!data.curPage) return res.send('');
 
-	Article.findList(data.curPage, null, null, function (err, docs){
+	biz.article.findList(data.curPage, null, null, function (err, docs){
 		if(err) return res.send('');
 		if(!docs || 0 === docs.length) return res.send('');
 		res.render(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), {
