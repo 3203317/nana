@@ -11,7 +11,7 @@ $(function(){
 		var text = widget.text();
 		widget.find('i').addClass('fa-spinner');
 		widget.find('span').text('费劲儿加载中...');
-		var curPage = $('.artIntro').length / 10 + 1;
+		var curPage = $('.artIntro').length / $!{conf.html.pagesize} + 1;
 		var data = {
 			data: JSON.stringify({
 				curPage: curPage

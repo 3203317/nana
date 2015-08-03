@@ -5,6 +5,8 @@
  */
 'use strict';
 
+var conf = require('../settings');
+
 var models = require('../models'),
 	User = models.User,
 	Article = models.Article;
@@ -165,7 +167,7 @@ exports.procArchive = function(cb){
  */
 exports.findList = function(curPage, pageSize, user_id, cb){
 	curPage = curPage || 1;
-	pageSize = pageSize || 10;
+	pageSize = pageSize || conf.html.pagesize;
 	var option = {
 		limit: pageSize,
 		skip: (curPage - 1) * pageSize,

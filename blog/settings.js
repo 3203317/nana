@@ -8,8 +8,6 @@
 module.exports = {
 	cookie: {
 		secret: 'foreworld'
-	}, cdn: {
-		url: 'http://www.foreworld.net/js/'
 	}, corp: {
 		name: 'FOREWORLD 洪荒',
 		website: 'http://www.foreworld.net/'
@@ -19,7 +17,9 @@ module.exports = {
 		port: 27017,
 		user: 'sa',
 		pass: 'xiang123'
-	}, static_res: {
-		virtualPath: '/public/'
+	}, html: {
+		cdn: 'http://www.foreworld.net/js/',
+		static_res: '/public/',
+		pagesize: 10
 	}
 };

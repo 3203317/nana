@@ -5,6 +5,8 @@
  */
 'use strict';
 
+var site = require('../controllers/site')
+
 // controller
 var front = {
 	index: require('../controllers/front/index')
@@ -20,6 +22,9 @@ module.exports = function(app){
 	app.get('/index.html$', front.index.indexUI);
 	app.get('/index/more$', front.index.indexUI_more);
 	app.get('/', front.index.indexUI);
+
+	app.get('/install/comment1$', site.install_comment_1);
+	app.get('/install/comment2$', site.install_comment_2);
 };
 
 /**
