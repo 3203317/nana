@@ -90,7 +90,7 @@ exports.indexUI = function(req, res, next){
 		ep.emit('bookmarkTopN', docs);
 	});
 
-	biz.article.findList(1, null, null, function (err, docs){
+	proxy.article.findFirstPage(function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articleIntros', docs);
 	});
