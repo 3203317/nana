@@ -8,9 +8,12 @@
 var util = require('speedt-utils'),
 	EventProxy = require('eventproxy'),
 	path = require('path'),
+	fs = require('fs'),
+	velocity = require('velocityjs'),
 	cwd = process.cwd();
 
-var conf = require('../../settings');
+var conf = require('../../settings'),
+	macros = require('../../lib/macro');
 
 var proxy = {
 	link: require('../../proxy/LINK'),
@@ -108,23 +111,57 @@ exports.indexUI = function(req, res, next){
  * @return
  */
 exports.indexUI_more = function(req, res, next){
-	var data = req.query.data;
-	if(!data) return res.send('');
+	var result = { success: false },
+		data = req._data;
 
-	try{
-		data = JSON.parse(data);
-	}catch(ex){
-		return res.send('');
-	}
+	if(!data.curPage) return res.send(result);
 
-	if(!data.curPage) return res.send('');
-
+	/* 获取下一页的文章列表 */
 	biz.article.findByCate(req.params.name, data.curPage, null, null, function (err, docs){
-		if(err) return res.send('');
-		if(!docs || 0 === docs.length) return res.send('');
-		res.render(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), {
-			conf: conf,
-			data: { articleIntros: docs }
+		if(err){
+			result.msg = err;
+			return res.send(result);
+		}
+
+		if(!docs || 0 === docs.length){
+			result.msg = 'size: 0.';
+			return res.send(result);
+		}
+
+		exports.getTemplate(function (err, template){
+			if(err){
+				result.msg = err;
+				return res.send(result);
+			}
+
+			var html = velocity.render(template, {
+				conf: conf,
+				data: { articleIntros: docs }
+			}, macros);
+
+			result.success = true;
+			result.data = html;
+			res.send(result);
 		});
 	});
 };
+
+(function (exports){
+	var temp = null;
+
+	/**
+	 * 获取模板
+	 *
+	 * @params
+	 * @return
+	 */
+	exports.getTemplate = function(cb){
+		if(temp) return cb(null, temp);
+
+		fs.readFile(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
+			if(err) return cb(err);
+			temp = template;
+			cb(null, temp);
+		});
+	};
+})(exports);
