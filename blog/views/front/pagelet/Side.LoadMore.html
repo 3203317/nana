@@ -20,12 +20,12 @@ $(function(){
 		$.ajax({
 			url: $().olxUtilRandomUrl(widget.data('url')),
 			type: 'GET',
-			dataType: 'html',
+			dataType: 'json',
 			data: data
 		}).done(function (data){
-			if('' !== $.trim(data)){
+			if(data.success){
 				// widget.data('current-page', curPage);
-				$('.artIntro').parent().append(data);
+				$('.artIntro').parent().append(data.data);
 			}
 		}).complete(function(){
 			widget.find('i').removeClass('fa-spinner');

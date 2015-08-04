@@ -12,6 +12,7 @@ var front = {
 	index: require('../controllers/front/index'),
 	archive: require('../controllers/front/archive'),
 	tag: require('../controllers/front/tag'),
+	tag_name: require('../controllers/front/tag_name'),
 	category_name: require('../controllers/front/category_name')
 };
 
@@ -36,6 +37,9 @@ module.exports = function(app){
 	// category_name
 	app.get('/archive/category/:name/', front.category_name.indexUI);
 	app.get('/archive/category/:name/more$', front.category_name.indexUI_more);
+	// tag_name
+	app.get('/archive/tag/:name/', front.tag_name.indexUI);
+	app.get('/archive/tag/:name/more$', front.tag_name.indexUI_more);
 };
 
 /**

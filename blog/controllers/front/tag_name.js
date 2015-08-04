@@ -8,12 +8,9 @@
 var util = require('speedt-utils'),
 	EventProxy = require('eventproxy'),
 	path = require('path'),
-	fs = require('fs'),
-	velocity = require('velocityjs'),
 	cwd = process.cwd();
 
-var conf = require('../../settings'),
-	macros = require('../../lib/macro');
+var conf = require('../../settings');
 
 var proxy = {
 	link: require('../../proxy/LINK'),
@@ -46,18 +43,19 @@ function getTopMessage(){
  * @return
  */
 exports.indexUI = function(req, res, next){
+	var name = req.params.name;
 
 	var ep = EventProxy.create('allCategorys', 'articleIntros', 'bookmarkTopN', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
 		function (allCategorys, articleIntros, bookmarkTopN, newCommentTopN, usefulLink, hotArticleTopN){
 
-		res.render('front/Index', {
+		res.render('front/Tag_Name', {
 			conf: conf,
-			title: conf.corp.name,
-			moduleName: 'index',
+			title: name +' | 标签 | '+ conf.corp.name,
+			moduleName: 'tag',
 			description: '',
-			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
+			loadMore: 'archive/tag/'+ name,
 			topMessage: getTopMessage(),
-			loadMore: 'index',
 			data: {
 				hotArticleTopN: hotArticleTopN,
 				usefulLink: usefulLink,
@@ -93,7 +91,7 @@ exports.indexUI = function(req, res, next){
 		ep.emit('bookmarkTopN', docs);
 	});
 
-	proxy.article.findFirstPage(function (err, docs){
+	biz.article.findByTag(name, 1, null, null, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('articleIntros', docs);
 	});
@@ -111,51 +109,22 @@ exports.indexUI = function(req, res, next){
  */
 exports.indexUI_more = function(req, res, next){
 	var data = req.query.data;
-	if(!data) return res.send({ success: false });
+	if(!data) return res.send('');
 
 	try{
 		data = JSON.parse(data);
 	}catch(ex){
-		return res.send({ success: false, msg: ex.message });
+		return res.send('');
 	}
 
-	if(!data.curPage) return res.send({ success: false });
+	if(!data.curPage) return res.send('');
 
-	/* 获取下一页的文章列表 */
-	biz.article.findList(data.curPage, null, null, function (err, docs){
-		if(err) return res.send({ success: false, msg: err });
-		if(!docs || 0 === docs.length) return res.send({ success: false });
-
-		exports.getTemplate(function (err, template){
-			if(err) return res.send({ success: false, msg: err });
-
-			var html = velocity.render(template, {
-				conf: conf,
-				data: { articleIntros: docs }
-			}, macros);
-
-			res.send({ success: true, data: html });
+	biz.article.findByTag(req.params.name, data.curPage, null, null, function (err, docs){
+		if(err) return res.send('');
+		if(!docs || 0 === docs.length) return res.send('');
+		res.render(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), {
+			conf: conf,
+			data: { articleIntros: docs }
 		});
 	});
 };
-
-
-(function (exports){
-	var template = null;
-
-	/**
-	 * 获取模板
-	 *
-	 * @params
-	 * @return
-	 */
-	exports.getTemplate = function(cb){
-		if(template) return cb(null, template);
-
-		fs.readFile(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
-			if(err) return cb(err);
-			template = template;
-			cb(null, template);
-		});
-	};
-})(exports);
