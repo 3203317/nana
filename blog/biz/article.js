@@ -16,6 +16,41 @@ var macros = require('../lib/macro');
 var tag  = require('./tag');
 
 /**
+ * 文章分类分页
+ *
+ * @params
+ * @return
+ */
+exports.findByCate = function(name, curPage, pageSize, user_id, cb){
+	curPage = curPage || 1;
+	pageSize = pageSize || conf.html.pagesize;
+	var option = {
+		limit: pageSize,
+		skip: (curPage - 1) * pageSize,
+		sort: {
+			Topmark: -1,
+			_id: -1
+		}
+	};
+
+	var params = {
+		Cate: new RegExp('^'+ name +'$', 'i')
+	};
+
+	if(!!user_id){
+		params.User_Id = user_id;
+	}
+
+	Article.find(params, null, option, function (err, docs){
+		if(err) return cb(err);
+		attachData(docs, function (err, docs){
+			if(err) return cb(err);
+			cb(null, docs);
+		});
+	});
+};
+
+/**
  * 标签馆
  *
  * @params

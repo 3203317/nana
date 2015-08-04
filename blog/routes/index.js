@@ -11,7 +11,8 @@ var site = require('../controllers/site')
 var front = {
 	index: require('../controllers/front/index'),
 	archive: require('../controllers/front/archive'),
-	tag: require('../controllers/front/tag')
+	tag: require('../controllers/front/tag'),
+	category_name: require('../controllers/front/category_name')
 };
 
 var back = {};
@@ -32,6 +33,9 @@ module.exports = function(app){
 	app.get('/archive/', front.archive.indexUI);
 	// tag
 	app.get('/archive/tag/', front.tag.indexUI);
+	// category_name
+	app.get('/archive/category/:name/', front.category_name.indexUI);
+	app.get('/archive/category/:name/more$', front.category_name.indexUI_more);
 };
 
 /**
