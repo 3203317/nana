@@ -48,60 +48,62 @@ function getTopMessage(){
 exports.indexUI = function(req, res, next){
 	var name = req.params.name;
 
-	var ep = EventProxy.create('allCategorys', 'articleIntros', 'bookmarkTopN', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
-		function (allCategorys, articleIntros, bookmarkTopN, newCommentTopN, usefulLink, hotArticleTopN){
-
-		res.render('front/Tag_Name', {
-			conf: conf,
-			title: name +' | 标签 | '+ conf.corp.name,
-			moduleName: 'tag',
-			description: '',
-			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
-			loadMore: 'archive/tag/'+ name,
-			topMessage: getTopMessage(),
-			data: {
-				hotArticleTopN: hotArticleTopN,
-				usefulLink: usefulLink,
-				newCommentTopN: newCommentTopN,
-				bookmarkTopN: bookmarkTopN,
-				allCategorys: allCategorys,
-				articleIntros: articleIntros
-			}
-		});
-	});
-
-	ep.fail(function (err){
-		next(err);
-	});
-
-	proxy.article.findHotTopN(10, function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('hotArticleTopN', docs);
-	});
-
-	proxy.link.getAll(function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('usefulLink', docs);
-	});
-
-	proxy.comment.findNewTopN(5, function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('newCommentTopN', docs);
-	});
-
-	proxy.article.findBookmarkTopN(5, function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('bookmarkTopN', docs);
-	});
-
 	biz.article.findByTag(name, 1, null, null, function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('articleIntros', docs);
-	});
+		if(err) return next(err);
+		if(!docs || 0 === docs.length) return res.redirect('/archive/tag/');
 
-	proxy.category.getAll(function (err, docs){
-		if(err) return ep.emit('error', err);
-		ep.emit('allCategorys', docs);
+		var articleIntros = docs;
+
+		var ep = EventProxy.create('allCategorys', 'bookmarkTopN', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
+			function (allCategorys, bookmarkTopN, newCommentTopN, usefulLink, hotArticleTopN){
+
+			res.render('front/Tag_Name', {
+				conf: conf,
+				title: name +' | 标签 | '+ conf.corp.name,
+				moduleName: 'tag',
+				description: '',
+				keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
+				loadMore: 'archive/tag/'+ name,
+				topMessage: getTopMessage(),
+				data: {
+					hotArticleTopN: hotArticleTopN,
+					usefulLink: usefulLink,
+					newCommentTopN: newCommentTopN,
+					bookmarkTopN: bookmarkTopN,
+					allCategorys: allCategorys,
+					articleIntros: articleIntros
+				}
+			});
+		});
+
+		ep.fail(function (err){
+			next(err);
+		});
+
+		proxy.article.findHotTopN(10, function (err, docs){
+			if(err) return ep.emit('error', err);
+			ep.emit('hotArticleTopN', docs);
+		});
+
+		proxy.link.getAll(function (err, docs){
+			if(err) return ep.emit('error', err);
+			ep.emit('usefulLink', docs);
+		});
+
+		proxy.comment.findNewTopN(5, function (err, docs){
+			if(err) return ep.emit('error', err);
+			ep.emit('newCommentTopN', docs);
+		});
+
+		proxy.article.findBookmarkTopN(5, function (err, docs){
+			if(err) return ep.emit('error', err);
+			ep.emit('bookmarkTopN', docs);
+		});
+
+		proxy.category.getAll(function (err, docs){
+			if(err) return ep.emit('error', err);
+			ep.emit('allCategorys', docs);
+		});
 	});
 };
 
