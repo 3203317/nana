@@ -24,15 +24,13 @@ var tag  = require('./tag');
 exports.procTag = function(cb){
 	var that = this;
 
-	tag.findAll(null, function (err, status, msg, docs){
+	tag.getAll(function (err, docs){
 		if(err) return cb(err);
 
 		/* 获取全部的标签 */
 		var tags = docs;
 
-		that.findAll({
-			_id: -1
-		}, null, null, function (err, docs){
+		that.getAll(function (err, docs){
 			if(err) return cb(err);
 
 			var articles = docs;

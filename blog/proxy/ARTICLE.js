@@ -15,6 +15,35 @@ var Article = require('../biz/article');
 	last_time = new Date(last_time.valueOf() + timeout);
 
 	/**
+	 * 标签馆数据
+	 *
+	 * @params
+	 * @return
+	 */
+	exports.procTag = function(cb){
+		if(!!cache_data){
+			if(new Date() < last_time)
+				return cb(null, cache_data);
+		}
+
+		last_time = new Date();
+		last_time = new Date(last_time.valueOf() + timeout);
+
+		Article.procTag(function (err, docs){
+			if(err) return cb(err);
+			cache_data = docs;
+			cb(null, docs);
+		});
+	};
+})(exports);
+
+(function (exports, global){
+	var timeout = 1000 * 30;
+	var cache_data = null;
+	var last_time = new Date();
+	last_time = new Date(last_time.valueOf() + timeout);
+
+	/**
 	 * 档案馆数据
 	 *
 	 * @params

@@ -39,22 +39,22 @@ function getTopMessage(){
  */
 exports.indexUI = function(req, res, next){
 
-	var ep = EventProxy.create('allCategorys', 'archive', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
-		function (allCategorys, archive, newCommentTopN, usefulLink, hotArticleTopN){
+	var ep = EventProxy.create('allCategorys', 'tag', 'newCommentTopN', 'usefulLink', 'hotArticleTopN',
+		function (allCategorys, tag, newCommentTopN, usefulLink, hotArticleTopN){
 
-		res.render('front/archive/Index', {
+		res.render('front/tag/Index', {
 			conf: conf,
-			title: '档案馆 | '+ conf.corp.name,
-			moduleName: 'archive',
+			title: '标签 | '+ conf.corp.name,
+			moduleName: 'tag',
 			description: '',
-			keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			keywords: ',标签,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
 			topMessage: getTopMessage(),
 			data: {
 				hotArticleTopN: hotArticleTopN,
 				usefulLink: usefulLink,
 				newCommentTopN: newCommentTopN,
 				allCategorys: allCategorys,
-				archive: archive
+				tag: tag
 			}
 		});
 	});
@@ -78,9 +78,9 @@ exports.indexUI = function(req, res, next){
 		ep.emit('newCommentTopN', docs);
 	});
 
-	proxy.article.procArchive(function (err, docs){
+	proxy.article.procTag(function (err, docs){
 		if(err) return ep.emit('error', err);
-		ep.emit('archive', docs);
+		ep.emit('tag', docs);
 	});
 
 	proxy.category.getAll(function (err, docs){

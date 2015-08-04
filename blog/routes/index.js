@@ -10,7 +10,8 @@ var site = require('../controllers/site')
 // controller
 var front = {
 	index: require('../controllers/front/index'),
-	archive: require('../controllers/front/archive')
+	archive: require('../controllers/front/archive'),
+	tag: require('../controllers/front/tag')
 };
 
 var back = {};
@@ -29,6 +30,8 @@ module.exports = function(app){
 
 	// archive
 	app.get('/archive/', front.archive.indexUI);
+	// tag
+	app.get('/archive/tag/', front.tag.indexUI);
 };
 
 /**
