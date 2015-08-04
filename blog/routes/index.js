@@ -9,7 +9,8 @@ var site = require('../controllers/site')
 
 // controller
 var front = {
-	index: require('../controllers/front/index')
+	index: require('../controllers/front/index'),
+	archive: require('../controllers/front/archive')
 };
 
 var back = {};
@@ -25,6 +26,9 @@ module.exports = function(app){
 
 	app.get('/install/comment1$', site.install_comment_1);
 	app.get('/install/comment2$', site.install_comment_2);
+
+	// archive
+	app.get('/archive/', front.archive.indexUI);
 };
 
 /**

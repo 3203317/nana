@@ -86,9 +86,7 @@ exports.procTag = function(cb){
  * @return
  */
 exports.procArchive = function(cb){
-	this.findAll({
-		_id: -1
-	}, null, null, function (err, docs){
+	this.getAll(function (err, docs){
 		if(err) return cb(err);
 
 		/* 生成档案馆对象 */
