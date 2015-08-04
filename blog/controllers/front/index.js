@@ -110,38 +110,44 @@ exports.indexUI = function(req, res, next){
  * @return
  */
 exports.indexUI_more = function(req, res, next){
-	var data = req.query.data;
-	if(!data) return res.send({ success: false });
+	var result = { success: false },
+		data = req._data;
 
-	try{
-		data = JSON.parse(data);
-	}catch(ex){
-		return res.send({ success: false, msg: ex.message });
-	}
-
-	if(!data.curPage) return res.send({ success: false });
+	if(!data.curPage) return res.send(result);
 
 	/* 获取下一页的文章列表 */
 	biz.article.findList(data.curPage, null, null, function (err, docs){
-		if(err) return res.send({ success: false, msg: err });
-		if(!docs || 0 === docs.length) return res.send({ success: false });
+		if(err){
+			result.msg = err;
+			return res.send(result);
+		}
+
+		if(!docs || 0 === docs.length){
+			result.msg = 'size: 0.';
+			return res.send(result);
+		}
 
 		exports.getTemplate(function (err, template){
-			if(err) return res.send({ success: false, msg: err });
+			if(err){
+				result.msg = err;
+				return res.send(result);
+			}
 
 			var html = velocity.render(template, {
 				conf: conf,
 				data: { articleIntros: docs }
 			}, macros);
 
-			res.send({ success: true, data: html });
+			result.success = true;
+			result.data = html;
+			res.send(result);
 		});
 	});
 };
 
 
 (function (exports){
-	var template = null;
+	var temp = null;
 
 	/**
 	 * 获取模板
@@ -150,12 +156,12 @@ exports.indexUI_more = function(req, res, next){
 	 * @return
 	 */
 	exports.getTemplate = function(cb){
-		if(template) return cb(null, template);
+		if(temp) return cb(null, temp);
 
 		fs.readFile(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
 			if(err) return cb(err);
-			template = template;
-			cb(null, template);
+			temp = template;
+			cb(null, temp);
 		});
 	};
 })(exports);

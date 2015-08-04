@@ -24,7 +24,7 @@ var str1 = '参数异常';
 module.exports = function(app){
 	// front
 	app.get('/index.html$', front.index.indexUI);
-	app.get('/index/more$', front.index.indexUI_more);
+	app.get('/index/more$', valiGetData, front.index.indexUI_more);
 	app.get('/', front.index.indexUI);
 
 	app.get('/install/comment1$', site.install_comment_1);
