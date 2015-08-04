@@ -39,7 +39,7 @@ module.exports = function(app){
 	app.get('/archive/category/:name/more$', valiGetData, front.category_name.indexUI_more);
 	// tag_name
 	app.get('/archive/tag/:name/', front.tag_name.indexUI);
-	app.get('/archive/tag/:name/more$', front.tag_name.indexUI_more);
+	app.get('/archive/tag/:name/more$', valiGetData, front.tag_name.indexUI_more);
 };
 
 /**
