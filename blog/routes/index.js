@@ -14,7 +14,11 @@ var front = {
 	tag: require('../controllers/front/tag'),
 	tag_name: require('../controllers/front/tag_name'),
 	article_id: require('../controllers/front/article_id'),
-	category_name: require('../controllers/front/category_name')
+	category_name: require('../controllers/front/category_name'),
+	user: {
+		login: require('../controllers/front/user/login'),
+		register: require('../controllers/front/user/register')
+	}
 };
 
 var back = {};
@@ -43,6 +47,10 @@ module.exports = function(app){
 	app.get('/archive/tag/:name/more$', valiGetData, front.tag_name.indexUI_more);
 	// article's id
 	app.get('/archive/:id.html$', front.article_id.indexUI);
+
+	// user login
+	app.get('/user/login$', front.user.login.indexUI);
+	app.get('/user/register', front.user.register.indexUI);
 };
 
 /**
