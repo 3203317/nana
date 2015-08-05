@@ -13,6 +13,7 @@ var front = {
 	archive: require('../controllers/front/archive'),
 	tag: require('../controllers/front/tag'),
 	tag_name: require('../controllers/front/tag_name'),
+	article_id: require('../controllers/front/article_id'),
 	category_name: require('../controllers/front/category_name')
 };
 
@@ -40,6 +41,8 @@ module.exports = function(app){
 	// tag_name
 	app.get('/archive/tag/:name/', front.tag_name.indexUI);
 	app.get('/archive/tag/:name/more$', valiGetData, front.tag_name.indexUI_more);
+	// article's id
+	app.get('/archive/:id.html$', front.article_id.indexUI);
 };
 
 /**

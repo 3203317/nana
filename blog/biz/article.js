@@ -15,6 +15,81 @@ var macros = require('../lib/macro');
 
 var tag  = require('./tag');
 
+/**
+ * 查询喜欢的文章
+ *
+ * @params
+ * @return
+ */
+exports.findFav = function(article, count, cb){
+	count = count || 3;
+	Article.find({
+		_id: { '$ne': article._id },
+		Cate: article.Cate
+	}, null, {
+		limit: count
+	}, function (err, docs){
+		if(err) return cb(err);
+		cb(null, docs);
+	});
+};
+
+/**
+ * 通过上一篇文章
+ *
+ * @params
+ * @return
+ */
+exports.findPrev = function(id, cb){
+	Article.findOne({
+		_id: { $gt: id }
+	}, null, {
+		sort: { _id: 1 }
+	}, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ * 通过下一篇文章
+ *
+ * @params
+ * @return
+ */
+exports.findNext = function(id, cb){
+	Article.findOne({
+		_id: { $lt: id }
+	}, null, {
+		sort: { _id: -1 }
+	}, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ * 通过id查找一篇文章
+ *
+ * @params
+ * @return
+ */
+exports.findById = function(id, cb){
+	Article.findOne({
+		_id: id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		if(!doc) return cb(null, null);
+		// doc.ViewCount += 1;
+		// doc.save();
+		doc.update({
+			ViewCount: doc.ViewCount + 1
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
+	});
+};
 
 /**
  * 文章标签分页

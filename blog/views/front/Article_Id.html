@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		#parse('front/pagelet/Common.IndexHeader.html')
+		<link rel='stylesheet' type='text/css' media='screen' href='http://www.foreworld.net/public/site/css/article.css?v3' />
+		<link rel='stylesheet' type='text/css' media='screen' href='${conf.html.cdn}bootstrap/3.2.0/docs/assets/css/docs.min.css?v3.2.0' />
+	</head>
+	<body>
+		#parse('front/pagelet/Side.TopBanner.html')
+		<header id='header'></header>
+		<section class='container'>
+			<div class='row'>
+				<div class='col-sm-12 col-md-8'>
+					#parse('front/pagelet/Side.TopMessage.html')
+					<div class='panel panel-default' style='box-shadow: 0 0 5px #c2c2c2;'>
+						<div class='panel-body article'>
+							<ol class='breadcrumb'>
+								<li>
+									<i class='fa fa-home fa-fw'></i>
+									<a href='/index.html'>首页</a></li>
+								<li class='active'><a href='/archive/'>档案馆</a></li>
+								<li class='active'><a href='/archive/$!{data.article._id}.html'>$!{data.article.Title}</a></li>
+							</ol>
+							<div class='title'>
+								<h2><a href='/archive/$!{data.article._id}.html'>$!{data.article.Title}</a></h2>
+							</div>
+							<div class='tag ta nav'>
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-calendar'></span>
+									<a title='创建于 #formatDate($!{data.article.PostTime})'>#toSDate($!{data.article.PostTime})</a>
+								</span>
+								#*#if($!{data.article.Tags})<span class='label label-default'>
+									<span class='glyphicon glyphicon-tag'></span>
+									#foreach($tag in $!{data.article.Tags})<a rel='tag' title='查看 $tag 标签' href='/archive/tag/$tag/'>$tag</a>#if($foreach.hasNext),#end
+									#end
+								</span>#end*#
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-user'></span>
+									<a title='查看 $!{data.article.author.Nickname} 的全部文章' href='/u/$!{data.article.author.UserName}/'>$!{data.article.author.Nickname}</a>
+								</span>
+								<span class='label label-default'>
+									<span class='glyphicon glyphicon-eye-open'></span>
+									<a>#num2Money($!{data.article.ViewCount})人</a>
+								</span>
+							</div>
+							#if($!{data.article.Photo})<figure class='thumbnail clearfix'>
+								<img src='$!{conf.html.static_res}udata/$!{data.article.author.UserName}/$!{data.article.Photo}' alt='$!{conf.html.static_res}udata/$!{data.article.author.UserName}/$!{data.article.Photo}'>
+							</figure>#end
+							<div class='content'>#toHtml($!{data.article.Content})</div>
+							<div class='footer tag'>
+								#if(0<$!{data.article.Tags.length})<span class='label label-default'>
+									<span class='glyphicon glyphicon-tag'></span>
+									#foreach($tag in $!{data.article.Tags})<a rel='tag' title='查看 $tag 标签' href='/archive/tag/$tag/'>$tag</a>#if($foreach.hasNext),#end
+									#end
+								</span>#end
+							</div>
+							<div class='alert alert-success copyright'>
+								<p>版权所属：<a href='http://www.foreworld.net/'>洪荒世界</a></p>
+								<p>原文地址：<a href='/archive/$!{data.article._id}.html' title='$!{data.article.Title}'>http://www.foreworld.net/archive/$!{data.article._id}.html</a></p>
+								<p>转载时必须以链接形式注明原始出处及本声明。</p>
+							</div>
+							<div class='alert alert-success page'>
+								#if($!{data.next})<p>上篇：<a href='/archive/$!{data.next._id}.html' title='创建于 #formatDate($!{data.next.PostTime})'>$!{data.next.Title}</a></p>#end
+								#if($!{data.prev})<p>下篇：<a href='/archive/$!{data.prev._id}.html' title='创建于 #formatDate($!{data.prev.PostTime})'>$!{data.prev.Title}</a></p>#end
+							</div>
+							<div>
+								<a href='javascript:;'>
+									<img src='$!{conf.html.static_res}assets/images/share/16x16/twitter.png'></a>
+								<a href='javascript:;'>
+									<img src='$!{conf.html.static_res}assets/images/share/16x16/qqwb.png'></a>
+								<a href='javascript:;'>
+									<img src='$!{conf.html.static_res}assets/images/share/16x16/sinawb.png'></a>
+								<a href='javascript:;'>
+									<img src='$!{conf.html.static_res}assets/images/share/16x16/baidu.png'></a>
+							</div>
+						</div>
+					</div>
+					<div class='alert alert-danger fav ta'>
+						<div class='glyphicon glyphicon-heart'></div> 您可能也喜欢
+					</div>
+					#foreach($fav in $!{data.favs})<div class='col-sm-12 col-md-4'>
+						<div class='thumbnail fav3'>
+							<div class='caption'>
+								<div>
+									<a href='/archive/$!{fav._id}.html' title='创建于 #formatDate($!{fav.PostTime})'>
+										<div>$!{fav.Title}</div>
+									</a>
+								</div>
+								<p>$!{fav.Intro}</p>
+								<div class='clearfix'>
+									<a class='btn btn-danger pull-right' role='button' href='/archive/$!{fav._id}.html' title='详细阅读 $!{fav.Title}'>阅读全文</a>
+								</div>
+							</div>
+						</div>
+					</div>#end
+					<div class='clearfix' id='comment'>
+						<!-- 多说评论框 start -->
+						<div class='ds-thread' data-thread-key='$!{data.article._id}' data-title='$!{data.article.Title}' data-url='http://www.foreworld.net/archive/$!{data.article._id}.html'></div>
+						<!-- 多说评论框 end -->
+						<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+						<script type='text/javascript'>
+						var duoshuoQuery = {
+							short_name: 'foreworld'
+						};
+						$(function(){
+							var ds = document.createElement('script');
+							ds.type = 'text/javascript';
+							ds.async = true;
+							ds.src = (document.location.protocol === 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+							ds.charset = 'UTF-8';
+							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+						});
+						</script>
+						<!-- 多说公共JS代码 end -->
+					</div>
+				</div>
+				<div class='col-sm-12 col-md-4'>
+					#parse('front/pagelet/Side.HotArticleTopN.vm.html')
+					#parse('front/pagelet/Side.NewCommentTopN.vm.html')
+					#parse('front/pagelet/Side.UsefulLink.vm.html')
+					#parse('front/pagelet/Side.QrCode.html')
+				</div>
+			</div>
+		</section>
+		#parse('front/pagelet/Side.IndexFooter.html')
+		#parse('front/pagelet/Side.BackTop.html')
+		#parse('front/pagelet/Common.IndexJs.html')
+		<!-- Own -->
+		<script type='text/javascript'>
+		var ZeroClipboard_PATH = '${conf.html.cdn}bootstrap/3.2.0/docs/assets/flash/ZeroClipboard.swf';
+		</script>
+		<script type='text/javascript' src='${conf.html.cdn}bootstrap/3.2.0/docs/assets/js/docs.min.js?v3.2.0' defer='defer'></script>		
+		#parse('front/pagelet/Common.LastJs.html')
+	</body>
+</html>
