@@ -21,13 +21,15 @@ var front = {
 	}
 };
 
-var back = {};
+var back = {
+	my: require('../controllers/back/my')
+};
 var manage = {};
 
 var str1 = '参数异常';
 
 module.exports = function(app){
-	// front
+	/* front */
 	app.get('/index.html$', front.index.indexUI);
 	app.get('/index/more$', valiGetData, front.index.indexUI_more);
 	app.get('/', front.index.indexUI);
@@ -51,6 +53,9 @@ module.exports = function(app){
 	// user login
 	app.get('/user/login$', front.user.login.indexUI);
 	app.get('/user/register', front.user.register.indexUI);
+
+	/* back */
+	app.get('/u/:name/', back.my.valiUserName, back.my.indexUI);
 };
 
 /**

@@ -31,7 +31,7 @@ var Comment = require('../biz/comment');
 		last_time = new Date();
 		last_time = new Date(last_time.valueOf() + timeout);
 
-		Comment.findNewTopN(num, function (err, docs){
+		Comment.findNewTopN(num, null, function (err, docs){
 			if(err) return cb(err);
 			cache_data = docs;
 			cb(null, cache_data);

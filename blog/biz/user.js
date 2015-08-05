@@ -10,8 +10,22 @@ var md5 = require('speedt-utils').md5;
 var models = require('../models'),
 	User = models.User;
 
+
 /**
- * 
+ * 查找用户通过用户名
+ *
+ * @params
+ * @return
+ */
+exports.findByName = function(name, cb){
+	User.findByName(name, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ *
  * @params
  * @return
  */

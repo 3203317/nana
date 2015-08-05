@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		#parse('front/pagelet/Common.IndexHeader.html')
+		<link rel='stylesheet' type='text/css' media='screen' href='http://www.foreworld.net/public/user/css/my.css?v3' />
+	</head>
+	<body>
+		#parse('front/pagelet/Side.TopBanner.html')
+		<header id='header'></header>
+		<div class='container'>
+			<div class='row'>
+				#parse('back/pagelet/Sidebar.html')
+				<div class='col-sm-12 col-md-6'>
+					<ul class='nav nav-tabs' role='tablist'>
+						<li role='presentation'>
+							<a href='javascript:;'>最新动态</a></li>
+						<li role='presentation' class='active'>
+							<a href='javascript:;'>博客</a></li>
+						<li role='presentation'>
+							<a href='javascript:;'>新闻</a></li>
+					</ul>
+					<table id='table1' data-olx-type='olx.grid'
+						class='table table-hover table-condensed table-striped'
+						data-url='/manage/role/list' data-current='1' data-pagesize='20' data-count='561'>
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>标题</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>#set ($i=1)
+							#foreach($article in $!{data.articles})<tr>
+								<td>$i#set($i=$i+1)</td>
+								<td>
+									<a title='创建于 #formatDate($article.PostTime)'
+										href='/archive/${article._id}.html'>$!{article.Title}</a></td>
+								<td>
+									<div class='dropdown'>
+										<a id='drop${article._id}' href='javascript:;'
+											class='dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+											操作 <span class='caret'></span>
+										</a>
+										<ul class='dropdown-menu dropdown-menu-right' role='menu' aria-labelledby='drop${article._id}'>
+											<li role='presentation'>
+												<a role='menuitem' tabindex='-1' href='admin/edit/blog/${article._id}'>
+													<span class='glyphicon glyphicon-edit'></span> 编辑</a></li>
+											<li role='presentation'>
+												<a role='menuitem' tabindex='-1' href='javascript:del("${article._id}")'>
+													<span class='glyphicon glyphicon-remove-sign'></span> 删除</a></li>
+										</ul>
+									</div>
+								</td>
+							</tr>#end
+						</tbody>
+					</table>
+				</div>
+				#parse('back/pagelet/Sidebar2.html')
+			</div>
+		</div>
+		<div class='modal fade' id='delConfirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>警告</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>你确认执行该删除操作吗？</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+						<button type='button' class='btn btn-primary' id='delConfirmModal_btn_submit'>确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		#parse('front/pagelet/Side.IndexFooter.html')
+		#parse('front/pagelet/Side.BackTop.html')
+		#parse('front/pagelet/Common.IndexJs.html')
+		<!-- Own -->
+		#parse('front/pagelet/Common.LastJs.html')
+		<script type='text/javascript'>
+		var del_id = null;
+		function del(id){
+			del_id = id;
+			$('#delConfirmModal').modal();
+		}
+		$(function(){
+			$('#delConfirmModal_btn_submit').click(function(){
+				$.ajax({
+					url: 'admin/del/blog/'+ del_id,
+					type: 'POST',
+					dataType: 'json'
+				}).done(function (data){
+					location.reload();
+				});
+			});
+		});
+		</script>
+	</body>
+</html>

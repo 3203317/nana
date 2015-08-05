@@ -49,13 +49,19 @@ exports.findAuthor = function(cb){
  * @params
  * @return
  */
-exports.findNewTopN = function(num, cb){
+exports.findNewTopN = function(num, user_id, cb){
 	var option = {
 		limit: num || 5,
 		sort: { PostTime: -1 }
 	};
 
-	Comment.find(null, null, option, function (err, docs){
+	var params = null;
+	if(!!user_id){
+		// params = params || {};
+		// params.User_Id = user_id;
+	}
+
+	Comment.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});

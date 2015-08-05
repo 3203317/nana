@@ -176,7 +176,7 @@ exports.procTag = function(cb){
 		/* 获取全部的标签 */
 		var tags = docs;
 
-		that.getAll(function (err, docs){
+		that.getAll(null, function (err, docs){
 			if(err) return cb(err);
 
 			var articles = docs;
@@ -230,7 +230,7 @@ exports.procTag = function(cb){
  * @return
  */
 exports.procArchive = function(cb){
-	this.getAll(function (err, docs){
+	this.getAll(null, function (err, docs){
 		if(err) return cb(err);
 
 		/* 生成档案馆对象 */
@@ -358,13 +358,19 @@ exports.findBookmarkTopN = function(num, cb){
  * @params
  * @return
  */
-exports.findHotTopN = function(num, cb){
+exports.findHotTopN = function(num, user_id, cb){
 	var option = {
 		limit: num || 10,
 		sort: { ViewCount: -1 }
 	};
 
-	Article.find(null, null, option, function (err, docs){
+	var params = null;
+	if(!!user_id){
+		params = params || {};
+		params.User_Id = user_id;
+	}
+
+	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		attachData(docs, function (err, docs){
 			if(err) return cb(err);
@@ -379,12 +385,18 @@ exports.findHotTopN = function(num, cb){
  * @params
  * @return
  */
-exports.getAll = function(cb){
+exports.getAll = function(user_id, cb){
 	var option = {
 		sort: { _id: -1 }
 	};
 
-	Article.find(null, null, option, function (err, docs){
+	var params = null;
+	if(!!user_id){
+		params = params || {};
+		params.User_Id = user_id;
+	}
+
+	Article.find(params, null, option, function (err, docs){
 		if(err) return cb(err);
 		cb(null, docs);
 	});

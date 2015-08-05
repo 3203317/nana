@@ -147,7 +147,7 @@ var Article = require('../biz/article');
 		last_time = new Date();
 		last_time = new Date(last_time.valueOf() + timeout);
 
-		Article.findHotTopN(num, function (err, docs){
+		Article.findHotTopN(num, null, function (err, docs){
 			if(err) return cb(err);
 			cache_data = docs;
 			cb(null, docs);
