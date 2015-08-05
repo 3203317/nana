@@ -5,6 +5,8 @@
  */
 'use strict';
 
+var conf = require('../settings');
+
 // biz
 var Comment = require('../biz/comment');
 

@@ -5,11 +5,13 @@
  */
 'use strict';
 
+var conf = require('../settings');
+
 // biz
 var Link = require('../biz/link');
 
 (function (exports, global){
-	var timeout = 1000 * 30;
+	var timeout = conf.html.cache_time;
 	var cache_data = null;
 	var last_time = new Date();
 	last_time = new Date(last_time.valueOf() + timeout);

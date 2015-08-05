@@ -20,6 +20,7 @@ module.exports = {
 	}, html: {
 		cdn: 'http://www.foreworld.net/js/',
 		static_res: '/public/',
-		pagesize: 10
+		pagesize: 10,
+		cache_time: 1000 * 60 * 60
 	}
 };

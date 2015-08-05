@@ -5,6 +5,8 @@
  */
 'use strict';
 
+var conf = require('../settings');
+
 // biz
 var Article = require('../biz/article');
 
@@ -96,7 +98,7 @@ var Article = require('../biz/article');
 })(exports);
 
 (function (exports, global){
-	var timeout = 1000 * 30;
+	var timeout = conf.html.cache_time;
 	var cache_data = null;
 	var last_time = new Date();
 	last_time = new Date(last_time.valueOf() + timeout);
@@ -125,7 +127,7 @@ var Article = require('../biz/article');
 })(exports);
 
 (function (exports, global){
-	var timeout = 1000 * 30;
+	var timeout = conf.html.cache_time;
 	var cache_data = null;
 	var last_time = new Date();
 	last_time = new Date(last_time.valueOf() + timeout);
