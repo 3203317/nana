@@ -52,7 +52,11 @@ module.exports = function(app){
 
 	// user login
 	app.get('/user/login$', front.user.login.indexUI);
-	app.get('/user/register', front.user.register.indexUI);
+	app.post('/user/login$', valiPostData, front.user.login.login);
+	app.get('/user/login/success$', front.user.login.validate, front.user.login.login_success);
+	// register
+	app.get('/user/register$', front.user.register.indexUI);
+	app.post('/user/register$', valiPostData, front.user.register.register);
 
 	/* back */
 	app.get('/u/:name/', back.my.valiUserName, back.my.indexUI);

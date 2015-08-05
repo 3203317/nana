@@ -19,8 +19,12 @@ var proxy = {
 	article: require('../../../proxy/ARTICLE')
 };
 
+var biz = {
+	user: require('../../../biz/user')
+};
+
 /**
- * 
+ *
  * @params
  * @return
  */
@@ -41,4 +45,54 @@ exports.indexUI = function(req, res, next){
 			}
 		});
 	});
+};
+
+/**
+ * 用户登陆
+ *
+ * @params
+ * @return
+ */
+exports.login = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+
+	biz.user.login(data, function (err, status, msg, doc){
+		if(err) return next(err);
+		if(!!status){
+			result.msg = msg;
+			return res.send(result);
+		}
+		/* session */
+		req.session.lv = 2;
+		req.session.userId = doc._id;
+		req.session.role = 'user';
+		req.session.user = doc;
+		/* result */
+		result.success = true;
+		res.send(result);
+	});
+};
+
+/**
+ * 用户登陆成功
+ *
+ * @params
+ * @return
+ */
+exports.login_success = function(req, res, next){
+	var user = req.session.user;
+	res.redirect('/u/'+ user.UserName +'/');
+};
+
+/**
+ * 用户会话验证
+ *
+ * @params
+ * @return
+ */
+exports.validate = function(req, res, next){
+	if(2 === req.session.lv) return next();
+	if(req.xhr) return next(new Error('无权访问'));
+	res.redirect('/user/login');
 };
