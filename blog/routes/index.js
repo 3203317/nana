@@ -24,7 +24,12 @@ var front = {
 var back = {
 	my: require('../controllers/back/my')
 };
-var manage = {};
+var manage = {
+	manager: {
+		login: require('../controllers/manage/manager/login'),
+		logout: false
+	}
+};
 
 var str1 = '参数异常';
 
@@ -60,6 +65,9 @@ module.exports = function(app){
 
 	/* back */
 	app.get('/u/:name/', back.my.valiUserName, back.my.indexUI);
+
+	/* manage */
+	app.get('/manager/login$', manage.manager.login.indexUI);
 };
 
 /**
