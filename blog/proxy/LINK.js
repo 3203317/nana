@@ -31,7 +31,7 @@ var Link = require('../biz/link');
 		last_time = new Date();
 		last_time = new Date(last_time.valueOf() + timeout);
 
-		Link.getAll(function (err, docs){
+		Link.getAll(null, function (err, docs){
 			if(err) return cb(err);
 			cache_data = docs;
 			cb(null, docs);

@@ -19,6 +19,7 @@ var proxy = {
 var biz = {
 	user: require('../../biz/user'),
 	comment: require('../../biz/comment'),
+	link: require('../../biz/link'),
 	article: require('../../biz/article')
 };
 
@@ -53,7 +54,9 @@ exports.valiUserName = function(req, res, next){
 exports.indexUI = function(req, res, next){
 	var user = req.flash('user')[0];
 
-	var ep = EventProxy.create('newCommentTopN', 'hotArticleTopN', 'articles', 'allCategorys', function (newCommentTopN, hotArticleTopN, articles, allCategorys){
+	var ep = EventProxy.create('usefulLink', 'newCommentTopN', 'hotArticleTopN', 'articles', 'allCategorys',
+		function (usefulLink, newCommentTopN, hotArticleTopN, articles, allCategorys){
+
 		res.render('back/My', {
 			conf: conf,
 			title: user.Nickname +'的个人空间 | '+ conf.corp.name,
@@ -64,7 +67,8 @@ exports.indexUI = function(req, res, next){
 				articles: articles,
 				allCategorys: allCategorys,
 				hotArticleTopN: hotArticleTopN,
-				newCommentTopN: newCommentTopN
+				newCommentTopN: newCommentTopN,
+				usefulLink: usefulLink
 			}
 		});
 	});
@@ -91,5 +95,10 @@ exports.indexUI = function(req, res, next){
 	biz.comment.findNewTopN(5, user._id, function (err, docs){
 		if(err) return ep.emit('error', err);
 		ep.emit('newCommentTopN', docs);
+	});
+
+	biz.link.getAll(user._id, function (err, docs){
+		if(err) return ep.emit('error', err);
+		ep.emit('usefulLink', docs);
 	});
 };

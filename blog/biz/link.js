@@ -15,8 +15,15 @@ var models = require('../models'),
  * @params
  * @return
  */
-exports.getAll = function(cb){
-	Link.find(null, null, { sort: { Sort: 1 } }, function (err, docs){
+exports.getAll = function(user_id, cb){
+	var params = null;
+	if(!!user_id){
+		params = params || {};
+		params.User_Id = user_id;
+	}
+
+
+	Link.find(params, null, { sort: { Sort: 1 } }, function (err, docs){
 		if(err) return cb(err);
 
 		attachData(docs, function (err, docs){
