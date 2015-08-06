@@ -9,7 +9,7 @@
 		<header id='header'></header>
 		<div class='container'>
 			<div class='row'>
-				#parse('back/_pagelet/Sidebar.html')
+				#parse('back/_pagelet/Side.Bar.vm.html')
 				<div class='col-sm-12 col-md-6'>
 					<ul class='nav nav-tabs' role='tablist'>
 						<li role='presentation'>
@@ -33,20 +33,20 @@
 							#foreach($article in $!{data.articles})<tr>
 								<td>$i#set($i=$i+1)</td>
 								<td>
-									<a title='创建于 #formatDate($article.PostTime)'
-										href='/archive/${article._id}.html'>$!{article.Title}</a></td>
+									<a title='创建于 #formatDate($!{article.PostTime})'
+										href='/archive/$!{article._id}.html'>$!{article.Title}</a></td>
 								<td>
 									<div class='dropdown'>
-										<a id='drop${article._id}' href='javascript:;'
+										<a id='drop$!{article._id}' href='javascript:;'
 											class='dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
 											操作 <span class='caret'></span>
 										</a>
-										<ul class='dropdown-menu dropdown-menu-right' role='menu' aria-labelledby='drop${article._id}'>
+										<ul class='dropdown-menu dropdown-menu-right' role='menu' aria-labelledby='drop$!{article._id}'>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='admin/edit/blog/${article._id}'>
+												<a role='menuitem' tabindex='-1' href='admin/edit/blog/$!{article._id}'>
 													<span class='glyphicon glyphicon-edit'></span> 编辑</a></li>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='javascript:del("${article._id}")'>
+												<a role='menuitem' tabindex='-1' href='javascript:del("$!{article._id}")'>
 													<span class='glyphicon glyphicon-remove-sign'></span> 删除</a></li>
 										</ul>
 									</div>
@@ -55,7 +55,7 @@
 						</tbody>
 					</table>
 				</div>
-				#parse('back/_pagelet/Sidebar2.html')
+				#parse('back/_pagelet/Side.Bar2.vm.html')
 			</div>
 		</div>
 		<div class='modal fade' id='delConfirmModal'>
