@@ -28,7 +28,8 @@ var manage = {
 	index: require('../controllers/manage/index'),
 	manager: {
 		login: require('../controllers/manage/manager/login'),
-		logout: false
+		logout: require('../controllers/manage/manager/logout'),
+		changePwd: require('../controllers/manage/manager/changePwd')
 	}
 };
 
@@ -70,6 +71,10 @@ module.exports = function(app){
 	/* manage */
 	app.get('/manager/login$', manage.manager.login.indexUI);
 	app.post('/manager/login$', valiPostData, manage.manager.login.login);
+	app.get('/manager/logout$', manage.manager.login.validate, manage.manager.logout.indexUI);
+
+	// changePwd
+	app.get('/manager/changePwd$', manage.manager.login.validate, manage.manager.changePwd.indexUI);
 
 	// manager login
 	app.get('/manage/', manage.manager.login.validate, manage.index.indexUI);
