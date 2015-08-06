@@ -33,5 +33,19 @@ exports.indexUI = function(req, res, next){
  * @return
  */
 exports.changePwd = function(req, res, next){
-	// TODO
+	var result = { success: false },
+		data = req._data,
+		user = req.session.user;
+
+	if(!data.NewPass || 0 === data.NewPass.trim().length){
+		result.msg = ['新密码不能为空。', 'NewPass'];
+		return res.send(result);
+	}
+
+	biz.manager.changePwd(user._id, data.OldPass, data.NewPass, function (err, status, msg, doc){
+		if(err) return next(err);
+		result.success = !status;
+		result.msg = msg;
+		res.send(result);
+	});
 };

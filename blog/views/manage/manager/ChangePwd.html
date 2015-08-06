@@ -54,7 +54,9 @@
 		</div>
 		#parse('front/_pagelet/Common.IndexJs.html')
 		<script type='text/javascript'>
-			function showVali(valiResu){ }
+			function showVali(valiResu){
+				alert(valiResu[0]);
+			}
 
 			$('#chpwdFrm_btn_sub').click(function(){
 				$('#chpwdFrm').olxForm('submit', [function(){
@@ -62,6 +64,7 @@
 					showVali(valiResu);
 				}, function (data){
 					if(!data.success) return showVali(data.msg);
+					alert('修改密码成功!')
 				}]);
 			});
 		</script>

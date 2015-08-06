@@ -53,7 +53,7 @@ exports.changePwd = function(user_id, oldPass, newPass, cb){
 		if(err) return cb(err);
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
 		if(md5.hex(oldPass) !== doc.UserPass)
-			return cb(null, 6, ['用户名或密码输入错误。', 'UserPass'], doc);
+			return cb(null, 6, ['用户名或密码输入错误。', 'OldPass'], doc);
 		doc.update({
 			UserPass: md5.hex(newPass)
 		}, function (err, count){

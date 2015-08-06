@@ -75,6 +75,7 @@ module.exports = function(app){
 
 	// changePwd
 	app.get('/manager/changePwd$', manage.manager.login.validate, manage.manager.changePwd.indexUI);
+	app.post('/manager/changePwd$', valiPostData, manage.manager.login.validate, manage.manager.changePwd.changePwd);
 
 	// manager login
 	app.get('/manage/', manage.manager.login.validate, manage.index.indexUI);
