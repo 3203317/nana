@@ -85,8 +85,14 @@ module.exports = function(app){
 
 	// category
 	app.get('/manage/article/category/', manage.manager.login.validate, manage.article.category.indexUI);
+	app.post('/manage/article/category/add$', valiPostData, manage.manager.login.validate, manage.article.category.add);
+	app.post('/manage/article/category/remove$', valiPostData, manage.manager.login.validate, manage.article.category.remove);
 	// tag
 	app.get('/manage/article/tag/', manage.manager.login.validate, manage.article.tag.indexUI);
+	app.post('/manage/article/tag/add$', valiPostData, manage.manager.login.validate, manage.article.tag.add);
+	app.post('/manage/article/tag/remove$', valiPostData, manage.manager.login.validate, manage.article.tag.remove);
+	app.get('/manage/article/tag/:id$', manage.manager.login.validate, manage.article.tag.id);
+	app.post('/manage/article/tag/edit$', valiPostData, manage.manager.login.validate, manage.article.tag.edit);
 };
 
 /**

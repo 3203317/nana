@@ -30,3 +30,38 @@ exports.indexUI = function(req, res, next){
 		});
 	});
 };
+
+/**
+ * 新增
+ *
+ * @params
+ * @return
+ */
+exports.add = function(req, res, next){
+	var result = { success: false },
+		data = req._data,
+		user = req.session.user;
+	data.User_Id = user._id;
+	biz.category.saveNew(data, function (err, docs){
+		if(err) return next(err);
+		result.success = !!docs;
+		result.data = docs;
+		res.send(result);
+	});
+};
+
+/**
+ * 删除
+ *
+ * @params
+ * @return
+ */
+exports.remove = function(req, res, next){
+	var result = { success: false },
+		data = req._data;
+	biz.category.remove(data.ids, function (err, count){
+		if(err) return next(err);
+		result.success = count === data.ids.length;
+		res.send(result);
+	});
+};

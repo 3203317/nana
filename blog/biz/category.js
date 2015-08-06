@@ -24,3 +24,32 @@ exports.getAll = function(cb){
 		cb(null, docs);
 	});
 };
+
+/**
+ * 新增
+ *
+ * @params
+ * @return
+ */
+exports.saveNew = function(newInfo, cb){
+	newInfo.Count = newInfo.Count || 0;
+	Category.create(newInfo, function (err, doc){
+		if(err) return cb(err);
+		cb(null, doc);
+	});
+};
+
+/**
+ * 删除
+ *
+ * @params
+ * @return
+ */
+exports.remove = function(ids, cb){
+	Category.remove({
+		_id: { '$in': ids }
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};

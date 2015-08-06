@@ -215,11 +215,11 @@
 			var selIds = $('#table1').olxGrid('getCheckedRowsValue', 1);
 			var data = {
 				data: JSON.stringify({
-					Ids: selIds
+					ids: selIds
 				})
 			};
 			$.ajax({
-				url: 'del',
+				url: 'remove',
 				type: 'POST',
 				dataType: 'json',
 				data: data
