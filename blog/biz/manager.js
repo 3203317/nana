@@ -23,7 +23,7 @@ exports.login = function(logInfo, cb){
 		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
 		if(md5.hex(logInfo.UserPass) !== doc.UserPass)
 			return cb(null, 6, ['用户名或密码输入错误。', 'UserPass'], doc);
-		cb(null, 0, null, doc);
+		cb(null, null, null, doc);
 	});
 };
 
@@ -37,7 +37,7 @@ exports.findById = function(id, cb){
 		_id: id
 	}, null, null, function (err, doc){
 		if(err) return cb(err);
-		cb(null, 0, null, doc);
+		cb(null, doc);
 	});
 };
 
@@ -58,7 +58,7 @@ exports.changePwd = function(user_id, oldPass, newPass, cb){
 			UserPass: md5.hex(newPass)
 		}, function (err, count){
 			if(err) return cb(err);
-			cb(null, 0, null, count);
+			cb(null, null, null, count);
 		});
 	});
 };

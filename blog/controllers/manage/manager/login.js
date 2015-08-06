@@ -5,22 +5,12 @@
  */
 'use strict';
 
-var util = require('speedt-utils'),
-	EventProxy = require('eventproxy'),
-	path = require('path'),
-	cwd = process.cwd();
+var util = require('speedt-utils');
 
 var conf = require('../../../settings');
 
-var proxy = {
-	link: require('../../../proxy/LINK'),
-	comment: require('../../../proxy/COMMENT'),
-	category: require('../../../proxy/CATEGORY'),
-	article: require('../../../proxy/ARTICLE')
-};
-
 var biz = {
-	user: require('../../../biz/user')
+	manager: require('../../../biz/manager')
 };
 
 /**
@@ -47,32 +37,21 @@ exports.login = function(req, res, next){
 	var result = { success: false },
 		data = req._data;
 
-	biz.user.login(data, function (err, status, msg, doc){
+	biz.manager.login(data, function (err, status, msg, doc){
 		if(err) return next(err);
 		if(!!status){
 			result.msg = msg;
 			return res.send(result);
 		}
 		/* session */
-		req.session.lv = 2;
+		req.session.lv = 1;
 		req.session.userId = doc._id;
-		req.session.role = 'user';
+		req.session.role = 'admin';
 		req.session.user = doc;
 		/* result */
 		result.success = true;
 		res.send(result);
 	});
-};
-
-/**
- * 用户登陆成功
- *
- * @params
- * @return
- */
-exports.login_success = function(req, res, next){
-	var user = req.session.user;
-	res.redirect('/u/'+ user.UserName +'/');
 };
 
 /**
@@ -82,7 +61,7 @@ exports.login_success = function(req, res, next){
  * @return
  */
 exports.validate = function(req, res, next){
-	if(2 === req.session.lv) return next();
+	if(1 === req.session.lv) return next();
 	if(req.xhr) return next(new Error('无权访问'));
-	res.redirect('/user/login');
+	res.redirect('/manager/login');
 };

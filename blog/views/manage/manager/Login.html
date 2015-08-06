@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='zh-CN'>
 	<head>
-		#parse('front/pagelet/Common.IndexHeader.html')
+		#parse('front/_pagelet/Common.IndexHeader.html')
 		<style>
 		body {
 			background-color: #F5F5F5;
@@ -45,14 +45,14 @@
 				<button id='btn_login' type='button' class='btn btn-primary'>登陆</button>
 			</form>
 		</section>
-		#parse('front/pagelet/Common.IndexJs.html')
+		#parse('front/_pagelet/Common.IndexJs.html')
 		<script type='text/javascript'>
 		$('#btn_login').click(function(){
 			$('#loginFrm').olxForm('submit', [function(){
 			}, function (valiResu){
 			}, function (data){
 				if(data.success) location.href = '/manage/';
-				alert(data.msg[0]);
+				if(data.msg) alert(data.msg[0]);
 			}]);
 		});
 		</script>

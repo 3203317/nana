@@ -25,6 +25,7 @@ var back = {
 	my: require('../controllers/back/my')
 };
 var manage = {
+	index: require('../controllers/manage/index'),
 	manager: {
 		login: require('../controllers/manage/manager/login'),
 		logout: false
@@ -68,6 +69,10 @@ module.exports = function(app){
 
 	/* manage */
 	app.get('/manager/login$', manage.manager.login.indexUI);
+	app.post('/manager/login$', valiPostData, manage.manager.login.login);
+
+	// manager login
+	app.get('/manage/', manage.manager.login.validate, manage.index.indexUI);
 };
 
 /**
