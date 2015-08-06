@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		#parse('front/_pagelet/Common.IndexHeader.html')
+		<link rel='stylesheet' type='text/css' href='$!{conf.html.cdn}bootstrap-datetimepicker/2.2.0/css/bootstrap-datetimepicker.min.css' media='screen'>
+		<link rel='stylesheet' type='text/css' href='http://www.foreworld.net/public/manage/css/index.css?v3' media='screen' />
+	</head>
+	<body>
+		#parse('manage/_pagelet/Side.TopBanner.html')
+		<header id='header'></header>
+		<div class='container'>
+			<div class='row'>
+				<div class='col-sm-12 col-md-2'>
+					#parse('manage/_pagelet/Side.Nav.html')
+				</div>
+				<div class='col-sm-12 col-md-10'>
+					<div id='info_alert' class='alert alert-info'>
+						<button type='button' class='close' data-dismiss='alert'>&times;</button>
+						<strong>提示：</strong>设置系统中所有的文章标签信息。
+					</div>
+					<div class='panel panel-info'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'><strong>查询条件</strong></h3>
+						</div>
+						<div class='panel-body'>
+							<form class='form-inline' role='form'>
+								<div class='form-group'>
+									<input type='text' class='form-control' id='inputEmail3' placeholder='标签名称'>
+								</div>
+								<button type='button' class='btn btn-default glyphicon glyphicon-search'>&#8201;查询</button>
+							</form>
+						</div>
+					</div>
+					<div class='panel panel-default table-responsive'>
+						<div class='panel-heading'>
+							<div class='btn-group btn-group-sm'>
+								<button class='btn btn-primary glyphicon glyphicon-plus-sign' data-toggle='modal' data-target='#addModal'>新增</button>
+								<button id='btn_edit' class='btn btn-default glyphicon glyphicon-edit' data-toggle='modal' data-target='#editModal'>编辑</button>
+								<button id='btn_del' class='btn btn-danger glyphicon glyphicon-remove-sign'>删除</button>
+							</div>
+						</div>
+						#parse('manage/article/tag/_pagelet/Side.List.html')
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='modal fade' id='alertModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>提示</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>请选择需要操作的记录！</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id='addModal' class='modal fade' aria-hidden='true' aria-labelledby='addModalLabel' role='dialog' tabindex='-1'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button class='close' aria-hidden='true' data-dismiss='modal' type='button'>×</button>
+						<h4 id='addModalLabel' class='modal-title'><b>新增</b></h4>
+					</div>
+					<form id='addFrm' data-olx-type='olx.form' class='form-horizontal' role='form' data-url='add'>
+						<div class='modal-body'>
+							<div class='form-group'>
+								<label for='addFrm_TagName' class='col-sm-3 control-label'><span class='olx-form-required'>*</span>标签名称</label>
+								<div class='col-sm-7'>
+									<input type='text' data-olx-type='olx.form.input' data-required='true' class='form-control' id='addFrm_TagName' name='TagName' placeholder='标签名称' data-placement='bottom' data-original-title='请输入正确的格式。' autofocus>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for='addFrm_shadow_PostTime' class='col-sm-3 control-label'>创建时间</label>
+								<div class='col-sm-7'>
+									<div class='input-group date form_date col-md-12' data-date='' data-date-format='yyyy/mm/dd' data-link-field='addFrm_PostTime' data-link-format='yyyy/mm/dd'>
+										<input class='form-control' id='addFrm_shadow_PostTime' type='text' value='' readonly placeholder='创建时间'>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-remove'></span></span>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+									</div>
+									<input type='hidden' data-olx-type='olx.form.input' class='form-control' id='addFrm_PostTime' name='CreateTime' placeholder='创建时间'>
+								</div>
+							</div>
+						</div>
+						<div class='modal-footer'>
+							<button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
+							<button class='btn btn-warning' type='reset'>重置</button>
+							<button id='addFrm_btn_submit' class='btn btn-primary' type='button'>保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class='modal fade' id='delConfirmModal'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+						<h4 class='modal-title'><b>警告</b></h4>
+					</div>
+					<div class='modal-body'>
+						<p>你确认执行该删除操作吗？</p>
+					</div>
+					<div class='modal-footer'>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+						<button type='button' class='btn btn-primary' id='delConfirmModal_btn_submit'>确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id='editModal' class='modal fade' aria-hidden='true' aria-labelledby='editModalLabel' role='dialog' tabindex='-1'>
+			<div class='modal-dialog'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<button class='close' aria-hidden='true' data-dismiss='modal' type='button'>×</button>
+						<h4 id='editModalLabel' class='modal-title'><b>编辑</b></h4>
+					</div>
+					<form id='editFrm' data-olx-type='olx.form' class='form-horizontal' role='form' data-url='edit'>
+						<input type='hidden' id='editFrm_id' name='id'>
+						<div class='modal-body'>
+							<div class='form-group'>
+								<label for='editFrm_TagName' class='col-sm-3 control-label'><span class='olx-form-required'>*</span>标签名称</label>
+								<div class='col-sm-7'>
+									<input type='text' data-olx-type='olx.form.input' data-required='true' class='form-control' id='editFrm_TagName' name='TagName' placeholder='标签名称' data-placement='bottom' data-original-title='请输入正确的格式。' autofocus>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for='editFrm_shadow_PostTime' class='col-sm-3 control-label'>创建时间</label>
+								<div class='col-sm-7'>
+									<div class='input-group date form_date col-md-12' data-date='' data-date-format='yyyy/mm/dd' data-link-field='editFrm_PostTime' data-link-format='yyyy/mm/dd'>
+										<input class='form-control' id='editFrm_shadow_PostTime' type='text' value='' readonly placeholder='创建时间'>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-remove'></span></span>
+										<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+									</div>
+									<input type='hidden' data-olx-type='olx.form.input' class='form-control' id='editFrm_PostTime' name='CreateTime' placeholder='创建时间'>
+								</div>
+							</div>
+						</div>
+						<div class='modal-footer'>
+							<button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
+							<button class='btn btn-warning' type='reset'>重置</button>
+							<button id='editFrm_btn_submit' class='btn btn-primary' type='button'>保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		#parse('front/_pagelet/Common.IndexJs.html')
+		<script type='text/javascript' src='$!{conf.html.cdn}bootstrap-datetimepicker/2.2.0/js/bootstrap-datetimepicker.js' charset='UTF-8'></script>
+		<script type='text/javascript' src='$!{conf.html.cdn}bootstrap-datetimepicker/2.2.0/js/locales/bootstrap-datetimepicker.zh-CN.js' charset='UTF-8'></script>
+		<script type='text/javascript'>
+		$('.form_date').datetimepicker({
+			format: 'yyyy-mm-dd hh:ii:ss',
+			language: 'zh-CN',
+			weekStart: 1,
+			todayBtn: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+		$('#delConfirmModal').on('show.bs.modal', function (e){
+			var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			if(!vals.length){
+				$('#alertModal').modal();
+				return e.preventDefault();
+			}
+		});
+		$('#editModal').on('show.bs.modal', function (e){
+			var vals = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			if(1 !== vals.length){
+				$('#alertModal').modal();
+				return e.preventDefault();
+			}
+			$.ajax({
+				url: vals[0],
+				type: 'GET',
+				dataType: 'json'
+			}).done(function (data) {
+				if(!data.success) alert(data.msg);
+				$('#editFrm_TagName').val(data.data.TagName);
+				$('#editFrm_id').val(data.data._id);
+			});
+		});
+		$('#btn_del').click(function(){
+			$('#delConfirmModal').modal();
+		});
+		$('#addFrm_btn_submit').click(function(){
+			$('#addFrm').olxForm('submit', [function(){}, null, function (data){
+				if(300 === data.code) return top.location.href = '/manager/login';
+				location.reload();
+			}]);
+		});
+		$('#editFrm_btn_submit').click(function(){
+			$('#editFrm').olxForm('submit', [function(){}, null, function (data){
+				if(300 === data.code) return top.location.href = '/manager/login';
+				location.reload();
+			}]);
+		});
+		$('#delConfirmModal_btn_submit').click(function(){
+			var selIds = $('#table1').olxGrid('getCheckedRowsValue', 1);
+			var data = {
+				data: JSON.stringify({
+					Ids: selIds
+				})
+			};
+			$.ajax({
+				url: 'del',
+				type: 'POST',
+				dataType: 'json',
+				data: data
+			}).done(function (data) {
+				location.reload();
+			});
+		});
+		</script>
+	</body>
+</html>

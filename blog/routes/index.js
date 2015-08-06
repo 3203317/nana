@@ -30,6 +30,9 @@ var manage = {
 		login: require('../controllers/manage/manager/login'),
 		logout: require('../controllers/manage/manager/logout'),
 		changePwd: require('../controllers/manage/manager/changePwd')
+	}, article: {
+		category: require('../controllers/manage/article/category'),
+		tag: require('../controllers/manage/article/tag')
 	}
 };
 
@@ -79,6 +82,11 @@ module.exports = function(app){
 
 	// manager login
 	app.get('/manage/', manage.manager.login.validate, manage.index.indexUI);
+
+	// category
+	app.get('/manage/article/category/', manage.manager.login.validate, manage.article.category.indexUI);
+	// tag
+	app.get('/manage/article/tag/', manage.manager.login.validate, manage.article.tag.indexUI);
 };
 
 /**
