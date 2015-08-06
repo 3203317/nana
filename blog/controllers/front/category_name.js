@@ -120,10 +120,7 @@ exports.indexUI_more = function(req, res, next){
 
 	/* 获取下一页的文章列表 */
 	biz.article.findByCate(req.params.name, data.curPage, null, null, function (err, docs){
-		if(err){
-			result.msg = err;
-			return res.send(result);
-		}
+		if(err) return next(err);
 
 		if(!docs || 0 === docs.length){
 			result.msg = 'size: 0.';
@@ -131,10 +128,7 @@ exports.indexUI_more = function(req, res, next){
 		}
 
 		exports.getTemplate(function (err, template){
-			if(err){
-				result.msg = err;
-				return res.send(result);
-			}
+			if(err) return next(err);
 
 			var html = velocity.render(template, {
 				conf: conf,
@@ -160,7 +154,7 @@ exports.indexUI_more = function(req, res, next){
 	exports.getTemplate = function(cb){
 		if(temp) return cb(null, temp);
 
-		fs.readFile(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
+		fs.readFile(path.join(cwd, 'views', 'front', '_pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
 			if(err) return cb(err);
 			temp = template;
 			cb(null, temp);

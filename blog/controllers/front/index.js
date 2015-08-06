@@ -157,7 +157,7 @@ exports.indexUI_more = function(req, res, next){
 	exports.getTemplate = function(cb){
 		if(temp) return cb(null, temp);
 
-		fs.readFile(path.join(cwd, 'views', 'front', 'pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
+		fs.readFile(path.join(cwd, 'views', 'front', '_pagelet', 'Side.ArticleIntros.vm.html'), 'utf8', function (err, template){
 			if(err) return cb(err);
 			temp = template;
 			cb(null, temp);
