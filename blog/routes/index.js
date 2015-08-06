@@ -45,8 +45,8 @@ module.exports = function(app){
 	app.get('/index/more$', valiGetData, front.index.indexUI_more);
 	app.get('/', front.index.indexUI);
 
-	app.get('/install/comment1$', site.install_comment_1);
-	app.get('/install/comment2$', site.install_comment_2);
+	app.get('/install/comment1$', front.user.login.validate, site.install_comment_1);
+	app.get('/install/comment2$', front.user.login.validate, site.install_comment_2);
 
 	// archive
 	app.get('/archive/', front.archive.indexUI);
