@@ -51,7 +51,12 @@
 			</ul>
 			<ul class='nav navbar-nav navbar-right'>
 				<li><a href='javascript:;'>关于</a></li>
-				<li class='active'><a href='/user/login'>登陆</a></li>
+				<li class='active'>#if($!{loginState})
+					<a href='/user/logout'>退出</a>
+					#else
+					<a href='/user/login'>登陆</a>
+					#end
+				</li>
 			</ul>
 			<form id='topSearchFrm' class='navbar-form navbar-right' role='search' data-olx-type='olx.form' onsubmit='return false;'>
 				<div class='form-group'><input class='form-control' type='text' placeholder='搜索'></div>

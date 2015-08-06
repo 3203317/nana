@@ -61,6 +61,7 @@ exports.indexUI = function(req, res, next){
 				description: '',
 				keywords: ',档案馆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ (article.Tags.length ? ','+ article.Tags : ''),
 				topMessage: getTopMessage(),
+				loginState: 2 === req.session.lv,
 				data: {
 					hotArticleTopN: hotArticleTopN,
 					usefulLink: usefulLink,

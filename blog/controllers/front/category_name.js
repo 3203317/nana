@@ -65,6 +65,7 @@ exports.indexUI = function(req, res, next){
 				keywords: ',分类,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5'+ name,
 				topMessage: getTopMessage(),
 				loadMore: 'archive/category/'+ name,
+				loginState: 2 === req.session.lv,
 				data: {
 					hotArticleTopN: hotArticleTopN,
 					usefulLink: usefulLink,

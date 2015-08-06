@@ -40,6 +40,7 @@ exports.indexUI = function(req, res, next){
 			description: '',
 			keywords: ',用户登陆,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
 			refererUrl: escape(req.url),
+			loginState: 2 === req.session.lv,
 			data: {
 				allCategorys: allCategorys
 			}

@@ -62,6 +62,7 @@ exports.indexUI = function(req, res, next){
 			title: user.Nickname +'的个人空间 | '+ conf.corp.name,
 			description: '',
 			keywords: ',个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5,'+ user.Nickname +'的个人空间',
+			loginState: 2 === req.session.lv,
 			data: {
 				user: user,
 				articles: articles,

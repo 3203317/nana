@@ -17,6 +17,7 @@ var front = {
 	category_name: require('../controllers/front/category_name'),
 	user: {
 		login: require('../controllers/front/user/login'),
+		logout: require('../controllers/front/user/logout'),
 		register: require('../controllers/front/user/register')
 	}
 };
@@ -64,6 +65,7 @@ module.exports = function(app){
 	app.get('/user/login$', front.user.login.indexUI);
 	app.post('/user/login$', valiPostData, front.user.login.login);
 	app.get('/user/login/success$', front.user.login.validate, front.user.login.login_success);
+	app.get('/user/logout$', front.user.login.validate, front.user.logout.indexUI);
 	// register
 	app.get('/user/register$', front.user.register.indexUI);
 	app.post('/user/register$', valiPostData, front.user.register.register);

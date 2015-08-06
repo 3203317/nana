@@ -35,6 +35,7 @@ exports.indexUI = function(req, res, next){
 			title: '新用户注册 | '+ conf.corp.name,
 			description: '',
 			keywords: ',新用户注册,个人博客,Blog,Bootstrap3,nodejs,express,css,javascript,java,aspx,html5',
+			loginState: 2 === req.session.lv,
 			data: {
 				allCategorys: allCategorys
 			}
