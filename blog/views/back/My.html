@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang='zh-CN'>
 	<head>
-		#parse('front/pagelet/Common.IndexHeader.html')
+		#parse('front/_pagelet/Common.IndexHeader.html')
 		<link rel='stylesheet' type='text/css' media='screen' href='http://www.foreworld.net/public/user/css/my.css?v3' />
 	</head>
 	<body>
-		#parse('front/pagelet/Side.TopBanner.html')
+		#parse('front/_pagelet/Side.TopBanner.html')
 		<header id='header'></header>
 		<div class='container'>
 			<div class='row'>
-				#parse('back/pagelet/Sidebar.html')
+				#parse('back/_pagelet/Sidebar.html')
 				<div class='col-sm-12 col-md-6'>
 					<ul class='nav nav-tabs' role='tablist'>
 						<li role='presentation'>
@@ -55,7 +55,7 @@
 						</tbody>
 					</table>
 				</div>
-				#parse('back/pagelet/Sidebar2.html')
+				#parse('back/_pagelet/Sidebar2.html')
 			</div>
 		</div>
 		<div class='modal fade' id='delConfirmModal'>
@@ -75,11 +75,11 @@
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-		#parse('front/pagelet/Side.IndexFooter.html')
-		#parse('front/pagelet/Side.BackTop.html')
-		#parse('front/pagelet/Common.IndexJs.html')
+		#parse('front/_pagelet/Side.IndexFooter.html')
+		#parse('front/_pagelet/Side.BackTop.html')
+		#parse('front/_pagelet/Common.IndexJs.html')
 		<!-- Own -->
-		#parse('front/pagelet/Common.LastJs.html')
+		#parse('front/_pagelet/Common.LastJs.html')
 		<script type='text/javascript'>
 		var del_id = null;
 		function del(id){
