@@ -61,7 +61,7 @@ module.exports = function(app){
 	app.get('/user/login$', back.user.loginUI);
 	app.post('/user/login$', valiPostData, back.user.login);
 	app.get('/user/login/success$', back.user.login_validate, back.user.login_success);
-	app.get('/user/logout$', back.user.login_validate, back.user.logoutUI);
+	app.get('/user/logout$', back.user.logoutUI);
 	// register
 	app.get('/user/register$', back.user.registerUI);
 	app.post('/user/register$', valiPostData, back.user.register);
@@ -86,7 +86,7 @@ module.exports = function(app){
 	/* manage */
 	app.get('/manager/login$', manage.manager.loginUI);
 	app.post('/manager/login$', valiPostData, manage.manager.login);
-	app.get('/manager/logout$', manage.manager.login_validate, manage.manager.logoutUI);
+	app.get('/manager/logout$', manage.manager.logoutUI);
 
 	// changePwd
 	app.get('/manager/changePwd$', manage.manager.login_validate, manage.manager.changePwdUI);
