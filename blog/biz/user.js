@@ -78,3 +78,45 @@ exports.register = function(newInfo, cb){
 		});
 	});
 };
+
+/**
+ * 修改密码
+ *
+ * @params
+ * @return
+ */
+exports.changePwd = function(user_id, oldPass, newPass, cb){
+	User.findOne({
+		_id: user_id
+	}, null, null, function (err, doc){
+		if(err) return cb(err);
+		if(!doc) return cb(null, 3, ['找不到该用户。', 'UserName']);
+		if(md5.hex(oldPass) !== doc.UserPass)
+			return cb(null, 6, ['用户名或密码输入错误。', 'OldPass'], doc);
+		doc.update({
+			UserPass: md5.hex(newPass)
+		}, function (err, count){
+			if(err) return cb(err);
+			cb(null, null, null, count);
+		});
+	});
+};
+
+/**
+ * 编辑
+ *
+ * @params
+ * @return
+ */
+exports.editInfo = function(newInfo, cb){
+	User.update({
+		_id: newInfo.id
+	}, {
+		'$set': {
+			Avatar_Url: newInfo.Avatar_Url
+		}
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	});
+};

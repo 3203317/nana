@@ -43,7 +43,7 @@
 										</a>
 										<ul class='dropdown-menu dropdown-menu-right' role='menu' aria-labelledby='drop$!{article._id}'>
 											<li role='presentation'>
-												<a role='menuitem' tabindex='-1' href='admin/edit/blog/$!{article._id}'>
+												<a role='menuitem' tabindex='-1' href='admin/edit/article/$!{article._id}'>
 													<span class='glyphicon glyphicon-edit'></span> 编辑</a></li>
 											<li role='presentation'>
 												<a role='menuitem' tabindex='-1' href='javascript:del("$!{article._id}")'>
@@ -89,7 +89,7 @@
 		$(function(){
 			$('#delConfirmModal_btn_submit').click(function(){
 				$.ajax({
-					url: 'admin/del/blog/'+ del_id,
+					url: 'admin/remove/article/'+ del_id,
 					type: 'POST',
 					dataType: 'json'
 				}).done(function (data){

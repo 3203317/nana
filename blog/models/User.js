@@ -47,6 +47,8 @@ var UserSchema = new Schema({
 		type: String
 	}, SecKey: {			// 密钥
 		type: String
+	}, Avatar_Url: {
+		type: String
 	}
 }, {
 	versionKey: false,

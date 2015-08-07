@@ -98,7 +98,7 @@ var Article = require('../biz/article');
 })(exports);
 
 (function (exports, global){
-	var timeout = conf.html.cache_time;
+	var timeout = 1000 * 30;
 	var cache_data = null;
 	var last_time = new Date();
 	last_time = new Date(last_time.valueOf() + timeout);

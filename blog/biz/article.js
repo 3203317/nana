@@ -16,6 +16,109 @@ var macros = require('../lib/macro');
 var tag  = require('./tag');
 
 /**
+ * 删除
+ *
+ * @params
+ * @return
+ */
+exports.remove = function(id, user_id, cb){
+	Article.remove({
+		_id: id,
+		User_Id: user_id
+	}, function (err, count){
+		if(err) return cb(err);
+		cb(null, count);
+	})
+};
+
+/**
+ * 编辑
+ *
+ * @params
+ * @return
+ */
+exports.editInfo = function(newInfo, cb){
+	/* 标签转换 */
+	formatTag(newInfo);
+
+	saveNewTag(newInfo.Tags, function (err){
+		if(err) return cb(err);
+		/* start save */
+		newInfo.Bookmark = newInfo.Bookmark || 0;
+		newInfo.Topmark = newInfo.Topmark || 0;
+		/* first */
+		var id = newInfo.id;
+		var user_id = newInfo.User_Id;
+		delete newInfo.id;
+		delete newInfo.User_Id;
+		/* second */
+		Article.update({
+			_id: id,
+			User_Id: user_id
+		}, newInfo, function (err, count){
+			if(err) return cb(err);
+			cb(null, count);
+		});
+	});
+};
+
+/**
+ * 格式化标签转为数组
+ *
+ * @params
+ * @return
+ */
+function formatTag(info){
+	var tags = info.Tags.split(',');
+	info.Tags = [];
+	for(var s in tags){
+		if('' !== tags[s]) info.Tags.push(tags[s]);
+	}
+}
+
+/**
+ * 过滤并保存新增标签
+ *
+ * @params
+ * @return
+ */
+function saveNewTag(tags, cb){
+	cb(null);
+	// if(!tags.length) return cb();
+	// tag.findByNames(tags, function (err, status, msg, docs){
+	// 	if(err) return cb(err);
+	// 	/* start save */
+	// 	var newArr = [];
+	// 	for(var s in docs){ }
+	// 	console.log(docs);
+	// 	cb();
+	// });
+}
+
+/**
+ * 新增
+ *
+ * @params
+ * @return
+ */
+exports.saveNew = function(newInfo, cb){
+	/* 标签转换 */
+	formatTag(newInfo);
+
+	saveNewTag(newInfo.Tags, function (err){
+		if(err) return cb(err);
+		/* start save */
+		newInfo.Bookmark = newInfo.Bookmark || 0;
+		newInfo.Topmark = newInfo.Topmark || 0;
+		/* last */
+		Article.create(newInfo, function (err, doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		});
+	});
+};
+
+/**
  * 查询喜欢的文章
  *
  * @params

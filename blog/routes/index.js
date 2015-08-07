@@ -73,7 +73,7 @@ module.exports = function(app){
 	app.get('/u/:name/admin/edit/article/:aid$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.editUI);
 	app.post('/u/:name/admin/edit/article/:aid$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.edit);
 	// remove article
-	app.post('/u/:name/admin/remove/article/:aid$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.remove);
+	app.post('/u/:name/admin/remove/article/:aid$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.remove);
 
 	// change pwd
 	app.get('/u/:name/admin/changePwd/user$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.user.changePwdUI);

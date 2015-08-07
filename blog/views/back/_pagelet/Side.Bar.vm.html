@@ -5,8 +5,7 @@
 				<div class='owner-left'>
 					<div class='face'>
 						<a href='javascript:;'>
-							<img title='$!{data.user.Nickname}'
-								src='$!{conf.html.static_res}assets/images/face/48x48/08_avatar_small.jpg?0'></a>
+							<img style='width:54px;height:54px' title='$!{data.user.Nickname}' src='$!{data.user.Avatar_Url}'></a>
 					</div>
 				</div>
 				<div class='owner-right'>
@@ -15,7 +14,7 @@
 					<div class='opt'>
 						<img title='#toSex($!{data.user.Sex})'
 							src='$!{conf.html.static_res}assets/images/share/16x16/men.png'>
-						<a href='javascript:;'>修改资料</a>
+						<a href='admin/edit/user'>修改资料</a>
 						<a href='javascript:;'>更换头像</a>
 					</div>
 				</div>
@@ -41,7 +40,7 @@
 		<div class='panel-body'>
 			<ul class='list-group'>
 				<li class='list-group-item'>
-					<a href='admin/new/blog'>
+					<a href='admin/create/article'>
 						<div>发表博文»</div></a>
 				</li>
 				<li class='list-group-item'>
