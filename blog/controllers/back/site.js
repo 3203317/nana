@@ -24,6 +24,19 @@ var biz = {
 };
 
 /**
+ *
+ * @params
+ * @return
+ */
+exports.safeSkip = function(req, res, next){
+	var name = req.params.name,
+		user = req.session.user;
+	if(name === user.UserName) return next();
+	if(req.xhr) return next(new Error('无权访问'));
+	res.redirect('/u/'+ user.UserName +'/');
+};
+
+/**
  * 验证用户是否存在
  *
  * @params
@@ -57,7 +70,7 @@ exports.indexUI = function(req, res, next){
 	var ep = EventProxy.create('usefulLink', 'newCommentTopN', 'hotArticleTopN', 'articles', 'allCategorys',
 		function (usefulLink, newCommentTopN, hotArticleTopN, articles, allCategorys){
 
-		res.render('back/My', {
+		res.render('back/Index', {
 			conf: conf,
 			title: user.Nickname +'的个人空间 | '+ conf.corp.name,
 			description: '',

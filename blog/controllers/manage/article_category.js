@@ -5,10 +5,10 @@
  */
 'use strict';
 
-var conf = require('../../../settings');
+var conf = require('../../settings');
 
 var biz = {
-	category: require('../../../biz/category')
+	category: require('../../biz/category')
 };
 
 /**
@@ -37,7 +37,7 @@ exports.indexUI = function(req, res, next){
  * @params
  * @return
  */
-exports.add = function(req, res, next){
+exports.create = function(req, res, next){
 	var result = { success: false },
 		data = req._data,
 		user = req.session.user;

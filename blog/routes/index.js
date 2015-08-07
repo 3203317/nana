@@ -14,27 +14,20 @@ var front = {
 	tag: require('../controllers/front/tag'),
 	tag_name: require('../controllers/front/tag_name'),
 	article_id: require('../controllers/front/article_id'),
-	category_name: require('../controllers/front/category_name'),
-	user: {
-		login: require('../controllers/front/user/login'),
-		logout: require('../controllers/front/user/logout'),
-		register: require('../controllers/front/user/register')
-	}
+	category_name: require('../controllers/front/category_name')
 };
 
 var back = {
-	my: require('../controllers/back/my')
+	site: require('../controllers/back/site'),
+	user: require('../controllers/back/user'),
+	article: require('../controllers/back/article')
 };
+
 var manage = {
-	index: require('../controllers/manage/index'),
-	manager: {
-		login: require('../controllers/manage/manager/login'),
-		logout: require('../controllers/manage/manager/logout'),
-		changePwd: require('../controllers/manage/manager/changePwd')
-	}, article: {
-		category: require('../controllers/manage/article/category'),
-		tag: require('../controllers/manage/article/tag')
-	}
+	site: require('../controllers/manage/site'),
+	manager: require('../controllers/manage/manager'),
+	article_category: require('../controllers/manage/article_category'),
+	article_tag: require('../controllers/manage/article_tag')
 };
 
 var str1 = '参数异常';
@@ -45,8 +38,8 @@ module.exports = function(app){
 	app.get('/index/more$', valiGetData, front.index.indexUI_more);
 	app.get('/', front.index.indexUI);
 
-	app.get('/install/comment1$', front.user.login.validate, site.install_comment_1);
-	app.get('/install/comment2$', front.user.login.validate, site.install_comment_2);
+	app.get('/install/comment1$', back.user.login_validate, site.install_comment_1);
+	app.get('/install/comment2$', back.user.login_validate, site.install_comment_2);
 
 	// archive
 	app.get('/archive/', front.archive.indexUI);
@@ -61,40 +54,57 @@ module.exports = function(app){
 	// article's id
 	app.get('/archive/:id.html$', front.article_id.indexUI);
 
-	// user login
-	app.get('/user/login$', front.user.login.indexUI);
-	app.post('/user/login$', valiPostData, front.user.login.login);
-	app.get('/user/login/success$', front.user.login.validate, front.user.login.login_success);
-	app.get('/user/logout$', front.user.login.validate, front.user.logout.indexUI);
-	// register
-	app.get('/user/register$', front.user.register.indexUI);
-	app.post('/user/register$', valiPostData, front.user.register.register);
-
 	/* back */
-	app.get('/u/:name/', back.my.valiUserName, back.my.indexUI);
+	app.get('/u/:name/', back.site.valiUserName, back.site.indexUI);
+
+	// user login
+	app.get('/user/login$', back.user.loginUI);
+	app.post('/user/login$', valiPostData, back.user.login);
+	app.get('/user/login/success$', back.user.login_validate, back.user.login_success);
+	app.get('/user/logout$', back.user.login_validate, back.user.logoutUI);
+	// register
+	app.get('/user/register$', back.user.registerUI);
+	app.post('/user/register$', valiPostData, back.user.register);
+
+	// create article
+	app.get('/u/:name/admin/create/article$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.createUI);
+	app.post('/u/:name/admin/create/article$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.create);
+	// edit article
+	app.get('/u/:name/admin/edit/article/:aid$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.editUI);
+	app.post('/u/:name/admin/edit/article/:aid$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.edit);
+	// remove article
+	app.post('/u/:name/admin/remove/article/:aid$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.article.remove);
+
+	// change pwd
+	app.get('/u/:name/admin/changePwd/user$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.user.changePwdUI);
+	app.post('/u/:name/admin/changePwd/user$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.user.changePwd);
+
+	// edit user
+	app.get('/u/:name/admin/edit/user$', back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.user.editUI);
+	app.post('/u/:name/admin/edit/user$', valiPostData, back.user.login_validate, back.site.safeSkip, back.site.valiUserName, back.user.edit);
 
 	/* manage */
-	app.get('/manager/login$', manage.manager.login.indexUI);
-	app.post('/manager/login$', valiPostData, manage.manager.login.login);
-	app.get('/manager/logout$', manage.manager.login.validate, manage.manager.logout.indexUI);
+	app.get('/manager/login$', manage.manager.loginUI);
+	app.post('/manager/login$', valiPostData, manage.manager.login);
+	app.get('/manager/logout$', manage.manager.login_validate, manage.manager.logoutUI);
 
 	// changePwd
-	app.get('/manager/changePwd$', manage.manager.login.validate, manage.manager.changePwd.indexUI);
-	app.post('/manager/changePwd$', valiPostData, manage.manager.login.validate, manage.manager.changePwd.changePwd);
+	app.get('/manager/changePwd$', manage.manager.login_validate, manage.manager.changePwdUI);
+	app.post('/manager/changePwd$', valiPostData, manage.manager.login_validate, manage.manager.changePwd);
 
 	// manager login
-	app.get('/manage/', manage.manager.login.validate, manage.index.indexUI);
+	app.get('/manage/', manage.manager.login_validate, manage.site.indexUI);
 
 	// category
-	app.get('/manage/article/category/', manage.manager.login.validate, manage.article.category.indexUI);
-	app.post('/manage/article/category/add$', valiPostData, manage.manager.login.validate, manage.article.category.add);
-	app.post('/manage/article/category/remove$', valiPostData, manage.manager.login.validate, manage.article.category.remove);
+	app.get('/manage/article/category/', manage.manager.login_validate, manage.article_category.indexUI);
+	app.post('/manage/article/category/create$', valiPostData, manage.manager.login_validate, manage.article_category.create);
+	app.post('/manage/article/category/remove$', valiPostData, manage.manager.login_validate, manage.article_category.remove);
 	// tag
-	app.get('/manage/article/tag/', manage.manager.login.validate, manage.article.tag.indexUI);
-	app.post('/manage/article/tag/add$', valiPostData, manage.manager.login.validate, manage.article.tag.add);
-	app.post('/manage/article/tag/remove$', valiPostData, manage.manager.login.validate, manage.article.tag.remove);
-	app.get('/manage/article/tag/:id$', manage.manager.login.validate, manage.article.tag.id);
-	app.post('/manage/article/tag/edit$', valiPostData, manage.manager.login.validate, manage.article.tag.edit);
+	app.get('/manage/article/tag/', manage.manager.login_validate, manage.article_tag.indexUI);
+	app.post('/manage/article/tag/create$', valiPostData, manage.manager.login_validate, manage.article_tag.create);
+	app.post('/manage/article/tag/remove$', valiPostData, manage.manager.login_validate, manage.article_tag.remove);
+	app.get('/manage/article/tag/:id$', manage.manager.login_validate, manage.article_tag.id);
+	app.post('/manage/article/tag/edit$', valiPostData, manage.manager.login_validate, manage.article_tag.edit);
 };
 
 /**
