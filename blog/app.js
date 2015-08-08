@@ -57,7 +57,8 @@ app.use(express.session({
 		maxAge: 1000 * 60 * 60 * 24 * 30  //30 days
 	}, store: new MongoStore({
 		// db: dbconf.database
-		url: 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database
+		url: 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database,
+		auto_reconnect: true
 	})
 }));
 
