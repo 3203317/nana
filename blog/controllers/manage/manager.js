@@ -83,7 +83,7 @@ exports.logoutUI = function(req, res, next){
  * @return
  */
 exports.changePwdUI = function(req, res, next){
-	res.render('manage/manager/changePwd', {
+	res.render('manage/manager/ChangePwd', {
 		conf: conf,
 		title: '修改密码 | 后台管理 | '+ conf.corp.name,
 		description: '',
