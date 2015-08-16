@@ -23,5 +23,14 @@ module.exports = {
 		external_res: 'http://www.foreworld.net/public/',
 		pagesize: 10,
 		cache_time: 1000 * 60 * 60
+	}, mail: {
+		secureConnection: true,
+		host: 'smtp.qq.com',
+		port: 465,
+		to: ['huangxin@foreworld.net'],
+		auth: {
+			user: '3203317@qq.com',
+			pass: '82314178hxi'
+		}
 	}
 };

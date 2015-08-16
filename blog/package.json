@@ -13,11 +13,10 @@
     "velocityjs": "0.4.6",
     "connect-mongo": "0.4.1",
     "connect-flash": "0.1.1",
-    "nodemailer": "1.3.0",
     "node-uuid": "1.4.1",
     "async": "0.9.0",
     "log4js": "0.6.21",
-    "speedt-utils": "0.1.16",
+    "speedt-utils": "0.1.23",
     "eventproxy": "0.3.1"
   }
 }

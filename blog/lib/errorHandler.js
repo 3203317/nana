@@ -5,6 +5,9 @@
  */
 'use strict';
 
+var util = require('speedt-utils'),
+	mailService = util.service.mail;
+
 exports.appErrorProcess = function(app){
 
 	app.configure(function(){
@@ -26,6 +29,10 @@ exports.appErrorProcess = function(app){
 
 		process.on('uncaughtException', function (err){
 			// TODO: send email
+			mailService.sendMail({
+				subject: 'foreworld.net [App Error]',
+				html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+			});
 			console.log(err);
 		});
 	});

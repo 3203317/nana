@@ -10,6 +10,9 @@ var mongoose = require('mongoose'),
 
 var dbconf = require('../settings').db;
 
+var util = require('speedt-utils'),
+	mailService = util.service.mail;
+
 var url = 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database;
 
 dbconn.on('error', console.error);
@@ -18,10 +21,16 @@ dbconn.once('open', function(){
 });
 
 mongoose.connect(url, function (err){
-	if(err){
-		console.error('Connect to %s Error: %s.', url, err.message);
+	if(!err) return;
+	// mongoose error
+	console.error('Connect to %s Error: %s.', url, err.message);
+	// send mail
+	mailService.sendMail({
+		subject: 'foreworld.net [Web Error]',
+		html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+	}, function (err, info){
 		process.exit(1);
-	}
+	});
 });
 
 // models
