@@ -27,10 +27,10 @@ module.exports = {
 		secureConnection: true,
 		host: 'smtp.qq.com',
 		port: 465,
-		to: ['huangxin@foreworld.net'],
+		to: ['huangxin@foreworld.net', 'fxy_100@sina.com'],
 		auth: {
 			user: '3203317@qq.com',
-			pass: '82314178hxi'
+			pass: ''
 		}
 	}
 };

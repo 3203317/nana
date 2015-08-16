@@ -29,6 +29,7 @@ mongoose.connect(url, function (err){
 		subject: 'foreworld.net [Web Error]',
 		html: err.message +'\n'+ err.stack +'\n'+ err.toString()
 	}, function (err, info){
+		if(err) console.log(arguments);
 		process.exit(1);
 	});
 });

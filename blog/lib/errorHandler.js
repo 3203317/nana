@@ -21,6 +21,14 @@ exports.appErrorProcess = function(app){
 
 		app.use(function (err, req, res, next){
 			if(!err) return next();
+			// send mail
+			mailService.sendMail({
+				subject: 'foreworld.net [Web Error]',
+				html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+			}, function (err, info){
+				if(err) console.log(arguments);
+			});
+			// res send
 			if(req.xhr){
 				return res.send({ success: false, msg: err.message });
 			}
@@ -28,12 +36,13 @@ exports.appErrorProcess = function(app){
 		});
 
 		process.on('uncaughtException', function (err){
-			// TODO: send email
+			// send mail
 			mailService.sendMail({
-				subject: 'foreworld.net [App Error]',
+				subject: 'foreworld.net [Web Error]',
 				html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+			}, function (err, info){
+				if(err) console.log(arguments);
 			});
-			console.log(err);
 		});
 	});
 };
