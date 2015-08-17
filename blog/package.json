@@ -16,7 +16,7 @@
     "node-uuid": "1.4.1",
     "async": "0.9.0",
     "log4js": "0.6.21",
-    "speedt-utils": "0.1.24",
+    "speedt-utils": "0.1.26",
     "eventproxy": "0.3.1"
   }
 }

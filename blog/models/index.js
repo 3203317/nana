@@ -13,6 +13,10 @@ var dbconf = require('../settings').db;
 var util = require('speedt-utils'),
 	mailService = util.service.mail;
 
+var path = require('path'),
+	cwd = process.cwd(),
+	macros = require('../lib/macro');
+
 var url = 'mongodb://'+ dbconf.user +':'+ dbconf.pass +'@'+ dbconf.host +':'+ dbconf.port +'/'+ dbconf.database;
 
 dbconn.on('error', console.error);
@@ -27,7 +31,14 @@ mongoose.connect(url, function (err){
 	// send mail
 	mailService.sendMail({
 		subject: 'foreworld.net [Web Error]',
-		html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+		template: [
+			path.join(cwd, 'lib', 'ErrorMail.vm.html'), {
+				data: {
+					error: err,
+					time: util.format(new Date(), 'YY-MM-dd hh:mm:ss.S')
+				}
+			}, macros
+		]
 	}, function (err, info){
 		if(err) console.log(arguments);
 		process.exit(1);

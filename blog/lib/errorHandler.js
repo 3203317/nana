@@ -5,6 +5,10 @@
  */
 'use strict';
 
+var path = require('path'),
+	cwd = process.cwd(),
+	macros = require('./macro');
+
 var util = require('speedt-utils'),
 	mailService = util.service.mail;
 
@@ -24,7 +28,14 @@ exports.appErrorProcess = function(app){
 			// send mail
 			mailService.sendMail({
 				subject: 'foreworld.net [Web Error]',
-				html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+				template: [
+					path.join(cwd, 'lib', 'ErrorMail.vm.html'), {
+						data: {
+							error: err,
+							time: util.format(new Date(), 'YY-MM-dd hh:mm:ss.S')
+						}
+					}, macros
+				]
 			}, function (err, info){
 				if(err) console.log(arguments);
 			});
@@ -39,7 +50,14 @@ exports.appErrorProcess = function(app){
 			// send mail
 			mailService.sendMail({
 				subject: 'foreworld.net [Web Error]',
-				html: err.message +'\n'+ err.stack +'\n'+ err.toString()
+				template: [
+					path.join(cwd, 'lib', 'ErrorMail.vm.html'), {
+						data: {
+							error: err,
+							time: util.format(new Date(), 'YY-MM-dd hh:mm:ss.S')
+						}
+					}, macros
+				]
 			}, function (err, info){
 				if(err) console.log(arguments);
 			});
