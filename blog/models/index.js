@@ -30,7 +30,7 @@ mongoose.connect(url, function (err){
 	console.error('Connect to %s Error: %s.', url, err.message);
 	// send mail
 	mailService.sendMail({
-		subject: 'foreworld.net [Web Error]',
+		subject: 'foreworld.net [Web DB Error]',
 		template: [
 			path.join(cwd, 'lib', 'ErrorMail.vm.html'), {
 				data: {
@@ -40,7 +40,7 @@ mongoose.connect(url, function (err){
 			}, macros
 		]
 	}, function (err, info){
-		if(err) console.log(arguments);
+		if(err) console.error(err);
 		process.exit(1);
 	});
 });

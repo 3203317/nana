@@ -22,7 +22,6 @@ exports.getAll = function(user_id, cb){
 		params.User_Id = user_id;
 	}
 
-
 	Link.find(params, null, { sort: { Sort: 1 } }, function (err, docs){
 		if(err) return cb(err);
 

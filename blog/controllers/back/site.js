@@ -32,7 +32,7 @@ exports.safeSkip = function(req, res, next){
 	var name = req.params.name,
 		user = req.session.user;
 	if(name === user.UserName) return next();
-	if(req.xhr) return next(new Error('无权访问'));
+	if(req.xhr) return res.send({ success: false, msg: '无权访问' });
 	res.redirect('/u/'+ user.UserName +'/');
 };
 

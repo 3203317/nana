@@ -8,7 +8,6 @@
 var models = require('../models'),
 	Comment = models.Comment;
 
-
 /**
  * 更新用户头像
  *

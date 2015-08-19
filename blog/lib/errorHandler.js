@@ -37,7 +37,7 @@ exports.appErrorProcess = function(app){
 					}, macros
 				]
 			}, function (err, info){
-				if(err) console.log(arguments);
+				if(err) console.error(err);
 			});
 			// res send
 			if(req.xhr){
@@ -49,7 +49,7 @@ exports.appErrorProcess = function(app){
 		process.on('uncaughtException', function (err){
 			// send mail
 			mailService.sendMail({
-				subject: 'foreworld.net [Web Error]',
+				subject: 'foreworld.net [Web Uncaught Error]',
 				template: [
 					path.join(cwd, 'lib', 'ErrorMail.vm.html'), {
 						data: {
@@ -59,7 +59,7 @@ exports.appErrorProcess = function(app){
 					}, macros
 				]
 			}, function (err, info){
-				if(err) console.log(arguments);
+				if(err) console.error(err);
 			});
 		});
 	});
