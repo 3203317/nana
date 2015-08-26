@@ -5,16 +5,21 @@
  */
 'use strict';
 
+var util = require('speedt-utils'),
+	cache = util.cache;
+
 var conf = require('../settings');
 
+// biz
 var Category = require('../biz/category');
 
 (function (exports, global){
-	var timeout = conf.html.cache_time;
-	var cache_data = null;
-	var last_time = new Date();
-	last_time = new Date(last_time.valueOf() + timeout);
-
+	function func(cb){
+		Category.getAll(function (err, docs){
+			if(err) return cb(err);
+			cb(null, docs);
+		});
+	}
 	/**
 	 * 获取所有分类
 	 *
@@ -22,18 +27,9 @@ var Category = require('../biz/category');
 	 * @return
 	 */
 	exports.getAll = function(cb){
-		if(!!cache_data){
-			if(new Date() < last_time)
-				return cb(null, cache_data);
-		}
-
-		last_time = new Date();
-		last_time = new Date(last_time.valueOf() + timeout);
-
-		Category.getAll(function (err, docs){
+		cache.get('CategoryAllList', conf.html.cache_time, [func], function (err, data){
 			if(err) return cb(err);
-			cache_data = docs;
-			cb(null, docs);
+			cb(null, data);
 		});
 	};
 })(exports);

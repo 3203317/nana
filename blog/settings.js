@@ -25,11 +25,11 @@ module.exports = {
 		cache_time: 1000 * 60 * 60
 	}, mail: {
 		secureConnection: true,
-		host: 'smtp.qq.com',
+		host: 'smtp.sina.com',
 		port: 465,
 		to: ['huangxin@foreworld.net', 'fxy_100@sina.com'],
 		auth: {
-			user: '3203317@qq.com',
+			user: 'fxy_100@sina.com',
 			pass: ''
 		}
 	}

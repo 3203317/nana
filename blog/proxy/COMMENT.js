@@ -5,16 +5,21 @@
  */
 'use strict';
 
+var util = require('speedt-utils'),
+	cache = util.cache;
+
 var conf = require('../settings');
 
 // biz
 var Comment = require('../biz/comment');
 
 (function (exports, global){
-	var timeout = 1000 * 30;
-	var cache_data = null;
-	var last_time = new Date();
-	last_time = new Date(last_time.valueOf() + timeout);
+	function func(num, cb){
+		Comment.findNewTopN(num, null, function (err, docs){
+			if(err) return cb(err);
+			cb(null, docs);
+		});
+	}
 
 	/**
 	 * 最新的N条评论
@@ -23,18 +28,9 @@ var Comment = require('../biz/comment');
 	 * @return
 	 */
 	exports.findNewTopN = function(num, cb){
-		if(!!cache_data){
-			if(new Date() < last_time)
-				return cb(null, cache_data);
-		}
-
-		last_time = new Date();
-		last_time = new Date(last_time.valueOf() + timeout);
-
-		Comment.findNewTopN(num, null, function (err, docs){
+		cache.get('CommentNewTopN', 1000 * 30, [func, num], function (err, data){
 			if(err) return cb(err);
-			cache_data = docs;
-			cb(null, cache_data);
+			cb(null, data);
 		});
 	};
 })(exports);

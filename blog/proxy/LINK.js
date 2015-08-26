@@ -5,16 +5,21 @@
  */
 'use strict';
 
+var util = require('speedt-utils'),
+	cache = util.cache;
+
 var conf = require('../settings');
 
 // biz
 var Link = require('../biz/link');
 
 (function (exports, global){
-	var timeout = conf.html.cache_time;
-	var cache_data = null;
-	var last_time = new Date();
-	last_time = new Date(last_time.valueOf() + timeout);
+	function func(cb){
+		Link.getAll(null, function (err, docs){
+			if(err) return cb(err);
+			cb(null, docs);
+		});
+	}
 
 	/**
 	 * 获取全部常用链接
@@ -23,18 +28,9 @@ var Link = require('../biz/link');
 	 * @return
 	 */
 	exports.getAll = function(cb){
-		if(!!cache_data){
-			if(new Date() < last_time)
-				return cb(null, cache_data);
-		}
-
-		last_time = new Date();
-		last_time = new Date(last_time.valueOf() + timeout);
-
-		Link.getAll(null, function (err, docs){
+		cache.get('LinkAllList', conf.html.cache_time, [func], function (err, data){
 			if(err) return cb(err);
-			cache_data = docs;
-			cb(null, docs);
+			cb(null, data);
 		});
 	};
 })(exports);
