@@ -25,6 +25,7 @@ exports.appErrorProcess = function(app){
 
 		app.use(function (err, req, res, next){
 			if(!err) return next();
+			console.error(err);
 			// send mail
 			mailService.sendMail({
 				subject: 'foreworld.net [Web Error]',
@@ -47,6 +48,7 @@ exports.appErrorProcess = function(app){
 		});
 
 		process.on('uncaughtException', function (err){
+			console.error(err);
 			// send mail
 			mailService.sendMail({
 				subject: 'foreworld.net [Web Uncaught Error]',
