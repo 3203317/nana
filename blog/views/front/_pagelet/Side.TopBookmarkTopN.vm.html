@@ -8,11 +8,13 @@
 	</ul>
 </section>
 <script type='text/javascript'>
-$(function(){
-	setTimeout(function(){
+(function run(){
+	if(!$('.flexslider').flexslider){
+		setTimeout(run, 200);
+	}else{
 		$('.flexslider').flexslider({
 			animation: 'slide'
 		});
-	}, 1000);
-});
+	}
+})();
 </script>
