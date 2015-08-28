@@ -3,7 +3,7 @@
 </div>
 <script type='text/javascript'>
 $(function(){
-	console.log('Hello, Foreworld!');
+	if(!isIE()) console.log('Hello, Foreworld!');
 	$('#qrCode').pin({
 		minWidth: 940,
 		top: 60
