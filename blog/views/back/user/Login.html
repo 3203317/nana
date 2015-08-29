@@ -110,9 +110,9 @@
 
 			$('#btn_log').click(function(){
 				$('#logFrm').olxForm('submit', [function(){
-					if(!$('#logFrm_Email').val().trim().length) return ['电子邮箱不能为空。', 'Email'];
-					if(!$('#logFrm_UserPass').val().trim().length) return ['登陆密码不能为空。', 'UserPass'];
-					if(!$('#logFrm_VerifyCode').val().trim().length) return ['验证码不能为空。', 'VerifyCode'];
+					if(!$.trim($('#logFrm_Email').val()).length) return ['电子邮箱不能为空。', 'Email'];
+					if(!$.trim($('#logFrm_UserPass').val()).length) return ['登陆密码不能为空。', 'UserPass'];
+					if(!$.trim($('#logFrm_VerifyCode').val()).length) return ['验证码不能为空。', 'VerifyCode'];
 				}, function (valiResu){
 					showVali(valiResu);
 				}, function (data){
