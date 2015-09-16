@@ -95,7 +95,7 @@ exports.login_success = function(req, res, next){
 exports.login_validate = function(req, res, next){
 	if(2 === req.session.lv) return next();
 	if(req.xhr) return res.send({ success: false, msg: '无权访问' });
-	res.redirect('/user/login?refererUrl='+ req.url);
+	res.redirect('/user/login?refererUrl='+ escape(req.url));
 };
 
 /**
