@@ -1,6 +1,10 @@
 <div id='qrCode'>
 	<figure><img src='$!{conf.html.static_res}assets/images/foreworld.png' alt='二维码' title='洪荒世界'></figure>
 </div>
+<video id='video' autoplay=''></video>
+<figure id='camera'>
+	<img src='$!{conf.html.static_res}assets/images/camera/48x48.png' alt='摄像头' title='开启摄像头（火狐）'>
+</figure>
 <script type='text/javascript'>
 $(function(){
 	if(!isIE()) console.log('Hello, Foreworld!');
@@ -8,5 +12,60 @@ $(function(){
 		minWidth: 940,
 		top: 60
 	});
+
+	$('#camera').click(function(){
+		if(!!getById('video').src) return;
+		if(!!navigator.mozGetUserMedia){
+			navigator.mozGetUserMedia({
+				'video': true
+			}, function (stream){
+				getById('video').src = window.URL.createObjectURL(stream);
+				getById('video').onloadedmetadata = function(e){
+					getById('video').play();
+					$("#video").css('display', 'block');
+				};
+			}, function(){
+				console.log(arguments)
+			});
+		}
+	});
+
+	function getById(id){
+		return document.getElementById(id);
+	}
+	#*console.log(navigator.getUserMedia)
+	console.log(navigator.webkitGetUserMedia)
+	console.log(navigator.mozGetUserMedia)
+	console.log(navigator.msGetUserMedia)*#
 });
 </script>
+<style>
+#camera, #video {
+	bottom: 150px;
+	cursor: pointer;
+	line-height: 1px;
+	position: fixed;
+	right: 40px;
+	top: auto;
+	z-index: 999;
+}
+#video {
+	cursor: auto;
+	width: 250px;
+	bottom: 200px;
+	display: none;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 2px;
+}
+@media screen and (min-width: 768px) and (max-width: 1010px) {
+	#camera, #video {
+		right: 5px;
+	}
+}
+@media screen and (max-width: 800px) {
+	#camera, #video {
+		right: 5px;
+	}
+}
+</style>
