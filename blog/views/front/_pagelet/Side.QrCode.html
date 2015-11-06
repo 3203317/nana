@@ -3,7 +3,7 @@
 </div>
 <video id='video' autoplay=''></video>
 <figure id='camera'>
-	<img src='$!{conf.html.static_res}assets/images/camera/48x48.png' alt='摄像头' title='开启摄像头（火狐）'>
+	<img src='$!{conf.html.static_res}assets/images/camera/48x48.png' alt='摄像头' title='开启摄像头（火狐, WebKit）'>
 </figure>
 <script type='text/javascript'>
 $(function(){
@@ -15,17 +15,26 @@ $(function(){
 
 	$('#camera').click(function(){
 		if(!!getById('video').src) return;
+		var params = { 'video': true, 'audio': true };
 		if(!!navigator.mozGetUserMedia){
-			navigator.mozGetUserMedia({
-				'video': true
-			}, function (stream){
+			navigator.mozGetUserMedia(params, function (stream){
 				getById('video').src = window.URL.createObjectURL(stream);
 				getById('video').onloadedmetadata = function(e){
 					getById('video').play();
 					$("#video").css('display', 'block');
 				};
 			}, function(){
-				console.log(arguments)
+				console.log(arguments);
+			});
+		}else if(!!navigator.webkitGetUserMedia){
+			navigator.webkitGetUserMedia(params, function (stream){
+				getById('video').src = window.webkitURL.createObjectURL(stream);
+				getById('video').onloadedmetadata = function(e){
+					getById('video').play();
+					$("#video").css('display', 'block');
+				};
+			}, function(){
+				console.log(arguments);
 			});
 		}
 	});
