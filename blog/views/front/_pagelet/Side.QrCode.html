@@ -24,6 +24,7 @@ $(function(){
 					$("#video").css('display', 'block');
 				};
 			}, function(){
+				$("#video").css('display', 'none');
 				console.log(arguments);
 			});
 		}else if(!!navigator.webkitGetUserMedia){
@@ -63,7 +64,7 @@ $(function(){
 	width: 250px;
 	bottom: 200px;
 	display: none;
-	border: 1px solid #ccc;
+	border: 1px solid #5EC895;
 	border-radius: 3px;
 	padding: 2px;
 }
