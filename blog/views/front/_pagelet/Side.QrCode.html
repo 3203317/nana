@@ -15,7 +15,7 @@ $(function(){
 
 	$('#camera').click(function(){
 		if(!!getById('video').src) return;
-		var params = { 'video': true, 'audio': true };
+		var params = { 'video': true, 'audio': false };
 		if(!!navigator.mozGetUserMedia){
 			navigator.mozGetUserMedia(params, function (stream){
 				getById('video').src = window.URL.createObjectURL(stream);
@@ -35,6 +35,7 @@ $(function(){
 					$("#video").css('display', 'block');
 				};
 			}, function(){
+				$("#video").css('display', 'none');
 				console.log(arguments);
 			});
 		}
