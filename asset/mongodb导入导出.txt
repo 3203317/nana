@@ -1,0 +1,18 @@
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c links -o links.json -f LinkName,LinkUrl,Sort,User_Id
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c users -o users.json -f UserName,UserPass,SecPass,Sex,Nickname,Birthday,QQ,AckCode,Email,SafeEmail,Status,IsDel,ApiKey,SecKey,Avatar_Url
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c articles -o articles.json -f Title,Intro,Content,Cate,Tags,ViewCount,Bookmark,Topmark,Photo,User_Id
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c categories -o categories.json -f CateName,Intro,Count,Sort,User_Id
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c comments -o comments.json -f Content,PostIP,Author,Author_Id,Author_Url,User_Id,Article_Id,Avatar_Url,PostTime
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c managers -o managers.json -f UserName,UserPass,Sex,Email,IsDel,ApiKey,SecKey
+
+./mongoexport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name -c tags -o tags.json -f TagName,Count,User_Id
+
+
+./mongoimport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name --jsonArray -c articles
+
+./mongoimport -h 127.0.0.1 --port 12345 -u sa -p user_pass -d db_name --jsonArray -c links
