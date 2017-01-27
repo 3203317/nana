@@ -3,4 +3,4 @@
 local var = ngx.var;
 
 
-ngx.say('hello, lua!');
+ngx.say('{ "error": { "code": 40001, "msg": "hello, lua!"} }');
