@@ -11,10 +11,10 @@ end;
 --[[
 判断字符串是否为空
 --]]
-function _M.isEmpty(s)
+function _M:isEmpty(s)
   if nil == s then return nil; end;
 
-  s = _M.trim(s);
+  s = self.trim(s);
 
 --  if '' == s then
 --    return nil;
