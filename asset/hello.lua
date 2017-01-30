@@ -28,10 +28,11 @@ UTC
 --]]
 local _utctime = (ngx.now() - 8 * 60 * 60) * 1000;
 
-if _timestamp < _utctime then
-  ngx.say('{"error":{"code":40002}}');
+if (_timestamp < (_utctime - 3600000)) or ((_utctime + 3600000) < _timestamp) then
+  ngx.say('{"error":{"code":40001,"system_time":'.. _utctime  ..'}}');
   return ngx.exit(ngx.HTTP_OK);
 end;
+
 
 ngx.say('{"data":{"msg":"hello lua!"}}');
 ngx.exit(ngx.HTTP_OK);
