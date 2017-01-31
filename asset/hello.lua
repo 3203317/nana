@@ -3,11 +3,18 @@
 local var = ngx.var;
 
 local _timestamp = var.arg_timestamp;
-
 _timestamp = util:isEmpty(_timestamp);
 
 if nil == _timestamp then
   ngx.say('{"error":{"code":40001}}');
+  return ngx.exit(ngx.HTTP_OK);
+end;
+
+local _method = var.arg_method;
+_method = util:isEmpty(_method);
+
+if nil == _method then
+  ngx.say('{"error":{"code":40002}}');
   return ngx.exit(ngx.HTTP_OK);
 end;
 
