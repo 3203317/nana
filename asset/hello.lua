@@ -4,8 +4,6 @@ local var = ngx.var;
 
 local _timestamp = var.arg_timestamp;
 
-local util = require "util";
-
 _timestamp = util:isEmpty(_timestamp);
 
 if nil == _timestamp then
