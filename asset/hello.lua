@@ -1,6 +1,8 @@
 -- huangxin <3203317@qq.com>
 
 local var = ngx.var;
+local util = require 'util';
+
 
 local _timestamp = var.arg_timestamp;
 _timestamp = util:isEmpty(_timestamp);
