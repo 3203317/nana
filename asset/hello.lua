@@ -3,7 +3,9 @@
 local var = ngx.var;
 local util = require 'util';
 
-
+--[[
+时间戳
+--]]
 local _timestamp = var.arg_timestamp;
 _timestamp = util:isEmpty(_timestamp);
 
@@ -12,6 +14,9 @@ if nil == _timestamp then
   return ngx.exit(ngx.HTTP_OK);
 end;
 
+--[[
+method
+--]]
 local _method = var.arg_method;
 _method = util:isEmpty(_method);
 
