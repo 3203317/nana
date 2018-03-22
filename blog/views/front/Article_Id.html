@@ -95,20 +95,15 @@
 					</div>#end
 					<div class='clearfix' id='comment'>
 						<!-- 多说评论框 start -->
-						<div class='ds-thread' data-thread-key='$!{data.article._id}' data-title='$!{data.article.Title}' data-url='http://www.foreworld.net/archive/$!{data.article._id}.html'></div>
-						<!-- 多说评论框 end -->
-						<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-						<script type='text/javascript'>
-						var duoshuoQuery = {
-							short_name: 'foreworld'
-						};
-						$(function(){
-							var ds = document.createElement('script');
-							ds.type = 'text/javascript';
-							ds.async = true;
-							ds.src = (document.location.protocol === 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-							ds.charset = 'UTF-8';
-							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+						<!--高速版-->
+						<!--PC打分版-->
+						<div id="SOHUCS" sid="$!{data.article._id}"></div>
+						<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+						<script type="text/javascript">
+						window._config = { showScore: true };
+						window.changyan.api.config({
+							appid: 'cytwHAHNm',
+							conf: 'prod_80642296d55cfef2096f31b1ff6218c9'
 						});
 						</script>
 						<!-- 多说公共JS代码 end -->
