@@ -44,7 +44,7 @@
 								</span>
 							</div>
 							#if($!{data.article.Photo})<figure class='thumbnail clearfix'>
-								<img src='$!{conf.html.static_res}udata/$!{data.article.author.UserName}/$!{data.article.Photo}' alt='$!{conf.html.static_res}udata/$!{data.article.author.UserName}/$!{data.article.Photo}'>
+								<img src='$!{data.article.Photo}' alt='$!{conf.html.static_res}udata/$!{data.article.author.UserName}/$!{data.article.Photo}'>
 							</figure>#end
 							<div class='content'>#toHtml($!{data.article.Content})</div>
 							<div class='footer tag'>

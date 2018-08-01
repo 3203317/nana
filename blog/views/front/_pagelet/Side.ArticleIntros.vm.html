@@ -24,7 +24,7 @@
 		</div>
 		#if(${article.Photo})<figure class='thumbnail clearfix'>
 			<a href='/archive/${article._id}.html'>
-				<img src='$!{conf.html.static_res}udata/$article.author.UserName/${article.Photo}' alt='$!{conf.html.static_res}udata/$article.author.UserName/${article.Photo}'></a>
+				<img src='${article.Photo}' alt='$!{conf.html.static_res}udata/$article.author.UserName/${article.Photo}'></a>
 		</figure>#end
 		<div class='well'>$article.Intro</div>
 		<div class='footer'>
