@@ -1,0 +1,6 @@
+{"_id":{"$oid":"53d636dc3194bb740d797d98"},"CateName":"杂文","Count":1,"Intro":"杂文","Sort":1,"User_Id":{"$oid":"53d636dcff62e3740dd006bd"}}
+{"_id":{"$oid":"53d636dc3194bb740d797d9a"},"CateName":"设计模式","Count":2,"Intro":"设计模式","Sort":2,"User_Id":{"$oid":"53d636dcff62e3740dd006bf"}}
+{"_id":{"$oid":"53d636dc3194bb740d797d9c"},"CateName":"插件","Count":3,"Intro":"插件","Sort":3,"User_Id":{"$oid":"53d636dcff62e3740dd006c1"}}
+{"_id":{"$oid":"53d636dc3194bb740d797d9e"},"CateName":"Java","Count":3,"Intro":"Java","Sort":5,"User_Id":{"$oid":"53d636dcff62e3740dd006c3"}}
+{"_id":{"$oid":"53d636dc3194bb740d797d9f"},"CateName":"ASP.NET","Count":3,"Intro":"ASP.NET","Sort":4,"User_Id":{"$oid":"53d636dcff62e3740dd006c4"}}
+{"_id":{"$oid":"5412f6e2ea7f3d7c6e533e5a"},"CateName":"Golang","Count":0,"Intro":"","Sort":6,"User_Id":{"$oid":"53fee1f35520ad4ef7b2f756"}}
